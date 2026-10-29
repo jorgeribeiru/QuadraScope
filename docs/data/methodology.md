@@ -1,6 +1,6 @@
 # Metodologia científica — QuadraScope
 
-> Especificação para implementação, revisada em 29/10/2026. Ingestão, auditoria interna, cobertura e enriquecimento implementados nas etapas 2–3, com testes. Descritivas, dados do boxplot e distribuições implementados na etapa 4; demais detectores ainda pendentes.
+> Especificação para implementação, revisada em 29/10/2026. Ingestão, auditoria interna, cobertura e enriquecimento implementados nas etapas 2–3, com testes. Descritivas, dados do boxplot e distribuições implementados na etapa 4; sete detectores implementados e validados na etapa 5.
 
 A origem NBA via `nba_api` foi informada pelo grupo; os detalhes conhecidos e não informados estão na [proveniência](provenance.md). O [CSV preservado](../../data/raw/stats_times_regular_final.csv) é a entrada reproduzível da análise.
 
@@ -68,28 +68,30 @@ Pressuposto: distribuição aproximadamente normal, cuja adequação deve ser di
 
 Ordem fixa: `[PTS,REB,AST,STL,BLK,PF,FG3M]`. Excluir identificadores, datas brutas, resultado e acumulados. Ajustar separadamente por time. Mínimo operacional inicial n≥20 e ausência de valores inválidos; não é garantia estatística. Excluir colunas constantes do vetor efetivo com registro; nenhuma dimensão restante implica não aplicabilidade.
 
-Distâncias: `StandardScaler` ajustado à referência do próprio time e distância euclidiana, como configuração candidata. Comparar com `RobustScaler` antes de congelar. ECOD trabalha nos dados originais e não requer esse escalonamento.
+Distâncias: `StandardScaler` ajustado à referência do próprio time e distância euclidiana, como configuração principal revisada para este snapshot. A comparação com `RobustScaler` está registrada no [relatório de sensibilidade](anomaly-sensitivity.json). ECOD trabalha nos dados originais e não requer esse escalonamento.
 
-| Método | Configuração candidata para validação | Saída |
+| Método | Configuração revisada para o snapshot | Saída |
 | --- | --- | --- |
 | k-NN | k=10; distância ao décimo vizinho, excluindo o próprio registro | Maior escore = mais atípico |
 | LOF | n_neighbors=10, novelty=False; fit_predict e negative_outlier_factor_ no histórico | Preservar score bruto; escore apresentado = seu negativo |
-| DBSCAN | min_samples=5; avaliar eps=1,0/1,5/2,0/2,5/3,0 após escalonamento | Cluster e is_noise=(label==-1); sem score contínuo obrigatório |
+| DBSCAN | min_samples=5, eps=2,5; grade alternativa 1,0/1,5/2,0/2,5/3,0 nas duas escalas | Cluster e is_noise=(label==-1); sem score contínuo obrigatório |
 | ECOD | Implementação específica segundo artigo e referência | Escore agregado e contribuições por dimensão |
 
-Para ECOD, k-NN e LOF, corte candidato: quantil 0,95 linear dos escores orientados para maior atipicidade; sinalizar estritamente score>limiar. É seleção relativa de cauda, não taxa verdadeira de erro/contaminação. Empates podem produzir menos sinalizações; não forçar 5%. Para LOF, esse corte explícito difere dos rótulos automáticos da biblioteca: identificar qual política gerou is_outlier e não misturar critérios.
+Para ECOD, k-NN e LOF, corte operacional revisado: quantil 0,95 linear dos escores orientados para maior atipicidade; sinalizar estritamente score>limiar. É seleção relativa de cauda, não taxa verdadeira de erro/contaminação. Empates podem produzir menos sinalizações; não forçar 5%. Para LOF, esse corte explícito difere dos rótulos automáticos da biblioteca: identificar qual política gerou is_outlier e não misturar critérios.
 
-**Esses parâmetros ainda não estão validados.** Antes da publicação, comparar k=5/10/15, escalonamentos e faixa de eps; registrar estabilidade de rankings/conjuntos por time. Escolher configuração explicável, sem otimizar quantidade desejada de anomalias. Se DBSCAN não produzir estrutura estável, mostrar a limitação em vez de inventar clusters. Configuração final e sensibilidade são artefatos obrigatórios para publicação.
+**Parâmetros 1.0.0 revisados para o snapshot** em [anomaly-parameters.json](../../backend/content/anomaly-parameters.json). Foram executadas 44 variantes: k=5/10/15, StandardScaler/RobustScaler e cinco eps. k=10 é o intermediário pré-especificado. eps=2,5 é o candidato mais próximo da mediana dos joelhos das curvas padronizadas de distância ao quarto vizinho externo (2,3926644109581847); a quantidade de ruído não determina a escolha.
+
+O [relatório versionado](anomaly-sensitivity.json) preserva parâmetros, flags, correlações e seleção. Rankings k-NN/LOF são relativamente consistentes, mas os conjuntos sinalizados variam; Jaccard mínimo chega a 1/3. DBSCAN varia de todo a nenhum ruído na grade e não sustenta subdivisão estável em múltiplos clusters. Na configuração principal há um cluster por time mais 4/2 registros de ruído. Essa limitação deve acompanhar a interpretação. Resultados não estimam acurácia ou contaminação real. [Detalhes e reprodução](../development/anomalies.md).
 
 LOF de outliers no histórico não é detecção de novidades futuras. Scores dos dois times têm referências diferentes e não compõem ranking absoluto. Concordância entre métodos não é acurácia; não há rótulos verdadeiros de anomalia. [scikit-learn](https://scikit-learn.org/stable/modules/outlier_detection.html).
 
 ### ECOD: referência e validação
 
-Referência normativa: [artigo ECOD](https://arxiv.org/abs/2201.00382). A [implementação dos autores](https://github.com/yzhao062/pyod/blob/master/pyod/models/ecod.py) serve de oráculo, sem PyOD no runtime. Fixar revisão exata antes de gerar fixtures; master é apenas localizador inicial.
+Referência normativa: [artigo ECOD](https://arxiv.org/abs/2201.00382). A [implementação dos autores](https://github.com/yzhao062/pyod/blob/master/pyod/models/ecod.py) serve de oráculo, sem PyOD no runtime. Revisão fixada: `7e1330e10ac5c56ed402fbbaa41b225efb4bbc5c`; [fixtures](../../backend/tests/fixtures/ecod-reference.json) e [licença](../references/pyod-ecod-LICENSE.txt) preservadas. O gerador verifica a revisão VCS em ambiente uv isolado, sem instalar PyOD no projeto.
 
 Calcular CDF inferior P(X≤x) e superior P(X≥x) diretamente: a superior não é 1−F(x) com empates. No ajuste, as probabilidades são pelo menos 1/n. Transformar por log negativo, selecionar/agregar caudas e assimetria conforme referência e somar contribuições. Documentar a convenção interna de assimetria separadamente do coeficiente ajustado descritivo.
 
-Validar probabilidades, contribuições e escore em exemplos com empates, caudas opostas, colunas constantes, simetria e permutação de linhas. Fixar tolerância numérica. Não substituir o ECOD por fórmula genérica de raridade. Score e limiar são decisões separadas.
+Validar probabilidades, contribuições e escore em exemplos com empates, caudas opostas, colunas constantes, simetria e permutação de linhas. Tolerância fixada: rtol=atol=1e−12, validada em seis casos de referência e permutação. Não substituir o ECOD por fórmula genérica de raridade. Score e limiar são decisões separadas.
 
 ## Qualidade e missingness
 

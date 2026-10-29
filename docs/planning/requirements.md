@@ -1,6 +1,6 @@
 # Requisitos e acompanhamento — QuadraScope
 
-> Base: [Projeto 1.pdf](<../references/Projeto 1.pdf>), cinco páginas. Revisão: 29/10/2026. Etapas 0–4 concluídas; infraestrutura, qualidade e cálculos descritivos validados. Os requisitos da aplicação permanecem pendentes ou parciais.
+> Base: [Projeto 1.pdf](<../references/Projeto 1.pdf>), cinco páginas. Revisão: 29/10/2026. Etapas 0–5 concluídas; qualidade, descritivas, sete detectores e sensibilidade validados. Os requisitos da aplicação permanecem pendentes ou parciais.
 
 A ordem de trabalho e as tarefas detalhadas estão no [plano de implementação](implementation-plan.md). Este arquivo acompanha o cumprimento dos requisitos do enunciado.
 
@@ -21,8 +21,8 @@ A ordem de trabalho e as tarefas detalhadas estão no [plano de implementação]
 | [ ] | R11 | Zeros, negativos, duplicatas e fora de domínio, p.2 | Qualidade | Contagens e regras verificáveis por coluna; consistências entre linhas separadas | Parcial — 29/10/2026: [domínios, zeros, duplicatas e relações](../../backend/analytics/quality.py) auditados; falta apresentação no sistema |
 | [ ] | R12 | Missing por coluna e MCAR/MAR/MNAR, p.2 | Qualidade e métodos | Contagens reais e distinção entre células ausentes e cobertura incompleta | Parcial — 29/10/2026: zero missing por coluna, cobertura separada e [mecanismos explicados](../../backend/content/missingness.json); falta apresentação no sistema |
 | [ ] | R13 | Little, Jamshidian–Jalal, Listing–Schlittgen, Fairclough, p.2 | Dados e métodos | Explicar teoria, pressupostos, uso e inaplicabilidade atual; nenhuma execução fictícia | Parcial — 29/10/2026: [teoria e aplicabilidade](../../backend/analytics/missingness.py) dos quatro métodos implementadas; sem execução fictícia; falta apresentação no sistema |
-| [ ] | R14 | Inconsistências/outliers por coluna, p.3 | Qualidade e Anomalias | Tabela com domínio do método, contagens e não aplicabilidade para IDs/textos | Parcial — 29/10/2026: qualidade e [outliers IQR do boxplot](../development/descriptive.md) calculados; demais métodos e apresentação pendentes |
-| [ ] | R15 | Z-score/IQR, Grubbs, ECOD, k-NN, DBSCAN, LOF, p.3 | Anomalias e metodologia | Implementação validada, parâmetros, referência, quantidades e registros; distinguir uni/multivariado | Parcial — 29/10/2026: cercas/outliers IQR reutilizáveis; demais detectores e parâmetros completos pertencem à etapa 5 |
+| [ ] | R14 | Inconsistências/outliers por coluna, p.3 | Qualidade e Anomalias | Tabela com domínio do método, contagens e não aplicabilidade para IDs/textos | Parcial — 29/10/2026: [qualidade e sete métodos](../development/anomalies.md) calculados em relatórios separados; falta apresentação por escopo/método no sistema |
+| [ ] | R15 | Z-score/IQR, Grubbs, ECOD, k-NN, DBSCAN, LOF, p.3 | Anomalias e metodologia | Implementação validada, parâmetros, referência, quantidades e registros; distinguir uni/multivariado | Parcial — 29/10/2026: sete métodos validados, [parâmetros versionados](../../backend/content/anomaly-parameters.json) e sensibilidade documentada; falta apresentação no sistema |
 | [ ] | R16 | Medidas das sete variáveis por time, p.3 | Perfil | Média, mediana, moda(s), extremos, amplitude, desvio, variância, Q1/Q3 e outliers para ambos | Parcial — 29/10/2026: [14 resultados completos](../development/descriptive.md) calculados e testados; falta apresentação no sistema |
 | [ ] | R17 | Boxplot com todos os elementos, p.3 | Perfil e Comparação | Média, mediana, moda(s), Q1/Q3, cercas, bigodes e outliers consistentes com tabela | Parcial — 29/10/2026: [payload do boxplot](../../backend/analytics/descriptive.py) com todos os elementos e partidas; falta desenhar e interpretar no sistema |
 | [ ] | R18 | Barras comparativas e papel do z-score, p.3 | Comparação | Mesma unidade, eixo comum, referência explícita para padronização | Parcial — 29/10/2026: tabelas comparativas disponíveis; barras e discussão do z-score na interface pendentes |
@@ -30,7 +30,7 @@ A ordem de trabalho e as tarefas detalhadas estão no [plano de implementação]
 | [ ] | R20 | CV: cálculo, validade e quadro, p.4–5 | Comparação | Quadro 7×2, fórmula amostral/%, média positiva, discussão de BLK/STL e escala | Parcial — 29/10/2026: CV amostral/%, estados de validade e quadro 7×2 calculados; faltam apresentação e interpretação |
 | [ ] | R21 | CV com desvio/assimetria e alternativa robusta, p.4–5 | Comparação e Síntese | Regularidade por variável, discordâncias explicadas, sem rótulo global indevido | Parcial — 29/10/2026: CV, desvio, assimetria e IQR/mediana disponíveis; discussão contextual pendente no sistema |
 | [ ] | R22 | IQR, Q1/Q3, método e quadro, p.5 | Comparação | Tabela Q1/Q3/IQR e quadro 7×2 com quartis iguais aos boxplots | Parcial — 29/10/2026: Q1/Q3/IQR, quadro 7×2 e boxplot com quartis idênticos; falta apresentação no sistema |
-| [ ] | R23 | IQR versus amplitude/desvio e regra de outliers, p.5 | Comparação e Anomalias | Cercas corretas, registros coincidentes e discussão de extremos; não forçar evidência inexistente | Parcial — 29/10/2026: cercas, amplitude, desvio e outliers IQR coerentes; falta confronto interpretativo no sistema |
+| [ ] | R23 | IQR versus amplitude/desvio e regra de outliers, p.5 | Comparação e Anomalias | Cercas corretas, registros coincidentes e discussão de extremos; não forçar evidência inexistente | Parcial — 29/10/2026: IQR e boxplots coincidem nos 14 pares variável/time; amplitude/desvio disponíveis; falta confronto interpretativo no sistema |
 | [ ] | R24 | Síntese interpretativa, p.1 e desenvolvimento | Página inicial | Conclusões sobre os dois times ligadas a evidências e limitações | — |
 
 Os nomes de métodos no enunciado têm variações de grafia; a documentação usa Jamshidian–Jalal e Listing–Schlittgen, preservando a correspondência com o PDF. O PDF exige discussão dos testes de missingness e implementação/explicação dos métodos de outlier; a matriz distingue essas obrigações.
@@ -89,17 +89,29 @@ Registrar uma linha a cada atividade concluída, mesmo quando o requisito ainda 
 | 29/10/2026 | P4.08 | R18, R20, R22 — parciais | Quadros CV/IQR 7×2, Q1/Q3/IQR e tabela geral sem recomputar as medidas | [Comparações](../../backend/analytics/comparisons.py) | Codex |
 | 29/10/2026 | P4.09 | R16–R23 — parciais | make check aprovado com 110 testes; valores manuais, casos de borda, propriedades e bloqueios do comando | [Testes](../../backend/tests/analytics/test_descriptive.py), [pipeline](../../backend/tests/analytics/test_describe_data.py) | Codex |
 | 29/10/2026 | P4.10 | R16, R17, R20, R22 — parciais | Referências reais reproduzidas: médias/CV, modas Houston PTS e Atlanta STL, cercas e dois outliers Atlanta PTS | [Referências e validação](../development/descriptive.md) | Codex |
+| 29/10/2026 | P5.01 | R14, R15 — parciais | Contrato comum: referência, unidades, scores, limiar, parâmetros, registros e decisões nulas quando inaplicável | [Contrato](../../backend/analytics/anomaly_contracts.py) | Codex |
+| 29/10/2026 | P5.02 | R15 — parcial | Z-score ddof=1, score absoluto, bruto assinado, limiar 3 e estados de insuficiência/constante | [Univariados](../../backend/analytics/univariate_anomalies.py) | Codex |
+| 29/10/2026 | P5.03 | R14, R15, R23 — parciais | IQR reutiliza limites da etapa 4, com contagens e IDs equivalentes aos boxplots para ambos os times | [Univariados](../../backend/analytics/univariate_anomalies.py), [testes](../../backend/tests/analytics/test_anomalies.py) | Codex |
+| 29/10/2026 | P5.04 | R15 — parcial | Grubbs bilateral alpha=0,05, G/crítico/decisão, sem iteração; empates não viram rejeições independentes | [Algoritmo](../../backend/analytics/univariate_anomalies.py), [testes](../../backend/tests/analytics/test_anomalies.py) | Codex |
+| 29/10/2026 | P5.05 | R15 — parcial | Sete features ordenadas, mínimo operacional 20, exclusões de constantes e centro/escala do próprio time registrados | [Pré-processamento](../../backend/analytics/multivariate_anomalies.py) | Codex |
+| 29/10/2026 | P5.06 | R15 — parcial | k-NN por distância ao décimo vizinho externo; próprio índice removido inclusive em duplicatas | [Multivariados](../../backend/analytics/multivariate_anomalies.py), [testes](../../backend/tests/analytics/test_anomalies.py) | Codex |
+| 29/10/2026 | P5.07 | R15 — parcial | LOF histórico, novelty=False, score orientado e corte próprio separado dos rótulos automáticos | [Multivariados](../../backend/analytics/multivariate_anomalies.py) | Codex |
+| 29/10/2026 | P5.08 | R15 — parcial | DBSCAN retorna clusters/ruído, sem inventar score; todo/nenhum ruído testados | [Multivariados](../../backend/analytics/multivariate_anomalies.py), [testes](../../backend/tests/analytics/test_anomalies.py) | Codex |
+| 29/10/2026 | P5.09 | R15 — parcial | Commit do oráculo ECOD fixado, licença preservada e seis fixtures geradas em uv isolado; tolerância 1e−12 | [Fixtures](../../backend/tests/fixtures/ecod-reference.json), [licença](../references/pyod-ecod-LICENSE.txt), [gerador](../../backend/scripts/generate_ecod_reference.py) | Codex |
+| 29/10/2026 | P5.10 | R15 — parcial | ECOD próprio validado em scores, contribuições, caudas inclusivas, empates, constantes e permutação; sem PyOD no projeto | [ECOD](../../backend/analytics/ecod.py), [testes](../../backend/tests/analytics/test_ecod.py) | Codex |
+| 29/10/2026 | P5.11 | R15 — parcial | Quantil linear 0,95 e comparação estrita, sem forçar 5% ou desempatar; regra distinta do ruído DBSCAN | [Corte](../../backend/analytics/anomaly_contracts.py), [testes](../../backend/tests/analytics/test_anomalies.py) | Codex |
+| 29/10/2026 | P5.12 | R15 — parcial | 44 variantes de k/escala/eps; Spearman/Jaccard e resultados registrados sem alegar acurácia | [Sensibilidade](../../backend/analytics/sensitivity.py), [resultados](../development/anomalies.md) | Codex |
+| 29/10/2026 | P5.13 | R15 — parcial | Configuração 1.0.0 por snapshot: k=10, StandardScaler e eps=2,5 pela curva de quarto vizinho; limitações de DBSCAN e flags registradas | [Parâmetros](../../backend/content/anomaly-parameters.json), [relatório versionado](../data/anomaly-sensitivity.json), [metodologia](../data/methodology.md) | Codex |
+| 29/10/2026 | P5.14 | R14, R15, R23 — parciais | make check com 151 testes, Ruff e formatação; referências, empates, permutação, vizinhos e IQR/boxplots de ambos os times conferidos | [Testes](../../backend/tests/analytics/test_anomalies.py), [pipeline](../../backend/tests/analytics/test_anomaly_pipeline.py) | Codex |
 
-Etapas 1–4 de implementação concluídas e validadas em 29/10/2026. Infraestrutura, qualidade e descritivas estão assinaladas no plano; elas não concluem os requisitos de apresentação no sistema, demais detectores, hospedagem ou submissão.
+Etapas 1–5 de implementação concluídas e validadas em 29/10/2026. Infraestrutura, qualidade, descritivas e detectores estão assinalados no plano; elas não concluem os requisitos de apresentação no sistema, build/manifesto final, hospedagem ou submissão.
 
 ## Pendências e responsabilidade
 
 | Pendência | Responsável / momento de resolução |
 | --- | --- |
-| Parâmetros finais e sensibilidade dos detectores | Implementação científica; antes de publicar scores |
-| Revisão fixa do oráculo ECOD e tolerâncias | Implementação científica; antes das fixtures |
 | Topologia Vercel e requisitos de execução | Implementação/infra; na prova de hospedagem |
 
-Origem e stack foram confirmadas pelo grupo e registradas no histórico. Data exata da extração, endpoints, versão da biblioteca e tratamentos prévios permanecem não informados, conforme a [proveniência](../data/provenance.md); isso não reabre P0.06, que admite o registro explícito das limitações.
+Origem e stack foram confirmadas pelo grupo e registradas no histórico. Oráculo, parâmetros e sensibilidade foram concluídos na etapa 5. Data exata da extração, endpoints, versão da biblioteca e tratamentos prévios permanecem não informados, conforme a [proveniência](../data/provenance.md); isso não reabre P0.06, que admite o registro explícito das limitações.
 
 Essas pendências técnicas não exigem suspender a preparação local. O status de cada requisito será atualizado por evidência na implementação, não apenas pela existência deste documento.

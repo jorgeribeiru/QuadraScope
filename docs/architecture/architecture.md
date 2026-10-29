@@ -1,7 +1,7 @@
 # QuadraScope — Arquitetura do sistema
 
 > Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. Revisão: 29/10/2026.
-> Estado: etapas 0–4 concluídas. Ingestão, qualidade, descritivas e dados dos gráficos implementados; demais detectores, endpoints e frontend ainda pendentes.
+> Estado: etapas 0–5 concluídas. Ciência e sete detectores validados no snapshot; build final, endpoints e frontend ainda pendentes.
 
 ## Objetivo e escopo
 
@@ -19,6 +19,7 @@ Documentos complementares:
 - [Ingestão e normalização](../development/ingestion.md).
 - [Qualidade, cobertura e enriquecimento](../development/quality.md).
 - [Descritivas, boxplots e distribuições](../development/descriptive.md).
+- [Detectores e sensibilidade](../development/anomalies.md).
 - [Metodologia e regras científicas](../data/methodology.md).
 - [Requisitos, rastreabilidade e acompanhamento](../planning/requirements.md).
 - [Plano detalhado de implementação, do início à entrega](../planning/implementation-plan.md).
@@ -205,7 +206,7 @@ quadrascope/
     └── tests/                  # casos científicos e contratos
 ```
 
-As etapas 1–2 criaram ambiente e normalização em `data/processed/ingestion/`. A etapa 3 gera diagnóstico e intermediários enriquecidos em `data/processed/quality/`, somente após aprovação das regras internas. Esses arquivos não são o conjunto final de publicação. A etapa 4 calcula descritivas, boxplots e distribuições em `data/processed/descriptive/`, com estados por medida e metadados. Demais detectores, API e frontend pertencem às próximas etapas. Evitar um segundo arquivo de arquitetura concorrente.
+As etapas 1–2 criaram ambiente e normalização em `data/processed/ingestion/`. A etapa 3 gera diagnóstico e intermediários enriquecidos em `data/processed/quality/`, somente após aprovação das regras internas. Esses arquivos não são o conjunto final de publicação. A etapa 4 calcula descritivas, boxplots e distribuições em `data/processed/descriptive/`, com estados por medida e metadados. A etapa 5 gera 50 resultados e sensibilidade em `data/processed/anomalies/`; parâmetros e relatório compacto da revisão são versionados. Build/manifesto final, API e frontend pertencem às próximas etapas. Evitar um segundo arquivo de arquitetura concorrente.
 
 ## Entrega e pendências
 
@@ -213,6 +214,6 @@ Validar hospedagem com roteamento `/api`, recarga de rotas React, tamanho do pac
 
 O README futuro terá versões necessárias, `requirements.txt`, preparação de artefatos e comando único de execução local. A aplicação deve estar acessível para avaliação, com instruções locais como alternativa prevista no enunciado. Sem banco, filas ou microsserviços sem necessidade demonstrada.
 
-Confirmados: origem NBA via `nba_api` (com detalhes de coleta não informados documentados) e stack FastAPI + React. Pendências técnicas: validação dos parâmetros candidatos e topologia final da hospedagem. Publicação dos resultados depende da validação correspondente.
+Confirmados: origem NBA via `nba_api` (com detalhes de coleta não informados documentados) e stack FastAPI + React. Parâmetros dos detectores revisados para o snapshot na etapa 5; limitações de sensibilidade documentadas. Pendência técnica externa: topologia final da hospedagem. Publicação dos resultados depende da validação correspondente.
 
 Referências: [FastAPI na Vercel](https://vercel.com/docs/frameworks/backend/fastapi), [Vercel Services](https://vercel.com/docs/services). Referências científicas estão na [metodologia](../data/methodology.md).

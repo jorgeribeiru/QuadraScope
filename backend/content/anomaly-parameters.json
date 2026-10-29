@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "validation_status": "reviewed_for_snapshot",
+  "dataset_sha256": "fa56bf638ef18be972a88850719043953e615bf39339671a8daa007ba08811b6",
+  "features": ["PTS", "REB", "AST", "STL", "BLK", "PF", "FG3M"],
+  "min_reference_n": 20,
+  "scaler": "standard",
+  "neighbor_k": 10,
+  "score_quantile": 0.95,
+  "dbscan_min_samples": 5,
+  "dbscan_eps": 2.5,
+  "z_threshold": 3.0,
+  "iqr_k": 1.5,
+  "grubbs_alpha": 0.05,
+  "selection": {
+    "neighbor_policy": "k=10 intermediário pré-especificado; não otimizado por quantidade de sinalizações.",
+    "dbscan_policy": "Candidato mais próximo da mediana dos joelhos das curvas padronizadas de distância ao quarto vizinho externo; empate favorece menor eps.",
+    "median_knee": 2.3926644109581847,
+    "neighbor_grid": [5, 10, 15],
+    "scalers": ["standard", "robust"],
+    "eps_grid": [1.0, 1.5, 2.0, 2.5, 3.0],
+    "interpretation": "Rankings de vizinhança razoavelmente consistentes, mas conjuntos sinalizados variam. DBSCAN não sustenta subdivisão estável em múltiplos clusters na grade; ruído é exploratório e sensível."
+  }
+}

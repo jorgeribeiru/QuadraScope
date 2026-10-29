@@ -2,7 +2,7 @@
 
 Relatório web interativo de análise de dados da NBA, desenvolvido para o Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. O foco do grupo é **Atlanta Hawks × Houston Rockets**, nas variáveis PTS, REB, AST, STL, BLK, PF e FG3M.
 
-**Estado atual:** etapas 0–4 concluídas. Ingestão, qualidade, descritivas, boxplots e distribuições calculados no Python. Demais detectores, API, gráficos na interface, frontend e deploy ainda pendentes. A stack **FastAPI + React** foi confirmada pelo grupo.
+**Estado atual:** etapas 0–5 concluídas. Ingestão, qualidade, descritivas e sete detectores com sensibilidade implementados no Python. Build/manifesto final, API, gráficos na interface, frontend e deploy ainda pendentes. A stack **FastAPI + React** foi confirmada pelo grupo.
 
 ## Estrutura atual
 
@@ -29,7 +29,8 @@ QuadraScope/
     │   ├── setup.md
     │   ├── ingestion.md
     │   ├── quality.md
-    │   └── descriptive.md
+    │   ├── descriptive.md
+    │   └── anomalies.md
     ├── architecture/
     │   ├── architecture.md
     │   └── diagrams/
@@ -38,7 +39,8 @@ QuadraScope/
     ├── data/
     │   ├── provenance.md
     │   ├── data-dictionary.md
-    │   └── methodology.md
+    │   ├── methodology.md
+    │   └── anomaly-sensitivity.json
     ├── planning/
     │   ├── requirements.md
     │   └── implementation-plan.md
@@ -68,6 +70,7 @@ O [guia de desenvolvimento](docs/development/setup.md) apresenta instalação al
 - [Ingestão, normalização e arquivos gerados](docs/development/ingestion.md).
 - [Qualidade, cobertura e enriquecimento](docs/development/quality.md).
 - [Descritivas, boxplots e distribuições](docs/development/descriptive.md).
+- [Detectores, parâmetros e sensibilidade](docs/development/anomalies.md).
 - [Plano de implementação e tarefas](docs/planning/implementation-plan.md).
 - [Requisitos, caixas de conclusão e histórico](docs/planning/requirements.md).
 - [Arquitetura](docs/architecture/architecture.md) e [diagrama](docs/architecture/diagrams/quadrascope-arquitetura.svg).
@@ -94,5 +97,13 @@ make data-describe
 ```
 
 Os JSONs ficam em `data/processed/descriptive/`, com metadados, estados por medida e tabelas 7×2. Os dados dos gráficos estão prontos; sua apresentação visual será implementada no React.
+
+Para executar os sete detectores e a sensibilidade dos parâmetros:
+
+```bash
+make data-anomalies
+```
+
+Os relatórios ficam em `data/processed/anomalies/`, com referência fixa por time e parâmetros revisados para este snapshot. O ECOD próprio usa fixtures de referência; PyOD não integra o ambiente do projeto. Consulte o [relatório de sensibilidade versionado](docs/data/anomaly-sensitivity.json) e as limitações no guia dos detectores.
 
 Ainda não há servidor de aplicação. `make data-build` continua reservado ao pipeline completo e retorna erro explícito; ele não substitui o comando de normalização. As instruções de execução da aplicação e hospedagem serão adicionadas nas etapas correspondentes.

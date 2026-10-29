@@ -1,0 +1,3841 @@
+{
+  "metadata": {
+    "source": {
+      "filename": "stats_times_regular_final.csv",
+      "sha256": "fa56bf638ef18be972a88850719043953e615bf39339671a8daa007ba08811b6",
+      "size_bytes": 309357,
+      "row_count": 2238,
+      "column_count": 28,
+      "encoding": "utf-8-sig",
+      "delimiter": ","
+    },
+    "schema_version": "1.0.0",
+    "analysis_version": "1.0.0",
+    "parameter_version": "1.0.0",
+    "parameters": {
+      "version": "1.0.0",
+      "validation_status": "reviewed_for_snapshot",
+      "dataset_sha256": "fa56bf638ef18be972a88850719043953e615bf39339671a8daa007ba08811b6",
+      "features": [
+        "PTS",
+        "REB",
+        "AST",
+        "STL",
+        "BLK",
+        "PF",
+        "FG3M"
+      ],
+      "min_reference_n": 20,
+      "scaler": "standard",
+      "neighbor_k": 10,
+      "score_quantile": 0.95,
+      "dbscan_min_samples": 5,
+      "dbscan_eps": 2.5,
+      "z_threshold": 3.0,
+      "iqr_k": 1.5,
+      "grubbs_alpha": 0.05,
+      "selection": {
+        "neighbor_policy": "k=10 intermediário pré-especificado; não otimizado por quantidade de sinalizações.",
+        "dbscan_policy": "Candidato mais próximo da mediana dos joelhos das curvas padronizadas de distância ao quarto vizinho externo; empate favorece menor eps.",
+        "median_knee": 2.3926644109581847,
+        "neighbor_grid": [
+          5,
+          10,
+          15
+        ],
+        "scalers": [
+          "standard",
+          "robust"
+        ],
+        "eps_grid": [
+          1.0,
+          1.5,
+          2.0,
+          2.5,
+          3.0
+        ],
+        "interpretation": "Rankings de vizinhança razoavelmente consistentes, mas conjuntos sinalizados variam. DBSCAN não sustenta subdivisão estável em múltiplos clusters na grade; ruído é exploratório e sensível."
+      }
+    },
+    "scope": "full_team_history_in_dataset",
+    "display_filters": {
+      "from": null,
+      "to": null,
+      "venue": "all",
+      "outcome": "all"
+    },
+    "dependencies": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1"
+    }
+  },
+  "grids": {
+    "k": [
+      5,
+      10,
+      15
+    ],
+    "scalers": [
+      "standard",
+      "robust"
+    ],
+    "eps": [
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0
+    ]
+  },
+  "teams": [
+    {
+      "team_id": "1610612737",
+      "reference_n": 75,
+      "neighbor_methods": {
+        "knn": {
+          "baseline": {
+            "scaler": "standard",
+            "k": 10
+          },
+          "variants": [
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "standard",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    118.25333333333333,
+                    43.333333333333336,
+                    30.346666666666668,
+                    9.4,
+                    4.626666666666667,
+                    19.546666666666667,
+                    14.533333333333333
+                  ],
+                  "scale": [
+                    12.515689708876971,
+                    6.7770855748536105,
+                    4.837336273427994,
+                    2.7422618401604177,
+                    2.2965094285797205,
+                    3.234370967522983,
+                    3.844765561412324
+                  ],
+                  "convention": "population_std_ddof0"
+                },
+                "k": 5,
+                "metric": "euclidean",
+                "score": "kth_other_neighbor_distance",
+                "self_excluded": true,
+                "algorithm": "brute",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 3.1438111608441686,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500227",
+                "22500304",
+                "22500396",
+                "22500735"
+              ],
+              "clusters": null,
+              "scaler": "standard",
+              "k": 5,
+              "spearman_vs_standard_k10": 0.9102367134186058,
+              "flag_jaccard_vs_standard_k10": 1.0
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "standard",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    118.25333333333333,
+                    43.333333333333336,
+                    30.346666666666668,
+                    9.4,
+                    4.626666666666667,
+                    19.546666666666667,
+                    14.533333333333333
+                  ],
+                  "scale": [
+                    12.515689708876971,
+                    6.7770855748536105,
+                    4.837336273427994,
+                    2.7422618401604177,
+                    2.2965094285797205,
+                    3.234370967522983,
+                    3.844765561412324
+                  ],
+                  "convention": "population_std_ddof0"
+                },
+                "k": 10,
+                "metric": "euclidean",
+                "score": "kth_other_neighbor_distance",
+                "self_excluded": true,
+                "algorithm": "brute",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 3.4447905260935205,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500227",
+                "22500304",
+                "22500396",
+                "22500735"
+              ],
+              "clusters": null,
+              "scaler": "standard",
+              "k": 10,
+              "spearman_vs_standard_k10": 0.9999999999999999,
+              "flag_jaccard_vs_standard_k10": 1.0
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "standard",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    118.25333333333333,
+                    43.333333333333336,
+                    30.346666666666668,
+                    9.4,
+                    4.626666666666667,
+                    19.546666666666667,
+                    14.533333333333333
+                  ],
+                  "scale": [
+                    12.515689708876971,
+                    6.7770855748536105,
+                    4.837336273427994,
+                    2.7422618401604177,
+                    2.2965094285797205,
+                    3.234370967522983,
+                    3.844765561412324
+                  ],
+                  "convention": "population_std_ddof0"
+                },
+                "k": 15,
+                "metric": "euclidean",
+                "score": "kth_other_neighbor_distance",
+                "self_excluded": true,
+                "algorithm": "brute",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 3.7551601299305664,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500227",
+                "22500304",
+                "22500396",
+                "22500735"
+              ],
+              "clusters": null,
+              "scaler": "standard",
+              "k": 15,
+              "spearman_vs_standard_k10": 0.9674601878487086,
+              "flag_jaccard_vs_standard_k10": 1.0
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "robust",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    119.0,
+                    43.0,
+                    31.0,
+                    9.0,
+                    5.0,
+                    19.0,
+                    14.0
+                  ],
+                  "scale": [
+                    15.5,
+                    9.0,
+                    5.5,
+                    3.5,
+                    3.0,
+                    4.0,
+                    4.5
+                  ],
+                  "convention": "median_and_IQR_linear"
+                },
+                "k": 5,
+                "metric": "euclidean",
+                "score": "kth_other_neighbor_distance",
+                "self_excluded": true,
+                "algorithm": "brute",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 2.49158414582632,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500227",
+                "22500396",
+                "22500735",
+                "22501018"
+              ],
+              "clusters": null,
+              "scaler": "robust",
+              "k": 5,
+              "spearman_vs_standard_k10": 0.9373510772466165,
+              "flag_jaccard_vs_standard_k10": 0.6
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "robust",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    119.0,
+                    43.0,
+                    31.0,
+                    9.0,
+                    5.0,
+                    19.0,
+                    14.0
+                  ],
+                  "scale": [
+                    15.5,
+                    9.0,
+                    5.5,
+                    3.5,
+                    3.0,
+                    4.0,
+                    4.5
+                  ],
+                  "convention": "median_and_IQR_linear"
+                },
+                "k": 10,
+                "metric": "euclidean",
+                "score": "kth_other_neighbor_distance",
+                "self_excluded": true,
+                "algorithm": "brute",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 2.7393890341143785,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500227",
+                "22500304",
+                "22500396",
+                "22500735"
+              ],
+              "clusters": null,
+              "scaler": "robust",
+              "k": 10,
+              "spearman_vs_standard_k10": 0.9939827592117808,
+              "flag_jaccard_vs_standard_k10": 1.0
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "robust",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    119.0,
+                    43.0,
+                    31.0,
+                    9.0,
+                    5.0,
+                    19.0,
+                    14.0
+                  ],
+                  "scale": [
+                    15.5,
+                    9.0,
+                    5.5,
+                    3.5,
+                    3.0,
+                    4.0,
+                    4.5
+                  ],
+                  "convention": "median_and_IQR_linear"
+                },
+                "k": 15,
+                "metric": "euclidean",
+                "score": "kth_other_neighbor_distance",
+                "self_excluded": true,
+                "algorithm": "brute",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 3.0211680423390592,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500227",
+                "22500304",
+                "22500396",
+                "22500735"
+              ],
+              "clusters": null,
+              "scaler": "robust",
+              "k": 15,
+              "spearman_vs_standard_k10": 0.9640456630991746,
+              "flag_jaccard_vs_standard_k10": 1.0
+            }
+          ],
+          "stability": {
+            "min_spearman": 0.9102367134186058,
+            "median_spearman": 0.9640456630991746,
+            "min_flag_jaccard": 0.6,
+            "median_flag_jaccard": 1.0
+          }
+        },
+        "lof": {
+          "baseline": {
+            "scaler": "standard",
+            "k": 10
+          },
+          "variants": [
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "standard",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    118.25333333333333,
+                    43.333333333333336,
+                    30.346666666666668,
+                    9.4,
+                    4.626666666666667,
+                    19.546666666666667,
+                    14.533333333333333
+                  ],
+                  "scale": [
+                    12.515689708876971,
+                    6.7770855748536105,
+                    4.837336273427994,
+                    2.7422618401604177,
+                    2.2965094285797205,
+                    3.234370967522983,
+                    3.844765561412324
+                  ],
+                  "convention": "population_std_ddof0"
+                },
+                "k": 5,
+                "novelty": false,
+                "score": "-negative_outlier_factor_",
+                "library_offset": -1.5,
+                "algorithm": "brute",
+                "final_labels": "explicit_quantile_not_library_labels",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 1.2914183332232054,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500309",
+                "22500396",
+                "22500735",
+                "22501018"
+              ],
+              "clusters": null,
+              "scaler": "standard",
+              "k": 5,
+              "spearman_vs_standard_k10": 0.847823613086771,
+              "flag_jaccard_vs_standard_k10": 0.6
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "standard",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    118.25333333333333,
+                    43.333333333333336,
+                    30.346666666666668,
+                    9.4,
+                    4.626666666666667,
+                    19.546666666666667,
+                    14.533333333333333
+                  ],
+                  "scale": [
+                    12.515689708876971,
+                    6.7770855748536105,
+                    4.837336273427994,
+                    2.7422618401604177,
+                    2.2965094285797205,
+                    3.234370967522983,
+                    3.844765561412324
+                  ],
+                  "convention": "population_std_ddof0"
+                },
+                "k": 10,
+                "novelty": false,
+                "score": "-negative_outlier_factor_",
+                "library_offset": -1.5,
+                "algorithm": "brute",
+                "final_labels": "explicit_quantile_not_library_labels",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 1.2549952739680472,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500227",
+                "22500396",
+                "22500735",
+                "22501018"
+              ],
+              "clusters": null,
+              "scaler": "standard",
+              "k": 10,
+              "spearman_vs_standard_k10": 0.9999999999999999,
+              "flag_jaccard_vs_standard_k10": 1.0
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "standard",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    118.25333333333333,
+                    43.333333333333336,
+                    30.346666666666668,
+                    9.4,
+                    4.626666666666667,
+                    19.546666666666667,
+                    14.533333333333333
+                  ],
+                  "scale": [
+                    12.515689708876971,
+                    6.7770855748536105,
+                    4.837336273427994,
+                    2.7422618401604177,
+                    2.2965094285797205,
+                    3.234370967522983,
+                    3.844765561412324
+                  ],
+                  "convention": "population_std_ddof0"
+                },
+                "k": 15,
+                "novelty": false,
+                "score": "-negative_outlier_factor_",
+                "library_offset": -1.5,
+                "algorithm": "brute",
+                "final_labels": "explicit_quantile_not_library_labels",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 1.208787513604333,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500227",
+                "22500304",
+                "22500396",
+                "22500735"
+              ],
+              "clusters": null,
+              "scaler": "standard",
+              "k": 15,
+              "spearman_vs_standard_k10": 0.9502702702702702,
+              "flag_jaccard_vs_standard_k10": 0.6
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "robust",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    119.0,
+                    43.0,
+                    31.0,
+                    9.0,
+                    5.0,
+                    19.0,
+                    14.0
+                  ],
+                  "scale": [
+                    15.5,
+                    9.0,
+                    5.5,
+                    3.5,
+                    3.0,
+                    4.0,
+                    4.5
+                  ],
+                  "convention": "median_and_IQR_linear"
+                },
+                "k": 5,
+                "novelty": false,
+                "score": "-negative_outlier_factor_",
+                "library_offset": -1.5,
+                "algorithm": "brute",
+                "final_labels": "explicit_quantile_not_library_labels",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 1.2636724904280006,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500309",
+                "22500396",
+                "22500735",
+                "22501018"
+              ],
+              "clusters": null,
+              "scaler": "robust",
+              "k": 5,
+              "spearman_vs_standard_k10": 0.868307254623044,
+              "flag_jaccard_vs_standard_k10": 0.6
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "robust",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    119.0,
+                    43.0,
+                    31.0,
+                    9.0,
+                    5.0,
+                    19.0,
+                    14.0
+                  ],
+                  "scale": [
+                    15.5,
+                    9.0,
+                    5.5,
+                    3.5,
+                    3.0,
+                    4.0,
+                    4.5
+                  ],
+                  "convention": "median_and_IQR_linear"
+                },
+                "k": 10,
+                "novelty": false,
+                "score": "-negative_outlier_factor_",
+                "library_offset": -1.5,
+                "algorithm": "brute",
+                "final_labels": "explicit_quantile_not_library_labels",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 1.2376812505913386,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500227",
+                "22500396",
+                "22500735",
+                "22501018"
+              ],
+              "clusters": null,
+              "scaler": "robust",
+              "k": 10,
+              "spearman_vs_standard_k10": 0.981678520625889,
+              "flag_jaccard_vs_standard_k10": 1.0
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "robust",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    119.0,
+                    43.0,
+                    31.0,
+                    9.0,
+                    5.0,
+                    19.0,
+                    14.0
+                  ],
+                  "scale": [
+                    15.5,
+                    9.0,
+                    5.5,
+                    3.5,
+                    3.0,
+                    4.0,
+                    4.5
+                  ],
+                  "convention": "median_and_IQR_linear"
+                },
+                "k": 15,
+                "novelty": false,
+                "score": "-negative_outlier_factor_",
+                "library_offset": -1.5,
+                "algorithm": "brute",
+                "final_labels": "explicit_quantile_not_library_labels",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 1.2069089075927568,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500227",
+                "22500396",
+                "22500735",
+                "22501037"
+              ],
+              "clusters": null,
+              "scaler": "robust",
+              "k": 15,
+              "spearman_vs_standard_k10": 0.936330014224751,
+              "flag_jaccard_vs_standard_k10": 0.6
+            }
+          ],
+          "stability": {
+            "min_spearman": 0.847823613086771,
+            "median_spearman": 0.936330014224751,
+            "min_flag_jaccard": 0.6,
+            "median_flag_jaccard": 0.6
+          }
+        }
+      },
+      "dbscan": [
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "standard",
+              "fitted_on": "full_team_reference",
+              "center": [
+                118.25333333333333,
+                43.333333333333336,
+                30.346666666666668,
+                9.4,
+                4.626666666666667,
+                19.546666666666667,
+                14.533333333333333
+              ],
+              "scale": [
+                12.515689708876971,
+                6.7770855748536105,
+                4.837336273427994,
+                2.7422618401604177,
+                2.2965094285797205,
+                3.234370967522983,
+                3.844765561412324
+              ],
+              "convention": "population_std_ddof0"
+            },
+            "eps": 1.0,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 75,
+          "flagged_game_ids": [
+            "22500014",
+            "22500020",
+            "22500030",
+            "22500057",
+            "22500069",
+            "22500082",
+            "22500090",
+            "22500101",
+            "22500115",
+            "22500130",
+            "22500151",
+            "22500166",
+            "22500185",
+            "22500206",
+            "22500223",
+            "22500227",
+            "22500239",
+            "22500251",
+            "22500267",
+            "22500270",
+            "22500276",
+            "22500304",
+            "22500309",
+            "22500327",
+            "22500340",
+            "22500351",
+            "22500371",
+            "22500383",
+            "22500396",
+            "22500411",
+            "22500423",
+            "22500435",
+            "22500455",
+            "22500463",
+            "22500479",
+            "22500488",
+            "22500504",
+            "22500519",
+            "22500537",
+            "22500556",
+            "22500569",
+            "22500585",
+            "22500594",
+            "22500623",
+            "22500636",
+            "22500659",
+            "22500673",
+            "22500682",
+            "22500698",
+            "22500720",
+            "22500735",
+            "22500751",
+            "22500765",
+            "22500775",
+            "22500794",
+            "22500805",
+            "22500818",
+            "22500832",
+            "22500850",
+            "22500873",
+            "22500897",
+            "22500917",
+            "22500939",
+            "22500956",
+            "22500970",
+            "22500983",
+            "22501006",
+            "22501018",
+            "22501026",
+            "22501037",
+            "22501051",
+            "22501067",
+            "22501078",
+            "22501210",
+            "22501217"
+          ],
+          "clusters": 0,
+          "scaler": "standard",
+          "eps": 1.0,
+          "noise_fraction": 1.0,
+          "noise_jaccard_vs_previous_eps": null
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "standard",
+              "fitted_on": "full_team_reference",
+              "center": [
+                118.25333333333333,
+                43.333333333333336,
+                30.346666666666668,
+                9.4,
+                4.626666666666667,
+                19.546666666666667,
+                14.533333333333333
+              ],
+              "scale": [
+                12.515689708876971,
+                6.7770855748536105,
+                4.837336273427994,
+                2.7422618401604177,
+                2.2965094285797205,
+                3.234370967522983,
+                3.844765561412324
+              ],
+              "convention": "population_std_ddof0"
+            },
+            "eps": 1.5,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 70,
+          "flagged_game_ids": [
+            "22500014",
+            "22500020",
+            "22500030",
+            "22500057",
+            "22500069",
+            "22500082",
+            "22500090",
+            "22500101",
+            "22500130",
+            "22500151",
+            "22500166",
+            "22500185",
+            "22500206",
+            "22500223",
+            "22500227",
+            "22500251",
+            "22500267",
+            "22500270",
+            "22500276",
+            "22500304",
+            "22500309",
+            "22500327",
+            "22500340",
+            "22500351",
+            "22500371",
+            "22500383",
+            "22500396",
+            "22500411",
+            "22500423",
+            "22500435",
+            "22500455",
+            "22500463",
+            "22500479",
+            "22500504",
+            "22500519",
+            "22500537",
+            "22500556",
+            "22500569",
+            "22500585",
+            "22500594",
+            "22500623",
+            "22500636",
+            "22500659",
+            "22500673",
+            "22500682",
+            "22500698",
+            "22500720",
+            "22500735",
+            "22500751",
+            "22500765",
+            "22500775",
+            "22500794",
+            "22500805",
+            "22500818",
+            "22500832",
+            "22500850",
+            "22500873",
+            "22500897",
+            "22500939",
+            "22500956",
+            "22500970",
+            "22500983",
+            "22501006",
+            "22501018",
+            "22501037",
+            "22501051",
+            "22501067",
+            "22501078",
+            "22501210",
+            "22501217"
+          ],
+          "clusters": 1,
+          "scaler": "standard",
+          "eps": 1.5,
+          "noise_fraction": 0.9333333333333333,
+          "noise_jaccard_vs_previous_eps": 0.9333333333333333
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "standard",
+              "fitted_on": "full_team_reference",
+              "center": [
+                118.25333333333333,
+                43.333333333333336,
+                30.346666666666668,
+                9.4,
+                4.626666666666667,
+                19.546666666666667,
+                14.533333333333333
+              ],
+              "scale": [
+                12.515689708876971,
+                6.7770855748536105,
+                4.837336273427994,
+                2.7422618401604177,
+                2.2965094285797205,
+                3.234370967522983,
+                3.844765561412324
+              ],
+              "convention": "population_std_ddof0"
+            },
+            "eps": 2.0,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 25,
+          "flagged_game_ids": [
+            "22500020",
+            "22500030",
+            "22500130",
+            "22500223",
+            "22500227",
+            "22500304",
+            "22500309",
+            "22500327",
+            "22500383",
+            "22500396",
+            "22500455",
+            "22500519",
+            "22500636",
+            "22500659",
+            "22500682",
+            "22500735",
+            "22500794",
+            "22500805",
+            "22500832",
+            "22500850",
+            "22500873",
+            "22501018",
+            "22501037",
+            "22501067",
+            "22501217"
+          ],
+          "clusters": 1,
+          "scaler": "standard",
+          "eps": 2.0,
+          "noise_fraction": 0.3333333333333333,
+          "noise_jaccard_vs_previous_eps": 0.35714285714285715
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "standard",
+              "fitted_on": "full_team_reference",
+              "center": [
+                118.25333333333333,
+                43.333333333333336,
+                30.346666666666668,
+                9.4,
+                4.626666666666667,
+                19.546666666666667,
+                14.533333333333333
+              ],
+              "scale": [
+                12.515689708876971,
+                6.7770855748536105,
+                4.837336273427994,
+                2.7422618401604177,
+                2.2965094285797205,
+                3.234370967522983,
+                3.844765561412324
+              ],
+              "convention": "population_std_ddof0"
+            },
+            "eps": 2.5,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 4,
+          "flagged_game_ids": [
+            "22500227",
+            "22500396",
+            "22500735",
+            "22501018"
+          ],
+          "clusters": 1,
+          "scaler": "standard",
+          "eps": 2.5,
+          "noise_fraction": 0.05333333333333334,
+          "noise_jaccard_vs_previous_eps": 0.16
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "standard",
+              "fitted_on": "full_team_reference",
+              "center": [
+                118.25333333333333,
+                43.333333333333336,
+                30.346666666666668,
+                9.4,
+                4.626666666666667,
+                19.546666666666667,
+                14.533333333333333
+              ],
+              "scale": [
+                12.515689708876971,
+                6.7770855748536105,
+                4.837336273427994,
+                2.7422618401604177,
+                2.2965094285797205,
+                3.234370967522983,
+                3.844765561412324
+              ],
+              "convention": "population_std_ddof0"
+            },
+            "eps": 3.0,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 0,
+          "flagged_game_ids": [],
+          "clusters": 1,
+          "scaler": "standard",
+          "eps": 3.0,
+          "noise_fraction": 0.0,
+          "noise_jaccard_vs_previous_eps": 0.0
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "robust",
+              "fitted_on": "full_team_reference",
+              "center": [
+                119.0,
+                43.0,
+                31.0,
+                9.0,
+                5.0,
+                19.0,
+                14.0
+              ],
+              "scale": [
+                15.5,
+                9.0,
+                5.5,
+                3.5,
+                3.0,
+                4.0,
+                4.5
+              ],
+              "convention": "median_and_IQR_linear"
+            },
+            "eps": 1.0,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 75,
+          "flagged_game_ids": [
+            "22500014",
+            "22500020",
+            "22500030",
+            "22500057",
+            "22500069",
+            "22500082",
+            "22500090",
+            "22500101",
+            "22500115",
+            "22500130",
+            "22500151",
+            "22500166",
+            "22500185",
+            "22500206",
+            "22500223",
+            "22500227",
+            "22500239",
+            "22500251",
+            "22500267",
+            "22500270",
+            "22500276",
+            "22500304",
+            "22500309",
+            "22500327",
+            "22500340",
+            "22500351",
+            "22500371",
+            "22500383",
+            "22500396",
+            "22500411",
+            "22500423",
+            "22500435",
+            "22500455",
+            "22500463",
+            "22500479",
+            "22500488",
+            "22500504",
+            "22500519",
+            "22500537",
+            "22500556",
+            "22500569",
+            "22500585",
+            "22500594",
+            "22500623",
+            "22500636",
+            "22500659",
+            "22500673",
+            "22500682",
+            "22500698",
+            "22500720",
+            "22500735",
+            "22500751",
+            "22500765",
+            "22500775",
+            "22500794",
+            "22500805",
+            "22500818",
+            "22500832",
+            "22500850",
+            "22500873",
+            "22500897",
+            "22500917",
+            "22500939",
+            "22500956",
+            "22500970",
+            "22500983",
+            "22501006",
+            "22501018",
+            "22501026",
+            "22501037",
+            "22501051",
+            "22501067",
+            "22501078",
+            "22501210",
+            "22501217"
+          ],
+          "clusters": 0,
+          "scaler": "robust",
+          "eps": 1.0,
+          "noise_fraction": 1.0,
+          "noise_jaccard_vs_previous_eps": null
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "robust",
+              "fitted_on": "full_team_reference",
+              "center": [
+                119.0,
+                43.0,
+                31.0,
+                9.0,
+                5.0,
+                19.0,
+                14.0
+              ],
+              "scale": [
+                15.5,
+                9.0,
+                5.5,
+                3.5,
+                3.0,
+                4.0,
+                4.5
+              ],
+              "convention": "median_and_IQR_linear"
+            },
+            "eps": 1.5,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 42,
+          "flagged_game_ids": [
+            "22500020",
+            "22500030",
+            "22500101",
+            "22500130",
+            "22500166",
+            "22500223",
+            "22500227",
+            "22500267",
+            "22500270",
+            "22500304",
+            "22500309",
+            "22500327",
+            "22500340",
+            "22500383",
+            "22500396",
+            "22500423",
+            "22500455",
+            "22500504",
+            "22500519",
+            "22500537",
+            "22500569",
+            "22500585",
+            "22500623",
+            "22500636",
+            "22500659",
+            "22500682",
+            "22500720",
+            "22500735",
+            "22500765",
+            "22500794",
+            "22500805",
+            "22500832",
+            "22500850",
+            "22500873",
+            "22500897",
+            "22500939",
+            "22500956",
+            "22500983",
+            "22501018",
+            "22501037",
+            "22501067",
+            "22501217"
+          ],
+          "clusters": 3,
+          "scaler": "robust",
+          "eps": 1.5,
+          "noise_fraction": 0.56,
+          "noise_jaccard_vs_previous_eps": 0.56
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "robust",
+              "fitted_on": "full_team_reference",
+              "center": [
+                119.0,
+                43.0,
+                31.0,
+                9.0,
+                5.0,
+                19.0,
+                14.0
+              ],
+              "scale": [
+                15.5,
+                9.0,
+                5.5,
+                3.5,
+                3.0,
+                4.0,
+                4.5
+              ],
+              "convention": "median_and_IQR_linear"
+            },
+            "eps": 2.0,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 4,
+          "flagged_game_ids": [
+            "22500227",
+            "22500396",
+            "22500735",
+            "22501018"
+          ],
+          "clusters": 1,
+          "scaler": "robust",
+          "eps": 2.0,
+          "noise_fraction": 0.05333333333333334,
+          "noise_jaccard_vs_previous_eps": 0.09523809523809523
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "robust",
+              "fitted_on": "full_team_reference",
+              "center": [
+                119.0,
+                43.0,
+                31.0,
+                9.0,
+                5.0,
+                19.0,
+                14.0
+              ],
+              "scale": [
+                15.5,
+                9.0,
+                5.5,
+                3.5,
+                3.0,
+                4.0,
+                4.5
+              ],
+              "convention": "median_and_IQR_linear"
+            },
+            "eps": 2.5,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 0,
+          "flagged_game_ids": [],
+          "clusters": 1,
+          "scaler": "robust",
+          "eps": 2.5,
+          "noise_fraction": 0.0,
+          "noise_jaccard_vs_previous_eps": 0.0
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "robust",
+              "fitted_on": "full_team_reference",
+              "center": [
+                119.0,
+                43.0,
+                31.0,
+                9.0,
+                5.0,
+                19.0,
+                14.0
+              ],
+              "scale": [
+                15.5,
+                9.0,
+                5.5,
+                3.5,
+                3.0,
+                4.0,
+                4.5
+              ],
+              "convention": "median_and_IQR_linear"
+            },
+            "eps": 3.0,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 0,
+          "flagged_game_ids": [],
+          "clusters": 1,
+          "scaler": "robust",
+          "eps": 3.0,
+          "noise_fraction": 0.0,
+          "noise_jaccard_vs_previous_eps": 1.0
+        }
+      ],
+      "k_distance_knee": {
+        "distance": 2.2753180085993856,
+        "index": 56,
+        "sorted_distances": [
+          1.450893342155582,
+          1.6050967201600328,
+          1.6420515085548117,
+          1.663935555211881,
+          1.7379781450704288,
+          1.8098966387085356,
+          1.8437857403339502,
+          1.8505546005840563,
+          1.8632349080337791,
+          1.8680686372447086,
+          1.8730671257114921,
+          1.879984781366377,
+          1.8882828547666293,
+          1.8920393552824504,
+          1.8974332988387441,
+          1.909110805641861,
+          1.9106900979489851,
+          1.9235777502333171,
+          1.9243038548752702,
+          1.926436911774305,
+          1.9431723159960426,
+          1.9438063982600136,
+          1.9438063982600136,
+          1.9623165239814544,
+          1.9679003632536243,
+          1.9905203376326686,
+          1.9941045574275087,
+          2.0024680876332974,
+          2.0082051711216438,
+          2.0186844118013276,
+          2.0272191008075553,
+          2.0320877170667164,
+          2.0360666344249783,
+          2.045295384116126,
+          2.0572594054339612,
+          2.0669097212603527,
+          2.0670539101223397,
+          2.091629576210358,
+          2.0956541628898586,
+          2.0969861620522363,
+          2.098235902058779,
+          2.0996161740788306,
+          2.142657628665037,
+          2.1569107590906174,
+          2.1853795886475194,
+          2.19062237614063,
+          2.191282710572635,
+          2.1995796534702743,
+          2.209608203809232,
+          2.2143592418726836,
+          2.217341109019643,
+          2.2249893822882045,
+          2.230541707223036,
+          2.233402915414855,
+          2.2346540694822505,
+          2.2708654386617644,
+          2.2753180085993856,
+          2.3393882536267765,
+          2.4298408175773574,
+          2.4298408175773574,
+          2.4335859113688976,
+          2.4422938582048084,
+          2.4693590226837574,
+          2.510360485579088,
+          2.5697421351230614,
+          2.599836837215549,
+          2.62225709756086,
+          2.6345406841845382,
+          2.7833118984814016,
+          2.8600851460664827,
+          2.9119039070015615,
+          3.1430425255885694,
+          3.191934923920066,
+          3.2631906081291344,
+          3.2749692473592944
+        ],
+        "neighbor_k_excluding_self": 4,
+        "rule": "maximum_gap_below_normalized_endpoint_chord",
+        "reason": null
+      }
+    },
+    {
+      "team_id": "1610612745",
+      "reference_n": 74,
+      "neighbor_methods": {
+        "knn": {
+          "baseline": {
+            "scaler": "standard",
+            "k": 10
+          },
+          "variants": [
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "standard",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    114.4054054054054,
+                    48.25675675675676,
+                    25.12162162162162,
+                    8.675675675675675,
+                    5.824324324324325,
+                    18.39189189189189,
+                    11.297297297297296
+                  ],
+                  "scale": [
+                    11.117212025234783,
+                    6.3821135421705755,
+                    4.3742264264441975,
+                    2.9090172395878198,
+                    2.5381314051776096,
+                    3.872346755356246,
+                    3.4747340156020408
+                  ],
+                  "convention": "population_std_ddof0"
+                },
+                "k": 5,
+                "metric": "euclidean",
+                "score": "kth_other_neighbor_distance",
+                "self_excluded": true,
+                "algorithm": "brute",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 2.899711810699743,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500042",
+                "22500093",
+                "22500581",
+                "22500682"
+              ],
+              "clusters": null,
+              "scaler": "standard",
+              "k": 5,
+              "spearman_vs_standard_k10": 0.9419748972822958,
+              "flag_jaccard_vs_standard_k10": 0.6
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "standard",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    114.4054054054054,
+                    48.25675675675676,
+                    25.12162162162162,
+                    8.675675675675675,
+                    5.824324324324325,
+                    18.39189189189189,
+                    11.297297297297296
+                  ],
+                  "scale": [
+                    11.117212025234783,
+                    6.3821135421705755,
+                    4.3742264264441975,
+                    2.9090172395878198,
+                    2.5381314051776096,
+                    3.872346755356246,
+                    3.4747340156020408
+                  ],
+                  "convention": "population_std_ddof0"
+                },
+                "k": 10,
+                "metric": "euclidean",
+                "score": "kth_other_neighbor_distance",
+                "self_excluded": true,
+                "algorithm": "brute",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 3.455003396421591,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500042",
+                "22500146",
+                "22500581",
+                "22500682"
+              ],
+              "clusters": null,
+              "scaler": "standard",
+              "k": 10,
+              "spearman_vs_standard_k10": 0.9999999999999999,
+              "flag_jaccard_vs_standard_k10": 1.0
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "standard",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    114.4054054054054,
+                    48.25675675675676,
+                    25.12162162162162,
+                    8.675675675675675,
+                    5.824324324324325,
+                    18.39189189189189,
+                    11.297297297297296
+                  ],
+                  "scale": [
+                    11.117212025234783,
+                    6.3821135421705755,
+                    4.3742264264441975,
+                    2.9090172395878198,
+                    2.5381314051776096,
+                    3.872346755356246,
+                    3.4747340156020408
+                  ],
+                  "convention": "population_std_ddof0"
+                },
+                "k": 15,
+                "metric": "euclidean",
+                "score": "kth_other_neighbor_distance",
+                "self_excluded": true,
+                "algorithm": "brute",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 3.693187425841315,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500042",
+                "22500330",
+                "22500581",
+                "22500682"
+              ],
+              "clusters": null,
+              "scaler": "standard",
+              "k": 15,
+              "spearman_vs_standard_k10": 0.9495360874622581,
+              "flag_jaccard_vs_standard_k10": 0.6
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "robust",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    114.0,
+                    47.5,
+                    25.0,
+                    9.0,
+                    6.0,
+                    18.0,
+                    11.0
+                  ],
+                  "scale": [
+                    16.5,
+                    9.0,
+                    6.5,
+                    3.75,
+                    4.0,
+                    5.0,
+                    4.0
+                  ],
+                  "convention": "median_and_IQR_linear"
+                },
+                "k": 5,
+                "metric": "euclidean",
+                "score": "kth_other_neighbor_distance",
+                "self_excluded": true,
+                "algorithm": "brute",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 2.1710659450055454,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500042",
+                "22500330",
+                "22500581",
+                "22500682"
+              ],
+              "clusters": null,
+              "scaler": "robust",
+              "k": 5,
+              "spearman_vs_standard_k10": 0.946772115757228,
+              "flag_jaccard_vs_standard_k10": 0.6
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "robust",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    114.0,
+                    47.5,
+                    25.0,
+                    9.0,
+                    6.0,
+                    18.0,
+                    11.0
+                  ],
+                  "scale": [
+                    16.5,
+                    9.0,
+                    6.5,
+                    3.75,
+                    4.0,
+                    5.0,
+                    4.0
+                  ],
+                  "convention": "median_and_IQR_linear"
+                },
+                "k": 10,
+                "metric": "euclidean",
+                "score": "kth_other_neighbor_distance",
+                "self_excluded": true,
+                "algorithm": "brute",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 2.5319665262362867,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500042",
+                "22500330",
+                "22500682",
+                "22500737"
+              ],
+              "clusters": null,
+              "scaler": "robust",
+              "k": 10,
+              "spearman_vs_standard_k10": 0.9829393994324749,
+              "flag_jaccard_vs_standard_k10": 0.3333333333333333
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "robust",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    114.0,
+                    47.5,
+                    25.0,
+                    9.0,
+                    6.0,
+                    18.0,
+                    11.0
+                  ],
+                  "scale": [
+                    16.5,
+                    9.0,
+                    6.5,
+                    3.75,
+                    4.0,
+                    5.0,
+                    4.0
+                  ],
+                  "convention": "median_and_IQR_linear"
+                },
+                "k": 15,
+                "metric": "euclidean",
+                "score": "kth_other_neighbor_distance",
+                "self_excluded": true,
+                "algorithm": "brute",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 2.7405480014369963,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500042",
+                "22500146",
+                "22500330",
+                "22500682"
+              ],
+              "clusters": null,
+              "scaler": "robust",
+              "k": 15,
+              "spearman_vs_standard_k10": 0.9669226269637974,
+              "flag_jaccard_vs_standard_k10": 0.6
+            }
+          ],
+          "stability": {
+            "min_spearman": 0.9419748972822958,
+            "median_spearman": 0.9495360874622581,
+            "min_flag_jaccard": 0.3333333333333333,
+            "median_flag_jaccard": 0.6
+          }
+        },
+        "lof": {
+          "baseline": {
+            "scaler": "standard",
+            "k": 10
+          },
+          "variants": [
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "standard",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    114.4054054054054,
+                    48.25675675675676,
+                    25.12162162162162,
+                    8.675675675675675,
+                    5.824324324324325,
+                    18.39189189189189,
+                    11.297297297297296
+                  ],
+                  "scale": [
+                    11.117212025234783,
+                    6.3821135421705755,
+                    4.3742264264441975,
+                    2.9090172395878198,
+                    2.5381314051776096,
+                    3.872346755356246,
+                    3.4747340156020408
+                  ],
+                  "convention": "population_std_ddof0"
+                },
+                "k": 5,
+                "novelty": false,
+                "score": "-negative_outlier_factor_",
+                "library_offset": -1.5,
+                "algorithm": "brute",
+                "final_labels": "explicit_quantile_not_library_labels",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 1.3162995941396425,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500093",
+                "22500505",
+                "22500581",
+                "22500682"
+              ],
+              "clusters": null,
+              "scaler": "standard",
+              "k": 5,
+              "spearman_vs_standard_k10": 0.8079229914846352,
+              "flag_jaccard_vs_standard_k10": 0.6
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "standard",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    114.4054054054054,
+                    48.25675675675676,
+                    25.12162162162162,
+                    8.675675675675675,
+                    5.824324324324325,
+                    18.39189189189189,
+                    11.297297297297296
+                  ],
+                  "scale": [
+                    11.117212025234783,
+                    6.3821135421705755,
+                    4.3742264264441975,
+                    2.9090172395878198,
+                    2.5381314051776096,
+                    3.872346755356246,
+                    3.4747340156020408
+                  ],
+                  "convention": "population_std_ddof0"
+                },
+                "k": 10,
+                "novelty": false,
+                "score": "-negative_outlier_factor_",
+                "library_offset": -1.5,
+                "algorithm": "brute",
+                "final_labels": "explicit_quantile_not_library_labels",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 1.2026547825303107,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500042",
+                "22500093",
+                "22500581",
+                "22500682"
+              ],
+              "clusters": null,
+              "scaler": "standard",
+              "k": 10,
+              "spearman_vs_standard_k10": 0.9999999999999999,
+              "flag_jaccard_vs_standard_k10": 1.0
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "standard",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    114.4054054054054,
+                    48.25675675675676,
+                    25.12162162162162,
+                    8.675675675675675,
+                    5.824324324324325,
+                    18.39189189189189,
+                    11.297297297297296
+                  ],
+                  "scale": [
+                    11.117212025234783,
+                    6.3821135421705755,
+                    4.3742264264441975,
+                    2.9090172395878198,
+                    2.5381314051776096,
+                    3.872346755356246,
+                    3.4747340156020408
+                  ],
+                  "convention": "population_std_ddof0"
+                },
+                "k": 15,
+                "novelty": false,
+                "score": "-negative_outlier_factor_",
+                "library_offset": -1.5,
+                "algorithm": "brute",
+                "final_labels": "explicit_quantile_not_library_labels",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 1.2001328676871041,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500042",
+                "22500093",
+                "22500581",
+                "22500682"
+              ],
+              "clusters": null,
+              "scaler": "standard",
+              "k": 15,
+              "spearman_vs_standard_k10": 0.9096630877452794,
+              "flag_jaccard_vs_standard_k10": 1.0
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "robust",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    114.0,
+                    47.5,
+                    25.0,
+                    9.0,
+                    6.0,
+                    18.0,
+                    11.0
+                  ],
+                  "scale": [
+                    16.5,
+                    9.0,
+                    6.5,
+                    3.75,
+                    4.0,
+                    5.0,
+                    4.0
+                  ],
+                  "convention": "median_and_IQR_linear"
+                },
+                "k": 5,
+                "novelty": false,
+                "score": "-negative_outlier_factor_",
+                "library_offset": -1.5,
+                "algorithm": "brute",
+                "final_labels": "explicit_quantile_not_library_labels",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 1.3055429577098707,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500093",
+                "22500330",
+                "22500581",
+                "22500682"
+              ],
+              "clusters": null,
+              "scaler": "robust",
+              "k": 5,
+              "spearman_vs_standard_k10": 0.814972232506479,
+              "flag_jaccard_vs_standard_k10": 0.6
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "robust",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    114.0,
+                    47.5,
+                    25.0,
+                    9.0,
+                    6.0,
+                    18.0,
+                    11.0
+                  ],
+                  "scale": [
+                    16.5,
+                    9.0,
+                    6.5,
+                    3.75,
+                    4.0,
+                    5.0,
+                    4.0
+                  ],
+                  "convention": "median_and_IQR_linear"
+                },
+                "k": 10,
+                "novelty": false,
+                "score": "-negative_outlier_factor_",
+                "library_offset": -1.5,
+                "algorithm": "brute",
+                "final_labels": "explicit_quantile_not_library_labels",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 1.225458155217908,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500093",
+                "22500330",
+                "22500581",
+                "22500682"
+              ],
+              "clusters": null,
+              "scaler": "robust",
+              "k": 10,
+              "spearman_vs_standard_k10": 0.9669455757126988,
+              "flag_jaccard_vs_standard_k10": 0.6
+            },
+            {
+              "status": "ok",
+              "reason": null,
+              "parameters": {
+                "min_reference_n": 20,
+                "preprocessing": {
+                  "input_features": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "features_used": [
+                    "PTS",
+                    "REB",
+                    "AST",
+                    "STL",
+                    "BLK",
+                    "PF",
+                    "FG3M"
+                  ],
+                  "excluded_constant_features": [],
+                  "scaler": "robust",
+                  "fitted_on": "full_team_reference",
+                  "center": [
+                    114.0,
+                    47.5,
+                    25.0,
+                    9.0,
+                    6.0,
+                    18.0,
+                    11.0
+                  ],
+                  "scale": [
+                    16.5,
+                    9.0,
+                    6.5,
+                    3.75,
+                    4.0,
+                    5.0,
+                    4.0
+                  ],
+                  "convention": "median_and_IQR_linear"
+                },
+                "k": 15,
+                "novelty": false,
+                "score": "-negative_outlier_factor_",
+                "library_offset": -1.5,
+                "algorithm": "brute",
+                "final_labels": "explicit_quantile_not_library_labels",
+                "quantile": 0.95,
+                "quantile_method": "linear",
+                "comparison": "score>threshold"
+              },
+              "threshold": 1.2058496635936642,
+              "outlier_count": 4,
+              "flagged_game_ids": [
+                "22500042",
+                "22500330",
+                "22500682",
+                "22500737"
+              ],
+              "clusters": null,
+              "scaler": "robust",
+              "k": 15,
+              "spearman_vs_standard_k10": 0.922251018141429,
+              "flag_jaccard_vs_standard_k10": 0.3333333333333333
+            }
+          ],
+          "stability": {
+            "min_spearman": 0.8079229914846352,
+            "median_spearman": 0.9096630877452794,
+            "min_flag_jaccard": 0.3333333333333333,
+            "median_flag_jaccard": 0.6
+          }
+        }
+      },
+      "dbscan": [
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "standard",
+              "fitted_on": "full_team_reference",
+              "center": [
+                114.4054054054054,
+                48.25675675675676,
+                25.12162162162162,
+                8.675675675675675,
+                5.824324324324325,
+                18.39189189189189,
+                11.297297297297296
+              ],
+              "scale": [
+                11.117212025234783,
+                6.3821135421705755,
+                4.3742264264441975,
+                2.9090172395878198,
+                2.5381314051776096,
+                3.872346755356246,
+                3.4747340156020408
+              ],
+              "convention": "population_std_ddof0"
+            },
+            "eps": 1.0,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 74,
+          "flagged_game_ids": [
+            "22500001",
+            "22500012",
+            "22500032",
+            "22500042",
+            "22500054",
+            "22500066",
+            "22500093",
+            "22500116",
+            "22500131",
+            "22500146",
+            "22500160",
+            "22500176",
+            "22500191",
+            "22500218",
+            "22500236",
+            "22500255",
+            "22500290",
+            "22500301",
+            "22500316",
+            "22500330",
+            "22500346",
+            "22500356",
+            "22500375",
+            "22500386",
+            "22500401",
+            "22500422",
+            "22500438",
+            "22500453",
+            "22500471",
+            "22500491",
+            "22500505",
+            "22500527",
+            "22500540",
+            "22500557",
+            "22500565",
+            "22500581",
+            "22500591",
+            "22500604",
+            "22500615",
+            "22500628",
+            "22500635",
+            "22500662",
+            "22500679",
+            "22500682",
+            "22500701",
+            "22500713",
+            "22500728",
+            "22500737",
+            "22500748",
+            "22500772",
+            "22500782",
+            "22500792",
+            "22500816",
+            "22500830",
+            "22500845",
+            "22500852",
+            "22500864",
+            "22500879",
+            "22500902",
+            "22500910",
+            "22500927",
+            "22500940",
+            "22500950",
+            "22500964",
+            "22500989",
+            "22501007",
+            "22501018",
+            "22501027",
+            "22501042",
+            "22501058",
+            "22501069",
+            "22501088",
+            "22501205",
+            "22501225"
+          ],
+          "clusters": 0,
+          "scaler": "standard",
+          "eps": 1.0,
+          "noise_fraction": 1.0,
+          "noise_jaccard_vs_previous_eps": null
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "standard",
+              "fitted_on": "full_team_reference",
+              "center": [
+                114.4054054054054,
+                48.25675675675676,
+                25.12162162162162,
+                8.675675675675675,
+                5.824324324324325,
+                18.39189189189189,
+                11.297297297297296
+              ],
+              "scale": [
+                11.117212025234783,
+                6.3821135421705755,
+                4.3742264264441975,
+                2.9090172395878198,
+                2.5381314051776096,
+                3.872346755356246,
+                3.4747340156020408
+              ],
+              "convention": "population_std_ddof0"
+            },
+            "eps": 1.5,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 69,
+          "flagged_game_ids": [
+            "22500001",
+            "22500012",
+            "22500032",
+            "22500042",
+            "22500054",
+            "22500066",
+            "22500093",
+            "22500116",
+            "22500131",
+            "22500146",
+            "22500160",
+            "22500176",
+            "22500191",
+            "22500218",
+            "22500236",
+            "22500255",
+            "22500290",
+            "22500301",
+            "22500316",
+            "22500330",
+            "22500375",
+            "22500386",
+            "22500401",
+            "22500422",
+            "22500438",
+            "22500453",
+            "22500491",
+            "22500505",
+            "22500527",
+            "22500540",
+            "22500557",
+            "22500565",
+            "22500581",
+            "22500591",
+            "22500604",
+            "22500615",
+            "22500628",
+            "22500635",
+            "22500662",
+            "22500679",
+            "22500682",
+            "22500701",
+            "22500713",
+            "22500728",
+            "22500737",
+            "22500748",
+            "22500772",
+            "22500782",
+            "22500792",
+            "22500816",
+            "22500830",
+            "22500845",
+            "22500864",
+            "22500879",
+            "22500902",
+            "22500910",
+            "22500927",
+            "22500940",
+            "22500950",
+            "22500964",
+            "22500989",
+            "22501007",
+            "22501018",
+            "22501027",
+            "22501058",
+            "22501069",
+            "22501088",
+            "22501205",
+            "22501225"
+          ],
+          "clusters": 1,
+          "scaler": "standard",
+          "eps": 1.5,
+          "noise_fraction": 0.9324324324324325,
+          "noise_jaccard_vs_previous_eps": 0.9324324324324325
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "standard",
+              "fitted_on": "full_team_reference",
+              "center": [
+                114.4054054054054,
+                48.25675675675676,
+                25.12162162162162,
+                8.675675675675675,
+                5.824324324324325,
+                18.39189189189189,
+                11.297297297297296
+              ],
+              "scale": [
+                11.117212025234783,
+                6.3821135421705755,
+                4.3742264264441975,
+                2.9090172395878198,
+                2.5381314051776096,
+                3.872346755356246,
+                3.4747340156020408
+              ],
+              "convention": "population_std_ddof0"
+            },
+            "eps": 2.0,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 31,
+          "flagged_game_ids": [
+            "22500042",
+            "22500093",
+            "22500116",
+            "22500131",
+            "22500146",
+            "22500218",
+            "22500236",
+            "22500301",
+            "22500330",
+            "22500375",
+            "22500438",
+            "22500505",
+            "22500527",
+            "22500581",
+            "22500604",
+            "22500615",
+            "22500628",
+            "22500662",
+            "22500682",
+            "22500701",
+            "22500728",
+            "22500737",
+            "22500772",
+            "22500830",
+            "22500845",
+            "22500910",
+            "22500989",
+            "22501018",
+            "22501027",
+            "22501069",
+            "22501088"
+          ],
+          "clusters": 1,
+          "scaler": "standard",
+          "eps": 2.0,
+          "noise_fraction": 0.4189189189189189,
+          "noise_jaccard_vs_previous_eps": 0.4492753623188406
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "standard",
+              "fitted_on": "full_team_reference",
+              "center": [
+                114.4054054054054,
+                48.25675675675676,
+                25.12162162162162,
+                8.675675675675675,
+                5.824324324324325,
+                18.39189189189189,
+                11.297297297297296
+              ],
+              "scale": [
+                11.117212025234783,
+                6.3821135421705755,
+                4.3742264264441975,
+                2.9090172395878198,
+                2.5381314051776096,
+                3.872346755356246,
+                3.4747340156020408
+              ],
+              "convention": "population_std_ddof0"
+            },
+            "eps": 2.5,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 2,
+          "flagged_game_ids": [
+            "22500042",
+            "22500330"
+          ],
+          "clusters": 1,
+          "scaler": "standard",
+          "eps": 2.5,
+          "noise_fraction": 0.02702702702702703,
+          "noise_jaccard_vs_previous_eps": 0.06451612903225806
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "standard",
+              "fitted_on": "full_team_reference",
+              "center": [
+                114.4054054054054,
+                48.25675675675676,
+                25.12162162162162,
+                8.675675675675675,
+                5.824324324324325,
+                18.39189189189189,
+                11.297297297297296
+              ],
+              "scale": [
+                11.117212025234783,
+                6.3821135421705755,
+                4.3742264264441975,
+                2.9090172395878198,
+                2.5381314051776096,
+                3.872346755356246,
+                3.4747340156020408
+              ],
+              "convention": "population_std_ddof0"
+            },
+            "eps": 3.0,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 0,
+          "flagged_game_ids": [],
+          "clusters": 1,
+          "scaler": "standard",
+          "eps": 3.0,
+          "noise_fraction": 0.0,
+          "noise_jaccard_vs_previous_eps": 0.0
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "robust",
+              "fitted_on": "full_team_reference",
+              "center": [
+                114.0,
+                47.5,
+                25.0,
+                9.0,
+                6.0,
+                18.0,
+                11.0
+              ],
+              "scale": [
+                16.5,
+                9.0,
+                6.5,
+                3.75,
+                4.0,
+                5.0,
+                4.0
+              ],
+              "convention": "median_and_IQR_linear"
+            },
+            "eps": 1.0,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 74,
+          "flagged_game_ids": [
+            "22500001",
+            "22500012",
+            "22500032",
+            "22500042",
+            "22500054",
+            "22500066",
+            "22500093",
+            "22500116",
+            "22500131",
+            "22500146",
+            "22500160",
+            "22500176",
+            "22500191",
+            "22500218",
+            "22500236",
+            "22500255",
+            "22500290",
+            "22500301",
+            "22500316",
+            "22500330",
+            "22500346",
+            "22500356",
+            "22500375",
+            "22500386",
+            "22500401",
+            "22500422",
+            "22500438",
+            "22500453",
+            "22500471",
+            "22500491",
+            "22500505",
+            "22500527",
+            "22500540",
+            "22500557",
+            "22500565",
+            "22500581",
+            "22500591",
+            "22500604",
+            "22500615",
+            "22500628",
+            "22500635",
+            "22500662",
+            "22500679",
+            "22500682",
+            "22500701",
+            "22500713",
+            "22500728",
+            "22500737",
+            "22500748",
+            "22500772",
+            "22500782",
+            "22500792",
+            "22500816",
+            "22500830",
+            "22500845",
+            "22500852",
+            "22500864",
+            "22500879",
+            "22500902",
+            "22500910",
+            "22500927",
+            "22500940",
+            "22500950",
+            "22500964",
+            "22500989",
+            "22501007",
+            "22501018",
+            "22501027",
+            "22501042",
+            "22501058",
+            "22501069",
+            "22501088",
+            "22501205",
+            "22501225"
+          ],
+          "clusters": 0,
+          "scaler": "robust",
+          "eps": 1.0,
+          "noise_fraction": 1.0,
+          "noise_jaccard_vs_previous_eps": null
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "robust",
+              "fitted_on": "full_team_reference",
+              "center": [
+                114.0,
+                47.5,
+                25.0,
+                9.0,
+                6.0,
+                18.0,
+                11.0
+              ],
+              "scale": [
+                16.5,
+                9.0,
+                6.5,
+                3.75,
+                4.0,
+                5.0,
+                4.0
+              ],
+              "convention": "median_and_IQR_linear"
+            },
+            "eps": 1.5,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 22,
+          "flagged_game_ids": [
+            "22500042",
+            "22500093",
+            "22500146",
+            "22500236",
+            "22500301",
+            "22500330",
+            "22500375",
+            "22500386",
+            "22500438",
+            "22500505",
+            "22500581",
+            "22500615",
+            "22500662",
+            "22500682",
+            "22500728",
+            "22500737",
+            "22500845",
+            "22500910",
+            "22500950",
+            "22500989",
+            "22501018",
+            "22501069"
+          ],
+          "clusters": 1,
+          "scaler": "robust",
+          "eps": 1.5,
+          "noise_fraction": 0.2972972972972973,
+          "noise_jaccard_vs_previous_eps": 0.2972972972972973
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "robust",
+              "fitted_on": "full_team_reference",
+              "center": [
+                114.0,
+                47.5,
+                25.0,
+                9.0,
+                6.0,
+                18.0,
+                11.0
+              ],
+              "scale": [
+                16.5,
+                9.0,
+                6.5,
+                3.75,
+                4.0,
+                5.0,
+                4.0
+              ],
+              "convention": "median_and_IQR_linear"
+            },
+            "eps": 2.0,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 0,
+          "flagged_game_ids": [],
+          "clusters": 1,
+          "scaler": "robust",
+          "eps": 2.0,
+          "noise_fraction": 0.0,
+          "noise_jaccard_vs_previous_eps": 0.0
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "robust",
+              "fitted_on": "full_team_reference",
+              "center": [
+                114.0,
+                47.5,
+                25.0,
+                9.0,
+                6.0,
+                18.0,
+                11.0
+              ],
+              "scale": [
+                16.5,
+                9.0,
+                6.5,
+                3.75,
+                4.0,
+                5.0,
+                4.0
+              ],
+              "convention": "median_and_IQR_linear"
+            },
+            "eps": 2.5,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 0,
+          "flagged_game_ids": [],
+          "clusters": 1,
+          "scaler": "robust",
+          "eps": 2.5,
+          "noise_fraction": 0.0,
+          "noise_jaccard_vs_previous_eps": 1.0
+        },
+        {
+          "status": "ok",
+          "reason": null,
+          "parameters": {
+            "min_reference_n": 20,
+            "preprocessing": {
+              "input_features": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "features_used": [
+                "PTS",
+                "REB",
+                "AST",
+                "STL",
+                "BLK",
+                "PF",
+                "FG3M"
+              ],
+              "excluded_constant_features": [],
+              "scaler": "robust",
+              "fitted_on": "full_team_reference",
+              "center": [
+                114.0,
+                47.5,
+                25.0,
+                9.0,
+                6.0,
+                18.0,
+                11.0
+              ],
+              "scale": [
+                16.5,
+                9.0,
+                6.5,
+                3.75,
+                4.0,
+                5.0,
+                4.0
+              ],
+              "convention": "median_and_IQR_linear"
+            },
+            "eps": 3.0,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "algorithm": "brute"
+          },
+          "threshold": null,
+          "outlier_count": 0,
+          "flagged_game_ids": [],
+          "clusters": 1,
+          "scaler": "robust",
+          "eps": 3.0,
+          "noise_fraction": 0.0,
+          "noise_jaccard_vs_previous_eps": 1.0
+        }
+      ],
+      "k_distance_knee": {
+        "distance": 2.5100108133169834,
+        "index": 62,
+        "sorted_distances": [
+          1.42422520368989,
+          1.5167885261367482,
+          1.5183263825003757,
+          1.5317804732496985,
+          1.6283861993200939,
+          1.6393977016363566,
+          1.6521064225362636,
+          1.6521064225362636,
+          1.6692874473673203,
+          1.6697549848342974,
+          1.6887568296647666,
+          1.7493707952446547,
+          1.7550851386072983,
+          1.7766526128382776,
+          1.7805009330011672,
+          1.8319327407921304,
+          1.8345939262573538,
+          1.8856254722561796,
+          1.9114391268717215,
+          1.9462752686791902,
+          1.9477792501109312,
+          1.9598272394724054,
+          1.9774412068457379,
+          1.9952728661194692,
+          2.0061678376270047,
+          2.0191705760517675,
+          2.0253274172379747,
+          2.049809457693002,
+          2.0642939070766566,
+          2.0647285164815203,
+          2.069001834491576,
+          2.0847841883032383,
+          2.0847841883032383,
+          2.0943981261641227,
+          2.1035469329782104,
+          2.1106600164139513,
+          2.1361444295448164,
+          2.151044354644452,
+          2.1790740975317724,
+          2.179779512347329,
+          2.1884011161171912,
+          2.1884675066955483,
+          2.1885760574350206,
+          2.1973633389195406,
+          2.2015203385129984,
+          2.209365219834088,
+          2.2219616689450925,
+          2.2925553290069716,
+          2.304781774310116,
+          2.309900036013863,
+          2.3449711407683855,
+          2.3599323791842926,
+          2.3678970150282472,
+          2.384351631919319,
+          2.397032215703898,
+          2.4140259309704195,
+          2.4271911569230813,
+          2.436133913055901,
+          2.4466215177173827,
+          2.467740191883083,
+          2.4816766029094817,
+          2.5100108133169834,
+          2.5100108133169834,
+          2.590302240916627,
+          2.5962085599147255,
+          2.6247123524594076,
+          2.6610270800487856,
+          2.702001832186805,
+          2.7451634885128158,
+          2.7766714678211954,
+          2.8552978410266214,
+          3.164399812133181,
+          3.1696523185646814,
+          3.5150256200534393
+        ],
+        "neighbor_k_excluding_self": 4,
+        "rule": "maximum_gap_below_normalized_endpoint_chord",
+        "reason": null
+      }
+    }
+  ],
+  "selection": {
+    "scaler": "standard",
+    "neighbor_k": 10,
+    "min_samples": 5,
+    "dbscan_eps": 2.5,
+    "median_standard_4distance_knee": 2.3926644109581847,
+    "rule": "Nearest eps to median standardized 4-distance knee; ties choose lower.",
+    "neighbor_reason": "k=10 é intermediário pré-especificado; RobustScaler testa sensibilidade, sem buscar rótulos desejados."
+  },
+  "limitations": [
+    "Sem rótulos verdadeiros, correlação e Jaccard não medem acurácia.",
+    "Concordância não garante validade; discordância é limitação a reportar.",
+    "Configuração DBSCAN não é escolhida para obter uma quantidade desejada de ruído.",
+    "Resultados exploratórios do snapshot; não estimam desempenho futuro."
+  ],
+  "report_version": "1.0.0",
+  "review_scope": "Todas as variantes; vetores por registro permanecem no artefato local completo."
+}

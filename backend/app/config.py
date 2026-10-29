@@ -47,5 +47,9 @@ class Settings:
     def descriptive_dir(self) -> Path:
         return self.processed_data_dir / "descriptive"
 
+    @property
+    def anomaly_dir(self) -> Path:
+        return self.processed_data_dir / "anomalies"
+
 
 settings = Settings()

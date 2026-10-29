@@ -1,4 +1,4 @@
-# Ambiente de desenvolvimento — etapas 1–4
+# Ambiente de desenvolvimento — etapas 1–5
 
 ## Versões e dependências
 
@@ -57,12 +57,13 @@ Essa alternativa não instala pytest/Ruff; usar o fluxo uv para desenvolvimento.
 | `make check-env` | Importa dependências, confere Python e localização dos dados; imprime versões e configuração |
 | `make lint` | Ruff check + verificação de formatação |
 | `make format` | Aplica somente a formatação Ruff |
-| `make test` | Executa configuração, ingestão, qualidade e cálculos descritivos |
+| `make test` | Executa configuração, ingestão, qualidade, descritivas e detectores |
 | `make check` | Ambiente + lint + testes |
 | `make export-requirements` | Regenera requirements de runtime com hashes, sem atualizar o lock |
 | `make data-normalize` | Gera base canônica, recorte e relatório intermediários da etapa 2 |
 | `make data-quality` | Audita a fonte e libera dados enriquecidos somente se aprovados |
 | `make data-describe` | Calcula descritivas, boxplots e distribuições após auditar a fonte |
+| `make data-anomalies` | Executa sete métodos e verifica parâmetros/sensibilidade antes de gerar scores |
 | `make data-build` | Reservado ao pipeline completo; termina com erro explícito |
 
 Os guias de [ingestão](ingestion.md) e [qualidade](quality.md) detalham os comandos e suas saídas locais. O build científico completo pertence à etapa 6; API e interface ainda não existem. As descritivas estão implementadas; não há servidor de aplicação para iniciar. Ver [guia científico da etapa 4](descriptive.md).
@@ -75,17 +76,21 @@ backend/
 ├── app/
 │   ├── __init__.py
 │   └── config.py
-├── analytics/                  # ingestão, qualidade, descritivas e distribuições
+├── analytics/                  # ingestão, qualidade, descritivas, detectores e sensibilidade
 ├── repositories/               # futuros repositórios de dados
 ├── content/missingness.json    # teoria e limites dos métodos exigidos
 ├── scripts/
 │   ├── check_environment.py
 │   ├── normalize_data.py
 │   ├── audit_data.py
-│   └── describe_data.py
+│   ├── describe_data.py
+│   ├── detect_anomalies.py
+│   ├── export_sensitivity_review.py
+│   └── generate_ecod_reference.py  # opcional: somente no uv isolado com PyOD
 └── tests/
     ├── unit/test_config.py
     ├── analytics/              # contratos, qualidade, descritivas, distribuições e comando
+    ├── fixtures/ecod-reference.json
     └── api/                    # reservado: contratos futuros
 ```
 
@@ -103,7 +108,7 @@ uv run --locked pytest -m analytics
 uv run --locked pytest -m api
 ```
 
-As seleções unit e analytics têm testes de configuração e de ingestão/qualidade, respectivamente. A suíte api continua reservada; seleção sem testes retorna o código correspondente do pytest e não representa sucesso de API. Os testes de configuração verificam caminhos; os de ingestão verificam contratos, conversões, preservação e roundtrip Parquet. Descritivas e distribuições são cobertas por exemplos manuais, propriedades, referências reais e casos de borda. Demais detectores continuam pendentes.
+As seleções unit e analytics têm testes de configuração e de ingestão/qualidade, respectivamente. A suíte api continua reservada; seleção sem testes retorna o código correspondente do pytest e não representa sucesso de API. Os testes de configuração verificam caminhos; os de ingestão verificam contratos, conversões, preservação e roundtrip Parquet. Descritivas e distribuições são cobertas por exemplos manuais, propriedades, referências reais e casos de borda. Os detectores também são cobertos por referências externas, empates e sensibilidade; PyOD não é necessário nos testes normais.
 
 ## Validação da etapa 1 em 29/10/2026
 
@@ -132,3 +137,7 @@ R01, R05 e R06 permanecem parciais: preparar o ambiente não entrega aplicação
 ## Validação da etapa 4 em 29/10/2026
 
 `make check` aprovado com 110 testes, Ruff e formatação. `make data-describe` gera 14 resultados, quadros CV/IQR 7×2 e histogramas/KDE comparáveis. Medidas e dados dos boxplots compartilham os mesmos quartis. Foram reproduzidas as médias/CV, modas e outliers de referência; arquivos da fonte foram preservados. Ver [descritivas e distribuições](descriptive.md).
+
+## Validação da etapa 5 em 29/10/2026
+
+`make check` aprovado com 151 testes, Ruff e formatação. `make data-anomalies` gera 50 resultados e sensibilidade de 44 variantes, com parâmetros 1.0.0 revisados por snapshot. O ECOD coincide com seis fixtures de oráculo VCS fixado, a 1e−12. PyOD foi usado apenas em ambiente uv isolado para gerar fixtures e continua ausente da .venv, lock e requirements do projeto. [Reprodução, licença e limitações](anomalies.md).

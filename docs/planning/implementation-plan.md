@@ -1,7 +1,7 @@
 # Plano de implementação — QuadraScope
 
 > Do passo 0 à entrega. Revisão: 29/10/2026. Foco: Atlanta Hawks × Houston Rockets.
-> Estado atual: etapas 0–4 concluídas. Ingestão, qualidade, enriquecimento, descritivas, boxplots e distribuições calculados; demais detectores, API, frontend e deploy ainda pendentes.
+> Estado atual: etapas 0–5 concluídas. Ciência implementada, sete detectores e sensibilidade validados no snapshot; manifesto/build final, API, frontend e deploy ainda pendentes.
 
 ## Uso do plano
 
@@ -99,22 +99,22 @@ As caixas já marcadas na etapa 0 indicam documentação revisada e confirmaçõ
 
 **Dependência:** etapas 3–4. **Requisitos:** R14, R15 e R23.
 
-- [ ] **P5.01** — Criar contrato comum de resultado com referência, parâmetros, registros, score/direção, limiar e avisos específicos de cada método.
-- [ ] **P5.02** — Implementar Z-score amostral com limiar explícito e tratamento de variância zero.
-- [ ] **P5.03** — Implementar detecção IQR reutilizando os mesmos limites do boxplot; listar quantidades e partidas por variável/time.
-- [ ] **P5.04** — Implementar Grubbs bilateral com G, crítico e decisão; documentar normalidade/multiplicidade e evitar remoção iterativa.
-- [ ] **P5.05** — Preparar vetor multivariado por time, amostra mínima, exclusão registrada de constantes e escalonamento ajustado à referência.
-- [ ] **P5.06** — Implementar k-NN, excluindo o próprio registro e preservando o critério de distância escolhido.
-- [ ] **P5.07** — Implementar LOF para o histórico, orientando os scores e distinguindo o limiar explícito dos rótulos automáticos.
-- [ ] **P5.08** — Implementar DBSCAN com clusters/ruído e parâmetros completos, sem inventar score contínuo.
-- [ ] **P5.09** — Fixar revisão da referência ECOD, licença/atribuição aplicável, fixtures e tolerâncias numéricas.
-- [ ] **P5.10** — Implementar ECOD com caudas empíricas, empates, assimetria e contribuições conforme a referência; validar contra fixtures.
-- [ ] **P5.11** — Implementar política explícita de limiares e empates para os métodos com score, sem forçar quantidade de anomalias.
-- [ ] **P5.12** — Executar sensibilidade de k, escalonamento e eps por time; comparar rankings, conjuntos e estabilidade, sem tratá-la como acurácia.
-- [ ] **P5.13** — Selecionar configurações finais com justificativa, atualizar a metodologia e versionar parâmetros e relatório de sensibilidade.
-- [ ] **P5.14** — Validar empates, permutação de linhas, séries constantes, vizinhança e DBSCAN sem ruído/todo ruído; confrontar IQR com os registros do boxplot.
+- [X] **P5.01** — Criar contrato comum de resultado com referência, parâmetros, registros, score/direção, limiar e avisos específicos de cada método.
+- [X] **P5.02** — Implementar Z-score amostral com limiar explícito e tratamento de variância zero.
+- [X] **P5.03** — Implementar detecção IQR reutilizando os mesmos limites do boxplot; listar quantidades e partidas por variável/time.
+- [X] **P5.04** — Implementar Grubbs bilateral com G, crítico e decisão; documentar normalidade/multiplicidade e evitar remoção iterativa.
+- [X] **P5.05** — Preparar vetor multivariado por time, amostra mínima, exclusão registrada de constantes e escalonamento ajustado à referência.
+- [X] **P5.06** — Implementar k-NN, excluindo o próprio registro e preservando o critério de distância escolhido.
+- [X] **P5.07** — Implementar LOF para o histórico, orientando os scores e distinguindo o limiar explícito dos rótulos automáticos.
+- [X] **P5.08** — Implementar DBSCAN com clusters/ruído e parâmetros completos, sem inventar score contínuo.
+- [X] **P5.09** — Fixar revisão da referência ECOD, licença/atribuição aplicável, fixtures e tolerâncias numéricas.
+- [X] **P5.10** — Implementar ECOD com caudas empíricas, empates, assimetria e contribuições conforme a referência; validar contra fixtures.
+- [X] **P5.11** — Implementar política explícita de limiares e empates para os métodos com score, sem forçar quantidade de anomalias.
+- [X] **P5.12** — Executar sensibilidade de k, escalonamento e eps por time; comparar rankings, conjuntos e estabilidade, sem tratá-la como acurácia.
+- [X] **P5.13** — Selecionar configurações finais com justificativa, atualizar a metodologia e versionar parâmetros e relatório de sensibilidade.
+- [X] **P5.14** — Validar empates, permutação de linhas, séries constantes, vizinhança e DBSCAN sem ruído/todo ruído; confrontar IQR com os registros do boxplot.
 
-**Verificação/saída:** sete métodos disponíveis, com pressupostos e resultados verificáveis. Publicar scores somente após P5.13; não exigir que todo método encontre anomalias ou concorde com os demais.
+**Verificação/saída:** validado em 29/10/2026: `make data-anomalies` gera 50 resultados e sensibilidade de 44 variantes. Parâmetros 1.0.0 revisados para o snapshot: StandardScaler/k=10, quantil estrito 0,95 e DBSCAN eps=2,5/min_samples=5. ECOD coincide com seis fixtures do oráculo fixado a 1e−12; PyOD ausente do ambiente do projeto. `make check` aprovado com 151 testes. Limitações de estabilidade registradas; nenhum método precisa encontrar outlier. [Guia](../development/anomalies.md), [parâmetros](../../backend/content/anomaly-parameters.json), [fixtures](../../backend/tests/fixtures/ecod-reference.json) e [histórico](requirements.md).
 
 ## Etapa 6 — Construir os artefatos reproduzíveis
 
