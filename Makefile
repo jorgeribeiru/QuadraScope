@@ -1,6 +1,6 @@
 UV ?= uv
 
-.PHONY: help setup check-env lint format test check export-requirements data-build
+.PHONY: help setup check-env lint format test check export-requirements data-normalize data-build
 
 help:
 	@echo "setup                Instala Python 3.12 e sincroniza .venv pelo lock"
@@ -10,6 +10,7 @@ help:
 	@echo "test                 Executa os testes existentes"
 	@echo "check                Executa ambiente, lint e testes"
 	@echo "export-requirements  Exporta dependências de execução com hashes"
+	@echo "data-normalize       Normaliza CSV e gera intermediários da etapa 2"
 	@echo "data-build           Indisponível: pipeline previsto para etapas 2–6"
 
 setup:
@@ -32,6 +33,9 @@ check: check-env lint test
 
 export-requirements:
 	$(UV) export --locked --no-dev --no-emit-project --format requirements-txt --output-file requirements.txt > /dev/null
+
+data-normalize:
+	$(UV) run --locked python -m backend.scripts.normalize_data
 
 data-build:
 	@echo "Build de dados ainda não implementado (etapas 2–6). Nenhum artefato foi gerado." >&2

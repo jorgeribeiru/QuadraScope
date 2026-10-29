@@ -1,7 +1,7 @@
 # QuadraScope — Arquitetura do sistema
 
 > Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. Revisão: 29/10/2026.
-> Estado: etapas 0 e 1 concluídas. Estrutura Python, configuração e ambiente disponíveis; pipeline científico, endpoints e frontend ainda não implementados.
+> Estado: etapas 0, 1 e 2 concluídas. Ingestão estrita, normalização e seleção das features implementadas; qualidade completa, cálculos, endpoints e frontend ainda pendentes.
 
 ## Objetivo e escopo
 
@@ -16,6 +16,7 @@ Rankings da liga, seleção de quatro times, evolução temporal e normalizaçã
 Documentos complementares:
 
 - [Ambiente de desenvolvimento e comandos](../development/setup.md).
+- [Ingestão e normalização](../development/ingestion.md).
 - [Metodologia e regras científicas](../data/methodology.md).
 - [Requisitos, rastreabilidade e acompanhamento](../planning/requirements.md).
 - [Plano detalhado de implementação, do início à entrega](../planning/implementation-plan.md).
@@ -202,7 +203,7 @@ quadrascope/
     └── tests/                  # casos científicos e contratos
 ```
 
-A etapa 1 criou a estrutura do backend, configuração compartilhada e verificações de ambiente/testes. Ingestão, cálculos, API e frontend serão implementados nas próximas etapas. Evitar um segundo arquivo de arquitetura concorrente.
+A etapa 1 criou a estrutura e o ambiente; a etapa 2 implementou registro de métricas, ingestão e intermediários em `data/processed/ingestion/`, identificados como pendentes de qualidade completa. Esses arquivos não são o conjunto final de publicação. Qualidade, cálculos, API e frontend serão implementados nas próximas etapas. Evitar um segundo arquivo de arquitetura concorrente.
 
 ## Entrega e pendências
 

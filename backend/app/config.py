@@ -19,6 +19,9 @@ class Settings:
     metrics: tuple[str, ...] = ("PTS", "REB", "AST", "STL", "BLK", "PF", "FG3M")
     schema_version: str = "1.0.0"
     analysis_version: str = "1.0.0"
+    expected_dataset_sha256: str = (
+        "fa56bf638ef18be972a88850719043953e615bf39339671a8daa007ba08811b6"
+    )
 
     @property
     def raw_data_dir(self) -> Path:
@@ -31,6 +34,10 @@ class Settings:
     @property
     def dataset_path(self) -> Path:
         return self.raw_data_dir / "stats_times_regular_final.csv"
+
+    @property
+    def ingestion_dir(self) -> Path:
+        return self.processed_data_dir / "ingestion"
 
 
 settings = Settings()

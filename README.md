@@ -2,7 +2,7 @@
 
 Relatório web interativo de análise de dados da NBA, desenvolvido para o Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. O foco do grupo é **Atlanta Hawks × Houston Rockets**, nas variáveis PTS, REB, AST, STL, BLK, PF e FG3M.
 
-**Estado atual:** etapas 0 e 1 concluídas. Estrutura Python, ambiente reproduzível, configuração e testes iniciais disponíveis. Pipeline científico, API, frontend e deploy ainda não implementados. A stack **FastAPI + React** foi confirmada pelo grupo.
+**Estado atual:** etapas 0, 1 e 2 concluídas. Ambiente reproduzível, ingestão estrita, normalização e recorte dos times disponíveis. Qualidade completa, cálculos, API, frontend e deploy ainda pendentes. A stack **FastAPI + React** foi confirmada pelo grupo.
 
 ## Estrutura atual
 
@@ -22,11 +22,12 @@ QuadraScope/
 │   └── tests/             # unit, analytics e api
 ├── data/
 │   ├── raw/stats_times_regular_final.csv
-│   └── processed/         # Reservado para artefatos futuros
+│   └── processed/         # Intermediários locais; ignorados pelo Git
 └── docs/
     ├── README.md
     ├── development/
-    │   └── setup.md
+    │   ├── setup.md
+    │   └── ingestion.md
     ├── architecture/
     │   ├── architecture.md
     │   └── diagrams/
@@ -62,9 +63,18 @@ O [guia de desenvolvimento](docs/development/setup.md) apresenta instalação al
 
 - [Índice da documentação](docs/README.md).
 - [Ambiente de desenvolvimento e comandos](docs/development/setup.md).
+- [Ingestão, normalização e arquivos gerados](docs/development/ingestion.md).
 - [Plano de implementação e tarefas](docs/planning/implementation-plan.md).
 - [Requisitos, caixas de conclusão e histórico](docs/planning/requirements.md).
 - [Arquitetura](docs/architecture/architecture.md) e [diagrama](docs/architecture/diagrams/quadrascope-arquitetura.svg).
 - [Origem e extração dos dados](docs/data/provenance.md).
 
-Não há servidor de aplicação nesta fase. `make data-build` termina com erro explícito porque o pipeline pertence às etapas 2–6; nenhum artefato é gerado. As instruções de execução da aplicação e hospedagem serão adicionadas quando essas etapas estiverem implementadas e verificadas.
+Para gerar a base canônica e o recorte do grupo:
+
+```bash
+make data-normalize
+```
+
+Os intermediários ficam em `data/processed/ingestion/`: `canonical.parquet`, `focus.parquet` e `ingestion.json`. O comando confere o hash do CSV e preserva os dados originais. A validação completa de qualidade será feita na etapa 3.
+
+Ainda não há servidor de aplicação. `make data-build` continua reservado ao pipeline completo e retorna erro explícito; ele não substitui o comando de normalização. As instruções de execução da aplicação e hospedagem serão adicionadas nas etapas correspondentes.

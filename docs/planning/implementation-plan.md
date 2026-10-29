@@ -1,7 +1,7 @@
 # Plano de implementação — QuadraScope
 
 > Do passo 0 à entrega. Revisão: 29/10/2026. Foco: Atlanta Hawks × Houston Rockets.
-> Estado atual: etapas 0 e 1 concluídas. Ambiente Python, estrutura, configuração e testes iniciais disponíveis; ingestão, análise, API, frontend e deploy ainda não implementados.
+> Estado atual: etapas 0, 1 e 2 concluídas. Ingestão estrita, normalização, registro de métricas e recorte disponíveis; qualidade completa, cálculos, API, frontend e deploy ainda pendentes.
 
 ## Uso do plano
 
@@ -50,16 +50,16 @@ As caixas já marcadas na etapa 0 indicam documentação revisada e confirmaçõ
 
 **Dependência:** etapa 1. **Requisitos:** R07–R10.
 
-- [ ] **P2.01** — Implementar a identificação da cópia bruta já preservada em `data/raw/stats_times_regular_final.csv`; calcular SHA-256, tamanho e metadados de leitura pelo pipeline e conferir com a proveniência.
-- [ ] **P2.02** — Implementar leitor estrito com as 28 colunas esperadas, IDs como strings e erros claros para schema incompatível.
-- [ ] **P2.03** — Aplicar o mapa original→canônico e validar tipos; converter WL para booleano somente após validar 0/1.
-- [ ] **P2.04** — Converter datas estritamente, preservando a data civil; ordenar por time, data e partida para operações sequenciais.
-- [ ] **P2.05** — Implementar registro de métricas com sigla original, nome canônico, rótulo, tipo, domínio, unidade e elegibilidade.
-- [ ] **P2.06** — Gerar a base canônica mantendo os 30 times e todas as colunas; não remover outliers nem imputar zeros.
-- [ ] **P2.07** — Criar seleção explícita dos dois times principais e vetor ordenado das sete variáveis, com justificativas de exclusão dos demais campos.
-- [ ] **P2.08** — Verificar leitura, tipos e renomeações com exemplos válidos e inválidos; conferir a preservação dos IDs e do arquivo bruto.
+- [X] **P2.01** — Implementar a identificação da cópia bruta já preservada em `data/raw/stats_times_regular_final.csv`; calcular SHA-256, tamanho e metadados de leitura pelo pipeline e conferir com a proveniência.
+- [X] **P2.02** — Implementar leitor estrito com as 28 colunas esperadas, IDs como strings e erros claros para schema incompatível.
+- [X] **P2.03** — Aplicar o mapa original→canônico e validar tipos; converter WL para booleano somente após validar 0/1.
+- [X] **P2.04** — Converter datas estritamente, preservando a data civil; ordenar por time, data e partida para operações sequenciais.
+- [X] **P2.05** — Implementar registro de métricas com sigla original, nome canônico, rótulo, tipo, domínio, unidade e elegibilidade.
+- [X] **P2.06** — Gerar a base canônica mantendo os 30 times e todas as colunas; não remover outliers nem imputar zeros.
+- [X] **P2.07** — Criar seleção explícita dos dois times principais e vetor ordenado das sete variáveis, com justificativas de exclusão dos demais campos.
+- [X] **P2.08** — Verificar leitura, tipos e renomeações com exemplos válidos e inválidos; conferir a preservação dos IDs e do arquivo bruto.
 
-**Verificação/saída:** 2.238 linhas, 28 campos de origem mapeados e 149 observações do grupo. A normalização é reproduzível e mantém proveniência.
+**Verificação/saída:** validado em 29/10/2026: base canônica 2.238×28, 30 times; recorte 149×28 (75 Atlanta, 74 Houston); features 149×7. `make data-normalize` gera intermediários Parquet/JSON com hash conferido, sem alterar o CSV. `make check` aprovado com 34 testes. A qualidade completa continua na etapa 3. Evidências: [guia de ingestão](../development/ingestion.md), [testes](../../backend/tests/analytics/test_ingestion.py) e [histórico](requirements.md).
 
 ## Etapa 3 — Validar qualidade e enriquecer o contexto
 

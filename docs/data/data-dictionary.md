@@ -1,6 +1,6 @@
 # Dicionário e transformações — QuadraScope
 
-> Especificação de normalização das 28 colunas do CSV. A base normalizada ainda não foi gerada.
+> Normalização das 28 colunas implementada na etapa 2. Registro executável em [metrics.py](../../backend/analytics/metrics.py); execução e contratos no [guia de ingestão](../development/ingestion.md).
 
 Dados brutos: [CSV original](../../data/raw/stats_times_regular_final.csv). Origem e limitações de coleta: [proveniência](provenance.md).
 
@@ -39,7 +39,7 @@ Legenda de uso: **principal** = vetor obrigatório das sete variáveis; **contex
 | PTS | points | integer | Pontos / jogo | Principal |
 | TEAM_NAME | team_name | string | Nome do time | Contexto; apresentação |
 
-## Transformações previstas
+## Transformações implementadas
 
 - Ler IDs como strings, sem adicionar zeros por suposição. Não converter IDs para floats.
 - Converter GAME_DATE estritamente; falhas são reportadas e bloqueiam o artefato.
@@ -50,7 +50,7 @@ Legenda de uso: **principal** = vetor obrigatório das sete variáveis; **contex
 - Ordenar por time, data e ID de partida para análises sequenciais. A ordenação original do CSV não define sequência temporal.
 - Preservar CSV original e seus 28 campos na base canônica. Dados derivados têm nomes e proveniência próprios.
 
-## Campos derivados
+## Campos derivados previstos para a etapa 3
 
 | Campo | Derivação | Uso e limitação |
 | --- | --- | --- |

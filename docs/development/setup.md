@@ -1,4 +1,4 @@
-# Ambiente de desenvolvimento — etapa 1
+# Ambiente de desenvolvimento — etapas 1 e 2
 
 ## Versões e dependências
 
@@ -57,12 +57,13 @@ Essa alternativa não instala pytest/Ruff; usar o fluxo uv para desenvolvimento.
 | `make check-env` | Importa dependências, confere Python e localização dos dados; imprime versões e configuração |
 | `make lint` | Ruff check + verificação de formatação |
 | `make format` | Aplica somente a formatação Ruff |
-| `make test` | Executa os testes existentes; atualmente só configuração |
+| `make test` | Executa configuração e contratos de ingestão/normalização |
 | `make check` | Ambiente + lint + testes |
 | `make export-requirements` | Regenera requirements de runtime com hashes, sem atualizar o lock |
-| `make data-build` | Reservado; termina com erro explícito e não gera artefatos |
+| `make data-normalize` | Gera base canônica, recorte e relatório intermediários da etapa 2 |
+| `make data-build` | Reservado ao pipeline completo; termina com erro explícito |
 
-Build de dados será implementado nas etapas 2–6; API e interface ainda não existem. Os comandos não simulam essas funcionalidades. Não há servidor para iniciar nem resultados estatísticos produzidos nesta etapa.
+O [guia de ingestão](ingestion.md) detalha `make data-normalize` e suas saídas locais. O build científico completo pertence à etapa 6; API e interface ainda não existem. Não há servidor para iniciar nem resultados estatísticos calculados nesta etapa.
 
 ## Configuração e organização do backend
 
@@ -72,24 +73,25 @@ backend/
 ├── app/
 │   ├── __init__.py
 │   └── config.py
-├── analytics/                  # futuro núcleo científico
+├── analytics/                  # metrics.py e ingestion.py; cálculos futuros
 ├── repositories/               # futuros repositórios de dados
 ├── content/                    # reservado para textos contextualizados
 ├── scripts/
-│   └── check_environment.py
+│   ├── check_environment.py
+│   └── normalize_data.py
 └── tests/
     ├── unit/test_config.py
-    ├── analytics/              # reservado: cálculos futuros
+    ├── analytics/test_ingestion.py
     └── api/                    # reservado: contratos futuros
 ```
 
-`backend/app/config.py` centraliza raiz do repositório, caminhos bruto/processado, nome do CSV, IDs dos times, métricas e versões iniciais de schema/análise. Os caminhos padrão derivam do arquivo de configuração, não do diretório corrente. Importar configuração não lê dados nem cria pastas. As versões iniciais serão usadas pelos artefatos futuros; não indicam que um schema de artefato já foi implementado.
+`backend/app/config.py` centraliza raiz do repositório, caminhos bruto/processado, nome e hash esperado do CSV, IDs dos times, métricas e versões iniciais de schema/análise. Os caminhos padrão derivam do arquivo de configuração, não do diretório corrente. Importar configuração não lê dados nem cria pastas. As versões identificam também o relatório intermediário da ingestão, sem indicar publicação do manifesto final da etapa 6.
 
-`data/raw/` é a entrada preservada; `data/processed/` está reservada por `.gitkeep`. Artefatos gerados ficam ignorados até a política de publicação da etapa 6. Não usar `git add -f` para publicar resultados parciais. CSV, PDF e documentos fornecidos continuam versionáveis e preservados.
+`data/raw/` é a entrada preservada; `data/processed/ingestion/` recebe os intermediários locais da etapa 2. Artefatos gerados ficam ignorados até a política de publicação da etapa 6. Não usar `git add -f` para publicar resultados parciais. CSV, PDF e documentos fornecidos continuam versionáveis e preservados.
 
 ## Testes
 
-pytest está configurado no pyproject com marcadores estritos `unit`, `analytics` e `api`. As pastas separam configuração, cálculos e HTTP. Exemplos de seleção para quando essas suítes existirem:
+pytest está configurado no pyproject com marcadores estritos `unit`, `analytics` e `api`. As pastas separam configuração, cálculos e HTTP. Seleções disponíveis e futuras:
 
 ```bash
 uv run --locked pytest backend/tests/unit
@@ -97,9 +99,9 @@ uv run --locked pytest -m analytics
 uv run --locked pytest -m api
 ```
 
-Nesta etapa apenas a primeira seleção tem testes. Seleções sem testes retornam o código de ausência de testes do pytest; não representam sucesso científico ou de API. Os testes de configuração verificam independência do diretório de execução e isolamento dos caminhos bruto/processado sem criação de arquivos.
+As seleções unit e analytics têm testes de configuração e ingestão, respectivamente. A suíte api continua reservada; seleção sem testes retorna o código correspondente do pytest e não representa sucesso de API. Os testes de configuração verificam caminhos; os de ingestão verificam contratos, conversões, preservação e roundtrip Parquet. Cálculos estatísticos ainda não são cobertos porque não foram implementados.
 
-## Validação realizada em 29/10/2026
+## Validação da etapa 1 em 29/10/2026
 
 | Verificação | Resultado |
 | --- | --- |
@@ -114,3 +116,7 @@ Nesta etapa apenas a primeira seleção tem testes. Seleções sem testes retorn
 Node 24 foi registrado como versão-alvo, mas o frontend não foi instalado nem testado nesta etapa. A seleção não altera o Node global da máquina. Não houve prova de deploy.
 
 R01, R05 e R06 permanecem parciais: preparar o ambiente não entrega aplicação, hospedagem nem submissão. O [histórico](../planning/requirements.md) registra as evidências de P1.01–P1.07.
+
+## Validação da etapa 2 em 29/10/2026
+
+`make check` aprovado com 34 testes (configuração e ingestão), Ruff e formatação. `make data-normalize` gerou base 2.238×28, 30 times e recorte 149×28. IDs, tipos, datas e valores foram preservados no roundtrip Parquet; execuções repetidas e entradas inválidas foram verificadas. Consulte [contratos e testes de ingestão](ingestion.md). O CSV original permanece inalterado.

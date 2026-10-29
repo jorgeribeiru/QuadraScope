@@ -1,1 +1,1 @@
-"""Núcleo científico: implementação prevista a partir da etapa 2."""
+"""Ingestão, registro de métricas e futuro núcleo de cálculos científicos."""

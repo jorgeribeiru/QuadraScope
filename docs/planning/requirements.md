@@ -1,6 +1,6 @@
 # Requisitos e acompanhamento — QuadraScope
 
-> Base: [Projeto 1.pdf](<../references/Projeto 1.pdf>), cinco páginas. Revisão: 29/10/2026. Etapas 0 e 1 concluídas; infraestrutura de desenvolvimento validada. Os requisitos da aplicação permanecem pendentes ou parciais.
+> Base: [Projeto 1.pdf](<../references/Projeto 1.pdf>), cinco páginas. Revisão: 29/10/2026. Etapas 0, 1 e 2 concluídas; infraestrutura e normalização validadas. Os requisitos da aplicação permanecem pendentes ou parciais.
 
 A ordem de trabalho e as tarefas detalhadas estão no [plano de implementação](implementation-plan.md). Este arquivo acompanha o cumprimento dos requisitos do enunciado.
 
@@ -14,10 +14,10 @@ A ordem de trabalho e as tarefas detalhadas estão no [plano de implementação]
 | [ ] | R04 | Títulos, eixos, unidades, legendas e tabelas padronizadas, p.1 | Componentes de gráfico e tabela | Convenções uniformes e alternativa tabular acessível | — |
 | [ ] | R05 | Hospedagem ou instruções locais, p.1 | URL pública e README | Abrir URL em sessão limpa; alternativa local com requirements.txt e comando único documentado | Parcial — 29/10/2026: requirements com hashes, setup e verificações [documentados](../development/setup.md); aplicação e deploy ainda inexistentes |
 | [ ] | R06 | Código e link de aplicação, p.2 | Repositório/zip e submissão | Entrega reproduzível identificando versão; submissão é responsabilidade do grupo | — |
-| [ ] | R07 | Dimensões, colunas e significado, p.2 | Dados e dicionário | Todas as 28 colunas, unidade de análise e cobertura | — |
-| [ ] | R08 | Tipos, data e tamanho, p.2 | Dados e transformações | Tipos semânticos, parsing de datas, bytes e contagens identificados | — |
-| [ ] | R09 | Nomes intuitivos e conversões, p.2 | Mapa original→canônico | Mostrar todas as renomeações e explicar que W/L já são numéricos neste CSV | — |
-| [ ] | R10 | Excluir campos sem função para modelos, p.2 | Metodologia de seleção | Justificar vetor de sete variáveis, preservar base e discutir vazamento futuro | — |
+| [ ] | R07 | Dimensões, colunas e significado, p.2 | Dados e dicionário | Todas as 28 colunas, unidade de análise e cobertura | Parcial — 29/10/2026: [registro das 28 colunas e cobertura](../development/ingestion.md) implementados; falta apresentação no sistema |
+| [ ] | R08 | Tipos, data e tamanho, p.2 | Dados e transformações | Tipos semânticos, parsing de datas, bytes e contagens identificados | Parcial — 29/10/2026: hash, bytes, tipos e datas civis validados na [ingestão](../../backend/analytics/ingestion.py); falta apresentação no sistema |
+| [ ] | R09 | Nomes intuitivos e conversões, p.2 | Mapa original→canônico | Mostrar todas as renomeações e explicar que W/L já são numéricos neste CSV | Parcial — 29/10/2026: [mapa e conversões](../../backend/analytics/metrics.py) implementados e testados; falta apresentação no sistema |
+| [ ] | R10 | Excluir campos sem função para modelos, p.2 | Metodologia de seleção | Justificar vetor de sete variáveis, preservar base e discutir vazamento futuro | Parcial — 29/10/2026: vetor das sete variáveis e motivos de exclusão no [registro](../../backend/analytics/metrics.py); falta discussão publicada no sistema |
 | [ ] | R11 | Zeros, negativos, duplicatas e fora de domínio, p.2 | Qualidade | Contagens e regras verificáveis por coluna; consistências entre linhas separadas | — |
 | [ ] | R12 | Missing por coluna e MCAR/MAR/MNAR, p.2 | Qualidade e métodos | Contagens reais e distinção entre células ausentes e cobertura incompleta | — |
 | [ ] | R13 | Little, Jamshidian–Jalal, Listing–Schlittgen, Fairclough, p.2 | Dados e métodos | Explicar teoria, pressupostos, uso e inaplicabilidade atual; nenhuma execução fictícia | — |
@@ -54,7 +54,6 @@ Registrar uma linha a cada atividade concluída, mesmo quando o requisito ainda 
 | --- | --- | --- | --- | --- | --- |
 | 29/10/2026 | P0.06 | R07, R08 — preparação | Grupo confirmou origem NBA 2025–26, API oficial via nba_api; detalhes não fornecidos registrados como limitação | [Proveniência](../data/provenance.md), declaração do grupo nesta revisão | Grupo; registro: Codex |
 | 29/10/2026 | P0.07 | R01 — parcial | Grupo confirmou validação externa de FastAPI + React; justificativa registrada | [Arquitetura](../architecture/architecture.md), confirmação do grupo nesta revisão | Grupo; registro: Codex |
-
 | 29/10/2026 | P1.01 | R01, R05, R06 — infraestrutura | Estrutura Python e pastas de conteúdo/testes criadas; data/raw reutilizado e processed reservado | [Organização do backend](../development/setup.md), [configuração](../../backend/app/config.py) | Codex |
 | 29/10/2026 | P1.02 | R05 — parcial | Python 3.12 e Node 24 registrados; Python 3.12.13 usado na validação; Node reservado à etapa 8 | [.python-version](../../.python-version), [.nvmrc](../../.nvmrc), [justificativa](../development/setup.md) | Codex |
 | 29/10/2026 | P1.03 | R01, R05, R06 — infraestrutura | make setup aprovado; dependências compatíveis; requirements instalado em ambiente isolado com validação dos hashes | [pyproject](../../pyproject.toml), [lock](../../uv.lock), [requirements](../../requirements.txt), [validação](../development/setup.md) | Codex |
@@ -62,8 +61,16 @@ Registrar uma linha a cada atividade concluída, mesmo quando o requisito ainda 
 | 29/10/2026 | P1.05 | R06 — infraestrutura | Ignore validado para ambientes/caches/builds; CSV e PDF conferidos byte a byte contra HEAD, sem alterações | [.gitignore](../../.gitignore), [validação](../development/setup.md) | Codex |
 | 29/10/2026 | P1.06 | R01, R06 — infraestrutura | Caminhos, times, métricas e versões centralizados; testes de independência do diretório corrente e isolamento aprovados | [Settings](../../backend/app/config.py), [testes](../../backend/tests/unit/test_config.py) | Codex |
 | 29/10/2026 | P1.07 | R05, R06 — infraestrutura | make check aprovado; comandos documentados; data-build falha explicitamente sem criar artefatos | [Makefile](../../Makefile), [guia](../development/setup.md) | Codex |
+| 29/10/2026 | P2.01 | R08 — parcial | Snapshot único com SHA-256, bytes, codificação e dimensões; digest conferido contra proveniência | [Ingestão](../../backend/analytics/ingestion.py), [configuração](../../backend/app/config.py) | Codex |
+| 29/10/2026 | P2.02 | R07, R08 — parciais | Leitor estrito valida schema e registros; IDs textuais preservam zeros à esquerda | [Testes de ingestão](../../backend/tests/analytics/test_ingestion.py) | Codex |
+| 29/10/2026 | P2.03 | R08, R09 — parciais | Conversões e mapa de 28 colunas; WL validado antes do booleano e campos anuláveis sem imputação | [Registro](../../backend/analytics/metrics.py), [ingestão](../../backend/analytics/ingestion.py) | Codex |
+| 29/10/2026 | P2.04 | R08, R09 — parciais | Data civil date32 sem fuso, parsing estrito e ordenação por time/data/partida; roundtrip Parquet aprovado | [Testes](../../backend/tests/analytics/test_ingestion.py) | Codex |
+| 29/10/2026 | P2.05 | R07, R09, R10 — parciais | Registro imutável de nomes, tipos, rótulos, unidades, domínios e elegibilidade | [Métricas](../../backend/analytics/metrics.py) | Codex |
+| 29/10/2026 | P2.06 | R07, R08 — parciais | make data-normalize gerou base intermediária 2.238×28 com 30 times; sem descartar campos ou linhas | [Comando](../../backend/scripts/normalize_data.py), [guia](../development/ingestion.md) | Codex |
+| 29/10/2026 | P2.07 | R10 — parcial | Recorte 149×28, com 75/74 jogos; features 149×7 em ordem fixa e exclusões justificadas | [Seleções](../../backend/analytics/ingestion.py), [registro](../../backend/analytics/metrics.py) | Codex |
+| 29/10/2026 | P2.08 | R07–R10 — parciais | make check aprovado: 34 testes, Ruff e formatação; entradas inválidas, preservação, repetição e Parquet validados | [Testes](../../backend/tests/analytics/test_ingestion.py), [validação](../development/ingestion.md) | Codex |
 
-Etapa 1 de implementação concluída e validada em 29/10/2026. As tarefas de infraestrutura estão assinaladas na etapa 1 do plano; elas não concluem os requisitos de apresentação no sistema, hospedagem ou submissão.
+Etapas 1 e 2 de implementação concluídas e validadas em 29/10/2026. Infraestrutura e normalização estão assinaladas no plano; elas não concluem os requisitos de apresentação no sistema, qualidade completa, hospedagem ou submissão.
 
 ## Pendências e responsabilidade
 
