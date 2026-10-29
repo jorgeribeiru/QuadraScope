@@ -1,6 +1,6 @@
 # Metodologia científica — QuadraScope
 
-> Especificação para implementação, revisada em 29/10/2026. Ingestão, auditoria interna, cobertura e enriquecimento implementados nas etapas 2–3, com testes. Cálculos estatísticos e detectores ainda não implementados.
+> Especificação para implementação, revisada em 29/10/2026. Ingestão, auditoria interna, cobertura e enriquecimento implementados nas etapas 2–3, com testes. Descritivas, dados do boxplot e distribuições implementados na etapa 4; demais detectores ainda pendentes.
 
 A origem NBA via `nba_api` foi informada pelo grupo; os detalhes conhecidos e não informados estão na [proveniência](provenance.md). O [CSV preservado](../../data/raw/stats_times_regular_final.csv) é a entrada reproduzível da análise.
 
@@ -46,9 +46,9 @@ Barras comparam mesma variável e medida com eixo comum começando em zero para 
 
 ## Histograma e KDE
 
-Histograma em densidade para compartilhar escala com KDE, em unidade inversa da variável. Ao comparar times, usar bins comuns para a mesma variável e seleção. Proposta: Freedman–Diaconis nos dados combinados, com fallback de Sturges se largura nula. Limites devem respeitar legibilidade de contagens inteiras.
+Histograma em densidade para compartilhar escala com KDE, em unidade inversa da variável. Ao comparar times, usar bins comuns para a mesma variável e seleção. Implementado: largura Freedman–Diaconis nos dados combinados, com fallback de Sturges se largura nula. Arredondar largura para cima até inteiro ≥1 e alinhar bordas a meios inteiros. Limitar a 256 classes, aumentando a largura e registrando a limitação, sem excluir valores. O alinhamento pode alterar o número sugerido de classes.
 
-KDE gaussiana com banda de Scott, calculada no Python e identificada como suavização de contagens discretas. Não executar em série constante ou n<2. Suavização pode atribuir densidade fora do domínio; limitar o eixo não corrige essa propriedade do estimador. [SciPy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.gaussian_kde.html).
+KDE gaussiana com banda de Scott, calculada no Python e identificada como suavização de contagens discretas. Grade comum de 256 pontos com margem de três bandas máximas além dos extremos combinados, sem renormalização; registrar massa integrada na grade. Não executar em série constante ou n<2. Suavização pode atribuir densidade fora do domínio; limitar o eixo não corrige essa propriedade do estimador. [SciPy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.gaussian_kde.html).
 
 ## Outliers univariados
 
@@ -123,7 +123,7 @@ Prorrogações: análise principal usa totais. Extensão possível `valor*240/MI
 
 Interpretações ligam medida, resultado, comparação e limitação. “Mais regular” precisa citar CV/IQR/desvio; média maior não define “time melhor”. Texto fixo identifica dataset e filtros válidos.
 
-## Exemplos para verificação futura
+## Referências verificadas na etapa 4
 
 Quartis lineares, ddof=1, IQR 1,5, CSV identificado pelo hash da arquitetura:
 
@@ -131,4 +131,4 @@ Quartis lineares, ddof=1, IQR 1,5, CSV identificado pelo hash da arquitetura:
 - Houston PTS: modas [111,117,119,124]; Atlanta STL: modas [9,11].
 - Atlanta PTS: média≈118,253333, CV≈10,6551%; Houston PTS: média≈114,405405, CV≈9,7837%.
 
-São referências exploratórias a recalcular, não testes automatizados já aprovados. Complementar com exemplos sintéticos para fórmulas e estados de borda.
+Essas referências foram reproduzidas pelos [testes da etapa 4](../../backend/tests/analytics/test_descriptive.py), junto com exemplos manuais e casos de borda. Resultados e parâmetros estão documentados no [guia de descritivas](../development/descriptive.md).

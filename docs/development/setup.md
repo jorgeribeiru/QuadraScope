@@ -1,4 +1,4 @@
-# Ambiente de desenvolvimento — etapas 1–3
+# Ambiente de desenvolvimento — etapas 1–4
 
 ## Versões e dependências
 
@@ -57,14 +57,15 @@ Essa alternativa não instala pytest/Ruff; usar o fluxo uv para desenvolvimento.
 | `make check-env` | Importa dependências, confere Python e localização dos dados; imprime versões e configuração |
 | `make lint` | Ruff check + verificação de formatação |
 | `make format` | Aplica somente a formatação Ruff |
-| `make test` | Executa configuração, ingestão e qualidade |
+| `make test` | Executa configuração, ingestão, qualidade e cálculos descritivos |
 | `make check` | Ambiente + lint + testes |
 | `make export-requirements` | Regenera requirements de runtime com hashes, sem atualizar o lock |
 | `make data-normalize` | Gera base canônica, recorte e relatório intermediários da etapa 2 |
 | `make data-quality` | Audita a fonte e libera dados enriquecidos somente se aprovados |
+| `make data-describe` | Calcula descritivas, boxplots e distribuições após auditar a fonte |
 | `make data-build` | Reservado ao pipeline completo; termina com erro explícito |
 
-Os guias de [ingestão](ingestion.md) e [qualidade](quality.md) detalham os comandos e suas saídas locais. O build científico completo pertence à etapa 6; API e interface ainda não existem. Não há servidor para iniciar nem resultados estatísticos calculados nesta etapa.
+Os guias de [ingestão](ingestion.md) e [qualidade](quality.md) detalham os comandos e suas saídas locais. O build científico completo pertence à etapa 6; API e interface ainda não existem. As descritivas estão implementadas; não há servidor de aplicação para iniciar. Ver [guia científico da etapa 4](descriptive.md).
 
 ## Configuração e organização do backend
 
@@ -74,16 +75,17 @@ backend/
 ├── app/
 │   ├── __init__.py
 │   └── config.py
-├── analytics/                  # metrics, ingestion, quality e missingness
+├── analytics/                  # ingestão, qualidade, descritivas e distribuições
 ├── repositories/               # futuros repositórios de dados
 ├── content/missingness.json    # teoria e limites dos métodos exigidos
 ├── scripts/
 │   ├── check_environment.py
 │   ├── normalize_data.py
-│   └── audit_data.py
+│   ├── audit_data.py
+│   └── describe_data.py
 └── tests/
     ├── unit/test_config.py
-    ├── analytics/              # test_ingestion.py e test_quality.py
+    ├── analytics/              # contratos, qualidade, descritivas, distribuições e comando
     └── api/                    # reservado: contratos futuros
 ```
 
@@ -101,7 +103,7 @@ uv run --locked pytest -m analytics
 uv run --locked pytest -m api
 ```
 
-As seleções unit e analytics têm testes de configuração e de ingestão/qualidade, respectivamente. A suíte api continua reservada; seleção sem testes retorna o código correspondente do pytest e não representa sucesso de API. Os testes de configuração verificam caminhos; os de ingestão verificam contratos, conversões, preservação e roundtrip Parquet. Cálculos estatísticos ainda não são cobertos porque não foram implementados.
+As seleções unit e analytics têm testes de configuração e de ingestão/qualidade, respectivamente. A suíte api continua reservada; seleção sem testes retorna o código correspondente do pytest e não representa sucesso de API. Os testes de configuração verificam caminhos; os de ingestão verificam contratos, conversões, preservação e roundtrip Parquet. Descritivas e distribuições são cobertas por exemplos manuais, propriedades, referências reais e casos de borda. Demais detectores continuam pendentes.
 
 ## Validação da etapa 1 em 29/10/2026
 
@@ -126,3 +128,7 @@ R01, R05 e R06 permanecem parciais: preparar o ambiente não entrega aplicação
 ## Validação da etapa 3 em 29/10/2026
 
 `make check` aprovado com 67 testes, Ruff e formatação. `make data-quality` aprovado com 64 checagens sem falhas bloqueantes na base fornecida. Dados enriquecidos 2.238×33 e recorte 149×33; ausências, zeros, cobertura e aplicabilidade dos quatro métodos documentados. Os testes confirmam bloqueio e invalidação de saídas antigas após erros de entrada ou consistência. Consulte [qualidade e enriquecimento](quality.md).
+
+## Validação da etapa 4 em 29/10/2026
+
+`make check` aprovado com 110 testes, Ruff e formatação. `make data-describe` gera 14 resultados, quadros CV/IQR 7×2 e histogramas/KDE comparáveis. Medidas e dados dos boxplots compartilham os mesmos quartis. Foram reproduzidas as médias/CV, modas e outliers de referência; arquivos da fonte foram preservados. Ver [descritivas e distribuições](descriptive.md).

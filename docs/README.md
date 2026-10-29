@@ -6,6 +6,7 @@
 | Desenvolvimento | [Ambiente e comandos](development/setup.md) | Instalação, versões, ferramentas e validações da etapa 1 |
 | Desenvolvimento | [Ingestão e normalização](development/ingestion.md) | Comando, contratos e intermediários da etapa 2 |
 | Desenvolvimento | [Qualidade e enriquecimento](development/quality.md) | Regras, bloqueios, cobertura e missingness da etapa 3 |
+| Desenvolvimento | [Descritivas e distribuições](development/descriptive.md) | Medidas, boxplots, histogramas/KDE e quadros da etapa 4 |
 | Planejamento | [Requisitos e acompanhamento](planning/requirements.md) | Matriz R01–R24, critérios de aceite e histórico |
 | Planejamento | [Plano de implementação](planning/implementation-plan.md) | Tarefas P0–P11, dependências e verificações |
 | Arquitetura | [Desenho do sistema](architecture/architecture.md) | Escopo, stack, componentes, API e deploy |
@@ -15,4 +16,4 @@
 | Dados | [Dicionário](data/data-dictionary.md) | As 28 colunas, tipos e transformações |
 | Dados | [Metodologia](data/methodology.md) | Fórmulas, pressupostos e validação científica |
 
-O [CSV original](../data/raw/stats_times_regular_final.csv) fica fora da documentação, em `data/raw/`. O backend inclui ingestão, normalização, auditoria e enriquecimento; cálculos estatísticos, detectores, API e frontend ainda serão implementados. Voltar ao [README do projeto](../README.md).
+O [CSV original](../data/raw/stats_times_regular_final.csv) fica fora da documentação, em `data/raw/`. O backend inclui ingestão, qualidade e cálculos descritivos; demais detectores, API e frontend ainda serão implementados. Voltar ao [README do projeto](../README.md).

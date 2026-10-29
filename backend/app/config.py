@@ -43,5 +43,9 @@ class Settings:
     def quality_dir(self) -> Path:
         return self.processed_data_dir / "quality"
 
+    @property
+    def descriptive_dir(self) -> Path:
+        return self.processed_data_dir / "descriptive"
+
 
 settings = Settings()

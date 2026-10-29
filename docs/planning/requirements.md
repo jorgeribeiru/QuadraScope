@@ -1,6 +1,6 @@
 # Requisitos e acompanhamento — QuadraScope
 
-> Base: [Projeto 1.pdf](<../references/Projeto 1.pdf>), cinco páginas. Revisão: 29/10/2026. Etapas 0–3 concluídas; infraestrutura, normalização e auditoria interna validadas. Os requisitos da aplicação permanecem pendentes ou parciais.
+> Base: [Projeto 1.pdf](<../references/Projeto 1.pdf>), cinco páginas. Revisão: 29/10/2026. Etapas 0–4 concluídas; infraestrutura, qualidade e cálculos descritivos validados. Os requisitos da aplicação permanecem pendentes ou parciais.
 
 A ordem de trabalho e as tarefas detalhadas estão no [plano de implementação](implementation-plan.md). Este arquivo acompanha o cumprimento dos requisitos do enunciado.
 
@@ -21,16 +21,16 @@ A ordem de trabalho e as tarefas detalhadas estão no [plano de implementação]
 | [ ] | R11 | Zeros, negativos, duplicatas e fora de domínio, p.2 | Qualidade | Contagens e regras verificáveis por coluna; consistências entre linhas separadas | Parcial — 29/10/2026: [domínios, zeros, duplicatas e relações](../../backend/analytics/quality.py) auditados; falta apresentação no sistema |
 | [ ] | R12 | Missing por coluna e MCAR/MAR/MNAR, p.2 | Qualidade e métodos | Contagens reais e distinção entre células ausentes e cobertura incompleta | Parcial — 29/10/2026: zero missing por coluna, cobertura separada e [mecanismos explicados](../../backend/content/missingness.json); falta apresentação no sistema |
 | [ ] | R13 | Little, Jamshidian–Jalal, Listing–Schlittgen, Fairclough, p.2 | Dados e métodos | Explicar teoria, pressupostos, uso e inaplicabilidade atual; nenhuma execução fictícia | Parcial — 29/10/2026: [teoria e aplicabilidade](../../backend/analytics/missingness.py) dos quatro métodos implementadas; sem execução fictícia; falta apresentação no sistema |
-| [ ] | R14 | Inconsistências/outliers por coluna, p.3 | Qualidade e Anomalias | Tabela com domínio do método, contagens e não aplicabilidade para IDs/textos | Parcial — 29/10/2026: [inconsistências e domínios](../development/quality.md) disponíveis; outliers ainda não avaliados e apresentação no sistema pendente |
-| [ ] | R15 | Z-score/IQR, Grubbs, ECOD, k-NN, DBSCAN, LOF, p.3 | Anomalias e metodologia | Implementação validada, parâmetros, referência, quantidades e registros; distinguir uni/multivariado | — |
-| [ ] | R16 | Medidas das sete variáveis por time, p.3 | Perfil | Média, mediana, moda(s), extremos, amplitude, desvio, variância, Q1/Q3 e outliers para ambos | — |
-| [ ] | R17 | Boxplot com todos os elementos, p.3 | Perfil e Comparação | Média, mediana, moda(s), Q1/Q3, cercas, bigodes e outliers consistentes com tabela | — |
-| [ ] | R18 | Barras comparativas e papel do z-score, p.3 | Comparação | Mesma unidade, eixo comum, referência explícita para padronização | — |
-| [ ] | R19 | Assimetria e fórmula, p.3–4 | Perfil e Comparação | Coeficiente, direção, intensidade, critério, histograma/KDE, boxplot e discussão | — |
-| [ ] | R20 | CV: cálculo, validade e quadro, p.4–5 | Comparação | Quadro 7×2, fórmula amostral/%, média positiva, discussão de BLK/STL e escala | — |
-| [ ] | R21 | CV com desvio/assimetria e alternativa robusta, p.4–5 | Comparação e Síntese | Regularidade por variável, discordâncias explicadas, sem rótulo global indevido | — |
-| [ ] | R22 | IQR, Q1/Q3, método e quadro, p.5 | Comparação | Tabela Q1/Q3/IQR e quadro 7×2 com quartis iguais aos boxplots | — |
-| [ ] | R23 | IQR versus amplitude/desvio e regra de outliers, p.5 | Comparação e Anomalias | Cercas corretas, registros coincidentes e discussão de extremos; não forçar evidência inexistente | — |
+| [ ] | R14 | Inconsistências/outliers por coluna, p.3 | Qualidade e Anomalias | Tabela com domínio do método, contagens e não aplicabilidade para IDs/textos | Parcial — 29/10/2026: qualidade e [outliers IQR do boxplot](../development/descriptive.md) calculados; demais métodos e apresentação pendentes |
+| [ ] | R15 | Z-score/IQR, Grubbs, ECOD, k-NN, DBSCAN, LOF, p.3 | Anomalias e metodologia | Implementação validada, parâmetros, referência, quantidades e registros; distinguir uni/multivariado | Parcial — 29/10/2026: cercas/outliers IQR reutilizáveis; demais detectores e parâmetros completos pertencem à etapa 5 |
+| [ ] | R16 | Medidas das sete variáveis por time, p.3 | Perfil | Média, mediana, moda(s), extremos, amplitude, desvio, variância, Q1/Q3 e outliers para ambos | Parcial — 29/10/2026: [14 resultados completos](../development/descriptive.md) calculados e testados; falta apresentação no sistema |
+| [ ] | R17 | Boxplot com todos os elementos, p.3 | Perfil e Comparação | Média, mediana, moda(s), Q1/Q3, cercas, bigodes e outliers consistentes com tabela | Parcial — 29/10/2026: [payload do boxplot](../../backend/analytics/descriptive.py) com todos os elementos e partidas; falta desenhar e interpretar no sistema |
+| [ ] | R18 | Barras comparativas e papel do z-score, p.3 | Comparação | Mesma unidade, eixo comum, referência explícita para padronização | Parcial — 29/10/2026: tabelas comparativas disponíveis; barras e discussão do z-score na interface pendentes |
+| [ ] | R19 | Assimetria e fórmula, p.3–4 | Perfil e Comparação | Coeficiente, direção, intensidade, critério, histograma/KDE, boxplot e discussão | Parcial — 29/10/2026: assimetria ajustada, classificação e [histograma/KDE](../../backend/analytics/distributions.py) calculados; faltam gráficos e interpretação no sistema |
+| [ ] | R20 | CV: cálculo, validade e quadro, p.4–5 | Comparação | Quadro 7×2, fórmula amostral/%, média positiva, discussão de BLK/STL e escala | Parcial — 29/10/2026: CV amostral/%, estados de validade e quadro 7×2 calculados; faltam apresentação e interpretação |
+| [ ] | R21 | CV com desvio/assimetria e alternativa robusta, p.4–5 | Comparação e Síntese | Regularidade por variável, discordâncias explicadas, sem rótulo global indevido | Parcial — 29/10/2026: CV, desvio, assimetria e IQR/mediana disponíveis; discussão contextual pendente no sistema |
+| [ ] | R22 | IQR, Q1/Q3, método e quadro, p.5 | Comparação | Tabela Q1/Q3/IQR e quadro 7×2 com quartis iguais aos boxplots | Parcial — 29/10/2026: Q1/Q3/IQR, quadro 7×2 e boxplot com quartis idênticos; falta apresentação no sistema |
+| [ ] | R23 | IQR versus amplitude/desvio e regra de outliers, p.5 | Comparação e Anomalias | Cercas corretas, registros coincidentes e discussão de extremos; não forçar evidência inexistente | Parcial — 29/10/2026: cercas, amplitude, desvio e outliers IQR coerentes; falta confronto interpretativo no sistema |
 | [ ] | R24 | Síntese interpretativa, p.1 e desenvolvimento | Página inicial | Conclusões sobre os dois times ligadas a evidências e limitações | — |
 
 Os nomes de métodos no enunciado têm variações de grafia; a documentação usa Jamshidian–Jalal e Listing–Schlittgen, preservando a correspondência com o PDF. O PDF exige discussão dos testes de missingness e implementação/explicação dos métodos de outlier; a matriz distingue essas obrigações.
@@ -79,8 +79,18 @@ Registrar uma linha a cada atividade concluída, mesmo quando o requisito ainda 
 | 29/10/2026 | P3.08 | R12, R13 — parciais | Teoria, pressupostos e aplicabilidade dos quatro métodos; zero missing, sem estatísticas ou p-valores inventados | [Conteúdo](../../backend/content/missingness.json), [estados](../../backend/analytics/missingness.py) | Codex |
 | 29/10/2026 | P3.09 | R11–R14 — parciais | make check aprovado com 67 testes; erros de domínio/data, duplicatas, ausência de adversário, resultado e denominador zero cobertos | [Testes de qualidade](../../backend/tests/analytics/test_quality.py) | Codex |
 | 29/10/2026 | P3.10 | R11–R14 — parciais | 64 checagens, sem bloqueios na base real; falhas geram diagnóstico e invalidam enriquecidos antigos, preservando CSV/PDF | [Auditoria executável](../../backend/scripts/audit_data.py), [guia](../development/quality.md) | Codex |
+| 29/10/2026 | P4.01 | R16 — parcial | Média, mediana, modas/frequência, extremos e amplitude, com empates preservados | [Descritivas](../../backend/analytics/descriptive.py) | Codex |
+| 29/10/2026 | P4.02 | R16, R22 — parciais | Variância/desvio ddof=1 e quartis lineares/IQR implementados com unidades | [Descritivas](../../backend/analytics/descriptive.py), [testes](../../backend/tests/analytics/test_descriptive.py) | Codex |
+| 29/10/2026 | P4.03 | R20, R21 — parciais | CV percentual com validade e avisos; IQR/mediana identificado como razão distinta | [Descritivas](../../backend/analytics/descriptive.py) | Codex |
+| 29/10/2026 | P4.04 | R19 — parcial | Fisher–Pearson ajustado, direção e intensidade com limites explícitos | [Fórmulas e convenções](../development/descriptive.md) | Codex |
+| 29/10/2026 | P4.05 | R16, R19, R20 — parciais | Estados por medida para vazio/n=1/2/constante; ausência e não finitos não são descartados; JSON sem NaN/infinito | [Testes](../../backend/tests/analytics/test_descriptive.py) | Codex |
+| 29/10/2026 | P4.06 | R17, R23 — parciais | Boxplot com média, todas as modas, quartis, cercas, bigodes e partidas sinalizadas | [Payload](../../backend/analytics/descriptive.py) | Codex |
+| 29/10/2026 | P4.07 | R19 — parcial | Histograma em densidade com bins comuns, fallback e KDE Scott com estados e banda explícitos | [Distribuições](../../backend/analytics/distributions.py), [testes](../../backend/tests/analytics/test_distributions.py) | Codex |
+| 29/10/2026 | P4.08 | R18, R20, R22 — parciais | Quadros CV/IQR 7×2, Q1/Q3/IQR e tabela geral sem recomputar as medidas | [Comparações](../../backend/analytics/comparisons.py) | Codex |
+| 29/10/2026 | P4.09 | R16–R23 — parciais | make check aprovado com 110 testes; valores manuais, casos de borda, propriedades e bloqueios do comando | [Testes](../../backend/tests/analytics/test_descriptive.py), [pipeline](../../backend/tests/analytics/test_describe_data.py) | Codex |
+| 29/10/2026 | P4.10 | R16, R17, R20, R22 — parciais | Referências reais reproduzidas: médias/CV, modas Houston PTS e Atlanta STL, cercas e dois outliers Atlanta PTS | [Referências e validação](../development/descriptive.md) | Codex |
 
-Etapas 1–3 de implementação concluídas e validadas em 29/10/2026. Infraestrutura, normalização e auditoria estão assinaladas no plano; elas não concluem os requisitos de apresentação no sistema, detecção estatística de outliers, hospedagem ou submissão.
+Etapas 1–4 de implementação concluídas e validadas em 29/10/2026. Infraestrutura, qualidade e descritivas estão assinaladas no plano; elas não concluem os requisitos de apresentação no sistema, demais detectores, hospedagem ou submissão.
 
 ## Pendências e responsabilidade
 

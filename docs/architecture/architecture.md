@@ -1,7 +1,7 @@
 # QuadraScope — Arquitetura do sistema
 
 > Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. Revisão: 29/10/2026.
-> Estado: etapas 0–3 concluídas. Ingestão, auditoria interna, cobertura e enriquecimento implementados; cálculos estatísticos, detectores, endpoints e frontend ainda pendentes.
+> Estado: etapas 0–4 concluídas. Ingestão, qualidade, descritivas e dados dos gráficos implementados; demais detectores, endpoints e frontend ainda pendentes.
 
 ## Objetivo e escopo
 
@@ -18,6 +18,7 @@ Documentos complementares:
 - [Ambiente de desenvolvimento e comandos](../development/setup.md).
 - [Ingestão e normalização](../development/ingestion.md).
 - [Qualidade, cobertura e enriquecimento](../development/quality.md).
+- [Descritivas, boxplots e distribuições](../development/descriptive.md).
 - [Metodologia e regras científicas](../data/methodology.md).
 - [Requisitos, rastreabilidade e acompanhamento](../planning/requirements.md).
 - [Plano detalhado de implementação, do início à entrega](../planning/implementation-plan.md).
@@ -204,7 +205,7 @@ quadrascope/
     └── tests/                  # casos científicos e contratos
 ```
 
-As etapas 1–2 criaram ambiente e normalização em `data/processed/ingestion/`. A etapa 3 gera diagnóstico e intermediários enriquecidos em `data/processed/quality/`, somente após aprovação das regras internas. Esses arquivos não são o conjunto final de publicação. Cálculos estatísticos, detectores, API e frontend pertencem às próximas etapas. Evitar um segundo arquivo de arquitetura concorrente.
+As etapas 1–2 criaram ambiente e normalização em `data/processed/ingestion/`. A etapa 3 gera diagnóstico e intermediários enriquecidos em `data/processed/quality/`, somente após aprovação das regras internas. Esses arquivos não são o conjunto final de publicação. A etapa 4 calcula descritivas, boxplots e distribuições em `data/processed/descriptive/`, com estados por medida e metadados. Demais detectores, API e frontend pertencem às próximas etapas. Evitar um segundo arquivo de arquitetura concorrente.
 
 ## Entrega e pendências
 

@@ -2,7 +2,7 @@
 
 Relatório web interativo de análise de dados da NBA, desenvolvido para o Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. O foco do grupo é **Atlanta Hawks × Houston Rockets**, nas variáveis PTS, REB, AST, STL, BLK, PF e FG3M.
 
-**Estado atual:** etapas 0–3 concluídas. Ambiente reproduzível, ingestão, auditoria interna e dados enriquecidos disponíveis. Estatística descritiva, detectores, API, frontend e deploy ainda pendentes. A stack **FastAPI + React** foi confirmada pelo grupo.
+**Estado atual:** etapas 0–4 concluídas. Ingestão, qualidade, descritivas, boxplots e distribuições calculados no Python. Demais detectores, API, gráficos na interface, frontend e deploy ainda pendentes. A stack **FastAPI + React** foi confirmada pelo grupo.
 
 ## Estrutura atual
 
@@ -28,7 +28,8 @@ QuadraScope/
     ├── development/
     │   ├── setup.md
     │   ├── ingestion.md
-    │   └── quality.md
+    │   ├── quality.md
+    │   └── descriptive.md
     ├── architecture/
     │   ├── architecture.md
     │   └── diagrams/
@@ -66,6 +67,7 @@ O [guia de desenvolvimento](docs/development/setup.md) apresenta instalação al
 - [Ambiente de desenvolvimento e comandos](docs/development/setup.md).
 - [Ingestão, normalização e arquivos gerados](docs/development/ingestion.md).
 - [Qualidade, cobertura e enriquecimento](docs/development/quality.md).
+- [Descritivas, boxplots e distribuições](docs/development/descriptive.md).
 - [Plano de implementação e tarefas](docs/planning/implementation-plan.md).
 - [Requisitos, caixas de conclusão e histórico](docs/planning/requirements.md).
 - [Arquitetura](docs/architecture/architecture.md) e [diagrama](docs/architecture/diagrams/quadrascope-arquitetura.svg).
@@ -84,5 +86,13 @@ make data-quality
 ```
 
 O relatório fica em `data/processed/quality/quality.json`. Somente uma base aprovada nas regras internas gera `canonical_enriched.parquet` e `focus_enriched.parquet`, preservando os 28 campos e adicionando adversário, pontos adversários, saldo, mando e prorrogações. Falhas bloqueiam as saídas enriquecidas; zeros legítimos e prorrogações são preservados como contexto.
+
+Para calcular as medidas das sete variáveis, boxplots, histogramas/KDE e quadros comparativos:
+
+```bash
+make data-describe
+```
+
+Os JSONs ficam em `data/processed/descriptive/`, com metadados, estados por medida e tabelas 7×2. Os dados dos gráficos estão prontos; sua apresentação visual será implementada no React.
 
 Ainda não há servidor de aplicação. `make data-build` continua reservado ao pipeline completo e retorna erro explícito; ele não substitui o comando de normalização. As instruções de execução da aplicação e hospedagem serão adicionadas nas etapas correspondentes.

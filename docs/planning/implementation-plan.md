@@ -1,7 +1,7 @@
 # Plano de implementação — QuadraScope
 
 > Do passo 0 à entrega. Revisão: 29/10/2026. Foco: Atlanta Hawks × Houston Rockets.
-> Estado atual: etapas 0–3 concluídas. Ingestão, auditoria interna, cobertura e enriquecimento disponíveis; cálculos estatísticos, API, frontend e deploy ainda pendentes.
+> Estado atual: etapas 0–4 concluídas. Ingestão, qualidade, enriquecimento, descritivas, boxplots e distribuições calculados; demais detectores, API, frontend e deploy ainda pendentes.
 
 ## Uso do plano
 
@@ -82,18 +82,18 @@ As caixas já marcadas na etapa 0 indicam documentação revisada e confirmaçõ
 
 **Dependência:** etapas 2–3. **Requisitos:** R16–R23.
 
-- [ ] **P4.01** — Implementar média, mediana, modas/frequência, mínimo, máximo e amplitude para cada variável/time.
-- [ ] **P4.02** — Implementar variância e desvio com ddof=1, quartis lineares e IQR.
-- [ ] **P4.03** — Implementar CV percentual, validade da média e avisos; identificar separadamente eventual razão robusta IQR/mediana.
-- [ ] **P4.04** — Implementar assimetria ajustada, direção e intensidade pelos critérios documentados.
-- [ ] **P4.05** — Definir saída por medida com estados e motivos para n=0/1/2, série constante e resultados indefinidos; não serializar NaN/infinito.
-- [ ] **P4.06** — Calcular cercas, bigodes, média, modas e outliers do boxplot no Python; incluir IDs dos registros sinalizados.
-- [ ] **P4.07** — Calcular bins, densidade do histograma e KDE; usar bins comuns na comparação e registrar banda/fallbacks.
-- [ ] **P4.08** — Produzir tabelas comparativas de medidas, quadros CV/IQR 7×2 e tabela Q1/Q3/IQR.
-- [ ] **P4.09** — Validar fórmulas com exemplos pequenos calculáveis manualmente e casos de borda; conferir cercas inclusivas e IQR zero.
-- [ ] **P4.10** — Reproduzir as referências exploratórias de pontos e modas da metodologia a partir do CSV identificado pelo hash.
+- [X] **P4.01** — Implementar média, mediana, modas/frequência, mínimo, máximo e amplitude para cada variável/time.
+- [X] **P4.02** — Implementar variância e desvio com ddof=1, quartis lineares e IQR.
+- [X] **P4.03** — Implementar CV percentual, validade da média e avisos; identificar separadamente eventual razão robusta IQR/mediana.
+- [X] **P4.04** — Implementar assimetria ajustada, direção e intensidade pelos critérios documentados.
+- [X] **P4.05** — Definir saída por medida com estados e motivos para n=0/1/2, série constante e resultados indefinidos; não serializar NaN/infinito.
+- [X] **P4.06** — Calcular cercas, bigodes, média, modas e outliers do boxplot no Python; incluir IDs dos registros sinalizados.
+- [X] **P4.07** — Calcular bins, densidade do histograma e KDE; usar bins comuns na comparação e registrar banda/fallbacks.
+- [X] **P4.08** — Produzir tabelas comparativas de medidas, quadros CV/IQR 7×2 e tabela Q1/Q3/IQR.
+- [X] **P4.09** — Validar fórmulas com exemplos pequenos calculáveis manualmente e casos de borda; conferir cercas inclusivas e IQR zero.
+- [X] **P4.10** — Reproduzir as referências exploratórias de pontos e modas da metodologia a partir do CSV identificado pelo hash.
 
-**Verificação/saída:** resultados completos das sete variáveis para os dois times, sem arredondar intermediários. Boxplots e tabelas consomem o mesmo resultado científico.
+**Verificação/saída:** validado em 29/10/2026: `make data-describe` gera 14 resultados, histogramas/KDE e quadros comparativos 7×2 em JSON, sem arredondamento intermediário. Boxplots e tabelas compartilham medidas. `make check` aprovado com 110 testes, incluindo referências reais, exemplos manuais e casos de borda. [Guia e resultados](../development/descriptive.md), [testes](../../backend/tests/analytics/test_descriptive.py) e [histórico](requirements.md).
 
 ## Etapa 5 — Implementar e validar detecção de outliers
 
