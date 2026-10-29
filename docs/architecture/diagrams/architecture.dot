@@ -1,0 +1,36 @@
+digraph Architecture {
+  graph [rankdir=TB, bgcolor="#08111f", pad=0.35, nodesep=0.35, ranksep=0.6,
+    fontname="DejaVu Sans", fontsize=20, fontcolor="#e2e8f0",
+    label="QUADRASCOPE · ARQUITETURA PROPOSTA\nAtlanta Hawks × Houston Rockets", labelloc=t];
+  node [shape=box, style="rounded,filled", color="#476079", fillcolor="#122b40",
+    fontname="DejaVu Sans", fontsize=11, fontcolor="#f8fafc", margin="0.20,0.14"];
+  edge [color="#7c9bb9", fontcolor="#b6c6dc", fontname="DejaVu Sans", fontsize=9];
+
+  subgraph cluster_offline {
+    label="PROCESSAMENTO OFFLINE · PYTHON"; fontsize=13; color="#335b79"; style=rounded;
+    csv [shape=cylinder, label="CSV ORIGINAL IMUTÁVEL\n2.238 linhas · 28 colunas · 30 times"];
+    ingestion [label="INGESTÃO E QUALIDADE\nTipos · domínios · chave · pareamento"];
+    canonical [shape=cylinder, label="BASE CANÔNICA\n30 times preservados · adversários"];
+    scope [label="RECORTE PRINCIPAL\nAtlanta: 75 jogos · Houston: 74 jogos\nPTS · REB · AST · STL · BLK · PF · FG3M"];
+    science [fillcolor="#18334d", label="NÚCLEO CIENTÍFICO COMPARTILHADO\nDescritivas · distribuições · detectores\nFunções determinísticas · validação"];
+    artifacts [shape=cylinder, label="ARTEFATOS + MANIFESTO\nParquet / JSON · qualidade · parâmetros\nHash do dataset · código · dependências"];
+    csv -> ingestion -> canonical -> scope -> science -> artifacts;
+  }
+
+  subgraph cluster_online {
+    label="APLICAÇÃO ONLINE · TOPOLOGIA A VALIDAR"; fontsize=13; color="#3e6b58"; style=rounded;
+    api [fillcolor="#133f37", label="FASTAPI + PYDANTIC\nContratos · versões · filtros · estados"];
+    content [fillcolor="#312244", label="CONTEÚDO ANALÍTICO\nInterpretações por contexto\nMétodos · limitações · evidências"];
+    web [fillcolor="#14344e", label="REACT + TYPESCRIPT\nECharts · tabelas acessíveis · URL\nCache por versão e contexto"];
+    user [fillcolor="#312244", label="RELATÓRIO ATLANTA × HOUSTON\nSíntese · Perfil · Comparação\nAnomalias · Dados e métodos"];
+    {rank=same; api; content;}
+    content -> api [label="textos e evidências"];
+    api -> web [label="HTTP JSON / OpenAPI", dir=both];
+    web -> user [label="filtros e interpretações", dir=both];
+  }
+
+  artifacts -> api [label="consulta de artefatos validados", color="#37a88f", penwidth=2];
+  api -> science [label="descritivas sob demanda\nmesmas funções", style=dashed, constraint=false];
+  policy [shape=note, fillcolor="#24303d", label="POLÍTICA DE FILTROS\nDescritivas: recalcular no recorte\nDetectores: referência fixa por time; filtrar exibição\nSempre informar referência e n"];
+  api -> policy [style=dotted, arrowhead=none];
+}
