@@ -50,7 +50,7 @@ Legenda de uso: **principal** = vetor obrigatório das sete variáveis; **contex
 - Ordenar por time, data e ID de partida para análises sequenciais. A ordenação original do CSV não define sequência temporal.
 - Preservar CSV original e seus 28 campos na base canônica. Dados derivados têm nomes e proveniência próprios.
 
-## Campos derivados previstos para a etapa 3
+## Campos derivados implementados na etapa 3
 
 | Campo | Derivação | Uso e limitação |
 | --- | --- | --- |
@@ -60,6 +60,8 @@ Legenda de uso: **principal** = vetor obrigatório das sete variáveis; **contex
 | venue | vs.=home; @=away | Conferir contra a outra linha; não inferir de posição no CSV |
 | overtime_periods | (team_minutes−240)/25 | Somente após validar domínio 240+25k, k inteiro não negativo |
 | win_rate | Vitórias / n no filtro | Não confundir com cumulative_win_rate |
+
+Os cinco campos de partida são gerados por `make data-quality` apenas após aprovação da auditoria. `win_rate` pertence ao resumo de cobertura, não é uma coluna repetida por partida. Ver [qualidade e enriquecimento](../development/quality.md).
 
 MIN=240 corresponde a 5 jogadores × 48 minutos; 25 minutos agregados adicionais são compatíveis com uma prorrogação de cinco minutos. Essa interpretação é apoiada pelo padrão interno, mas a definição da fonte ainda precisa ser documentada.
 

@@ -2,7 +2,7 @@
 
 Relatório web interativo de análise de dados da NBA, desenvolvido para o Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. O foco do grupo é **Atlanta Hawks × Houston Rockets**, nas variáveis PTS, REB, AST, STL, BLK, PF e FG3M.
 
-**Estado atual:** etapas 0, 1 e 2 concluídas. Ambiente reproduzível, ingestão estrita, normalização e recorte dos times disponíveis. Qualidade completa, cálculos, API, frontend e deploy ainda pendentes. A stack **FastAPI + React** foi confirmada pelo grupo.
+**Estado atual:** etapas 0–3 concluídas. Ambiente reproduzível, ingestão, auditoria interna e dados enriquecidos disponíveis. Estatística descritiva, detectores, API, frontend e deploy ainda pendentes. A stack **FastAPI + React** foi confirmada pelo grupo.
 
 ## Estrutura atual
 
@@ -27,7 +27,8 @@ QuadraScope/
     ├── README.md
     ├── development/
     │   ├── setup.md
-    │   └── ingestion.md
+    │   ├── ingestion.md
+    │   └── quality.md
     ├── architecture/
     │   ├── architecture.md
     │   └── diagrams/
@@ -64,6 +65,7 @@ O [guia de desenvolvimento](docs/development/setup.md) apresenta instalação al
 - [Índice da documentação](docs/README.md).
 - [Ambiente de desenvolvimento e comandos](docs/development/setup.md).
 - [Ingestão, normalização e arquivos gerados](docs/development/ingestion.md).
+- [Qualidade, cobertura e enriquecimento](docs/development/quality.md).
 - [Plano de implementação e tarefas](docs/planning/implementation-plan.md).
 - [Requisitos, caixas de conclusão e histórico](docs/planning/requirements.md).
 - [Arquitetura](docs/architecture/architecture.md) e [diagrama](docs/architecture/diagrams/quadrascope-arquitetura.svg).
@@ -75,6 +77,12 @@ Para gerar a base canônica e o recorte do grupo:
 make data-normalize
 ```
 
-Os intermediários ficam em `data/processed/ingestion/`: `canonical.parquet`, `focus.parquet` e `ingestion.json`. O comando confere o hash do CSV e preserva os dados originais. A validação completa de qualidade será feita na etapa 3.
+Os intermediários ficam em `data/processed/ingestion/`: `canonical.parquet`, `focus.parquet` e `ingestion.json`. O comando confere o hash do CSV e preserva os dados originais. Para executar a auditoria de qualidade e gerar os intermediários enriquecidos:
+
+```bash
+make data-quality
+```
+
+O relatório fica em `data/processed/quality/quality.json`. Somente uma base aprovada nas regras internas gera `canonical_enriched.parquet` e `focus_enriched.parquet`, preservando os 28 campos e adicionando adversário, pontos adversários, saldo, mando e prorrogações. Falhas bloqueiam as saídas enriquecidas; zeros legítimos e prorrogações são preservados como contexto.
 
 Ainda não há servidor de aplicação. `make data-build` continua reservado ao pipeline completo e retorna erro explícito; ele não substitui o comando de normalização. As instruções de execução da aplicação e hospedagem serão adicionadas nas etapas correspondentes.

@@ -1,6 +1,6 @@
 # Metodologia científica — QuadraScope
 
-> Especificação para implementação, revisada em 29/10/2026. Auditoria exploratória executada; ingestão e testes de normalização implementados na etapa 2. Qualidade completa e cálculos estatísticos ainda não implementados.
+> Especificação para implementação, revisada em 29/10/2026. Ingestão, auditoria interna, cobertura e enriquecimento implementados nas etapas 2–3, com testes. Cálculos estatísticos e detectores ainda não implementados.
 
 A origem NBA via `nba_api` foi informada pelo grupo; os detalhes conhecidos e não informados estão na [proveniência](provenance.md). O [CSV preservado](../../data/raw/stats_times_regular_final.csv) é a entrada reproduzível da análise.
 

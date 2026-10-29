@@ -1,4 +1,4 @@
-# Ambiente de desenvolvimento — etapas 1 e 2
+# Ambiente de desenvolvimento — etapas 1–3
 
 ## Versões e dependências
 
@@ -57,13 +57,14 @@ Essa alternativa não instala pytest/Ruff; usar o fluxo uv para desenvolvimento.
 | `make check-env` | Importa dependências, confere Python e localização dos dados; imprime versões e configuração |
 | `make lint` | Ruff check + verificação de formatação |
 | `make format` | Aplica somente a formatação Ruff |
-| `make test` | Executa configuração e contratos de ingestão/normalização |
+| `make test` | Executa configuração, ingestão e qualidade |
 | `make check` | Ambiente + lint + testes |
 | `make export-requirements` | Regenera requirements de runtime com hashes, sem atualizar o lock |
 | `make data-normalize` | Gera base canônica, recorte e relatório intermediários da etapa 2 |
+| `make data-quality` | Audita a fonte e libera dados enriquecidos somente se aprovados |
 | `make data-build` | Reservado ao pipeline completo; termina com erro explícito |
 
-O [guia de ingestão](ingestion.md) detalha `make data-normalize` e suas saídas locais. O build científico completo pertence à etapa 6; API e interface ainda não existem. Não há servidor para iniciar nem resultados estatísticos calculados nesta etapa.
+Os guias de [ingestão](ingestion.md) e [qualidade](quality.md) detalham os comandos e suas saídas locais. O build científico completo pertence à etapa 6; API e interface ainda não existem. Não há servidor para iniciar nem resultados estatísticos calculados nesta etapa.
 
 ## Configuração e organização do backend
 
@@ -73,21 +74,22 @@ backend/
 ├── app/
 │   ├── __init__.py
 │   └── config.py
-├── analytics/                  # metrics.py e ingestion.py; cálculos futuros
+├── analytics/                  # metrics, ingestion, quality e missingness
 ├── repositories/               # futuros repositórios de dados
-├── content/                    # reservado para textos contextualizados
+├── content/missingness.json    # teoria e limites dos métodos exigidos
 ├── scripts/
 │   ├── check_environment.py
-│   └── normalize_data.py
+│   ├── normalize_data.py
+│   └── audit_data.py
 └── tests/
     ├── unit/test_config.py
-    ├── analytics/test_ingestion.py
+    ├── analytics/              # test_ingestion.py e test_quality.py
     └── api/                    # reservado: contratos futuros
 ```
 
 `backend/app/config.py` centraliza raiz do repositório, caminhos bruto/processado, nome e hash esperado do CSV, IDs dos times, métricas e versões iniciais de schema/análise. Os caminhos padrão derivam do arquivo de configuração, não do diretório corrente. Importar configuração não lê dados nem cria pastas. As versões identificam também o relatório intermediário da ingestão, sem indicar publicação do manifesto final da etapa 6.
 
-`data/raw/` é a entrada preservada; `data/processed/ingestion/` recebe os intermediários locais da etapa 2. Artefatos gerados ficam ignorados até a política de publicação da etapa 6. Não usar `git add -f` para publicar resultados parciais. CSV, PDF e documentos fornecidos continuam versionáveis e preservados.
+`data/raw/` é a entrada preservada; `data/processed/ingestion/` recebe os intermediários locais da etapa 2 e `data/processed/quality/` recebe diagnóstico e dados enriquecidos da etapa 3. Artefatos gerados ficam ignorados até a política de publicação da etapa 6. Não usar `git add -f` para publicar resultados parciais. CSV, PDF e documentos fornecidos continuam versionáveis e preservados.
 
 ## Testes
 
@@ -99,7 +101,7 @@ uv run --locked pytest -m analytics
 uv run --locked pytest -m api
 ```
 
-As seleções unit e analytics têm testes de configuração e ingestão, respectivamente. A suíte api continua reservada; seleção sem testes retorna o código correspondente do pytest e não representa sucesso de API. Os testes de configuração verificam caminhos; os de ingestão verificam contratos, conversões, preservação e roundtrip Parquet. Cálculos estatísticos ainda não são cobertos porque não foram implementados.
+As seleções unit e analytics têm testes de configuração e de ingestão/qualidade, respectivamente. A suíte api continua reservada; seleção sem testes retorna o código correspondente do pytest e não representa sucesso de API. Os testes de configuração verificam caminhos; os de ingestão verificam contratos, conversões, preservação e roundtrip Parquet. Cálculos estatísticos ainda não são cobertos porque não foram implementados.
 
 ## Validação da etapa 1 em 29/10/2026
 
@@ -120,3 +122,7 @@ R01, R05 e R06 permanecem parciais: preparar o ambiente não entrega aplicação
 ## Validação da etapa 2 em 29/10/2026
 
 `make check` aprovado com 34 testes (configuração e ingestão), Ruff e formatação. `make data-normalize` gerou base 2.238×28, 30 times e recorte 149×28. IDs, tipos, datas e valores foram preservados no roundtrip Parquet; execuções repetidas e entradas inválidas foram verificadas. Consulte [contratos e testes de ingestão](ingestion.md). O CSV original permanece inalterado.
+
+## Validação da etapa 3 em 29/10/2026
+
+`make check` aprovado com 67 testes, Ruff e formatação. `make data-quality` aprovado com 64 checagens sem falhas bloqueantes na base fornecida. Dados enriquecidos 2.238×33 e recorte 149×33; ausências, zeros, cobertura e aplicabilidade dos quatro métodos documentados. Os testes confirmam bloqueio e invalidação de saídas antigas após erros de entrada ou consistência. Consulte [qualidade e enriquecimento](quality.md).

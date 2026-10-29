@@ -39,5 +39,9 @@ class Settings:
     def ingestion_dir(self) -> Path:
         return self.processed_data_dir / "ingestion"
 
+    @property
+    def quality_dir(self) -> Path:
+        return self.processed_data_dir / "quality"
+
 
 settings = Settings()

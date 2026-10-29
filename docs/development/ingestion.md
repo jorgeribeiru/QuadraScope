@@ -42,7 +42,7 @@ O relatório contém o status `normalized_pending_quality_validation`, SHA-256, 
 - Validar data real no formato exato YYYY-MM-DD; preservar a data civil em `date32[day][pyarrow]`, inclusive no Parquet, sem timezone.
 - Ordenar por time, data e ID de partida, com índice posicional reiniciado. Nenhuma duplicata, observação extrema ou valor zero é removido.
 
-O domínio básico de tipos é validado aqui. Contagens detalhadas de qualidade, duplicatas, relações entre colunas, pareamento de adversários e cobertura serão implementados na etapa 3. Preservar uma célula ausente não significa aprová-la para análise.
+O domínio básico de tipos é validado aqui. Contagens detalhadas, duplicatas, relações, pareamento e cobertura são executados separadamente por [make data-quality](quality.md), implementado na etapa 3. Preservar uma célula ausente não significa aprová-la para análise.
 
 ## Componentes e uso programático
 
@@ -67,4 +67,4 @@ uv run --locked pytest -m analytics
 
 Os testes cobrem schema inválido, registro malformado, IDs com zeros à esquerda, literal NA, WL fora do domínio, datas inválidas, frações/contagens inválidas, overflow, ausências preservadas, ordenação, recorte, exclusões, roundtrip, execução repetida e proteção da origem. A integração com o CSV confere 2.238×28, 30 times, 149×7 features e 75/74 jogos do grupo.
 
-`make data-build` permanece indisponível: normalização é apenas o primeiro segmento do pipeline. API, interface e cálculos estatísticos ainda não foram implementados. Os requisitos R07–R10 permanecem parciais até a apresentação no sistema.
+`make data-quality` audita e enriquece a fonte separadamente, sem promover silenciosamente o status destes intermediários de normalização. `make data-build` permanece indisponível: normalização e qualidade são apenas os primeiros segmentos do pipeline. API, interface e cálculos estatísticos ainda não foram implementados. Os requisitos R07–R10 permanecem parciais até a apresentação no sistema.

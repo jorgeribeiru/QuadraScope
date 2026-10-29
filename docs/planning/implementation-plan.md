@@ -1,7 +1,7 @@
 # Plano de implementação — QuadraScope
 
 > Do passo 0 à entrega. Revisão: 29/10/2026. Foco: Atlanta Hawks × Houston Rockets.
-> Estado atual: etapas 0, 1 e 2 concluídas. Ingestão estrita, normalização, registro de métricas e recorte disponíveis; qualidade completa, cálculos, API, frontend e deploy ainda pendentes.
+> Estado atual: etapas 0–3 concluídas. Ingestão, auditoria interna, cobertura e enriquecimento disponíveis; cálculos estatísticos, API, frontend e deploy ainda pendentes.
 
 ## Uso do plano
 
@@ -65,18 +65,18 @@ As caixas já marcadas na etapa 0 indicam documentação revisada e confirmaçõ
 
 **Dependência:** etapa 2. **Requisitos:** R08, R11–R14.
 
-- [ ] **P3.01** — Calcular por coluna missing, zeros, negativos e valores fora de domínio; identificar regras não aplicáveis.
-- [ ] **P3.02** — Detectar duplicatas de linha e da chave time-partida; verificar IDs, nomes e contagens por time.
-- [ ] **P3.03** — Validar contagens inteiras, percentuais, convertidos/tentados, FG3M≤FGM e identidades de pontos/rebotes com tolerâncias documentadas.
-- [ ] **P3.04** — Parear adversários antes de restringir o grupo; validar duas linhas, times distintos, mesma data, resultado, placar e minutos coerentes.
-- [ ] **P3.05** — Derivar adversário, pontos adversários, saldo, casa/fora e prorrogações, preservando os campos originais.
-- [ ] **P3.06** — Conferir W/L/W_PCT e sequência observada; distinguir cobertura temporal de células ausentes.
-- [ ] **P3.07** — Gerar cobertura global e por time, incluindo jogos, vitórias, casa/fora, prorrogações e confrontos diretos.
-- [ ] **P3.08** — Implementar estados de não aplicabilidade dos testes de missingness; produzir conteúdo sobre MCAR/MAR/MNAR e os quatro procedimentos exigidos.
-- [ ] **P3.09** — Testar duplicatas, data inválida, domínio inválido, adversário ausente, resultado contraditório e denominador zero.
-- [ ] **P3.10** — Produzir relatório de qualidade, separando regras bloqueantes de alertas legítimos; impedir publicação de base inválida.
+- [X] **P3.01** — Calcular por coluna missing, zeros, negativos e valores fora de domínio; identificar regras não aplicáveis.
+- [X] **P3.02** — Detectar duplicatas de linha e da chave time-partida; verificar IDs, nomes e contagens por time.
+- [X] **P3.03** — Validar contagens inteiras, percentuais, convertidos/tentados, FG3M≤FGM e identidades de pontos/rebotes com tolerâncias documentadas.
+- [X] **P3.04** — Parear adversários antes de restringir o grupo; validar duas linhas, times distintos, mesma data, resultado, placar e minutos coerentes.
+- [X] **P3.05** — Derivar adversário, pontos adversários, saldo, casa/fora e prorrogações, preservando os campos originais.
+- [X] **P3.06** — Conferir W/L/W_PCT e sequência observada; distinguir cobertura temporal de células ausentes.
+- [X] **P3.07** — Gerar cobertura global e por time, incluindo jogos, vitórias, casa/fora, prorrogações e confrontos diretos.
+- [X] **P3.08** — Implementar estados de não aplicabilidade dos testes de missingness; produzir conteúdo sobre MCAR/MAR/MNAR e os quatro procedimentos exigidos.
+- [X] **P3.09** — Testar duplicatas, data inválida, domínio inválido, adversário ausente, resultado contraditório e denominador zero.
+- [X] **P3.10** — Produzir relatório de qualidade, separando regras bloqueantes de alertas legítimos; impedir publicação de base inválida.
 
-**Verificação/saída:** relatório reproduz a auditoria; Atlanta tem 75 jogos e Houston 74; 147 partidas distintas no recorte. Inaplicabilidade estatística não é erro nem resultado de teste executado.
+**Verificação/saída:** validado em 29/10/2026: `make data-quality` aprovado, 64 checagens sem falhas bloqueantes, base enriquecida 2.238×33 e recorte 149×33. Atlanta tem 75 jogos e Houston 74, com 147 partidas distintas no recorte. `make check` aprovado com 67 testes. Os quatro métodos de missingness são não aplicáveis na base sem ausências; nenhum teste inferencial foi executado. [Guia e resultados](../development/quality.md), [testes](../../backend/tests/analytics/test_quality.py) e [histórico](requirements.md).
 
 ## Etapa 4 — Implementar descritivas e distribuições
 

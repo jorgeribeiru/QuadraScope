@@ -1,0 +1,48 @@
+{
+  "mechanisms": {
+    "MCAR": "A probabilidade de ausência independe dos valores observados e não observados.",
+    "MAR": "Condicionada nas variáveis observadas, a ausência independe dos valores que faltam; pode depender dos observados.",
+    "MNAR": "Mesmo após condicionar nos observados, a ausência depende dos valores não observados. Exige hipóteses adicionais e análise de sensibilidade."
+  },
+  "limitations": [
+    "Zero células ausentes não prova MCAR e não comprova cobertura completa do calendário.",
+    "Um teste não significativo não prova MCAR; rejeitar MCAR não identifica automaticamente MAR ou MNAR.",
+    "MAR e MNAR não são genericamente distinguíveis apenas pelos valores observados.",
+    "As linhas são times em partidas, com dependência temporal e entre adversários; desenhos longitudinais clínicos não se transferem automaticamente.",
+    "Não foram imputados dados nem fabricados padrões sintéticos para gerar resultados de testes."
+  ],
+  "methods": [
+    {
+      "id": "little",
+      "name": "Little",
+      "theory": "Teste global da hipótese MCAR por diferenças de médias entre padrões de ausência, com estatística referenciada a qui-quadrado sob condições apropriadas.",
+      "why_use": "Investigar evidência contra MCAR quando há padrões de ausência com informação suficiente.",
+      "requirements": "Definir variáveis, pressupostos do modelo multivariado, padrões, tamanho dos grupos e tratamento de covariâncias singulares. Sem missing, não há contraste informativo."
+    },
+    {
+      "id": "jamshidian_jalal",
+      "name": "Jamshidian–Jalal",
+      "theory": "Procedimento baseado em dados imputados e comparação das estruturas de covariância entre padrões; a escolha do ramo depende da adequação da normalidade multivariada.",
+      "why_use": "Avaliar ausência relacionada aos observados, discutindo normalidade e o ramo não paramétrico quando apropriado.",
+      "requirements": "Padrões com grupos suficientes, estratégia de imputação, pressupostos e, quando houver simulação, semente e replicações. Não discrimina genericamente MNAR."
+    },
+    {
+      "id": "listing_schlittgen",
+      "name": "Listing–Schlittgen",
+      "theory": "Abordagem paramétrica de avaliação global do mecanismo de ausência em desenho longitudinal, discutida na referência para padrões monotônicos.",
+      "why_use": "Investigar a adequação de MCAR quando o desenho e o padrão de abandono atendem à formulação adotada.",
+      "requirements": "Definir unidades acompanhadas, avaliações repetidas, formulação e pressupostos. O formato time-partida não é automaticamente um painel de abandono monotônico."
+    },
+    {
+      "id": "fairclough",
+      "name": "Regressão logística de Fairclough",
+      "theory": "Modela o indicador de resposta/ausência a partir de covariáveis em avaliações longitudinais, examinando associações com a resposta.",
+      "why_use": "Investigar se a ausência se relaciona com informação disponível no desenho; dados recuperados podem apoiar análises adicionais sob hipóteses explícitas.",
+      "requirements": "Indicador de ausência com variação, covariáveis e avaliações definidas; atenção a separação e amostra. Indicador constante inviabiliza o ajuste; regressão genérica não demonstra MNAR."
+    }
+  ],
+  "references": [
+    "https://amices.org/mice/reference/mcar.html",
+    "https://link.springer.com/article/10.1186/1477-7525-7-57"
+  ]
+}

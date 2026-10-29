@@ -1,6 +1,6 @@
 # Requisitos e acompanhamento — QuadraScope
 
-> Base: [Projeto 1.pdf](<../references/Projeto 1.pdf>), cinco páginas. Revisão: 29/10/2026. Etapas 0, 1 e 2 concluídas; infraestrutura e normalização validadas. Os requisitos da aplicação permanecem pendentes ou parciais.
+> Base: [Projeto 1.pdf](<../references/Projeto 1.pdf>), cinco páginas. Revisão: 29/10/2026. Etapas 0–3 concluídas; infraestrutura, normalização e auditoria interna validadas. Os requisitos da aplicação permanecem pendentes ou parciais.
 
 A ordem de trabalho e as tarefas detalhadas estão no [plano de implementação](implementation-plan.md). Este arquivo acompanha o cumprimento dos requisitos do enunciado.
 
@@ -15,13 +15,13 @@ A ordem de trabalho e as tarefas detalhadas estão no [plano de implementação]
 | [ ] | R05 | Hospedagem ou instruções locais, p.1 | URL pública e README | Abrir URL em sessão limpa; alternativa local com requirements.txt e comando único documentado | Parcial — 29/10/2026: requirements com hashes, setup e verificações [documentados](../development/setup.md); aplicação e deploy ainda inexistentes |
 | [ ] | R06 | Código e link de aplicação, p.2 | Repositório/zip e submissão | Entrega reproduzível identificando versão; submissão é responsabilidade do grupo | — |
 | [ ] | R07 | Dimensões, colunas e significado, p.2 | Dados e dicionário | Todas as 28 colunas, unidade de análise e cobertura | Parcial — 29/10/2026: [registro das 28 colunas e cobertura](../development/ingestion.md) implementados; falta apresentação no sistema |
-| [ ] | R08 | Tipos, data e tamanho, p.2 | Dados e transformações | Tipos semânticos, parsing de datas, bytes e contagens identificados | Parcial — 29/10/2026: hash, bytes, tipos e datas civis validados na [ingestão](../../backend/analytics/ingestion.py); falta apresentação no sistema |
+| [ ] | R08 | Tipos, data e tamanho, p.2 | Dados e transformações | Tipos semânticos, parsing de datas, bytes e contagens identificados | Parcial — 29/10/2026: tipos, datas, tamanho e [cobertura auditada](../development/quality.md) disponíveis; falta apresentação no sistema |
 | [ ] | R09 | Nomes intuitivos e conversões, p.2 | Mapa original→canônico | Mostrar todas as renomeações e explicar que W/L já são numéricos neste CSV | Parcial — 29/10/2026: [mapa e conversões](../../backend/analytics/metrics.py) implementados e testados; falta apresentação no sistema |
 | [ ] | R10 | Excluir campos sem função para modelos, p.2 | Metodologia de seleção | Justificar vetor de sete variáveis, preservar base e discutir vazamento futuro | Parcial — 29/10/2026: vetor das sete variáveis e motivos de exclusão no [registro](../../backend/analytics/metrics.py); falta discussão publicada no sistema |
-| [ ] | R11 | Zeros, negativos, duplicatas e fora de domínio, p.2 | Qualidade | Contagens e regras verificáveis por coluna; consistências entre linhas separadas | — |
-| [ ] | R12 | Missing por coluna e MCAR/MAR/MNAR, p.2 | Qualidade e métodos | Contagens reais e distinção entre células ausentes e cobertura incompleta | — |
-| [ ] | R13 | Little, Jamshidian–Jalal, Listing–Schlittgen, Fairclough, p.2 | Dados e métodos | Explicar teoria, pressupostos, uso e inaplicabilidade atual; nenhuma execução fictícia | — |
-| [ ] | R14 | Inconsistências/outliers por coluna, p.3 | Qualidade e Anomalias | Tabela com domínio do método, contagens e não aplicabilidade para IDs/textos | — |
+| [ ] | R11 | Zeros, negativos, duplicatas e fora de domínio, p.2 | Qualidade | Contagens e regras verificáveis por coluna; consistências entre linhas separadas | Parcial — 29/10/2026: [domínios, zeros, duplicatas e relações](../../backend/analytics/quality.py) auditados; falta apresentação no sistema |
+| [ ] | R12 | Missing por coluna e MCAR/MAR/MNAR, p.2 | Qualidade e métodos | Contagens reais e distinção entre células ausentes e cobertura incompleta | Parcial — 29/10/2026: zero missing por coluna, cobertura separada e [mecanismos explicados](../../backend/content/missingness.json); falta apresentação no sistema |
+| [ ] | R13 | Little, Jamshidian–Jalal, Listing–Schlittgen, Fairclough, p.2 | Dados e métodos | Explicar teoria, pressupostos, uso e inaplicabilidade atual; nenhuma execução fictícia | Parcial — 29/10/2026: [teoria e aplicabilidade](../../backend/analytics/missingness.py) dos quatro métodos implementadas; sem execução fictícia; falta apresentação no sistema |
+| [ ] | R14 | Inconsistências/outliers por coluna, p.3 | Qualidade e Anomalias | Tabela com domínio do método, contagens e não aplicabilidade para IDs/textos | Parcial — 29/10/2026: [inconsistências e domínios](../development/quality.md) disponíveis; outliers ainda não avaliados e apresentação no sistema pendente |
 | [ ] | R15 | Z-score/IQR, Grubbs, ECOD, k-NN, DBSCAN, LOF, p.3 | Anomalias e metodologia | Implementação validada, parâmetros, referência, quantidades e registros; distinguir uni/multivariado | — |
 | [ ] | R16 | Medidas das sete variáveis por time, p.3 | Perfil | Média, mediana, moda(s), extremos, amplitude, desvio, variância, Q1/Q3 e outliers para ambos | — |
 | [ ] | R17 | Boxplot com todos os elementos, p.3 | Perfil e Comparação | Média, mediana, moda(s), Q1/Q3, cercas, bigodes e outliers consistentes com tabela | — |
@@ -69,8 +69,18 @@ Registrar uma linha a cada atividade concluída, mesmo quando o requisito ainda 
 | 29/10/2026 | P2.06 | R07, R08 — parciais | make data-normalize gerou base intermediária 2.238×28 com 30 times; sem descartar campos ou linhas | [Comando](../../backend/scripts/normalize_data.py), [guia](../development/ingestion.md) | Codex |
 | 29/10/2026 | P2.07 | R10 — parcial | Recorte 149×28, com 75/74 jogos; features 149×7 em ordem fixa e exclusões justificadas | [Seleções](../../backend/analytics/ingestion.py), [registro](../../backend/analytics/metrics.py) | Codex |
 | 29/10/2026 | P2.08 | R07–R10 — parciais | make check aprovado: 34 testes, Ruff e formatação; entradas inválidas, preservação, repetição e Parquet validados | [Testes](../../backend/tests/analytics/test_ingestion.py), [validação](../development/ingestion.md) | Codex |
+| 29/10/2026 | P3.01 | R11, R12, R14 — parciais | Perfis das 28 colunas, global/grupo: missing, zeros, negativos, domínio e não aplicabilidade; outliers não avaliados | [Auditoria](../../backend/analytics/quality.py) | Codex |
+| 29/10/2026 | P3.02 | R11 — parcial | Duplicatas, chave, nomes e siglas auditados; zero excessos na base real | [Auditoria](../../backend/analytics/quality.py), [testes](../../backend/tests/analytics/test_quality.py) | Codex |
+| 29/10/2026 | P3.03 | R11 — parcial | Identidades, arremessos e percentuais conferidos; denominador zero gera aviso sem divisão/imputação | [Regras e tolerâncias](../development/quality.md) | Codex |
+| 29/10/2026 | P3.04 | R11 — parcial | Pareamento 1:1 por partida/lado antes do recorte; data, times, resultado, placar, mando e minutos conferidos | [Auditoria](../../backend/analytics/quality.py), [testes](../../backend/tests/analytics/test_quality.py) | Codex |
+| 29/10/2026 | P3.05 | R08 — parcial | Cinco campos derivados preservando os 28 originais; base enriquecida 2.238×33 e recorte 149×33 | [Dicionário](../data/data-dictionary.md), [comando](../../backend/scripts/audit_data.py) | Codex |
+| 29/10/2026 | P3.06 | R08, R12 — parciais | W/L/W_PCT e sequência conferidos; lacunas de cobertura diferenciadas de células ausentes | [Acumulados](../../backend/analytics/quality.py) | Codex |
+| 29/10/2026 | P3.07 | R08 — parcial | 1.119 partidas; grupo 149 registros/147 partidas; 75/74 jogos e dois confrontos diretos, com mando/vitórias/prorrogações | [Cobertura](../development/quality.md) | Codex |
+| 29/10/2026 | P3.08 | R12, R13 — parciais | Teoria, pressupostos e aplicabilidade dos quatro métodos; zero missing, sem estatísticas ou p-valores inventados | [Conteúdo](../../backend/content/missingness.json), [estados](../../backend/analytics/missingness.py) | Codex |
+| 29/10/2026 | P3.09 | R11–R14 — parciais | make check aprovado com 67 testes; erros de domínio/data, duplicatas, ausência de adversário, resultado e denominador zero cobertos | [Testes de qualidade](../../backend/tests/analytics/test_quality.py) | Codex |
+| 29/10/2026 | P3.10 | R11–R14 — parciais | 64 checagens, sem bloqueios na base real; falhas geram diagnóstico e invalidam enriquecidos antigos, preservando CSV/PDF | [Auditoria executável](../../backend/scripts/audit_data.py), [guia](../development/quality.md) | Codex |
 
-Etapas 1 e 2 de implementação concluídas e validadas em 29/10/2026. Infraestrutura e normalização estão assinaladas no plano; elas não concluem os requisitos de apresentação no sistema, qualidade completa, hospedagem ou submissão.
+Etapas 1–3 de implementação concluídas e validadas em 29/10/2026. Infraestrutura, normalização e auditoria estão assinaladas no plano; elas não concluem os requisitos de apresentação no sistema, detecção estatística de outliers, hospedagem ou submissão.
 
 ## Pendências e responsabilidade
 
