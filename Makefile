@@ -1,6 +1,6 @@
 UV ?= uv
 
-.PHONY: help setup check-env lint format test check export-requirements data-normalize data-quality data-describe data-anomalies data-build data-validate data-reproduce data-package-runtime
+.PHONY: help setup check-env lint format test check export-requirements data-normalize data-quality data-describe data-anomalies data-build data-validate data-reproduce data-package-runtime api-serve api-export api-contracts
 
 help:
 	@echo "setup                Instala Python 3.12 e sincroniza .venv pelo lock"
@@ -17,7 +17,10 @@ help:
 	@echo "data-build           Executa pipeline integral, valida e publica release local"
 	@echo "data-validate        Verifica o release publicado, hashes e consistências"
 	@echo "data-reproduce       Compara dois builds independentes sem promover ponteiro"
-	@echo "data-package-runtime Exporta pacote JSON para a futura API"
+	@echo "data-package-runtime Exporta pacote JSON para a API"
+	@echo "api-serve            Inicia FastAPI local em 127.0.0.1:8000"
+	@echo "api-export           Exporta o contrato OpenAPI sem carregar artefatos"
+	@echo "api-contracts        Gera e confere tipos TypeScript a partir do OpenAPI"
 
 setup:
 	$(UV) sync --locked
@@ -64,3 +67,14 @@ data-reproduce:
 
 data-package-runtime:
 	$(UV) run --locked python -m backend.scripts.build_data package-runtime
+
+api-serve:
+	$(UV) run --locked uvicorn backend.app.main:app --host 127.0.0.1 --port 8000
+
+api-export:
+	$(UV) run --locked python -m backend.scripts.export_api
+
+api-contracts: api-export
+	npm ci --ignore-scripts --prefix tools/contracts
+	npm run generate --prefix tools/contracts
+	npm run check --prefix tools/contracts

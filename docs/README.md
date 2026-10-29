@@ -9,6 +9,8 @@
 | Desenvolvimento | [Descritivas e distribuições](development/descriptive.md) | Medidas, boxplots, histogramas/KDE e quadros da etapa 4 |
 | Desenvolvimento | [Detectores e sensibilidade](development/anomalies.md) | Sete métodos, parâmetros revisados e validação ECOD da etapa 5 |
 | Desenvolvimento | [Artefatos reproduzíveis](development/artifacts.md) | Build completo, schemas, manifesto, publicação e pacote de runtime da etapa 6 |
+| Desenvolvimento | [API FastAPI](development/api.md) | Servidor local, filtros, referência científica, erros e cache da etapa 7 |
+| API | [OpenAPI exportado](api/openapi.json) | Contratos HTTP usados para gerar os tipos TypeScript |
 | Planejamento | [Requisitos e acompanhamento](planning/requirements.md) | Matriz R01–R24, critérios de aceite e histórico |
 | Planejamento | [Plano de implementação](planning/implementation-plan.md) | Tarefas P0–P11, dependências e verificações |
 | Arquitetura | [Desenho do sistema](architecture/architecture.md) | Escopo, stack, componentes, API e deploy |
@@ -19,4 +21,4 @@
 | Dados | [Metodologia](data/methodology.md) | Fórmulas, pressupostos e validação científica |
 | Dados | [Sensibilidade versionada](data/anomaly-sensitivity.json) | Revisão 1.0.0 das 44 variantes no snapshot do projeto |
 
-O [CSV original](../data/raw/stats_times_regular_final.csv) fica fora da documentação, em `data/raw/`. O backend inclui ingestão, qualidade, descritivas e detectores; build final e manifesto estão implementados; API e frontend ainda serão implementados. Voltar ao [README do projeto](../README.md).
+O [CSV original](../data/raw/stats_times_regular_final.csv) fica fora da documentação, em `data/raw/`. O backend inclui ciência, build reproduzível e API FastAPI. Os tipos HTTP estão gerados; o aplicativo React será implementado na etapa 8. Voltar ao [README do projeto](../README.md).

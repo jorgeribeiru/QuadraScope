@@ -1,4 +1,4 @@
-# Ambiente de desenvolvimento — etapas 1–6
+# Ambiente de desenvolvimento — etapas 1–7
 
 ## Versões e dependências
 
@@ -11,9 +11,9 @@
 
 Python 3.12 e Node 24 foram escolhidos entre as versões suportadas pela hospedagem prevista. Isso não equivale a uma prova de deploy; ela continua nas etapas 7–8. Referências consultadas em 29/10/2026: [Python na Vercel](https://vercel.com/docs/functions/runtimes/python), [Node na Vercel](https://vercel.com/docs/functions/runtimes/node-js/node-js-versions).
 
-O Python global não precisa ser alterado: `uv sync` usa a versão declarada e cria `.venv` na raiz. O Node instalado na máquina não é usado nesta etapa. Com nvm disponível, `nvm install` e `nvm use` na raiz selecionam a versão do futuro frontend.
+O Python global não precisa ser alterado: `uv sync` usa a versão declarada e cria `.venv` na raiz. Node é necessário somente para a ferramenta de geração/verificação dos tipos HTTP, separada do runtime Python. Com nvm disponível, `nvm install` e `nvm use` na raiz selecionam a versão do futuro frontend.
 
-`pyproject.toml` declara as dependências de runtime FastAPI, Pydantic, Uvicorn, pandas, NumPy e SciPy. O grupo `pipeline` contém PyArrow, scikit-learn e threadpoolctl, usados offline. O grupo `dev` contém Ruff, pytest e HTTPX para os testes HTTP futuros. Os dois grupos são ativados por padrão no uv para desenvolvimento. `nba_api` não é necessário para analisar o CSV já coletado, e PyOD não integra o ambiente.
+`pyproject.toml` declara as dependências de runtime FastAPI, Pydantic, Uvicorn, pandas, NumPy e SciPy. O grupo `pipeline` contém PyArrow, scikit-learn e threadpoolctl, usados offline. O grupo `dev` contém Ruff, pytest e HTTPX para os testes HTTP. Os dois grupos são ativados por padrão no uv para desenvolvimento. `nba_api` não é necessário para analisar o CSV já coletado, e PyOD não integra o ambiente.
 
 `uv.lock` fixa também as dependências transitivas. `requirements.txt` exporta runtime + pipeline com versões e hashes, sem ferramentas dev. `requirements-runtime.txt` contém somente as dependências da futura API: o leitor usa JSON, e as descritivas filtradas usam pandas/NumPy/SciPy. A leitura e os cálculos foram verificados em ambiente isolado sem PyArrow/scikit-learn/threadpoolctl; [política e pacote de runtime](artifacts.md).
 
@@ -67,9 +67,12 @@ Essa alternativa não instala pytest/Ruff; usar o fluxo uv para desenvolvimento.
 | `make data-build` | Executa todas as análises, valida e publica um release completo |
 | `make data-validate` | Confere o release atual, hashes, schemas e consistências |
 | `make data-reproduce` | Compara 13 artefatos de dois builds independentes, sem publicar |
-| `make data-package-runtime` | Exporta manifesto e dez JSONs para a futura API |
+| `make data-package-runtime` | Exporta manifesto e dez JSONs para a API |
+| `make api-serve` | Inicia Uvicorn/FastAPI em 127.0.0.1:8000 |
+| `make api-export` | Exporta OpenAPI sem exigir artefatos ou servidor |
+| `make api-contracts` | Instala gerador pelo lock Node, gera e confere os tipos TypeScript |
 
-Os guias de [ingestão](ingestion.md) e [qualidade](quality.md) detalham os comandos e suas saídas locais. O [build científico completo](artifacts.md) está disponível desde a etapa 6; API e interface ainda não existem. As descritivas estão implementadas; não há servidor de aplicação para iniciar. Ver [guia científico da etapa 4](descriptive.md).
+Os guias de [ingestão](ingestion.md) e [qualidade](quality.md) detalham os comandos e suas saídas locais. O [build científico completo](artifacts.md) está disponível desde a etapa 6. A [API](api.md) está disponível desde a etapa 7; iniciar com `make api-serve` depois de `make data-build` e consultar `/docs`. O aplicativo React ainda não existe.
 
 ## Configuração e organização do backend
 
@@ -78,7 +81,11 @@ backend/
 ├── __init__.py
 ├── app/
 │   ├── __init__.py
-│   └── config.py
+│   ├── config.py
+│   ├── main.py                # factory, lifespan, rotas e erros
+│   ├── queries.py             # allowlists e filtros
+│   ├── schemas.py             # contratos HTTP
+│   └── services.py            # composição usando o núcleo científico
 ├── analytics/                  # ingestão, qualidade, descritivas, detectores e sensibilidade
 ├── artifacts/                  # schemas, build, validação e pacote runtime
 ├── repositories/               # leitor readonly de releases
@@ -88,6 +95,7 @@ backend/
 │   ├── normalize_data.py
 │   ├── audit_data.py
 │   ├── describe_data.py
+│   ├── export_api.py
 │   ├── build_data.py
 │   ├── detect_anomalies.py
 │   ├── export_sensitivity_review.py
@@ -96,7 +104,7 @@ backend/
     ├── unit/test_config.py
     ├── analytics/              # contratos, qualidade, descritivas, distribuições e comando
     ├── fixtures/ecod-reference.json
-    └── api/                    # reservado: contratos futuros
+    └── api/test_api.py         # contratos HTTP e equivalência científica
 ```
 
 `backend/app/config.py` centraliza raiz do repositório, caminhos bruto/processado, nome e hash esperado do CSV, IDs dos times, métricas e versões iniciais de schema/análise. Os caminhos padrão derivam do arquivo de configuração, não do diretório corrente. Importar configuração não lê dados nem cria pastas. As versões identificam os contratos e relatórios; caminhos dos releases, ponteiro e pacote runtime também estão centralizados.
@@ -113,7 +121,7 @@ uv run --locked pytest -m analytics
 uv run --locked pytest -m api
 ```
 
-As seleções unit e analytics têm testes de configuração e de ingestão/qualidade, respectivamente. A suíte api continua reservada; seleção sem testes retorna o código correspondente do pytest e não representa sucesso de API. Os testes de configuração verificam caminhos; os de ingestão verificam contratos, conversões, preservação e roundtrip Parquet. Descritivas e distribuições são cobertas por exemplos manuais, propriedades, referências reais e casos de borda. Os detectores também são cobertos por referências externas, empates e sensibilidade; PyOD não é necessário nos testes normais.
+As seleções unit e analytics têm testes de configuração e de ingestão/qualidade, respectivamente. A suíte api tem 61 testes de contratos, filtros, referência, cache, concorrência e indisponibilidade. Os testes de configuração verificam caminhos; os de ingestão verificam contratos, conversões, preservação e roundtrip Parquet. Descritivas e distribuições são cobertas por exemplos manuais, propriedades, referências reais e casos de borda. Os detectores também são cobertos por referências externas, empates e sensibilidade; PyOD não é necessário nos testes normais.
 
 ## Validação da etapa 1 em 29/10/2026
 
@@ -150,3 +158,7 @@ R01, R05 e R06 permanecem parciais: preparar o ambiente não entrega aplicação
 ## Validação da etapa 6 em 29/10/2026
 
 `make check` aprovado com 171 testes, Ruff e formatação. Build integral, validação do release, reprodução independente dos 13 artefatos e exportação do pacote JSON aprovados. A instalação isolada de `requirements-runtime.txt` com hashes permite ler o pacote e calcular descritivas/distribuições de Atlanta/Houston em casa, sem CSV, Parquet, PyArrow, scikit-learn ou threadpoolctl. CSV/PDF preservados. [Contratos, publicação e reprodução](artifacts.md).
+
+## Validação da etapa 7 em 29/10/2026
+
+`make check` aprovado com 232 testes (61 HTTP), Ruff e formatação. As dez rotas foram verificadas também em Uvicorn real com `requirements-runtime.txt`, sem CSV/Parquet ou dependências offline. Tipos OpenAPI/TypeScript gerados por ferramentas com lock e compilação aprovada. Há um aviso de depreciação upstream do TestClient sobre HTTPX; os testes passam sem silenciá-lo. Nenhuma dependência Python foi alterada. Node 26.12.1 foi usado para validar o gerador; o alvo registrado do frontend continua Node 24. [Execução, contratos e limitações](api.md).

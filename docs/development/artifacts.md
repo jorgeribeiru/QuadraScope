@@ -1,6 +1,6 @@
 # Artefatos reproduzíveis — etapa 6
 
-O pipeline completo transforma um snapshot aprovado em um release identificado por SHA-256. Ele reutiliza ingestão, qualidade, descritivas, distribuições, detectores e sensibilidade das etapas anteriores. O CSV original permanece preservado. API e interface serão implementadas nas próximas etapas.
+O pipeline completo transforma um snapshot aprovado em um release identificado por SHA-256. Ele reutiliza ingestão, qualidade, descritivas, distribuições, detectores e sensibilidade das etapas anteriores. O CSV original permanece preservado. A [API](api.md) consome esse pacote desde a etapa 7; a interface será implementada na etapa 8.
 
 ## Executar
 
@@ -75,7 +75,7 @@ Antes da promoção são verificados hashes/tamanhos, schemas, valores finitos, 
 
 Uma falha no cálculo, na validação ou na escrita do ponteiro mantém a publicação anterior. Se a escrita do ponteiro falhar depois da promoção, pode existir um release completo sem referência; ele não será apresentado como atual. Esse mecanismo fornece publicação atômica local; não é uma garantia de durabilidade de todos os arquivos diante de perda de energia.
 
-`make data-validate` relê o ponteiro e valida o release completo. O leitor rejeita arquivos ausentes, adulterados ou incompatíveis; não combina releases nem fabrica resultados. Na etapa 7, a API traduzirá essas falhas de infraestrutura em respostas adequadas. Para recuperar uma publicação corrompida, restaurar um pacote completo validado ou reconstruir pelo comando de build; o pipeline não sobrescreve silenciosamente um release existente corrompido.
+`make data-validate` relê o ponteiro e valida o release completo. O leitor rejeita arquivos ausentes, adulterados ou incompatíveis; não combina releases nem fabrica resultados. A API traduz essas falhas de infraestrutura em respostas 503. Para recuperar uma publicação corrompida, restaurar um pacote completo validado ou reconstruir pelo comando de build; o pipeline não sobrescreve silenciosamente um release existente corrompido.
 
 ## Runtime e cálculos online
 
@@ -97,7 +97,7 @@ repository = ArtifactRepository(settings.runtime_package_dir)
 games = repository.get("games.json")["rows"]
 ```
 
-As futuras descritivas e distribuições filtradas reutilizam `descriptive_reports` sobre `games.json`, com pandas/NumPy/SciPy. Converter as datas ISO em datas civis na fronteira de leitura; não usar inferência Arrow como requisito do runtime. Os detectores permanecem ajustados ao histórico completo de cada time e serão filtrados apenas na exibição. Não recalcular scikit-learn online. Latência, memória e tamanho do deploy serão medidos na etapa 8.
+As descritivas e distribuições filtradas da API reutilizam `descriptive_reports` sobre `games.json`, com pandas/NumPy/SciPy. Converter as datas ISO em datas civis na fronteira de leitura; não usar inferência Arrow como requisito do runtime. Os detectores permanecem ajustados ao histórico completo de cada time e são filtrados apenas na exibição. Não recalcular scikit-learn online. Latência, memória e tamanho do deploy serão medidos na etapa 8.
 
 `requirements.txt` exporta runtime + pipeline, sem ferramentas dev. `requirements-runtime.txt` exporta somente as dependências da futura API, também com hashes. Para instalar o segundo em ambiente isolado:
 

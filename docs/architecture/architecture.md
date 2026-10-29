@@ -1,7 +1,7 @@
 # QuadraScope — Arquitetura do sistema
 
 > Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. Revisão: 29/10/2026.
-> Estado: etapas 0–6 concluídas. Ciência, sete detectores e build reproduzível validados no snapshot; endpoints e frontend ainda pendentes.
+> Estado: etapas 0–7 concluídas. Ciência, build reproduzível e API FastAPI validados no snapshot; aplicativo React, interpretação final e deploy ainda pendentes.
 
 ## Objetivo e escopo
 
@@ -142,9 +142,9 @@ Datas inclusivas; condição `all|home|away`; resultado `all|win|loss`. Estado n
 
 Não recalcular detectores silenciosamente. Uma opção futura de recálculo exigirá referência explícita e validação de amostra/parâmetros. Scores ajustados separadamente por time não compõem ranking absoluto comum.
 
-## Contratos previstos
+## Contratos da API
 
-Prefixo `/api/v1`, rotas de leitura:
+Prefixo `/api/v1`, rotas de leitura implementadas; [execução, filtros e respostas](../development/api.md):
 
 | Rota | Finalidade |
 | --- | --- |
@@ -192,14 +192,15 @@ quadrascope/
 │   ├── data/                   # proveniência, dicionário e metodologia
 │   ├── planning/               # requisitos e plano de implementação
 │   └── references/             # enunciado acadêmico original
-├── frontend/src/               # a implementar
+├── tools/contracts/            # gerador OpenAPI/TypeScript com lock
+├── frontend/src/               # somente generated/api.ts implementado na etapa 7
 │   ├── app/                    # providers, layout e rotas
 │   ├── features/               # synthesis, teams, compare, anomalies, data
 │   ├── components/             # gráficos, tabelas e estados acessíveis
 │   ├── lib/                    # HTTP, URL e formatação
 │   └── generated/              # tipos OpenAPI
 └── backend/                    # estrutura criada na etapa 1
-    ├── app/                    # API, schemas e serviços
+    ├── app/                    # FastAPI, schemas, consultas e serviços
     ├── analytics/              # funções científicas compartilhadas
     ├── artifacts/              # contratos, build, manifesto e validação
     ├── repositories/           # leitor de releases e consultas
@@ -208,7 +209,7 @@ quadrascope/
     └── tests/                  # casos científicos e contratos
 ```
 
-As etapas 1–2 criaram ambiente e normalização em `data/processed/ingestion/`. A etapa 3 gera diagnóstico e intermediários enriquecidos em `data/processed/quality/`, somente após aprovação das regras internas. Esses arquivos não são o conjunto final de publicação. A etapa 4 calcula descritivas, boxplots e distribuições em `data/processed/descriptive/`, com estados por medida e metadados. A etapa 5 gera 50 resultados e sensibilidade em `data/processed/anomalies/`; parâmetros e relatório compacto da revisão são versionados. A etapa 6 integra as análises em um build único, valida os schemas e as consistências antes da promoção, confere dois builds independentes e exporta o pacote JSON da futura API. API e frontend pertencem às próximas etapas. Evitar um segundo arquivo de arquitetura concorrente.
+As etapas 1–2 criaram ambiente e normalização em `data/processed/ingestion/`. A etapa 3 gera diagnóstico e intermediários enriquecidos em `data/processed/quality/`, somente após aprovação das regras internas. Esses arquivos não são o conjunto final de publicação. A etapa 4 calcula descritivas, boxplots e distribuições em `data/processed/descriptive/`, com estados por medida e metadados. A etapa 5 gera 50 resultados e sensibilidade em `data/processed/anomalies/`; parâmetros e relatório compacto da revisão são versionados. A etapa 6 integra as análises em um build único, valida os schemas e as consistências antes da promoção, confere dois builds independentes e exporta o pacote JSON da futura API. A etapa 7 fornece a API sobre um snapshot validado em memória, com filtros, referência fixa dos detectores, erros e identidade de cache. OpenAPI exportado e tipos TypeScript precedem o aplicativo React da etapa 8. Evitar um segundo arquivo de arquitetura concorrente.
 
 ## Entrega e pendências
 

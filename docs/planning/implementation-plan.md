@@ -1,7 +1,7 @@
 # Plano de implementação — QuadraScope
 
 > Do passo 0 à entrega. Revisão: 29/10/2026. Foco: Atlanta Hawks × Houston Rockets.
-> Estado atual: etapas 0–6 concluídas. Ciência, sete detectores, sensibilidade e artefatos reproduzíveis validados no snapshot; API, frontend e deploy ainda pendentes.
+> Estado atual: etapas 0–7 concluídas. Ciência, artefatos reproduzíveis e API FastAPI validados; aplicativo React, relatório interpretativo e deploy ainda pendentes.
 
 ## Uso do plano
 
@@ -133,18 +133,18 @@ As caixas já marcadas na etapa 0 indicam documentação revisada e confirmaçõ
 
 **Dependência:** contratos da arquitetura e artefatos da etapa 6; schemas podem ser preparados antes. **Requisitos:** suporte a R01–R24.
 
-- [ ] **P7.01** — Criar aplicação FastAPI, configuração e schemas Pydantic de resultados, metadados e erros.
-- [ ] **P7.02** — Implementar repositório de leitura dos artefatos, validação de versões e carregamento controlado.
-- [ ] **P7.03** — Implementar filtros inclusivos de data, mando e resultado, com referência explícita; validar combinações por allowlist.
-- [ ] **P7.04** — Disponibilizar `/health`, `/meta`, `/dictionary` e `/teams`, distinguindo times principais e contexto.
-- [ ] **P7.05** — Disponibilizar summary, distributions e comparisons; chamar as mesmas funções científicas para descritivas filtradas.
-- [ ] **P7.06** — Disponibilizar anomalies, mantendo ajuste sobre o histórico completo e filtros só na exibição; incluir reference_n/display_n.
-- [ ] **P7.07** — Disponibilizar quality e interpretations; vincular textos ao contexto e evidências corretos.
-- [ ] **P7.08** — Implementar estados por medida, nulls e respostas 404/422/503; distinguir seleção vazia de erro de infraestrutura.
-- [ ] **P7.09** — Expor OpenAPI e gerar tipos TypeScript; definir identidade de cache por dataset, análise e parâmetros.
-- [ ] **P7.10** — Testar contratos, filtros equivalentes entre endpoints, datas-limite, consultas vazias, IDs fora de escopo e artefatos incompatíveis.
+- [X] **P7.01** — Criar aplicação FastAPI, configuração e schemas Pydantic de resultados, metadados e erros.
+- [X] **P7.02** — Implementar repositório de leitura dos artefatos, validação de versões e carregamento controlado.
+- [X] **P7.03** — Implementar filtros inclusivos de data, mando e resultado, com referência explícita; validar combinações por allowlist.
+- [X] **P7.04** — Disponibilizar `/health`, `/meta`, `/dictionary` e `/teams`, distinguindo times principais e contexto.
+- [X] **P7.05** — Disponibilizar summary, distributions e comparisons; chamar as mesmas funções científicas para descritivas filtradas.
+- [X] **P7.06** — Disponibilizar anomalies, mantendo ajuste sobre o histórico completo e filtros só na exibição; incluir reference_n/display_n.
+- [X] **P7.07** — Disponibilizar quality e interpretations; vincular textos ao contexto e evidências corretos.
+- [X] **P7.08** — Implementar estados por medida, nulls e respostas 404/422/503; distinguir seleção vazia de erro de infraestrutura.
+- [X] **P7.09** — Expor OpenAPI e gerar tipos TypeScript; definir identidade de cache por dataset, análise e parâmetros.
+- [X] **P7.10** — Testar contratos, filtros equivalentes entre endpoints, datas-limite, consultas vazias, IDs fora de escopo e artefatos incompatíveis.
 
-**Verificação/saída:** API utilizável sem frontend, resultados rastreáveis e documentação de endpoints. Testes incluem ambos os times e não se limitam a respostas HTTP 200.
+**Verificação/saída:** validado em 29/10/2026: dez rotas `/api/v1`, lifespan com snapshot validado, consultas por allowlist, filtros inclusivos equivalentes, descritivas recalculadas e detectores com referência fixa. OpenAPI exportado e tipos TypeScript compilados. `make check` aprovado com 232 testes (61 HTTP), Ruff e formatação; verificação em Uvicorn real no ambiente reduzido sem CSV/Parquet/dependências offline. Estados 200/304/404/422/503 e interpretações explicitamente pendentes da etapa 9. [Guia](../development/api.md), [OpenAPI](../api/openapi.json), [testes](../../backend/tests/api/test_api.py) e [histórico](requirements.md).
 
 ## Etapa 8 — Criar a base React e provar a hospedagem
 
