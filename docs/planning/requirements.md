@@ -1,6 +1,6 @@
 # Requisitos e acompanhamento — QuadraScope
 
-> Base: [Projeto 1.pdf](<../references/Projeto 1.pdf>), cinco páginas. Revisão: 29/10/2026. Os critérios abaixo são planejados; nenhuma funcionalidade de aplicação está concluída.
+> Base: [Projeto 1.pdf](<../references/Projeto 1.pdf>), cinco páginas. Revisão: 29/10/2026. Etapas 0 e 1 concluídas; infraestrutura de desenvolvimento validada. Os requisitos da aplicação permanecem pendentes ou parciais.
 
 A ordem de trabalho e as tarefas detalhadas estão no [plano de implementação](implementation-plan.md). Este arquivo acompanha o cumprimento dos requisitos do enunciado.
 
@@ -8,11 +8,11 @@ A ordem de trabalho e as tarefas detalhadas estão no [plano de implementação]
 
 | Concluído | ID | Exigência / página do PDF | Entrega no sistema | Critério de aceite | Evidência / data |
 | --- | --- | --- | --- | --- | --- |
-| [ ] | R01 | Sistema Python com justificativa do framework, p.1 | API FastAPI e análise Python; justificativa em Dados | Justificativa acessível e composição com React enquadrada antes de consolidar a UI | Parcial — 29/10/2026: stack confirmada pelo grupo e [justificada](../architecture/architecture.md); falta aplicação e apresentação no sistema |
+| [ ] | R01 | Sistema Python com justificativa do framework, p.1 | API FastAPI e análise Python; justificativa em Dados | Justificativa acessível e composição com React enquadrada antes de consolidar a UI | Parcial — 29/10/2026: stack confirmada e [ambiente Python validado](../development/setup.md); faltam API e apresentação da justificativa no sistema |
 | [ ] | R02 | Relatório com resultados e interpretação, p.1 | Todas as seções e Síntese | Tabelas/gráficos acompanhados de texto crítico com evidências | — |
 | [ ] | R03 | Navegação e seleção de time/variável, p.1 | Perfil e Comparação | Trocar time/variável atualiza resultados, n e contexto sem conclusões desatualizadas | — |
 | [ ] | R04 | Títulos, eixos, unidades, legendas e tabelas padronizadas, p.1 | Componentes de gráfico e tabela | Convenções uniformes e alternativa tabular acessível | — |
-| [ ] | R05 | Hospedagem ou instruções locais, p.1 | URL pública e README | Abrir URL em sessão limpa; alternativa local com requirements.txt e comando único documentado | — |
+| [ ] | R05 | Hospedagem ou instruções locais, p.1 | URL pública e README | Abrir URL em sessão limpa; alternativa local com requirements.txt e comando único documentado | Parcial — 29/10/2026: requirements com hashes, setup e verificações [documentados](../development/setup.md); aplicação e deploy ainda inexistentes |
 | [ ] | R06 | Código e link de aplicação, p.2 | Repositório/zip e submissão | Entrega reproduzível identificando versão; submissão é responsabilidade do grupo | — |
 | [ ] | R07 | Dimensões, colunas e significado, p.2 | Dados e dicionário | Todas as 28 colunas, unidade de análise e cobertura | — |
 | [ ] | R08 | Tipos, data e tamanho, p.2 | Dados e transformações | Tipos semânticos, parsing de datas, bytes e contagens identificados | — |
@@ -55,7 +55,15 @@ Registrar uma linha a cada atividade concluída, mesmo quando o requisito ainda 
 | 29/10/2026 | P0.06 | R07, R08 — preparação | Grupo confirmou origem NBA 2025–26, API oficial via nba_api; detalhes não fornecidos registrados como limitação | [Proveniência](../data/provenance.md), declaração do grupo nesta revisão | Grupo; registro: Codex |
 | 29/10/2026 | P0.07 | R01 — parcial | Grupo confirmou validação externa de FastAPI + React; justificativa registrada | [Arquitetura](../architecture/architecture.md), confirmação do grupo nesta revisão | Grupo; registro: Codex |
 
-Nenhuma atividade de implementação concluída até esta revisão. A documentação preparatória e as confirmações do grupo estão assinaladas na etapa 0 do plano; elas não concluem os requisitos de apresentação no sistema.
+| 29/10/2026 | P1.01 | R01, R05, R06 — infraestrutura | Estrutura Python e pastas de conteúdo/testes criadas; data/raw reutilizado e processed reservado | [Organização do backend](../development/setup.md), [configuração](../../backend/app/config.py) | Codex |
+| 29/10/2026 | P1.02 | R05 — parcial | Python 3.12 e Node 24 registrados; Python 3.12.13 usado na validação; Node reservado à etapa 8 | [.python-version](../../.python-version), [.nvmrc](../../.nvmrc), [justificativa](../development/setup.md) | Codex |
+| 29/10/2026 | P1.03 | R01, R05, R06 — infraestrutura | make setup aprovado; dependências compatíveis; requirements instalado em ambiente isolado com validação dos hashes | [pyproject](../../pyproject.toml), [lock](../../uv.lock), [requirements](../../requirements.txt), [validação](../development/setup.md) | Codex |
+| 29/10/2026 | P1.04 | R01, R06 — infraestrutura | Ruff e formatação aprovados; pytest com 2 testes de configuração aprovados e marcadores estritos unit/analytics/api | [Configuração das ferramentas](../../pyproject.toml), [testes](../../backend/tests/unit/test_config.py) | Codex |
+| 29/10/2026 | P1.05 | R06 — infraestrutura | Ignore validado para ambientes/caches/builds; CSV e PDF conferidos byte a byte contra HEAD, sem alterações | [.gitignore](../../.gitignore), [validação](../development/setup.md) | Codex |
+| 29/10/2026 | P1.06 | R01, R06 — infraestrutura | Caminhos, times, métricas e versões centralizados; testes de independência do diretório corrente e isolamento aprovados | [Settings](../../backend/app/config.py), [testes](../../backend/tests/unit/test_config.py) | Codex |
+| 29/10/2026 | P1.07 | R05, R06 — infraestrutura | make check aprovado; comandos documentados; data-build falha explicitamente sem criar artefatos | [Makefile](../../Makefile), [guia](../development/setup.md) | Codex |
+
+Etapa 1 de implementação concluída e validada em 29/10/2026. As tarefas de infraestrutura estão assinaladas na etapa 1 do plano; elas não concluem os requisitos de apresentação no sistema, hospedagem ou submissão.
 
 ## Pendências e responsabilidade
 

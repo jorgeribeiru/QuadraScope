@@ -1,7 +1,7 @@
 # Plano de implementação — QuadraScope
 
 > Do passo 0 à entrega. Revisão: 29/10/2026. Foco: Atlanta Hawks × Houston Rockets.
-> Estado atual: documentação preparatória disponível; aplicação, pipeline, testes e deploy ainda não implementados.
+> Estado atual: etapas 0 e 1 concluídas. Ambiente Python, estrutura, configuração e testes iniciais disponíveis; ingestão, análise, API, frontend e deploy ainda não implementados.
 
 ## Uso do plano
 
@@ -36,15 +36,15 @@ As caixas já marcadas na etapa 0 indicam documentação revisada e confirmaçõ
 
 **Dependência:** etapa 0 concluída; confirmações P0.06/P0.07 registradas. **Requisitos:** infraestrutura para R01, R05 e R06.
 
-- [ ] **P1.01** — Criar os diretórios de backend, núcleo científico, repositórios, scripts, conteúdo e testes conforme a arquitetura; reutilizar `data/raw/` e reservar `data/processed/` na raiz para os artefatos.
-- [ ] **P1.02** — Definir versões de Python e Node compatíveis com as dependências e hospedagem; registrá-las no repositório.
-- [ ] **P1.03** — Configurar o ambiente Python e dependências de runtime/desenvolvimento; gerar lock e `requirements.txt` reproduzível para execução.
-- [ ] **P1.04** — Configurar Ruff e pytest, separando testes científicos e de API.
-- [ ] **P1.05** — Criar `.gitignore` para ambientes, caches, builds e arquivos locais; preservar os insumos fornecidos sem sobrescrevê-los.
-- [ ] **P1.06** — Criar configuração central para caminhos de dados, IDs dos dois times e versões de schema/análise, sem espalhar constantes pelo código.
-- [ ] **P1.07** — Criar comandos documentados para lint, testes e build de dados; nesta etapa, registrar quais ainda dependem de código futuro.
+- [X] **P1.01** — Criar os diretórios de backend, núcleo científico, repositórios, scripts, conteúdo e testes conforme a arquitetura; reutilizar `data/raw/` e reservar `data/processed/` na raiz para os artefatos.
+- [X] **P1.02** — Definir versões de Python e Node compatíveis com as dependências e hospedagem; registrá-las no repositório.
+- [X] **P1.03** — Configurar o ambiente Python e dependências de runtime/desenvolvimento; gerar lock e `requirements.txt` reproduzível para execução.
+- [X] **P1.04** — Configurar Ruff e pytest, separando testes científicos e de API.
+- [X] **P1.05** — Criar `.gitignore` para ambientes, caches, builds e arquivos locais; preservar os insumos fornecidos sem sobrescrevê-los.
+- [X] **P1.06** — Criar configuração central para caminhos de dados, IDs dos dois times e versões de schema/análise, sem espalhar constantes pelo código.
+- [X] **P1.07** — Criar comandos documentados para lint, testes e build de dados; nesta etapa, registrar quais ainda dependem de código futuro.
 
-**Verificação/saída:** ambiente Python instalável e estrutura utilizável. Os comandos disponíveis devem executar de forma real; não apresentar scripts vazios como verificações concluídas.
+**Verificação/saída:** ambiente Python instalável e estrutura utilizável. Validado em 29/10/2026 com `make setup`, `make check`, instalação isolada pelo requirements com hashes e conferência de integridade dos insumos. Dois testes de configuração aprovados; Ruff aprovado. `make data-build` retorna erro explícito por ainda não haver pipeline. Evidências e comandos: [ambiente de desenvolvimento](../development/setup.md) e [histórico](requirements.md).
 
 ## Etapa 2 — Ingerir e normalizar o CSV
 

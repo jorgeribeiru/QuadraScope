@@ -1,7 +1,7 @@
 # QuadraScope — Arquitetura do sistema
 
 > Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. Revisão: 29/10/2026.
-> Estado: especificação para implementação. Componentes, pipeline e endpoints ainda não implementados.
+> Estado: etapas 0 e 1 concluídas. Estrutura Python, configuração e ambiente disponíveis; pipeline científico, endpoints e frontend ainda não implementados.
 
 ## Objetivo e escopo
 
@@ -15,6 +15,7 @@ Rankings da liga, seleção de quatro times, evolução temporal e normalizaçã
 
 Documentos complementares:
 
+- [Ambiente de desenvolvimento e comandos](../development/setup.md).
 - [Metodologia e regras científicas](../data/methodology.md).
 - [Requisitos, rastreabilidade e acompanhamento](../planning/requirements.md).
 - [Plano detalhado de implementação, do início à entrega](../planning/implementation-plan.md).
@@ -63,13 +64,13 @@ O recorte soma 149 linhas e 147 partidas distintas. Os contadores acumulados dos
 
 | Área | Decisão |
 | --- | --- |
-| Frontend | React + TypeScript + Vite |
+| Frontend | React + TypeScript + Vite; Node 24 previsto para build |
 | Design | Tailwind CSS + shadcn/ui; componentes Radix necessários sem abstrações duplicadas |
 | Gráficos | Apache ECharts + echarts-for-react, recebendo estatísticas prontas do Python |
 | Tabelas | TanStack Table e formatação centralizada |
 | Estado remoto | TanStack Query + fetch; cache por versão, filtros e parâmetros |
 | Navegação | React Router; filtros compartilháveis por URL |
-| Backend | Python + FastAPI + Pydantic; tipos TypeScript gerados pelo OpenAPI |
+| Backend | Python 3.12 + FastAPI + Pydantic; tipos TypeScript futuramente gerados pelo OpenAPI |
 | Ciência de dados | pandas, NumPy, SciPy, scikit-learn; ECOD próprio validado contra referência |
 | Persistência | CSV imutável, Parquet no pipeline, JSON de resultados; sem banco inicialmente |
 | Verificação futura | pytest para cálculos/API, Vitest para interações relevantes |
@@ -170,6 +171,10 @@ Tipos do frontend derivados de OpenAPI; chaves de cache incluem dataset, versão
 ```text
 quadrascope/
 ├── README.md
+├── pyproject.toml              # dependências, Ruff e pytest
+├── uv.lock                     # resolução completa de runtime e dev
+├── requirements.txt            # exportação de runtime com hashes
+├── Makefile                    # comandos locais
 ├── data/                       # dados compartilhados; fora de docs e do código
 │   ├── raw/                    # CSV original preservado, já existente
 │   └── processed/              # artefatos futuros do pipeline
@@ -178,6 +183,7 @@ quadrascope/
 │   ├── architecture/
 │   │   ├── architecture.md     # fonte principal da arquitetura
 │   │   └── diagrams/           # fonte DOT e diagrama SVG
+│   ├── development/            # instalação, comandos e verificações
 │   ├── data/                   # proveniência, dicionário e metodologia
 │   ├── planning/               # requisitos e plano de implementação
 │   └── references/             # enunciado acadêmico original
@@ -187,7 +193,7 @@ quadrascope/
 │   ├── components/             # gráficos, tabelas e estados acessíveis
 │   ├── lib/                    # HTTP, URL e formatação
 │   └── generated/              # tipos OpenAPI
-└── backend/                    # a implementar
+└── backend/                    # estrutura criada na etapa 1
     ├── app/                    # API, schemas e serviços
     ├── analytics/              # funções científicas compartilhadas
     ├── repositories/           # leitura e consulta em ../data/
@@ -196,7 +202,7 @@ quadrascope/
     └── tests/                  # casos científicos e contratos
 ```
 
-Nesta etapa existem apenas os documentos, os insumos e o diagrama; a estrutura de aplicação será criada na implementação. Evitar um segundo arquivo de arquitetura concorrente.
+A etapa 1 criou a estrutura do backend, configuração compartilhada e verificações de ambiente/testes. Ingestão, cálculos, API e frontend serão implementados nas próximas etapas. Evitar um segundo arquivo de arquitetura concorrente.
 
 ## Entrega e pendências
 

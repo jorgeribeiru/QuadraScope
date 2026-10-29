@@ -1,0 +1,1 @@
+"""Componentes Python do QuadraScope."""
