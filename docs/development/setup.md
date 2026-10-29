@@ -1,4 +1,4 @@
-# Ambiente de desenvolvimento — etapas 1–5
+# Ambiente de desenvolvimento — etapas 1–6
 
 ## Versões e dependências
 
@@ -13,9 +13,9 @@ Python 3.12 e Node 24 foram escolhidos entre as versões suportadas pela hospeda
 
 O Python global não precisa ser alterado: `uv sync` usa a versão declarada e cria `.venv` na raiz. O Node instalado na máquina não é usado nesta etapa. Com nvm disponível, `nvm install` e `nvm use` na raiz selecionam a versão do futuro frontend.
 
-`pyproject.toml` declara dependências diretas: FastAPI, Pydantic, Uvicorn e ferramentas científicas pandas, NumPy, SciPy, scikit-learn e PyArrow. O grupo `dev` contém Ruff, pytest e HTTPX para os testes HTTP futuros. `nba_api` não é necessário para analisar o CSV já coletado, e PyOD não integra o ambiente.
+`pyproject.toml` declara as dependências de runtime FastAPI, Pydantic, Uvicorn, pandas, NumPy e SciPy. O grupo `pipeline` contém PyArrow, scikit-learn e threadpoolctl, usados offline. O grupo `dev` contém Ruff, pytest e HTTPX para os testes HTTP futuros. Os dois grupos são ativados por padrão no uv para desenvolvimento. `nba_api` não é necessário para analisar o CSV já coletado, e PyOD não integra o ambiente.
 
-`uv.lock` fixa também as dependências transitivas. `requirements.txt` é exportado do lock com versões e hashes, sem ferramentas de desenvolvimento. Nesta fase ele inclui as dependências científicas previstas para o pipeline; a redução do runtime de produção será decidida na etapa 6, não está validada pelo simples fechamento do lock.
+`uv.lock` fixa também as dependências transitivas. `requirements.txt` exporta runtime + pipeline com versões e hashes, sem ferramentas dev. `requirements-runtime.txt` contém somente as dependências da futura API: o leitor usa JSON, e as descritivas filtradas usam pandas/NumPy/SciPy. A leitura e os cálculos foram verificados em ambiente isolado sem PyArrow/scikit-learn/threadpoolctl; [política e pacote de runtime](artifacts.md).
 
 ## Instalação e verificação
 
@@ -38,7 +38,7 @@ uv run --locked pytest
 
 A sincronização exige acesso aos pacotes e, se necessário, ao Python gerenciado pelo uv. Usar `--locked` evita atualizar o lock silenciosamente. Para modificar dependências intencionalmente, editar o pyproject, executar `uv lock`, sincronizar, testar e regenerar requirements. [Lock e sincronização do uv](https://docs.astral.sh/uv/concepts/projects/sync/).
 
-Alternativa de instalação somente das dependências de execução, com Python 3.12 já disponível:
+Alternativa de instalação das dependências de execução e pipeline, com Python 3.12 já disponível:
 
 ```bash
 python3.12 -m venv .venv
@@ -53,20 +53,23 @@ Essa alternativa não instala pytest/Ruff; usar o fluxo uv para desenvolvimento.
 | Comando | Estado e comportamento |
 | --- | --- |
 | `make help` | Lista os comandos e seus propósitos |
-| `make setup` | Instala/sincroniza runtime e desenvolvimento pelo lock |
+| `make setup` | Instala/sincroniza runtime, pipeline e desenvolvimento pelo lock |
 | `make check-env` | Importa dependências, confere Python e localização dos dados; imprime versões e configuração |
 | `make lint` | Ruff check + verificação de formatação |
 | `make format` | Aplica somente a formatação Ruff |
-| `make test` | Executa configuração, ingestão, qualidade, descritivas e detectores |
+| `make test` | Executa configuração, ciência e contratos/publicação dos artefatos |
 | `make check` | Ambiente + lint + testes |
-| `make export-requirements` | Regenera requirements de runtime com hashes, sem atualizar o lock |
+| `make export-requirements` | Regenera os dois requirements com hashes, sem atualizar o lock |
 | `make data-normalize` | Gera base canônica, recorte e relatório intermediários da etapa 2 |
 | `make data-quality` | Audita a fonte e libera dados enriquecidos somente se aprovados |
 | `make data-describe` | Calcula descritivas, boxplots e distribuições após auditar a fonte |
 | `make data-anomalies` | Executa sete métodos e verifica parâmetros/sensibilidade antes de gerar scores |
-| `make data-build` | Reservado ao pipeline completo; termina com erro explícito |
+| `make data-build` | Executa todas as análises, valida e publica um release completo |
+| `make data-validate` | Confere o release atual, hashes, schemas e consistências |
+| `make data-reproduce` | Compara 13 artefatos de dois builds independentes, sem publicar |
+| `make data-package-runtime` | Exporta manifesto e dez JSONs para a futura API |
 
-Os guias de [ingestão](ingestion.md) e [qualidade](quality.md) detalham os comandos e suas saídas locais. O build científico completo pertence à etapa 6; API e interface ainda não existem. As descritivas estão implementadas; não há servidor de aplicação para iniciar. Ver [guia científico da etapa 4](descriptive.md).
+Os guias de [ingestão](ingestion.md) e [qualidade](quality.md) detalham os comandos e suas saídas locais. O [build científico completo](artifacts.md) está disponível desde a etapa 6; API e interface ainda não existem. As descritivas estão implementadas; não há servidor de aplicação para iniciar. Ver [guia científico da etapa 4](descriptive.md).
 
 ## Configuração e organização do backend
 
@@ -77,13 +80,15 @@ backend/
 │   ├── __init__.py
 │   └── config.py
 ├── analytics/                  # ingestão, qualidade, descritivas, detectores e sensibilidade
-├── repositories/               # futuros repositórios de dados
+├── artifacts/                  # schemas, build, validação e pacote runtime
+├── repositories/               # leitor readonly de releases
 ├── content/missingness.json    # teoria e limites dos métodos exigidos
 ├── scripts/
 │   ├── check_environment.py
 │   ├── normalize_data.py
 │   ├── audit_data.py
 │   ├── describe_data.py
+│   ├── build_data.py
 │   ├── detect_anomalies.py
 │   ├── export_sensitivity_review.py
 │   └── generate_ecod_reference.py  # opcional: somente no uv isolado com PyOD
@@ -94,9 +99,9 @@ backend/
     └── api/                    # reservado: contratos futuros
 ```
 
-`backend/app/config.py` centraliza raiz do repositório, caminhos bruto/processado, nome e hash esperado do CSV, IDs dos times, métricas e versões iniciais de schema/análise. Os caminhos padrão derivam do arquivo de configuração, não do diretório corrente. Importar configuração não lê dados nem cria pastas. As versões identificam também o relatório intermediário da ingestão, sem indicar publicação do manifesto final da etapa 6.
+`backend/app/config.py` centraliza raiz do repositório, caminhos bruto/processado, nome e hash esperado do CSV, IDs dos times, métricas e versões iniciais de schema/análise. Os caminhos padrão derivam do arquivo de configuração, não do diretório corrente. Importar configuração não lê dados nem cria pastas. As versões identificam os contratos e relatórios; caminhos dos releases, ponteiro e pacote runtime também estão centralizados.
 
-`data/raw/` é a entrada preservada; `data/processed/ingestion/` recebe os intermediários locais da etapa 2 e `data/processed/quality/` recebe diagnóstico e dados enriquecidos da etapa 3. Artefatos gerados ficam ignorados até a política de publicação da etapa 6. Não usar `git add -f` para publicar resultados parciais. CSV, PDF e documentos fornecidos continuam versionáveis e preservados.
+`data/raw/` é a entrada preservada; `data/processed/ingestion/` recebe os intermediários locais da etapa 2 e `data/processed/quality/` recebe diagnóstico e dados enriquecidos da etapa 3. Releases completos ficam em `data/processed/releases/`, com ponteiro `current.json`; o pacote exportado fica em `data/processed/runtime/`. Artefatos gerados continuam ignorados e são reconstruídos pelo pipeline. Não usar `git add -f` para publicar resultados parciais. CSV, PDF e documentos fornecidos continuam versionáveis e preservados.
 
 ## Testes
 
@@ -141,3 +146,7 @@ R01, R05 e R06 permanecem parciais: preparar o ambiente não entrega aplicação
 ## Validação da etapa 5 em 29/10/2026
 
 `make check` aprovado com 151 testes, Ruff e formatação. `make data-anomalies` gera 50 resultados e sensibilidade de 44 variantes, com parâmetros 1.0.0 revisados por snapshot. O ECOD coincide com seis fixtures de oráculo VCS fixado, a 1e−12. PyOD foi usado apenas em ambiente uv isolado para gerar fixtures e continua ausente da .venv, lock e requirements do projeto. [Reprodução, licença e limitações](anomalies.md).
+
+## Validação da etapa 6 em 29/10/2026
+
+`make check` aprovado com 171 testes, Ruff e formatação. Build integral, validação do release, reprodução independente dos 13 artefatos e exportação do pacote JSON aprovados. A instalação isolada de `requirements-runtime.txt` com hashes permite ler o pacote e calcular descritivas/distribuições de Atlanta/Houston em casa, sem CSV, Parquet, PyArrow, scikit-learn ou threadpoolctl. CSV/PDF preservados. [Contratos, publicação e reprodução](artifacts.md).

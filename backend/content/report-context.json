@@ -1,0 +1,45 @@
+{
+  "provenance": {
+    "origin_declared_by": "Equipe do projeto",
+    "confirmed_on": "2026-10-29",
+    "source": "API oficial da NBA, domínio nba.com",
+    "collection_library": "nba_api (Python)",
+    "season": "2025-26",
+    "phase": "Temporada regular",
+    "extracted_at": null,
+    "endpoints": null,
+    "collection_library_version": null,
+    "prior_transformations": null,
+    "limitation": "Origem informada pela equipe; data exata e detalhes da extração não fornecidos. Não é nova coleta nem verificação externa de cada partida."
+  },
+  "methodology": {
+    "unit_of_analysis": "Um time em uma partida; duas observações por jogo. Dependência entre adversários e ao longo do tempo limita inferência.",
+    "descriptives": {
+      "variance": "Variância e desvio amostrais com n−1; unidades da variância ao quadrado.",
+      "quartiles": "Quantis com interpolação linear, compartilhados por tabelas e boxplots.",
+      "modes": "Todas as modas repetidas; nenhum valor repetido implica lista vazia e explicação.",
+      "cv": "100 × desvio amostral / média, em escala de razão e média positiva; interpretar com média, desvio e assimetria.",
+      "robust_ratio": "IQR/mediana é razão distinta do CV; exige mediana positiva.",
+      "skewness": "Fisher–Pearson ajustado (bias=False); classificação descritiva por sinal e intensidade, sem teste de normalidade.",
+      "distribution": "Histograma em densidade com classes comuns por variável e KDE Scott; contagens são discretas e a suavização pode atribuir densidade fora do domínio."
+    },
+    "detectors": {
+      "zscore": "Distância padronizada pelo desvio amostral, com corte absoluto declarado.",
+      "iqr": "Registros estritamente fora das cercas Q1−k×IQR e Q3+k×IQR; bigodes são observações dentro delas.",
+      "grubbs": "Teste bilateral para um extremo, pressupõe normalidade aproximada; alpha nominal e multiplicidade declarados. Sem remoção iterativa.",
+      "knn": "Distância ao k-ésimo vizinho externo, excluindo o próprio índice.",
+      "lof": "Densidade local relativa no histórico, sem modo de novidade; escore orientado e corte explícito distintos dos rótulos automáticos.",
+      "dbscan": "Agrupamento por densidade; ruído depende de escala e parâmetros, sem score contínuo inventado.",
+      "ecod": "Caudas empíricas inclusivas e contribuição por dimensão; implementação validada contra revisão fixada, com empates e assimetria documentados."
+    },
+    "limitations": [
+      "Comparação descritiva do recorte, sem previsão ou conclusão causal de superioridade.",
+      "Zeros e jogos com prorrogação são preservados e contextualizados.",
+      "Outlier não comprova erro; sem rótulos verdadeiros, concordância não é acurácia.",
+      "Scores têm referência própria do time; cortes relativos não são probabilidades de erro.",
+      "Os dois confrontos diretos não substituem a comparação dos históricos completos."
+    ]
+  },
+  "interpretation_status": "pending_stage_9",
+  "interpretations": []
+}

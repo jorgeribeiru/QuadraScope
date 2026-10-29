@@ -8,14 +8,17 @@ dependencies = [
     "fastapi>=0.115,<1",
     "numpy>=2.1,<3",
     "pandas>=2.2,<4",
-    "pyarrow>=18",
     "pydantic>=2.10,<3",
-    "scikit-learn>=1.5,<2",
     "scipy>=1.14,<2",
     "uvicorn>=0.30,<1",
 ]
 
 [dependency-groups]
+pipeline = [
+    "pyarrow>=18",
+    "scikit-learn>=1.5,<2",
+    "threadpoolctl>=3.5,<4",
+]
 dev = [
     "httpx>=0.28,<1",
     "pytest>=8,<10",
@@ -24,6 +27,7 @@ dev = [
 
 [tool.uv]
 package = false
+default-groups = ["dev", "pipeline"]
 
 [tool.ruff]
 target-version = "py312"

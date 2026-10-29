@@ -134,3 +134,7 @@ Quartis lineares, ddof=1, IQR 1,5, CSV identificado pelo hash da arquitetura:
 - Atlanta PTS: média≈118,253333, CV≈10,6551%; Houston PTS: média≈114,405405, CV≈9,7837%.
 
 Essas referências foram reproduzidas pelos [testes da etapa 4](../../backend/tests/analytics/test_descriptive.py), junto com exemplos manuais e casos de borda. Resultados e parâmetros estão documentados no [guia de descritivas](../development/descriptive.md).
+
+## Build e rastreabilidade dos resultados
+
+Desde a etapa 6, `make data-build` orquestra o núcleo científico a partir de um único snapshot e publica somente um conjunto integral validado. Schemas 1.0.0, manifesto com fonte/código/dependências/parâmetros e comparação de dois builds independentes vinculam os resultados ao contexto. Os 13 artefatos e a política de runtime estão descritos no [guia de artefatos](../development/artifacts.md). As descritivas filtradas reutilizarão as funções científicas; os detectores mantêm a referência completa por time. A exportação do conteúdo não conclui a interpretação acadêmica, prevista para a etapa 9.

@@ -51,5 +51,17 @@ class Settings:
     def anomaly_dir(self) -> Path:
         return self.processed_data_dir / "anomalies"
 
+    @property
+    def releases_dir(self) -> Path:
+        return self.processed_data_dir / "releases"
+
+    @property
+    def current_pointer_path(self) -> Path:
+        return self.processed_data_dir / "current.json"
+
+    @property
+    def runtime_package_dir(self) -> Path:
+        return self.processed_data_dir / "runtime"
+
 
 settings = Settings()

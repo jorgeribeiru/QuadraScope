@@ -2,7 +2,7 @@
 
 Relatório web interativo de análise de dados da NBA, desenvolvido para o Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. O foco do grupo é **Atlanta Hawks × Houston Rockets**, nas variáveis PTS, REB, AST, STL, BLK, PF e FG3M.
 
-**Estado atual:** etapas 0–5 concluídas. Ingestão, qualidade, descritivas e sete detectores com sensibilidade implementados no Python. Build/manifesto final, API, gráficos na interface, frontend e deploy ainda pendentes. A stack **FastAPI + React** foi confirmada pelo grupo.
+**Estado atual:** etapas 0–6 concluídas. Pipeline científico, sete detectores, schemas e artefatos reproduzíveis implementados no Python. API, gráficos na interface, frontend e deploy ainda pendentes. A stack **FastAPI + React** foi confirmada pelo grupo.
 
 ## Estrutura atual
 
@@ -11,10 +11,12 @@ QuadraScope/
 ├── README.md
 ├── pyproject.toml         # Dependências, Ruff e pytest
 ├── uv.lock                # Versões resolvidas
-├── requirements.txt       # Runtime exportado com hashes
+├── requirements.txt       # Runtime + pipeline, com hashes
+├── requirements-runtime.txt # Dependências da futura API, com hashes
 ├── Makefile               # Comandos de desenvolvimento
 ├── backend/
 │   ├── app/config.py      # Caminhos, times e versões
+│   ├── artifacts/          # Schemas, build, validação e exportação
 │   ├── analytics/
 │   ├── repositories/
 │   ├── content/
@@ -22,7 +24,7 @@ QuadraScope/
 │   └── tests/             # unit, analytics e api
 ├── data/
 │   ├── raw/stats_times_regular_final.csv
-│   └── processed/         # Intermediários locais; ignorados pelo Git
+│   └── processed/         # Releases e intermediários locais; ignorados pelo Git
 └── docs/
     ├── README.md
     ├── development/
@@ -30,7 +32,8 @@ QuadraScope/
     │   ├── ingestion.md
     │   ├── quality.md
     │   ├── descriptive.md
-    │   └── anomalies.md
+    │   ├── anomalies.md
+    │   └── artifacts.md
     ├── architecture/
     │   ├── architecture.md
     │   └── diagrams/
@@ -71,12 +74,24 @@ O [guia de desenvolvimento](docs/development/setup.md) apresenta instalação al
 - [Qualidade, cobertura e enriquecimento](docs/development/quality.md).
 - [Descritivas, boxplots e distribuições](docs/development/descriptive.md).
 - [Detectores, parâmetros e sensibilidade](docs/development/anomalies.md).
+- [Build completo, manifesto e pacote de runtime](docs/development/artifacts.md).
 - [Plano de implementação e tarefas](docs/planning/implementation-plan.md).
 - [Requisitos, caixas de conclusão e histórico](docs/planning/requirements.md).
 - [Arquitetura](docs/architecture/architecture.md) e [diagrama](docs/architecture/diagrams/quadrascope-arquitetura.svg).
 - [Origem e extração dos dados](docs/data/provenance.md).
 
-Para gerar a base canônica e o recorte do grupo:
+Para gerar e validar o conjunto completo de artefatos:
+
+```bash
+make data-build
+make data-validate
+make data-reproduce
+make data-package-runtime
+```
+
+O release completo fica em `data/processed/releases/`, identificado pelo manifesto e por `current.json`. O pacote da futura API fica em `data/processed/runtime/`, com dez JSONs e manifesto, dispensando CSV e Parquet. [Contratos, publicação e reprodução](docs/development/artifacts.md).
+
+Os comandos abaixo continuam disponíveis para diagnóstico intermediário. Para gerar a base canônica e o recorte do grupo:
 
 ```bash
 make data-normalize
@@ -106,4 +121,4 @@ make data-anomalies
 
 Os relatórios ficam em `data/processed/anomalies/`, com referência fixa por time e parâmetros revisados para este snapshot. O ECOD próprio usa fixtures de referência; PyOD não integra o ambiente do projeto. Consulte o [relatório de sensibilidade versionado](docs/data/anomaly-sensitivity.json) e as limitações no guia dos detectores.
 
-Ainda não há servidor de aplicação. `make data-build` continua reservado ao pipeline completo e retorna erro explícito; ele não substitui o comando de normalização. As instruções de execução da aplicação e hospedagem serão adicionadas nas etapas correspondentes.
+Ainda não há servidor de aplicação. A API começa na etapa 7 e o React na etapa 8. As instruções de execução da aplicação e hospedagem serão adicionadas nas etapas correspondentes.

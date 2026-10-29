@@ -1,6 +1,6 @@
 # Requisitos e acompanhamento — QuadraScope
 
-> Base: [Projeto 1.pdf](<../references/Projeto 1.pdf>), cinco páginas. Revisão: 29/10/2026. Etapas 0–5 concluídas; qualidade, descritivas, sete detectores e sensibilidade validados. Os requisitos da aplicação permanecem pendentes ou parciais.
+> Base: [Projeto 1.pdf](<../references/Projeto 1.pdf>), cinco páginas. Revisão: 29/10/2026. Etapas 0–6 concluídas; qualidade, descritivas, detectores e build reproduzível validados. Os requisitos da aplicação permanecem pendentes ou parciais.
 
 A ordem de trabalho e as tarefas detalhadas estão no [plano de implementação](implementation-plan.md). Este arquivo acompanha o cumprimento dos requisitos do enunciado.
 
@@ -13,7 +13,7 @@ A ordem de trabalho e as tarefas detalhadas estão no [plano de implementação]
 | [ ] | R03 | Navegação e seleção de time/variável, p.1 | Perfil e Comparação | Trocar time/variável atualiza resultados, n e contexto sem conclusões desatualizadas | — |
 | [ ] | R04 | Títulos, eixos, unidades, legendas e tabelas padronizadas, p.1 | Componentes de gráfico e tabela | Convenções uniformes e alternativa tabular acessível | — |
 | [ ] | R05 | Hospedagem ou instruções locais, p.1 | URL pública e README | Abrir URL em sessão limpa; alternativa local com requirements.txt e comando único documentado | Parcial — 29/10/2026: requirements com hashes, setup e verificações [documentados](../development/setup.md); aplicação e deploy ainda inexistentes |
-| [ ] | R06 | Código e link de aplicação, p.2 | Repositório/zip e submissão | Entrega reproduzível identificando versão; submissão é responsabilidade do grupo | — |
+| [ ] | R06 | Código e link de aplicação, p.2 | Repositório/zip e submissão | Entrega reproduzível identificando versão; submissão é responsabilidade do grupo | Parcial — 29/10/2026: [build reproduzível, manifesto e pacote runtime](../development/artifacts.md) validados; aplicação, hospedagem e submissão pendentes |
 | [ ] | R07 | Dimensões, colunas e significado, p.2 | Dados e dicionário | Todas as 28 colunas, unidade de análise e cobertura | Parcial — 29/10/2026: [registro das 28 colunas e cobertura](../development/ingestion.md) implementados; falta apresentação no sistema |
 | [ ] | R08 | Tipos, data e tamanho, p.2 | Dados e transformações | Tipos semânticos, parsing de datas, bytes e contagens identificados | Parcial — 29/10/2026: tipos, datas, tamanho e [cobertura auditada](../development/quality.md) disponíveis; falta apresentação no sistema |
 | [ ] | R09 | Nomes intuitivos e conversões, p.2 | Mapa original→canônico | Mostrar todas as renomeações e explicar que W/L já são numéricos neste CSV | Parcial — 29/10/2026: [mapa e conversões](../../backend/analytics/metrics.py) implementados e testados; falta apresentação no sistema |
@@ -103,8 +103,14 @@ Registrar uma linha a cada atividade concluída, mesmo quando o requisito ainda 
 | 29/10/2026 | P5.12 | R15 — parcial | 44 variantes de k/escala/eps; Spearman/Jaccard e resultados registrados sem alegar acurácia | [Sensibilidade](../../backend/analytics/sensitivity.py), [resultados](../development/anomalies.md) | Codex |
 | 29/10/2026 | P5.13 | R15 — parcial | Configuração 1.0.0 por snapshot: k=10, StandardScaler e eps=2,5 pela curva de quarto vizinho; limitações de DBSCAN e flags registradas | [Parâmetros](../../backend/content/anomaly-parameters.json), [relatório versionado](../data/anomaly-sensitivity.json), [metodologia](../data/methodology.md) | Codex |
 | 29/10/2026 | P5.14 | R14, R15, R23 — parciais | make check com 151 testes, Ruff e formatação; referências, empates, permutação, vizinhos e IQR/boxplots de ambos os times conferidos | [Testes](../../backend/tests/analytics/test_anomalies.py), [pipeline](../../backend/tests/analytics/test_anomaly_pipeline.py) | Codex |
+| 29/10/2026 | P6.01 | R07–R23 — infraestrutura parcial | Contratos Pydantic 1.0.0 de linhas, dez JSONs, manifesto e ponteiro; schemas exportados e Parquet tipado | [Schemas](../../backend/artifacts/models.py), [guia](../development/artifacts.md) | Codex |
+| 29/10/2026 | P6.02 | R06–R23 — infraestrutura parcial | Build único reutiliza ingestão, qualidade, descritivas, detectores e sensibilidade; gera 13 artefatos sem depender dos intermediários | [Build](../../backend/artifacts/build.py), [comandos](../../Makefile) | Codex |
+| 29/10/2026 | P6.03 | R06, R08, R10, R15 — parciais | Manifesto registra fonte, código/Git, lock, dependências, ambiente, parâmetros, ordem das features e hashes/tamanhos das saídas | [Manifesto e identidade](../../backend/artifacts/build.py), [contratos](../../backend/artifacts/models.py) | Codex |
+| 29/10/2026 | P6.04 | R06–R23 — infraestrutura parcial | Schemas e invariantes entre arquivos antes da promoção; falhas preservam publicação anterior; 171 testes, Ruff/formatação aprovados | [Validador](../../backend/artifacts/validation.py), [testes](../../backend/tests/analytics/test_artifacts.py) | Codex |
+| 29/10/2026 | P6.05 | R06, R08, R15–R23 — infraestrutura parcial | Dois builds independentes com hashes idênticos dos 13 artefatos; somente generated_at excluído do manifesto; relatório gerado localmente | [Comparação](../../backend/artifacts/reproducibility.py), [reprodução](../development/artifacts.md) | Codex |
+| 29/10/2026 | P6.06 | R05, R06, R16–R23 — infraestrutura parcial | Runtime JSON e requirements próprio; leitura/cálculos filtrados validados em uv isolado sem CSV/Parquet/PyArrow/scikit-learn/threadpoolctl; detectores permanecem offline | [Política e instalação](../development/artifacts.md), [requirements runtime](../../requirements-runtime.txt), [leitor](../../backend/repositories/artifacts.py) | Codex |
 
-Etapas 1–5 de implementação concluídas e validadas em 29/10/2026. Infraestrutura, qualidade, descritivas e detectores estão assinalados no plano; elas não concluem os requisitos de apresentação no sistema, build/manifesto final, hospedagem ou submissão.
+Etapas 1–6 de implementação concluídas e validadas em 29/10/2026. Infraestrutura, ciência e build estão assinalados no plano; os requisitos de apresentação, interpretação, hospedagem ou submissão continuam abertos. Os releases vinculam as evidências de R07–R23 à mesma fonte, análise e parâmetros; isso não substitui sua apresentação no sistema.
 
 ## Pendências e responsabilidade
 

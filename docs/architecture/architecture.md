@@ -1,7 +1,7 @@
 # QuadraScope — Arquitetura do sistema
 
 > Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. Revisão: 29/10/2026.
-> Estado: etapas 0–5 concluídas. Ciência e sete detectores validados no snapshot; build final, endpoints e frontend ainda pendentes.
+> Estado: etapas 0–6 concluídas. Ciência, sete detectores e build reproduzível validados no snapshot; endpoints e frontend ainda pendentes.
 
 ## Objetivo e escopo
 
@@ -114,7 +114,7 @@ Pipeline offline e API usam as mesmas funções científicas. Não haverá fórm
 
 ## Artefatos e reprodução
 
-O build produzirá base canônica, descritivas/distribuições por time, resultados dos detectores, qualidade e manifesto. Parquet é interno; o runtime pode consumir apenas JSON quando isso atender à interatividade. Caso haja descritivas online, empacotar suas dependências e medir custo real.
+O build gera 13 artefatos validados e manifesto em releases imutáveis, publicados por troca atômica de `current.json`. Dez JSONs compõem o pacote de runtime; os três Parquets e o CSV são internos ao pipeline. Pandas/NumPy/SciPy permanecem no runtime para descritivas/distribuições filtradas, reutilizando as funções científicas. PyArrow/scikit-learn/threadpoolctl ficam no grupo offline `pipeline`; detectores não são recalculados online. [Comandos, schemas e critérios de validação](../development/artifacts.md).
 
 Manifesto: hash do dataset, `schema_version`, `analysis_version`, revisão do código, dependências, parâmetros, ordem das variáveis, data UTC da geração e hashes dos artefatos. Dataset e versão da análise são identidades distintas. Timestamps de geração ficam fora da comparação de conteúdo determinístico.
 
@@ -177,11 +177,12 @@ quadrascope/
 ├── README.md
 ├── pyproject.toml              # dependências, Ruff e pytest
 ├── uv.lock                     # resolução completa de runtime e dev
-├── requirements.txt            # exportação de runtime com hashes
+├── requirements.txt            # runtime + pipeline, com hashes
+├── requirements-runtime.txt    # somente a futura API, com hashes
 ├── Makefile                    # comandos locais
 ├── data/                       # dados compartilhados; fora de docs e do código
 │   ├── raw/                    # CSV original preservado, já existente
-│   └── processed/              # artefatos futuros do pipeline
+│   └── processed/              # releases, pacote runtime e intermediários locais
 ├── docs/
 │   ├── README.md               # índice da documentação
 │   ├── architecture/
@@ -200,13 +201,14 @@ quadrascope/
 └── backend/                    # estrutura criada na etapa 1
     ├── app/                    # API, schemas e serviços
     ├── analytics/              # funções científicas compartilhadas
-    ├── repositories/           # leitura e consulta em ../data/
+    ├── artifacts/              # contratos, build, manifesto e validação
+    ├── repositories/           # leitor de releases e consultas
     ├── content/                # textos contextualizados
     ├── scripts/                # build e validação
     └── tests/                  # casos científicos e contratos
 ```
 
-As etapas 1–2 criaram ambiente e normalização em `data/processed/ingestion/`. A etapa 3 gera diagnóstico e intermediários enriquecidos em `data/processed/quality/`, somente após aprovação das regras internas. Esses arquivos não são o conjunto final de publicação. A etapa 4 calcula descritivas, boxplots e distribuições em `data/processed/descriptive/`, com estados por medida e metadados. A etapa 5 gera 50 resultados e sensibilidade em `data/processed/anomalies/`; parâmetros e relatório compacto da revisão são versionados. Build/manifesto final, API e frontend pertencem às próximas etapas. Evitar um segundo arquivo de arquitetura concorrente.
+As etapas 1–2 criaram ambiente e normalização em `data/processed/ingestion/`. A etapa 3 gera diagnóstico e intermediários enriquecidos em `data/processed/quality/`, somente após aprovação das regras internas. Esses arquivos não são o conjunto final de publicação. A etapa 4 calcula descritivas, boxplots e distribuições em `data/processed/descriptive/`, com estados por medida e metadados. A etapa 5 gera 50 resultados e sensibilidade em `data/processed/anomalies/`; parâmetros e relatório compacto da revisão são versionados. A etapa 6 integra as análises em um build único, valida os schemas e as consistências antes da promoção, confere dois builds independentes e exporta o pacote JSON da futura API. API e frontend pertencem às próximas etapas. Evitar um segundo arquivo de arquitetura concorrente.
 
 ## Entrega e pendências
 

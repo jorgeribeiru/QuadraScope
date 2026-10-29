@@ -1,7 +1,7 @@
 # Plano de implementação — QuadraScope
 
 > Do passo 0 à entrega. Revisão: 29/10/2026. Foco: Atlanta Hawks × Houston Rockets.
-> Estado atual: etapas 0–5 concluídas. Ciência implementada, sete detectores e sensibilidade validados no snapshot; manifesto/build final, API, frontend e deploy ainda pendentes.
+> Estado atual: etapas 0–6 concluídas. Ciência, sete detectores, sensibilidade e artefatos reproduzíveis validados no snapshot; API, frontend e deploy ainda pendentes.
 
 ## Uso do plano
 
@@ -120,14 +120,14 @@ As caixas já marcadas na etapa 0 indicam documentação revisada e confirmaçõ
 
 **Dependência:** etapas 3–5. **Requisitos:** sustentação de R07–R23 e R06.
 
-- [ ] **P6.01** — Definir schemas versionados dos arquivos canônicos, descritivas, distribuições, qualidade, anomalias e conteúdo associado.
-- [ ] **P6.02** — Implementar comando único de build dos dados reutilizando as funções científicas, sem fórmulas duplicadas.
-- [ ] **P6.03** — Gerar manifesto com hash do CSV, versões, código, dependências, parâmetros, ordem das features e hashes de saída.
-- [ ] **P6.04** — Validar schemas, valores finitos/nulos e consistência entre arquivos antes de promover um conjunto completo de artefatos.
-- [ ] **P6.05** — Rodar o build duas vezes e comparar conteúdo determinístico, isolando timestamps e outros metadados de geração.
-- [ ] **P6.06** — Definir quais artefatos/dependências integram o runtime e quais ficam apenas no pipeline; registrar a decisão para os cálculos online.
+- [X] **P6.01** — Definir schemas versionados dos arquivos canônicos, descritivas, distribuições, qualidade, anomalias e conteúdo associado.
+- [X] **P6.02** — Implementar comando único de build dos dados reutilizando as funções científicas, sem fórmulas duplicadas.
+- [X] **P6.03** — Gerar manifesto com hash do CSV, versões, código, dependências, parâmetros, ordem das features e hashes de saída.
+- [X] **P6.04** — Validar schemas, valores finitos/nulos e consistência entre arquivos antes de promover um conjunto completo de artefatos.
+- [X] **P6.05** — Rodar o build duas vezes e comparar conteúdo determinístico, isolando timestamps e outros metadados de geração.
+- [X] **P6.06** — Definir quais artefatos/dependências integram o runtime e quais ficam apenas no pipeline; registrar a decisão para os cálculos online.
 
-**Verificação/saída:** conjunto consistente, rastreável e reconstruível; artefato ausente/incompatível gera falha explícita, sem resultados parciais apresentados como completos.
+**Verificação/saída:** validado em 29/10/2026: `make data-build` publica 13 artefatos e manifesto 1.0.0, após schemas, hashes e consistências; ponteiro atômico e releases anteriores preservados em falhas. `make data-reproduce` confirmou dois builds independentes idênticos, excluindo somente o timestamp do manifesto. Pacote runtime de dez JSONs validado em ambiente isolado sem CSV/Parquet/PyArrow/scikit-learn/threadpoolctl, incluindo cálculos filtrados. `make check` aprovado com 171 testes e Ruff/formatação. [Guia e contratos](../development/artifacts.md), [testes](../../backend/tests/analytics/test_artifacts.py) e [histórico](requirements.md).
 
 ## Etapa 7 — Implementar a API Python
 
