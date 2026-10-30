@@ -2,7 +2,9 @@
 
 Relatório web interativo de análise de dados da NBA, desenvolvido para o Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. O foco do grupo é **Atlanta Hawks × Houston Rockets**, nas variáveis PTS, REB, AST, STL, BLK, PF e FG3M.
 
-**Estado atual:** etapas 0–9 implementadas, publicadas e validadas em https://quadrascope.vercel.app. Relatório completo de Atlanta/Houston com dados e qualidade, perfis das sete variáveis, boxplots, distribuições, comparação, sete métodos de anomalias e síntese contextual. Revisão integral, reprodução final e submissão permanecem nas etapas 10–11. A stack **FastAPI + React** foi confirmada pelo grupo. [Relatório e limites](docs/development/report.md).
+**Estado atual:** etapas 0–9 implementadas, publicadas e validadas em https://quadrascope.vercel.app. Relatório completo de Atlanta/Houston com dados e qualidade, perfis das sete variáveis, boxplots, distribuições, comparação, sete métodos de anomalias e síntese contextual. Revisão integral concluída localmente na etapa 10; reprodução final e submissão permanecem na etapa 11. A stack **FastAPI + React** foi confirmada pelo grupo. [Relatório e limites](docs/development/report.md).
+
+**Etapa 10 concluída localmente em 30/10/2026:** integração, ciência, conteúdo e acessibilidade revisados. 245 testes Python, 25 Vitest e 27 de navegador aprovados. Correções ainda sem commit/deploy; entrega final na etapa 11. [Evidências e limites](docs/development/validation.md).
 
 ## Estrutura atual
 

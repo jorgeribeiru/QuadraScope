@@ -356,7 +356,10 @@ def validate_relationships(documents: dict, manifest: dict, config: Settings = s
     require(content["interpretation_status"] == "descriptive_available", "Leituras ausentes.")
     require(
         _index(content["interpretations"], ["team_id", "metric"])
-        == _index(describe_results(list(descriptions.values())), ["team_id", "metric"]),
+        == _index(
+            describe_results(list(descriptions.values()), documents["games.json"]["rows"]),
+            ["team_id", "metric"],
+        ),
         "Leituras não correspondem às evidências descritivas.",
     )
     require(len(content["missingness"]["methods"]) == 4, "Discussão de missingness incompleta.")

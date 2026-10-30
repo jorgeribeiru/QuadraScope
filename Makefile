@@ -1,9 +1,10 @@
 UV ?= uv
 NPM ?= npm
 
-.PHONY: help setup check-env lint format test check export-requirements data-normalize data-quality data-describe data-anomalies data-build data-validate data-reproduce data-package-runtime api-serve api-export api-contracts web-setup web-dev web-build web-check web-e2e dev deploy-prepare
+.PHONY: help setup check-env lint format test check export-requirements data-normalize data-quality data-describe data-anomalies data-build data-validate data-reproduce data-package-runtime api-serve api-export api-contracts web-setup web-dev web-build web-check web-e2e dev deploy-prepare report-audit
 
 help:
+	@echo "report-audit         Confere medidas e partidas diretamente no CSV original"
 	@echo "setup                Instala Python 3.12 e sincroniza .venv pelo lock"
 	@echo "check-env            Verifica ambiente, dependências e caminhos"
 	@echo "lint                 Executa Ruff e confere formatação"
@@ -108,3 +109,6 @@ dev:
 
 deploy-prepare:
 	$(UV) run --locked python -m backend.scripts.prepare_deployment
+
+report-audit:
+	$(UV) run --locked python -m backend.scripts.verify_report

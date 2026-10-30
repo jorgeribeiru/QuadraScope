@@ -10,8 +10,8 @@ import {
   ScanLine,
   Users,
 } from 'lucide-react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
-import { useEffect, useRef, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { FilterBar } from './FilterBar'
 import { teams } from '@/lib/format'
 import { selectionHref, supportsFilters } from '@/lib/filters'
@@ -23,19 +23,40 @@ const navigation = [
   { to: '/fora-da-curva', label: 'Fora da curva', Icon: ScanLine },
   { to: '/dados', label: 'Dados e métodos', Icon: Database },
 ]
+const mobileQuery = '(max-width: 700px)'
+function subscribeToViewport(callback: () => void) {
+  const media = window.matchMedia(mobileQuery)
+  media.addEventListener('change', callback)
+  return () => media.removeEventListener('change', callback)
+}
+function mobileSnapshot() {
+  return window.matchMedia(mobileQuery).matches
+}
+function serverSnapshot() {
+  return false
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
+  const mobile = useSyncExternalStore(subscribeToViewport, mobileSnapshot, serverSnapshot)
+  const mobileMenuOpen = mobile && menuOpen
+  const focusAfterClose = useRef<'content' | 'menu' | null>(null)
   const brandRef = useRef<HTMLAnchorElement>(null)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const mainRef = useRef<HTMLElement>(null)
   useEffect(() => {
-    if (menuOpen) brandRef.current?.focus()
-  }, [menuOpen])
+    if (mobileMenuOpen) brandRef.current?.focus()
+    else if (focusAfterClose.current) {
+      const target = focusAfterClose.current === 'content' ? mainRef.current : menuButtonRef.current
+      target?.focus()
+      focusAfterClose.current = null
+    }
+  }, [mobileMenuOpen])
   function closeNavigation() {
     if (menuOpen) {
+      if (mobileMenuOpen) focusAfterClose.current = 'content'
       setMenuOpen(false)
-      mainRef.current?.focus()
     }
   }
   const active = navigation.find((item) =>
@@ -44,20 +65,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
       : location.pathname.startsWith(item.to.split('/').slice(0, 2).join('/')),
   )
   return (
-    <div className="app-shell">
-      <a className="skip-link" href="#conteudo">
+    <div
+      className="app-shell"
+      onKeyDown={(event) => {
+        if (event.key === 'Escape' && mobileMenuOpen) {
+          focusAfterClose.current = 'menu'
+          setMenuOpen(false)
+        }
+      }}
+    >
+      <a className="skip-link" href="#conteudo" onClick={closeNavigation}>
         Pular para o conteúdo
       </a>
-      <aside
-        id="navegacao"
-        className={`sidebar ${menuOpen ? 'is-open' : ''}`}
-        onKeyDown={(event) => {
-          if (event.key === 'Escape' && menuOpen) {
-            setMenuOpen(false)
-            menuButtonRef.current?.focus()
-          }
-        }}
-      >
+      <aside id="navegacao" className={`sidebar ${menuOpen ? 'is-open' : ''}`}>
         <Link
           ref={brandRef}
           to={selectionHref('/', location.search)}
@@ -76,18 +96,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <p className="nav-label">EXPLORAR</p>
         <nav aria-label="Navegação principal">
           {navigation.map(({ to, label, Icon }) => (
-            <NavLink
+            <Link
               key={to}
               to={selectionHref(to, location.search)}
-              end={to === '/'}
               aria-current={active?.to === to ? 'page' : undefined}
-              className={() => `nav-item ${active?.to === to ? 'active' : ''}`}
+              className={`nav-item ${active?.to === to ? 'active' : ''}`}
               onClick={closeNavigation}
             >
               <Icon size={19} />
               {label}
               {active?.to === to && <ChevronRight size={15} />}
-            </NavLink>
+            </Link>
           ))}
         </nav>
         <div className="sidebar-teams">
@@ -137,7 +156,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             Análise descritiva
           </span>
         </header>
-        <main ref={mainRef} id="conteudo" tabIndex={-1}>
+        <main ref={mainRef} id="conteudo" tabIndex={-1} inert={mobileMenuOpen}>
           <div className="page-heading">
             <div>
               <div className="eyebrow">ATLANTA HAWKS × HOUSTON ROCKETS</div>

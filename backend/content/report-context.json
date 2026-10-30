@@ -20,7 +20,7 @@
       "modes": "Todas as modas repetidas; nenhum valor repetido implica lista vazia e explicação.",
       "cv": "100 × desvio amostral / média, em escala de razão e média positiva; interpretar com média, desvio e assimetria.",
       "robust_ratio": "IQR/mediana é razão distinta do CV; exige mediana positiva.",
-      "skewness": "Fisher–Pearson ajustado (bias=False); classificação descritiva por sinal e intensidade, sem teste de normalidade.",
+      "skewness": "Fisher–Pearson ajustado (bias=False); classificação descritiva por sinal e intensidade, sem teste de normalidade. O ajuste amostral corrige o viés do coeficiente de momento e explicita a convenção ao comparar amostras de tamanhos distintos; não neutraliza extremos nem testa normalidade.",
       "distribution": "Histograma em densidade com classes comuns por variável e KDE Scott; contagens são discretas e a suavização pode atribuir densidade fora do domínio."
     },
     "detectors": {

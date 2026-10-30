@@ -140,7 +140,9 @@ def _compute(config: Settings):
         "metadata": metadata,
         **context,
         "interpretation_status": "descriptive_available",
-        "interpretations": describe_results(reports["descriptives"]["results"]),
+        "interpretations": describe_results(
+            reports["descriptives"]["results"], focus.to_dict(orient="records")
+        ),
         "missingness": read_json(CODE_ROOT / "backend/content/missingness.json"),
         "licenses": {
             "pyod_ecod_reference": (CODE_ROOT / "docs/references/pyod-ecod-LICENSE.txt").read_text()

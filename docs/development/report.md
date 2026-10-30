@@ -1,6 +1,6 @@
 # Relatório web — etapa 9
 
-O relatório apresenta Atlanta Hawks e Houston Rockets nas sete variáveis PTS, REB, AST, STL, BLK, PF e FG3M. Resultados científicos são calculados no Python; o navegador formata valores, aplica escalas gráficas e apresenta as evidências. P9.01–P9.12 estão implementados. A revisão integral de integração, acessibilidade e entrega permanece nas etapas 10–11.
+O relatório apresenta Atlanta Hawks e Houston Rockets nas sete variáveis PTS, REB, AST, STL, BLK, PF e FG3M. Resultados científicos são calculados no Python; o navegador formata valores, aplica escalas gráficas e apresenta as evidências. P9.01–P9.12 estão implementados. A revisão de integração, conteúdo e acessibilidade foi concluída localmente na etapa 10; preparação e publicação final da entrega permanecem na etapa 11.
 
 ## Localização das exigências
 
@@ -68,3 +68,7 @@ Em 29/10/2026: 244 testes Python, 24 Vitest, lint/formatação, contratos TypeSc
 [Plano](../planning/implementation-plan.md), [rastreabilidade](../planning/requirements.md) e [publicação](deployment.md).
 
 A etapa 9 foi publicada no commit `c51acd9`, em https://quadrascope.vercel.app. Onze Playwright passaram sem login na versão pública. [Evidências do deployment e métricas](measurements/stage9-verification.json).
+
+## Revisão da etapa 10
+
+Em 30/10/2026, P10.01–P10.08 foram concluídos localmente. Foram corrigidos navegação/foco, contraste, semântica e unidades, e complementadas leituras e destaques entre variáveis. O novo diagnóstico de sensibilidade reutiliza funções científicas Python e não altera medidas oficiais ou detectores; é conferido independentemente no CSV. A versão pública anterior não foi atualizada nesta etapa. [Revisão completa](validation.md), [evidências](measurements/stage10-verification.json).

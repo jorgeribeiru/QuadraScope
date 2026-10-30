@@ -113,6 +113,7 @@ export function BoxplotChart({
             r="4"
             fill="#b64a3d"
             tabIndex={0}
+            role="img"
             aria-label={`${p.matchup}, ${formatDate(p.game_date)}, partida ${p.game_id}: ${decimal(p.value)}`}
           >
             <title>
@@ -194,7 +195,8 @@ export function DistributionChart({
               width={Math.max(0.5, x(b.to) - x(b.from))}
               height={235 - y(b.density)}
               fill="#b8cc9a"
-              stroke="#fcfcf9"
+              stroke="#4c6833"
+              strokeWidth={1.5}
             >
               <title>
                 {decimal(b.from)} a {decimal(b.to)}: {b.count} jogos; densidade{' '}
@@ -242,14 +244,14 @@ export function DistributionChart({
           columns={[
             {
               id: 'interval',
-              header: 'Intervalo',
+              header: `Intervalo (${unit})`,
               cell: ({ row }) =>
                 `[${decimal(row.original.from)}; ${decimal(row.original.to)}${row.original.index === bins.length - 1 ? ']' : ')'}`,
             },
             { accessorKey: 'count', header: 'Jogos' },
             {
               accessorKey: 'density',
-              header: 'Densidade',
+              header: `Densidade (1/(${unit}))`,
               cell: ({ row }) =>
                 row.original.density.toLocaleString('pt-BR', { maximumSignificantDigits: 6 }),
             },
@@ -268,7 +270,7 @@ export function DistributionChart({
             { accessorKey: 'value', header: unit, cell: ({ row }) => decimal(row.original.value) },
             {
               accessorKey: 'density',
-              header: 'Densidade KDE',
+              header: `Densidade KDE (1/(${unit}))`,
               cell: ({ row }) =>
                 row.original.density.toLocaleString('pt-BR', { maximumSignificantDigits: 6 }),
             },

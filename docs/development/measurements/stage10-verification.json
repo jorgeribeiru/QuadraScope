@@ -1,0 +1,5215 @@
+{
+  "date_local": "2026-10-30",
+  "timezone": "America/Recife",
+  "tasks": [
+    "P10.01",
+    "P10.02",
+    "P10.03",
+    "P10.04",
+    "P10.05",
+    "P10.06",
+    "P10.07",
+    "P10.08"
+  ],
+  "base_commit": "ab40cac8d987dd0f227e7e93364b9faa06aa039c",
+  "working_tree_changes": true,
+  "local_release_id": "a605fa0d3c8fadc5e470a1fc12f72e0bf4644497e4d89100d7785ba2a224024a",
+  "source_sha256": "fa56bf638ef18be972a88850719043953e615bf39339671a8daa007ba08811b6",
+  "source_files_sha256": {
+    "backend/analytics/interpretations.py": "680531fd691b373f2289077209756592f6017ce448830466a5c1994807cf3b10",
+    "backend/app/services.py": "1b9cc9837ac423113e718b91034979ce547d320e6713a2d353b50c73037c6c02",
+    "backend/artifacts/build.py": "50d513c329442fb38183ebacaa0deb0b5abb82f46a16e2de668c7ab22f551106",
+    "backend/artifacts/validation.py": "b9148af4b650478688bcfc6663526a8aece12b60604883b2744d798f7a3c11ec",
+    "backend/content/report-context.json": "48a0c3412c3d560d1a9fd9b4ee7f1fb827a73ce179ebccc6e54d48f16fe55bd3",
+    "backend/scripts/verify_report.py": "de266ccb454964035f4975d24896556b089f8c02b7ffbdf1d380e5dcb8a0efcf",
+    "backend/tests/api/test_api.py": "3e736523ca8eddedcc0139f3e94d5c6a8e9440e99c6a1c2eba99b90df076b580",
+    "frontend/src/components/Layout.tsx": "e4bf53cda17c4662ca4284ed10a3fe948c20579ee0e376f5d79e435159d363e4",
+    "frontend/src/components/DataTable.tsx": "eb31ea17a6c05071678fac27da999ad42d63364e77727e28d8eae390c49795e5",
+    "frontend/src/components/ScientificCharts.tsx": "0670200b175496e945d0e4704f24cff955b929fe3d429d0444400d6f1a31d430",
+    "frontend/src/components/VariableHighlights.tsx": "68a7c8d3d01c569791515d579a75f3c9b6e0670d3bf3612b9c2e7d0b71e2c3d1",
+    "frontend/src/features/TeamReport.tsx": "d2363837e6849a469562690b4c53806a6260b7a9e1fb684190cf56343a7e39df",
+    "frontend/src/features/ComparisonReport.tsx": "41ca96a6beb02efdb4f5377886c1d35af365e834513951414bc6451eb1f7ad5a",
+    "frontend/e2e/review.spec.ts": "67ebba7e7bfbd83ea81ec1ce4e4044a1082e5a7c38bb778669942f937caff36c",
+    "frontend/e2e/context-review.spec.ts": "2ed5735f1b04c98c3c11c54aab6c8490ceb70007984f202312f4ffc819c713d9",
+    "frontend/package-lock.json": "58b409c8443021630ba80f4d4c417de8ed856c8b5fc4e440c489a9be40488d5a",
+    "docs/references/Projeto 1.pdf": "4e06065bb9dc2086aa9dcde8282a0e18e2207baaa9af7177a1db3102244fdb80"
+  },
+  "checks": {
+    "python_tests_passed": 245,
+    "vitest_tests_passed": 25,
+    "playwright": {
+      "startTime": "2026-10-30T04:14:09.710Z",
+      "duration": 54607.50399999999,
+      "expected": 27,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "final_accessibility_recheck": {
+      "startTime": "2026-10-30T04:17:28.294Z",
+      "duration": 16087.615,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "ruff": "passed",
+    "prettier": "passed",
+    "eslint": "passed",
+    "typescript_build": "passed",
+    "openapi_contracts": "passed",
+    "release_validation": "passed"
+  },
+  "browser_tests": [
+    {
+      "title": "consulta real, URL compartilhável e recarga de rota profunda",
+      "file": "base.spec.ts",
+      "status": "expected",
+      "duration_ms": 1646
+    },
+    {
+      "title": "estado vazio é diferente de indisponibilidade da API",
+      "file": "base.spec.ts",
+      "status": "expected",
+      "duration_ms": 198
+    },
+    {
+      "title": "visão geral distingue seleção aplicada, edição pendente e contexto fixo",
+      "file": "base.spec.ts",
+      "status": "expected",
+      "duration_ms": 673
+    },
+    {
+      "title": "URL inválida não dispara consultas analíticas",
+      "file": "base.spec.ts",
+      "status": "expected",
+      "duration_ms": 134
+    },
+    {
+      "title": "navegação móvel, tabela acessível e layout sem transbordamento",
+      "file": "base.spec.ts",
+      "status": "expected",
+      "duration_ms": 1326
+    },
+    {
+      "title": "menu móvel posiciona o foco e permite fechar ou navegar pelo teclado",
+      "file": "base.spec.ts",
+      "status": "expected",
+      "duration_ms": 340
+    },
+    {
+      "title": "filtros ficam apenas na Home e Comparação, sem seleção oculta nos perfis",
+      "file": "base.spec.ts",
+      "status": "expected",
+      "duration_ms": 1036
+    },
+    {
+      "title": "URLs antigas dos perfis são normalizadas antes de consultar o histórico completo",
+      "file": "base.spec.ts",
+      "status": "expected",
+      "duration_ms": 307
+    },
+    {
+      "title": "troca de release e versão não conserva resultados antigos durante falha da API",
+      "file": "context-review.spec.ts",
+      "status": "expected",
+      "duration_ms": 645
+    },
+    {
+      "title": "resposta de outro release é rejeitada antes da apresentação e força atualizar metadados",
+      "file": "context-review.spec.ts",
+      "status": "expected",
+      "duration_ms": 508
+    },
+    {
+      "title": "resposta atrasada de um filtro anterior não substitui a seleção aplicada depois",
+      "file": "context-review.spec.ts",
+      "status": "expected",
+      "duration_ms": 1085
+    },
+    {
+      "title": "índice orienta para as seções e permite voltar por teclado",
+      "file": "data-report.spec.ts",
+      "status": "expected",
+      "duration_ms": 237
+    },
+    {
+      "title": "Dados apresenta dimensões, todas as colunas e auditoria com escopos distintos",
+      "file": "data-report.spec.ts",
+      "status": "expected",
+      "duration_ms": 859
+    },
+    {
+      "title": "falha na auditoria não vira qualidade aprovada nem oculta o dicionário",
+      "file": "data-report.spec.ts",
+      "status": "expected",
+      "duration_ms": 217
+    },
+    {
+      "title": "destaques preservam os valores, amostras e escopos dos perfis e da comparação",
+      "file": "report.spec.ts",
+      "status": "expected",
+      "duration_ms": 732
+    },
+    {
+      "title": "os 14 pares variável/time apresentam medidas, boxplot, distribuição e interpretação coerentes",
+      "file": "report.spec.ts",
+      "status": "expected",
+      "duration_ms": 2713
+    },
+    {
+      "title": "os sete métodos funcionam para os dois times, com scores ou ruído e referência fixa",
+      "file": "report.spec.ts",
+      "status": "expected",
+      "duration_ms": 2165
+    },
+    {
+      "title": "fora da curva apresenta critérios próprios, limites e sinais com precisão explícita",
+      "file": "report.spec.ts",
+      "status": "expected",
+      "duration_ms": 341
+    },
+    {
+      "title": "comparação e síntese acompanham filtros e não inventam regularidade com uma observação",
+      "file": "report.spec.ts",
+      "status": "expected",
+      "duration_ms": 1357
+    },
+    {
+      "title": "auditoria automática de acessibilidade nas seis telas, com gráficos carregados",
+      "file": "review.spec.ts",
+      "status": "expected",
+      "duration_ms": 12895
+    },
+    {
+      "title": "cada outlier do boxplot e cada sinalização dos sete métodos coincide com o CSV",
+      "file": "review.spec.ts",
+      "status": "expected",
+      "duration_ms": 8565
+    },
+    {
+      "title": "teclado, menu móvel, tabelas e página atual nos dois perfis",
+      "file": "review.spec.ts",
+      "status": "expected",
+      "duration_ms": 839
+    },
+    {
+      "title": "contraste de textos SVG e limites das barras do histograma",
+      "file": "review.spec.ts",
+      "status": "expected",
+      "duration_ms": 295
+    },
+    {
+      "title": "menu móvel aberto não permite foco oculto atrás da navegação",
+      "file": "review.spec.ts",
+      "status": "expected",
+      "duration_ms": 483
+    },
+    {
+      "title": "jornada Dados → Perfil → Comparação → Anomalias → Síntese nos dois times",
+      "file": "review.spec.ts",
+      "status": "expected",
+      "duration_ms": 3107
+    },
+    {
+      "title": "refluxo em 320/390/768 px e todas as modas, inclusive coincidentes com a mediana",
+      "file": "review.spec.ts",
+      "status": "expected",
+      "duration_ms": 8201
+    },
+    {
+      "title": "interpretação explicita destaques de CV/assimetria e diagnóstico sem mudar as medidas",
+      "file": "review.spec.ts",
+      "status": "expected",
+      "duration_ms": 746
+    }
+  ],
+  "scientific": {
+    "status": "passed",
+    "generated_at": "2026-10-30T04:08:40.739538+00:00",
+    "source_sha256": "fa56bf638ef18be972a88850719043953e615bf39339671a8daa007ba08811b6",
+    "review_script_sha256": "de266ccb454964035f4975d24896556b089f8c02b7ffbdf1d380e5dcb8a0efcf",
+    "release_id": "a605fa0d3c8fadc5e470a1fc12f72e0bf4644497e4d89100d7785ba2a224024a",
+    "method": "csv.DictReader + statistics + independent linear quantiles and skew formula",
+    "pair_count": 14,
+    "anomaly_analyses": 50,
+    "detector_records_checked": 3725,
+    "boxplot_occurrences": 11,
+    "flagged_occurrences": 43,
+    "pairs": [
+      {
+        "team_id": "1610612737",
+        "metric": "PTS",
+        "unit": "pontos/jogo",
+        "n": 75,
+        "statistics": {
+          "mean": 118.25333333333333,
+          "median": 119.0,
+          "std": 12.59997139993894,
+          "variance": 158.75927927927927,
+          "minimum": 86.0,
+          "maximum": 150.0,
+          "range": 64.0,
+          "modes": [
+            124.0
+          ],
+          "q1": 110.5,
+          "q3": 126.0,
+          "iqr": 15.5,
+          "cv": 10.655066580171615,
+          "iqr_median_ratio": 0.13025210084033614,
+          "skewness": -0.20422651851340956
+        },
+        "lower_fence": 87.25,
+        "upper_fence": 149.25,
+        "boxplot_outlier_ids": [
+          "22500396",
+          "22500682"
+        ],
+        "sensitivity_diagnostic": {
+          "excluded_game_ids": [
+            "22500396",
+            "22500682"
+          ],
+          "original_iqr": 15.5,
+          "original_std": 12.599971399938942,
+          "retained_iqr": 15.0,
+          "retained_n": 73,
+          "retained_std": 11.607023014418031,
+          "scope": "temporary_iqr_sensitivity_no_official_rows_removed"
+        },
+        "modes": [
+          124.0
+        ]
+      },
+      {
+        "team_id": "1610612745",
+        "metric": "PTS",
+        "unit": "pontos/jogo",
+        "n": 74,
+        "statistics": {
+          "mean": 114.4054054054054,
+          "median": 114.0,
+          "std": 11.193098312504677,
+          "variance": 125.28544983339503,
+          "minimum": 91.0,
+          "maximum": 140.0,
+          "range": 49.0,
+          "modes": [
+            111.0,
+            117.0,
+            119.0,
+            124.0
+          ],
+          "q1": 106.25,
+          "q3": 122.75,
+          "iqr": 16.5,
+          "cv": 9.783714565619492,
+          "iqr_median_ratio": 0.14473684210526316,
+          "skewness": 0.08929157371530289
+        },
+        "lower_fence": 81.5,
+        "upper_fence": 147.5,
+        "boxplot_outlier_ids": [],
+        "sensitivity_diagnostic": null,
+        "modes": [
+          111.0,
+          117.0,
+          119.0,
+          124.0
+        ]
+      },
+      {
+        "team_id": "1610612737",
+        "metric": "REB",
+        "unit": "rebotes/jogo",
+        "n": 75,
+        "statistics": {
+          "mean": 43.333333333333336,
+          "median": 43.0,
+          "std": 6.822723030399926,
+          "variance": 46.549549549549546,
+          "minimum": 30.0,
+          "maximum": 61.0,
+          "range": 31.0,
+          "modes": [
+            46.0
+          ],
+          "q1": 38.0,
+          "q3": 47.0,
+          "iqr": 9.0,
+          "cv": 15.74474545476906,
+          "iqr_median_ratio": 0.20930232558139536,
+          "skewness": 0.4103798038663527
+        },
+        "lower_fence": 24.5,
+        "upper_fence": 60.5,
+        "boxplot_outlier_ids": [
+          "22500832"
+        ],
+        "sensitivity_diagnostic": {
+          "excluded_game_ids": [
+            "22500832"
+          ],
+          "original_iqr": 9.0,
+          "original_std": 6.822723030399926,
+          "retained_iqr": 9.0,
+          "retained_n": 74,
+          "retained_std": 6.546292308175672,
+          "scope": "temporary_iqr_sensitivity_no_official_rows_removed"
+        },
+        "modes": [
+          46.0
+        ]
+      },
+      {
+        "team_id": "1610612745",
+        "metric": "REB",
+        "unit": "rebotes/jogo",
+        "n": 74,
+        "statistics": {
+          "mean": 48.25675675675676,
+          "median": 47.5,
+          "std": 6.42567796286804,
+          "variance": 41.28933728248797,
+          "minimum": 37.0,
+          "maximum": 62.0,
+          "range": 25.0,
+          "modes": [
+            44.0
+          ],
+          "q1": 44.0,
+          "q3": 53.0,
+          "iqr": 9.0,
+          "cv": 13.315602611375944,
+          "iqr_median_ratio": 0.18947368421052632,
+          "skewness": 0.1779877915029719
+        },
+        "lower_fence": 30.5,
+        "upper_fence": 66.5,
+        "boxplot_outlier_ids": [],
+        "sensitivity_diagnostic": null,
+        "modes": [
+          44.0
+        ]
+      },
+      {
+        "team_id": "1610612737",
+        "metric": "AST",
+        "unit": "assistências/jogo",
+        "n": 75,
+        "statistics": {
+          "mean": 30.346666666666668,
+          "median": 31.0,
+          "std": 4.869911296526461,
+          "variance": 23.716036036036037,
+          "minimum": 19.0,
+          "maximum": 42.0,
+          "range": 23.0,
+          "modes": [
+            33.0
+          ],
+          "q1": 28.0,
+          "q3": 33.5,
+          "iqr": 5.5,
+          "cv": 16.047598736356967,
+          "iqr_median_ratio": 0.1774193548387097,
+          "skewness": -0.23901645067745927
+        },
+        "lower_fence": 19.75,
+        "upper_fence": 41.75,
+        "boxplot_outlier_ids": [
+          "22500223",
+          "22500682"
+        ],
+        "sensitivity_diagnostic": {
+          "excluded_game_ids": [
+            "22500223",
+            "22500682"
+          ],
+          "original_iqr": 5.5,
+          "original_std": 4.869911296526461,
+          "retained_iqr": 5.0,
+          "retained_n": 73,
+          "retained_std": 4.549783810743685,
+          "scope": "temporary_iqr_sensitivity_no_official_rows_removed"
+        },
+        "modes": [
+          33.0
+        ]
+      },
+      {
+        "team_id": "1610612745",
+        "metric": "AST",
+        "unit": "assistências/jogo",
+        "n": 74,
+        "statistics": {
+          "mean": 25.12162162162162,
+          "median": 25.0,
+          "std": 4.404084973931394,
+          "variance": 19.395964457608294,
+          "minimum": 15.0,
+          "maximum": 34.0,
+          "range": 19.0,
+          "modes": [
+            24.0
+          ],
+          "q1": 22.25,
+          "q3": 28.75,
+          "iqr": 6.5,
+          "cv": 17.53105368859189,
+          "iqr_median_ratio": 0.26,
+          "skewness": 0.1566204343123794
+        },
+        "lower_fence": 12.5,
+        "upper_fence": 38.5,
+        "boxplot_outlier_ids": [],
+        "sensitivity_diagnostic": null,
+        "modes": [
+          24.0
+        ]
+      },
+      {
+        "team_id": "1610612737",
+        "metric": "STL",
+        "unit": "roubos/jogo",
+        "n": 75,
+        "statistics": {
+          "mean": 9.4,
+          "median": 9.0,
+          "std": 2.7607284585090257,
+          "variance": 7.621621621621622,
+          "minimum": 3.0,
+          "maximum": 18.0,
+          "range": 15.0,
+          "modes": [
+            9.0,
+            11.0
+          ],
+          "q1": 7.5,
+          "q3": 11.0,
+          "iqr": 3.5,
+          "cv": 29.36945168626623,
+          "iqr_median_ratio": 0.3888888888888889,
+          "skewness": 0.1916161981920922
+        },
+        "lower_fence": 2.25,
+        "upper_fence": 16.25,
+        "boxplot_outlier_ids": [
+          "22500227"
+        ],
+        "sensitivity_diagnostic": {
+          "excluded_game_ids": [
+            "22500227"
+          ],
+          "original_iqr": 3.5,
+          "original_std": 2.760728458509026,
+          "retained_iqr": 3.75,
+          "retained_n": 74,
+          "retained_std": 2.5882784793867755,
+          "scope": "temporary_iqr_sensitivity_no_official_rows_removed"
+        },
+        "modes": [
+          9.0,
+          11.0
+        ]
+      },
+      {
+        "team_id": "1610612745",
+        "metric": "STL",
+        "unit": "roubos/jogo",
+        "n": 74,
+        "statistics": {
+          "mean": 8.675675675675675,
+          "median": 9.0,
+          "std": 2.9288742430717285,
+          "variance": 8.578304331728988,
+          "minimum": 3.0,
+          "maximum": 17.0,
+          "range": 14.0,
+          "modes": [
+            9.0
+          ],
+          "q1": 6.25,
+          "q3": 10.0,
+          "iqr": 3.75,
+          "cv": 33.759609655343915,
+          "iqr_median_ratio": 0.4166666666666667,
+          "skewness": 0.5344889825657897
+        },
+        "lower_fence": 0.625,
+        "upper_fence": 15.625,
+        "boxplot_outlier_ids": [
+          "22500042",
+          "22500737"
+        ],
+        "sensitivity_diagnostic": {
+          "excluded_game_ids": [
+            "22500042",
+            "22500737"
+          ],
+          "original_iqr": 3.75,
+          "original_std": 2.9288742430717285,
+          "retained_iqr": 4.0,
+          "retained_n": 72,
+          "retained_std": 2.6533927258787906,
+          "scope": "temporary_iqr_sensitivity_no_official_rows_removed"
+        },
+        "modes": [
+          9.0
+        ]
+      },
+      {
+        "team_id": "1610612737",
+        "metric": "BLK",
+        "unit": "tocos/jogo",
+        "n": 75,
+        "statistics": {
+          "mean": 4.626666666666667,
+          "median": 5.0,
+          "std": 2.311974313271068,
+          "variance": 5.345225225225225,
+          "minimum": 1.0,
+          "maximum": 10.0,
+          "range": 9.0,
+          "modes": [
+            6.0
+          ],
+          "q1": 3.0,
+          "q3": 6.0,
+          "iqr": 3.0,
+          "cv": 49.97062636753028,
+          "iqr_median_ratio": 0.6,
+          "skewness": 0.22122597933880497
+        },
+        "lower_fence": -1.5,
+        "upper_fence": 10.5,
+        "boxplot_outlier_ids": [],
+        "sensitivity_diagnostic": null,
+        "modes": [
+          6.0
+        ]
+      },
+      {
+        "team_id": "1610612745",
+        "metric": "BLK",
+        "unit": "tocos/jogo",
+        "n": 74,
+        "statistics": {
+          "mean": 5.824324324324325,
+          "median": 6.0,
+          "std": 2.555456735350755,
+          "variance": 6.530359126249537,
+          "minimum": 1.0,
+          "maximum": 14.0,
+          "range": 13.0,
+          "modes": [
+            8.0
+          ],
+          "q1": 4.0,
+          "q3": 8.0,
+          "iqr": 4.0,
+          "cv": 43.87559127980414,
+          "iqr_median_ratio": 0.6666666666666666,
+          "skewness": 0.18614954242927428
+        },
+        "lower_fence": -2.0,
+        "upper_fence": 14.0,
+        "boxplot_outlier_ids": [],
+        "sensitivity_diagnostic": null,
+        "modes": [
+          8.0
+        ]
+      },
+      {
+        "team_id": "1610612737",
+        "metric": "PF",
+        "unit": "faltas/jogo",
+        "n": 75,
+        "statistics": {
+          "mean": 19.546666666666667,
+          "median": 19.0,
+          "std": 3.2561514894922383,
+          "variance": 10.602522522522522,
+          "minimum": 12.0,
+          "maximum": 27.0,
+          "range": 15.0,
+          "modes": [
+            19.0
+          ],
+          "q1": 17.0,
+          "q3": 21.0,
+          "iqr": 4.0,
+          "cv": 16.65834663792073,
+          "iqr_median_ratio": 0.21052631578947367,
+          "skewness": 0.027356654721679273
+        },
+        "lower_fence": 11.0,
+        "upper_fence": 27.0,
+        "boxplot_outlier_ids": [],
+        "sensitivity_diagnostic": null,
+        "modes": [
+          19.0
+        ]
+      },
+      {
+        "team_id": "1610612745",
+        "metric": "PF",
+        "unit": "faltas/jogo",
+        "n": 74,
+        "statistics": {
+          "mean": 18.39189189189189,
+          "median": 18.0,
+          "std": 3.8987794632706567,
+          "variance": 15.200481303221029,
+          "minimum": 10.0,
+          "maximum": 26.0,
+          "range": 16.0,
+          "modes": [
+            17.0
+          ],
+          "q1": 16.0,
+          "q3": 21.0,
+          "iqr": 5.0,
+          "cv": 21.198360050112314,
+          "iqr_median_ratio": 0.2777777777777778,
+          "skewness": -0.05892309145201752
+        },
+        "lower_fence": 8.5,
+        "upper_fence": 28.5,
+        "boxplot_outlier_ids": [],
+        "sensitivity_diagnostic": null,
+        "modes": [
+          17.0
+        ]
+      },
+      {
+        "team_id": "1610612737",
+        "metric": "FG3M",
+        "unit": "cestas/jogo",
+        "n": 75,
+        "statistics": {
+          "mean": 14.533333333333333,
+          "median": 14.0,
+          "std": 3.870656531130343,
+          "variance": 14.981981981981981,
+          "minimum": 6.0,
+          "maximum": 25.0,
+          "range": 19.0,
+          "modes": [
+            13.0
+          ],
+          "q1": 12.0,
+          "q3": 16.5,
+          "iqr": 4.5,
+          "cv": 26.63295778300695,
+          "iqr_median_ratio": 0.32142857142857145,
+          "skewness": 0.6279290762432584
+        },
+        "lower_fence": 5.25,
+        "upper_fence": 23.25,
+        "boxplot_outlier_ids": [
+          "22500227",
+          "22500455",
+          "22501037"
+        ],
+        "sensitivity_diagnostic": {
+          "excluded_game_ids": [
+            "22500227",
+            "22500455",
+            "22501037"
+          ],
+          "original_iqr": 4.5,
+          "original_std": 3.8706565311303436,
+          "retained_iqr": 4.0,
+          "retained_n": 72,
+          "retained_std": 3.329575346418885,
+          "scope": "temporary_iqr_sensitivity_no_official_rows_removed"
+        },
+        "modes": [
+          13.0
+        ]
+      },
+      {
+        "team_id": "1610612745",
+        "metric": "FG3M",
+        "unit": "cestas/jogo",
+        "n": 74,
+        "statistics": {
+          "mean": 11.297297297297296,
+          "median": 11.0,
+          "std": 3.498452611873833,
+          "variance": 12.239170677526841,
+          "minimum": 4.0,
+          "maximum": 19.0,
+          "range": 15.0,
+          "modes": [
+            10.0
+          ],
+          "q1": 9.0,
+          "q3": 13.0,
+          "iqr": 4.0,
+          "cv": 30.967164267782735,
+          "iqr_median_ratio": 0.36363636363636365,
+          "skewness": 0.37392110888483443
+        },
+        "lower_fence": 3.0,
+        "upper_fence": 19.0,
+        "boxplot_outlier_ids": [],
+        "sensitivity_diagnostic": null,
+        "modes": [
+          10.0
+        ]
+      }
+    ],
+    "flagged_records": [
+      {
+        "team_id": "1610612737",
+        "method": "iqr",
+        "metric": "PTS",
+        "game_id": "22500396",
+        "game_date": "2025-12-21",
+        "matchup": "ATL vs. CHI",
+        "values": {
+          "PTS": 150.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "iqr",
+        "metric": "PTS",
+        "game_id": "22500682",
+        "game_date": "2026-01-29",
+        "matchup": "ATL vs. HOU",
+        "values": {
+          "PTS": 86.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "iqr",
+        "metric": "REB",
+        "game_id": "22500832",
+        "game_date": "2026-02-24",
+        "matchup": "ATL vs. WAS",
+        "values": {
+          "REB": 61.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "iqr",
+        "metric": "AST",
+        "game_id": "22500223",
+        "game_date": "2025-11-12",
+        "matchup": "ATL @ SAC",
+        "values": {
+          "AST": 42.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "iqr",
+        "metric": "AST",
+        "game_id": "22500682",
+        "game_date": "2026-01-29",
+        "matchup": "ATL vs. HOU",
+        "values": {
+          "AST": 19.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "zscore",
+        "metric": "STL",
+        "game_id": "22500227",
+        "game_date": "2025-11-13",
+        "matchup": "ATL @ UTA",
+        "values": {
+          "STL": 18.0
+        },
+        "score": 3.115119842189971,
+        "raw_score": 3.115119842189971,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "iqr",
+        "metric": "STL",
+        "game_id": "22500227",
+        "game_date": "2025-11-13",
+        "matchup": "ATL @ UTA",
+        "values": {
+          "STL": 18.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "iqr",
+        "metric": "FG3M",
+        "game_id": "22500227",
+        "game_date": "2025-11-13",
+        "matchup": "ATL @ UTA",
+        "values": {
+          "FG3M": 24.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "iqr",
+        "metric": "FG3M",
+        "game_id": "22500455",
+        "game_date": "2025-12-29",
+        "matchup": "ATL @ OKC",
+        "values": {
+          "FG3M": 25.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "iqr",
+        "metric": "FG3M",
+        "game_id": "22501037",
+        "game_date": "2026-03-23",
+        "matchup": "ATL vs. MEM",
+        "values": {
+          "FG3M": 25.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "ecod",
+        "metric": null,
+        "game_id": "22500304",
+        "game_date": "2025-11-30",
+        "matchup": "ATL @ PHI",
+        "values": {
+          "AST": 36.0,
+          "BLK": 6.0,
+          "FG3M": 15.0,
+          "PF": 27.0,
+          "PTS": 142.0,
+          "REB": 58.0,
+          "STL": 10.0
+        },
+        "score": 15.441176408491257,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": {
+          "AST": 1.8325814637483102,
+          "BLK": 0.9501922835498364,
+          "FG3M": 0.7911275889201491,
+          "PF": 4.31748811353631,
+          "PTS": 3.2188758248682006,
+          "REB": 3.624340932976365,
+          "STL": 0.706570200892086
+        },
+        "tail_probabilities": {
+          "AST": {
+            "left": 0.92,
+            "right": 0.16
+          },
+          "BLK": {
+            "left": 0.8266666666666667,
+            "right": 0.38666666666666666
+          },
+          "FG3M": {
+            "left": 0.64,
+            "right": 0.4533333333333333
+          },
+          "PF": {
+            "left": 1.0,
+            "right": 0.013333333333333334
+          },
+          "PTS": {
+            "left": 0.9733333333333334,
+            "right": 0.04
+          },
+          "REB": {
+            "left": 0.9866666666666667,
+            "right": 0.02666666666666667
+          },
+          "STL": {
+            "left": 0.6533333333333333,
+            "right": 0.49333333333333335
+          }
+        },
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "ecod",
+        "metric": null,
+        "game_id": "22500396",
+        "game_date": "2025-12-21",
+        "matchup": "ATL vs. CHI",
+        "values": {
+          "AST": 39.0,
+          "BLK": 7.0,
+          "FG3M": 23.0,
+          "PF": 25.0,
+          "PTS": 150.0,
+          "REB": 35.0,
+          "STL": 6.0
+        },
+        "score": 19.181096240396652,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": {
+          "AST": 3.624340932976365,
+          "BLK": 1.7525387560747736,
+          "FG3M": 2.9311937524164198,
+          "PF": 2.70805020110221,
+          "PTS": 4.31748811353631,
+          "REB": 2.0149030205422647,
+          "STL": 1.8325814637483102
+        },
+        "tail_probabilities": {
+          "AST": {
+            "left": 0.9866666666666667,
+            "right": 0.02666666666666667
+          },
+          "BLK": {
+            "left": 0.88,
+            "right": 0.17333333333333334
+          },
+          "FG3M": {
+            "left": 0.96,
+            "right": 0.05333333333333334
+          },
+          "PF": {
+            "left": 0.9733333333333334,
+            "right": 0.06666666666666667
+          },
+          "PTS": {
+            "left": 1.0,
+            "right": 0.013333333333333334
+          },
+          "REB": {
+            "left": 0.13333333333333333,
+            "right": 0.92
+          },
+          "STL": {
+            "left": 0.16,
+            "right": 0.9333333333333333
+          }
+        },
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "ecod",
+        "metric": null,
+        "game_id": "22500735",
+        "game_date": "2026-02-05",
+        "matchup": "ATL vs. UTA",
+        "values": {
+          "AST": 34.0,
+          "BLK": 10.0,
+          "FG3M": 8.0,
+          "PF": 18.0,
+          "PTS": 121.0,
+          "REB": 50.0,
+          "STL": 3.0
+        },
+        "score": 15.967805212283979,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": {
+          "AST": 1.3730491343698699,
+          "BLK": 3.624340932976365,
+          "FG3M": 3.2188758248682006,
+          "PF": 1.0216512475319814,
+          "PTS": 0.7339691750802004,
+          "REB": 1.6784307839210517,
+          "STL": 4.31748811353631
+        },
+        "tail_probabilities": {
+          "AST": {
+            "left": 0.8,
+            "right": 0.25333333333333335
+          },
+          "BLK": {
+            "left": 1.0,
+            "right": 0.02666666666666667
+          },
+          "FG3M": {
+            "left": 0.04,
+            "right": 0.9866666666666667
+          },
+          "PF": {
+            "left": 0.36,
+            "right": 0.7333333333333333
+          },
+          "PTS": {
+            "left": 0.5333333333333333,
+            "right": 0.48
+          },
+          "REB": {
+            "left": 0.84,
+            "right": 0.18666666666666668
+          },
+          "STL": {
+            "left": 0.013333333333333334,
+            "right": 1.0
+          }
+        },
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "ecod",
+        "metric": null,
+        "game_id": "22501018",
+        "game_date": "2026-03-20",
+        "matchup": "ATL @ HOU",
+        "values": {
+          "AST": 22.0,
+          "BLK": 9.0,
+          "FG3M": 9.0,
+          "PF": 21.0,
+          "PTS": 95.0,
+          "REB": 37.0,
+          "STL": 13.0
+        },
+        "score": 16.15599188853033,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": {
+          "AST": 2.70805020110221,
+          "BLK": 2.9311937524164198,
+          "FG3M": 2.70805020110221,
+          "PF": 0.9852836033611064,
+          "PTS": 3.2188758248682006,
+          "REB": 1.4842747694800944,
+          "STL": 2.120263536200091
+        },
+        "tail_probabilities": {
+          "AST": {
+            "left": 0.06666666666666667,
+            "right": 0.96
+          },
+          "BLK": {
+            "left": 0.9733333333333334,
+            "right": 0.05333333333333334
+          },
+          "FG3M": {
+            "left": 0.06666666666666667,
+            "right": 0.96
+          },
+          "PF": {
+            "left": 0.76,
+            "right": 0.37333333333333335
+          },
+          "PTS": {
+            "left": 0.04,
+            "right": 0.9733333333333334
+          },
+          "REB": {
+            "left": 0.22666666666666666,
+            "right": 0.84
+          },
+          "STL": {
+            "left": 0.9333333333333333,
+            "right": 0.12
+          }
+        },
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "knn",
+        "metric": null,
+        "game_id": "22500227",
+        "game_date": "2025-11-13",
+        "matchup": "ATL @ UTA",
+        "values": {
+          "AST": 36.0,
+          "BLK": 6.0,
+          "FG3M": 24.0,
+          "PF": 18.0,
+          "PTS": 132.0,
+          "REB": 43.0,
+          "STL": 18.0
+        },
+        "score": 3.6241435852464425,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": [
+          "22501037",
+          "22500223",
+          "22500455",
+          "22500185",
+          "22500537",
+          "22500659",
+          "22500519",
+          "22500897",
+          "22500351",
+          "22500069"
+        ],
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "knn",
+        "metric": null,
+        "game_id": "22500304",
+        "game_date": "2025-11-30",
+        "matchup": "ATL @ PHI",
+        "values": {
+          "AST": 36.0,
+          "BLK": 6.0,
+          "FG3M": 15.0,
+          "PF": 27.0,
+          "PTS": 142.0,
+          "REB": 58.0,
+          "STL": 10.0
+        },
+        "score": 3.547393148285429,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": [
+          "22500873",
+          "22501217",
+          "22500020",
+          "22500340",
+          "22500130",
+          "22500556",
+          "22500623",
+          "22500659",
+          "22501006",
+          "22500983"
+        ],
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "knn",
+        "metric": null,
+        "game_id": "22500396",
+        "game_date": "2025-12-21",
+        "matchup": "ATL vs. CHI",
+        "values": {
+          "AST": 39.0,
+          "BLK": 7.0,
+          "FG3M": 23.0,
+          "PF": 25.0,
+          "PTS": 150.0,
+          "REB": 35.0,
+          "STL": 6.0
+        },
+        "score": 3.6857777204502624,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": [
+          "22500267",
+          "22500623",
+          "22500340",
+          "22501037",
+          "22500897",
+          "22500455",
+          "22500411",
+          "22500435",
+          "22500659",
+          "22500720"
+        ],
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "knn",
+        "metric": null,
+        "game_id": "22500735",
+        "game_date": "2026-02-05",
+        "matchup": "ATL vs. UTA",
+        "values": {
+          "AST": 34.0,
+          "BLK": 10.0,
+          "FG3M": 8.0,
+          "PF": 18.0,
+          "PTS": 121.0,
+          "REB": 50.0,
+          "STL": 3.0
+        },
+        "score": 3.6733189705183733,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": [
+          "22500057",
+          "22500939",
+          "22500014",
+          "22500206",
+          "22501210",
+          "22500276",
+          "22500270",
+          "22500775",
+          "22500423",
+          "22500030"
+        ],
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "lof",
+        "metric": null,
+        "game_id": "22500227",
+        "game_date": "2025-11-13",
+        "matchup": "ATL @ UTA",
+        "values": {
+          "AST": 36.0,
+          "BLK": 6.0,
+          "FG3M": 24.0,
+          "PF": 18.0,
+          "PTS": 132.0,
+          "REB": 43.0,
+          "STL": 18.0
+        },
+        "score": 1.2715172467340499,
+        "raw_score": -1.2715172467340499,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": 1,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "lof",
+        "metric": null,
+        "game_id": "22500396",
+        "game_date": "2025-12-21",
+        "matchup": "ATL vs. CHI",
+        "values": {
+          "AST": 39.0,
+          "BLK": 7.0,
+          "FG3M": 23.0,
+          "PF": 25.0,
+          "PTS": 150.0,
+          "REB": 35.0,
+          "STL": 6.0
+        },
+        "score": 1.3568159229386643,
+        "raw_score": -1.3568159229386643,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": 1,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "lof",
+        "metric": null,
+        "game_id": "22500735",
+        "game_date": "2026-02-05",
+        "matchup": "ATL vs. UTA",
+        "values": {
+          "AST": 34.0,
+          "BLK": 10.0,
+          "FG3M": 8.0,
+          "PF": 18.0,
+          "PTS": 121.0,
+          "REB": 50.0,
+          "STL": 3.0
+        },
+        "score": 1.4162423315111554,
+        "raw_score": -1.4162423315111554,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": 1,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "lof",
+        "metric": null,
+        "game_id": "22501018",
+        "game_date": "2026-03-20",
+        "matchup": "ATL @ HOU",
+        "values": {
+          "AST": 22.0,
+          "BLK": 9.0,
+          "FG3M": 9.0,
+          "PF": 21.0,
+          "PTS": 95.0,
+          "REB": 37.0,
+          "STL": 13.0
+        },
+        "score": 1.2711078774596645,
+        "raw_score": -1.2711078774596645,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": 1,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "dbscan",
+        "metric": null,
+        "game_id": "22500227",
+        "game_date": "2025-11-13",
+        "matchup": "ATL @ UTA",
+        "values": {
+          "AST": 36.0,
+          "BLK": 6.0,
+          "FG3M": 24.0,
+          "PF": 18.0,
+          "PTS": 132.0,
+          "REB": 43.0,
+          "STL": 18.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": -1
+      },
+      {
+        "team_id": "1610612737",
+        "method": "dbscan",
+        "metric": null,
+        "game_id": "22500396",
+        "game_date": "2025-12-21",
+        "matchup": "ATL vs. CHI",
+        "values": {
+          "AST": 39.0,
+          "BLK": 7.0,
+          "FG3M": 23.0,
+          "PF": 25.0,
+          "PTS": 150.0,
+          "REB": 35.0,
+          "STL": 6.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": -1
+      },
+      {
+        "team_id": "1610612737",
+        "method": "dbscan",
+        "metric": null,
+        "game_id": "22500735",
+        "game_date": "2026-02-05",
+        "matchup": "ATL vs. UTA",
+        "values": {
+          "AST": 34.0,
+          "BLK": 10.0,
+          "FG3M": 8.0,
+          "PF": 18.0,
+          "PTS": 121.0,
+          "REB": 50.0,
+          "STL": 3.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": -1
+      },
+      {
+        "team_id": "1610612737",
+        "method": "dbscan",
+        "metric": null,
+        "game_id": "22501018",
+        "game_date": "2026-03-20",
+        "matchup": "ATL @ HOU",
+        "values": {
+          "AST": 22.0,
+          "BLK": 9.0,
+          "FG3M": 9.0,
+          "PF": 21.0,
+          "PTS": 95.0,
+          "REB": 37.0,
+          "STL": 13.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": -1
+      },
+      {
+        "team_id": "1610612745",
+        "method": "iqr",
+        "metric": "STL",
+        "game_id": "22500042",
+        "game_date": "2025-11-14",
+        "matchup": "HOU vs. POR",
+        "values": {
+          "STL": 16.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "iqr",
+        "metric": "STL",
+        "game_id": "22500737",
+        "game_date": "2026-02-05",
+        "matchup": "HOU vs. CHA",
+        "values": {
+          "STL": 17.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "zscore",
+        "metric": "BLK",
+        "game_id": "22500682",
+        "game_date": "2026-01-29",
+        "matchup": "HOU @ ATL",
+        "values": {
+          "BLK": 14.0
+        },
+        "score": 3.1993011513667855,
+        "raw_score": 3.1993011513667855,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "ecod",
+        "metric": null,
+        "game_id": "22500146",
+        "game_date": "2025-11-01",
+        "matchup": "HOU @ BOS",
+        "values": {
+          "AST": 30.0,
+          "BLK": 11.0,
+          "FG3M": 19.0,
+          "PF": 14.0,
+          "PTS": 128.0,
+          "REB": 53.0,
+          "STL": 6.0
+        },
+        "score": 15.351968610006418,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": {
+          "AST": 1.6650077635889111,
+          "BLK": 3.6109179126442243,
+          "FG3M": 3.6109179126442243,
+          "PF": 1.739115735742633,
+          "PTS": 2.10684051586795,
+          "REB": 1.2595426554807467,
+          "STL": 1.3596261140377293
+        },
+        "tail_probabilities": {
+          "AST": {
+            "left": 0.8648648648648649,
+            "right": 0.1891891891891892
+          },
+          "BLK": {
+            "left": 0.9864864864864865,
+            "right": 0.02702702702702703
+          },
+          "FG3M": {
+            "left": 1.0,
+            "right": 0.02702702702702703
+          },
+          "PF": {
+            "left": 0.17567567567567569,
+            "right": 0.8783783783783784
+          },
+          "PTS": {
+            "left": 0.918918918918919,
+            "right": 0.12162162162162163
+          },
+          "REB": {
+            "left": 0.7972972972972973,
+            "right": 0.28378378378378377
+          },
+          "STL": {
+            "left": 0.25675675675675674,
+            "right": 0.8513513513513513
+          }
+        },
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "ecod",
+        "metric": null,
+        "game_id": "22500330",
+        "game_date": "2025-12-03",
+        "matchup": "HOU vs. SAC",
+        "values": {
+          "AST": 24.0,
+          "BLK": 8.0,
+          "FG3M": 5.0,
+          "PF": 10.0,
+          "PTS": 121.0,
+          "REB": 62.0,
+          "STL": 10.0
+        },
+        "score": 15.757681621268354,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": {
+          "AST": 0.7205461547480597,
+          "BLK": 1.213022639845854,
+          "FG3M": 2.917770732084279,
+          "PF": 4.304065093204169,
+          "PTS": 1.213022639845854,
+          "REB": 4.304065093204169,
+          "STL": 1.085189268335969
+        },
+        "tail_probabilities": {
+          "AST": {
+            "left": 0.4864864864864865,
+            "right": 0.6486486486486487
+          },
+          "BLK": {
+            "left": 0.8918918918918919,
+            "right": 0.2972972972972973
+          },
+          "FG3M": {
+            "left": 0.05405405405405406,
+            "right": 0.9864864864864865
+          },
+          "PF": {
+            "left": 0.013513513513513514,
+            "right": 1.0
+          },
+          "PTS": {
+            "left": 0.7162162162162162,
+            "right": 0.2972972972972973
+          },
+          "REB": {
+            "left": 1.0,
+            "right": 0.013513513513513514
+          },
+          "STL": {
+            "left": 0.7972972972972973,
+            "right": 0.33783783783783783
+          }
+        },
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "ecod",
+        "metric": null,
+        "game_id": "22500505",
+        "game_date": "2026-01-05",
+        "matchup": "HOU vs. PHX",
+        "values": {
+          "AST": 20.0,
+          "BLK": 1.0,
+          "FG3M": 9.0,
+          "PF": 11.0,
+          "PTS": 100.0,
+          "REB": 51.0,
+          "STL": 5.0
+        },
+        "score": 14.432296013235455,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": {
+          "AST": 2.10684051586795,
+          "BLK": 3.20545280453606,
+          "FG3M": 1.16857087727502,
+          "PF": 2.917770732084279,
+          "PTS": 2.2246235515243336,
+          "REB": 0.9028677115420143,
+          "STL": 1.906169820405799
+        },
+        "tail_probabilities": {
+          "AST": {
+            "left": 0.12162162162162163,
+            "right": 0.9054054054054054
+          },
+          "BLK": {
+            "left": 0.04054054054054054,
+            "right": 1.0
+          },
+          "FG3M": {
+            "left": 0.3108108108108108,
+            "right": 0.7972972972972973
+          },
+          "PF": {
+            "left": 0.05405405405405406,
+            "right": 0.9864864864864865
+          },
+          "PTS": {
+            "left": 0.10810810810810811,
+            "right": 0.9054054054054054
+          },
+          "REB": {
+            "left": 0.6756756756756757,
+            "right": 0.40540540540540543
+          },
+          "STL": {
+            "left": 0.14864864864864866,
+            "right": 0.9459459459459459
+          }
+        },
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "ecod",
+        "metric": null,
+        "game_id": "22500581",
+        "game_date": "2026-01-15",
+        "matchup": "HOU vs. OKC",
+        "values": {
+          "AST": 17.0,
+          "BLK": 7.0,
+          "FG3M": 7.0,
+          "PF": 12.0,
+          "PTS": 91.0,
+          "REB": 60.0,
+          "STL": 10.0
+        },
+        "score": 17.40716703483173,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": {
+          "AST": 3.20545280453606,
+          "BLK": 0.8700778887190235,
+          "FG3M": 2.2246235515243336,
+          "PF": 2.512305623976115,
+          "PTS": 4.304065093204169,
+          "REB": 3.20545280453606,
+          "STL": 1.085189268335969
+        },
+        "tail_probabilities": {
+          "AST": {
+            "left": 0.04054054054054054,
+            "right": 0.972972972972973
+          },
+          "BLK": {
+            "left": 0.7027027027027027,
+            "right": 0.4189189189189189
+          },
+          "FG3M": {
+            "left": 0.10810810810810811,
+            "right": 0.9459459459459459
+          },
+          "PF": {
+            "left": 0.08108108108108109,
+            "right": 0.9459459459459459
+          },
+          "PTS": {
+            "left": 0.013513513513513514,
+            "right": 1.0
+          },
+          "REB": {
+            "left": 0.9864864864864865,
+            "right": 0.04054054054054054
+          },
+          "STL": {
+            "left": 0.7972972972972973,
+            "right": 0.33783783783783783
+          }
+        },
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "knn",
+        "metric": null,
+        "game_id": "22500146",
+        "game_date": "2025-11-01",
+        "matchup": "HOU @ BOS",
+        "values": {
+          "AST": 30.0,
+          "BLK": 11.0,
+          "FG3M": 19.0,
+          "PF": 14.0,
+          "PTS": 128.0,
+          "REB": 53.0,
+          "STL": 6.0
+        },
+        "score": 3.4795686192629645,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": [
+          "22500845",
+          "22501088",
+          "22500830",
+          "22500131",
+          "22500218",
+          "22500438",
+          "22500386",
+          "22501069",
+          "22500375",
+          "22500964"
+        ],
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "knn",
+        "metric": null,
+        "game_id": "22500042",
+        "game_date": "2025-11-14",
+        "matchup": "HOU vs. POR",
+        "values": {
+          "AST": 26.0,
+          "BLK": 6.0,
+          "FG3M": 17.0,
+          "PF": 22.0,
+          "PTS": 140.0,
+          "REB": 49.0,
+          "STL": 16.0
+        },
+        "score": 3.4740953060233415,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": [
+          "22500301",
+          "22500628",
+          "22500218",
+          "22500116",
+          "22500290",
+          "22500748",
+          "22500830",
+          "22500176",
+          "22500131",
+          "22500438"
+        ],
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "knn",
+        "metric": null,
+        "game_id": "22500581",
+        "game_date": "2026-01-15",
+        "matchup": "HOU vs. OKC",
+        "values": {
+          "AST": 17.0,
+          "BLK": 7.0,
+          "FG3M": 7.0,
+          "PF": 12.0,
+          "PTS": 91.0,
+          "REB": 60.0,
+          "STL": 10.0
+        },
+        "score": 3.4937771007552105,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": [
+          "22500540",
+          "22500160",
+          "22500491",
+          "22500713",
+          "22500679",
+          "22500330",
+          "22501058",
+          "22500879",
+          "22500505",
+          "22500940"
+        ],
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "knn",
+        "metric": null,
+        "game_id": "22500682",
+        "game_date": "2026-01-29",
+        "matchup": "HOU @ ATL",
+        "values": {
+          "AST": 23.0,
+          "BLK": 14.0,
+          "FG3M": 12.0,
+          "PF": 11.0,
+          "PTS": 104.0,
+          "REB": 59.0,
+          "STL": 8.0
+        },
+        "score": 3.780104403134546,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": [
+          "22501058",
+          "22500540",
+          "22500438",
+          "22500160",
+          "22500330",
+          "22501069",
+          "22500581",
+          "22500615",
+          "22500964",
+          "22500782"
+        ],
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "lof",
+        "metric": null,
+        "game_id": "22500093",
+        "game_date": "2025-10-24",
+        "matchup": "HOU vs. DET",
+        "values": {
+          "AST": 15.0,
+          "BLK": 2.0,
+          "FG3M": 10.0,
+          "PF": 24.0,
+          "PTS": 111.0,
+          "REB": 45.0,
+          "STL": 14.0
+        },
+        "score": 1.2409469304128034,
+        "raw_score": -1.2409469304128034,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": 1,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "lof",
+        "metric": null,
+        "game_id": "22500042",
+        "game_date": "2025-11-14",
+        "matchup": "HOU vs. POR",
+        "values": {
+          "AST": 26.0,
+          "BLK": 6.0,
+          "FG3M": 17.0,
+          "PF": 22.0,
+          "PTS": 140.0,
+          "REB": 49.0,
+          "STL": 16.0
+        },
+        "score": 1.2181360059469104,
+        "raw_score": -1.2181360059469104,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": 1,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "lof",
+        "metric": null,
+        "game_id": "22500581",
+        "game_date": "2026-01-15",
+        "matchup": "HOU vs. OKC",
+        "values": {
+          "AST": 17.0,
+          "BLK": 7.0,
+          "FG3M": 7.0,
+          "PF": 12.0,
+          "PTS": 91.0,
+          "REB": 60.0,
+          "STL": 10.0
+        },
+        "score": 1.275633139678371,
+        "raw_score": -1.275633139678371,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": 1,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "lof",
+        "metric": null,
+        "game_id": "22500682",
+        "game_date": "2026-01-29",
+        "matchup": "HOU @ ATL",
+        "values": {
+          "AST": 23.0,
+          "BLK": 14.0,
+          "FG3M": 12.0,
+          "PF": 11.0,
+          "PTS": 104.0,
+          "REB": 59.0,
+          "STL": 8.0
+        },
+        "score": 1.3284015436435201,
+        "raw_score": -1.3284015436435201,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": 1,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "dbscan",
+        "metric": null,
+        "game_id": "22500042",
+        "game_date": "2025-11-14",
+        "matchup": "HOU vs. POR",
+        "values": {
+          "AST": 26.0,
+          "BLK": 6.0,
+          "FG3M": 17.0,
+          "PF": 22.0,
+          "PTS": 140.0,
+          "REB": 49.0,
+          "STL": 16.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": -1
+      },
+      {
+        "team_id": "1610612745",
+        "method": "dbscan",
+        "metric": null,
+        "game_id": "22500330",
+        "game_date": "2025-12-03",
+        "matchup": "HOU vs. SAC",
+        "values": {
+          "AST": 24.0,
+          "BLK": 8.0,
+          "FG3M": 5.0,
+          "PF": 10.0,
+          "PTS": 121.0,
+          "REB": 62.0,
+          "STL": 10.0
+        },
+        "score": null,
+        "raw_score": null,
+        "is_outlier": true,
+        "is_candidate": null,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": -1
+      }
+    ],
+    "grubbs_candidates": [
+      {
+        "team_id": "1610612737",
+        "method": "grubbs",
+        "metric": "PTS",
+        "game_id": "22500682",
+        "game_date": "2026-01-29",
+        "matchup": "ATL vs. HOU",
+        "values": {
+          "PTS": 86.0
+        },
+        "score": 2.5597941701272133,
+        "raw_score": -2.5597941701272133,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "grubbs",
+        "metric": "REB",
+        "game_id": "22500832",
+        "game_date": "2026-02-24",
+        "matchup": "ATL vs. WAS",
+        "values": {
+          "REB": 61.0
+        },
+        "score": 2.589386464605042,
+        "raw_score": 2.589386464605042,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "grubbs",
+        "metric": "AST",
+        "game_id": "22500223",
+        "game_date": "2025-11-12",
+        "matchup": "ATL @ SAC",
+        "values": {
+          "AST": 42.0
+        },
+        "score": 2.392925173328157,
+        "raw_score": 2.392925173328157,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "grubbs",
+        "metric": "STL",
+        "game_id": "22500227",
+        "game_date": "2025-11-13",
+        "matchup": "ATL @ UTA",
+        "values": {
+          "STL": 18.0
+        },
+        "score": 3.115119842189971,
+        "raw_score": 3.115119842189971,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "grubbs",
+        "metric": "BLK",
+        "game_id": "22500519",
+        "game_date": "2026-01-07",
+        "matchup": "ATL vs. NOP",
+        "values": {
+          "BLK": 10.0
+        },
+        "score": 2.3241319345503197,
+        "raw_score": 2.3241319345503197,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "grubbs",
+        "metric": "BLK",
+        "game_id": "22500735",
+        "game_date": "2026-02-05",
+        "matchup": "ATL vs. UTA",
+        "values": {
+          "BLK": 10.0
+        },
+        "score": 2.3241319345503197,
+        "raw_score": 2.3241319345503197,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "grubbs",
+        "metric": "PF",
+        "game_id": "22501078",
+        "game_date": "2026-03-28",
+        "matchup": "ATL vs. SAC",
+        "values": {
+          "PF": 12.0
+        },
+        "score": 2.3176644855192188,
+        "raw_score": -2.3176644855192188,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "grubbs",
+        "metric": "FG3M",
+        "game_id": "22500455",
+        "game_date": "2025-12-29",
+        "matchup": "ATL @ OKC",
+        "values": {
+          "FG3M": 25.0
+        },
+        "score": 2.704106288555161,
+        "raw_score": 2.704106288555161,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612737",
+        "method": "grubbs",
+        "metric": "FG3M",
+        "game_id": "22501037",
+        "game_date": "2026-03-23",
+        "matchup": "ATL vs. MEM",
+        "values": {
+          "FG3M": 25.0
+        },
+        "score": 2.704106288555161,
+        "raw_score": 2.704106288555161,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "grubbs",
+        "metric": "PTS",
+        "game_id": "22500042",
+        "game_date": "2025-11-14",
+        "matchup": "HOU vs. POR",
+        "values": {
+          "PTS": 140.0
+        },
+        "score": 2.2866407387846213,
+        "raw_score": 2.2866407387846213,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "grubbs",
+        "metric": "REB",
+        "game_id": "22500330",
+        "game_date": "2025-12-03",
+        "matchup": "HOU vs. SAC",
+        "values": {
+          "REB": 62.0
+        },
+        "score": 2.138800500532566,
+        "raw_score": 2.138800500532566,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "grubbs",
+        "metric": "AST",
+        "game_id": "22500093",
+        "game_date": "2025-10-24",
+        "matchup": "HOU vs. DET",
+        "values": {
+          "AST": 15.0
+        },
+        "score": 2.2982348618460815,
+        "raw_score": -2.2982348618460815,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "grubbs",
+        "metric": "STL",
+        "game_id": "22500737",
+        "game_date": "2026-02-05",
+        "matchup": "HOU vs. CHA",
+        "values": {
+          "STL": 17.0
+        },
+        "score": 2.842158328926402,
+        "raw_score": 2.842158328926402,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "grubbs",
+        "metric": "BLK",
+        "game_id": "22500682",
+        "game_date": "2026-01-29",
+        "matchup": "HOU @ ATL",
+        "values": {
+          "BLK": 14.0
+        },
+        "score": 3.1993011513667855,
+        "raw_score": 3.1993011513667855,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "grubbs",
+        "metric": "PF",
+        "game_id": "22500330",
+        "game_date": "2025-12-03",
+        "matchup": "HOU vs. SAC",
+        "values": {
+          "PF": 10.0
+        },
+        "score": 2.1524407756195565,
+        "raw_score": -2.1524407756195565,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "grubbs",
+        "metric": "FG3M",
+        "game_id": "22500146",
+        "game_date": "2025-11-01",
+        "matchup": "HOU @ BOS",
+        "values": {
+          "FG3M": 19.0
+        },
+        "score": 2.2017456164932874,
+        "raw_score": 2.2017456164932874,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      },
+      {
+        "team_id": "1610612745",
+        "method": "grubbs",
+        "metric": "FG3M",
+        "game_id": "22500386",
+        "game_date": "2025-12-20",
+        "matchup": "HOU @ DEN",
+        "values": {
+          "FG3M": 19.0
+        },
+        "score": 2.2017456164932874,
+        "raw_score": 2.2017456164932874,
+        "is_outlier": false,
+        "is_candidate": true,
+        "neighbor_game_ids": null,
+        "library_label": null,
+        "feature_contributions": null,
+        "tail_probabilities": null,
+        "cluster": null
+      }
+    ],
+    "limits": [
+      "Decisões sobre scores multivariados são conferidas; não se afirma reimplementação independente dos quatro estimadores.",
+      "Validação visual e de transporte HTTP é registrada separadamente nos testes do navegador."
+    ]
+  },
+  "browser_attachments": {
+    "release-requests.json": [
+      {
+        "path": "/api/v1/meta",
+        "generation": 0
+      },
+      {
+        "path": "/api/v1/comparisons",
+        "generation": 0
+      },
+      {
+        "path": "/api/v1/interpretations",
+        "generation": 0
+      },
+      {
+        "path": "/api/v1/meta",
+        "generation": 1
+      },
+      {
+        "path": "/api/v1/comparisons",
+        "generation": 1
+      },
+      {
+        "path": "/api/v1/meta",
+        "generation": 2
+      },
+      {
+        "path": "/api/v1/comparisons",
+        "generation": 2
+      },
+      {
+        "path": "/api/v1/interpretations",
+        "generation": 2
+      }
+    ],
+    "accessibility.json": [
+      {
+        "route": "/",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                ".atlanta > .team-card-heading > div > .eyebrow"
+              ],
+              [
+                ".atlanta > .team-card-heading > div > h3"
+              ],
+              [
+                ".atlanta > .team-card-heading > .sample-pill"
+              ],
+              [
+                ".atlanta > .team-score > small"
+              ],
+              [
+                ".atlanta > .team-measures > div:nth-child(1) > span"
+              ],
+              [
+                ".atlanta > .team-measures > div:nth-child(1) > b"
+              ],
+              [
+                ".atlanta > .team-measures > div:nth-child(2) > span"
+              ],
+              [
+                ".atlanta > .team-measures > div:nth-child(2) > b"
+              ],
+              [
+                ".atlanta > .team-measures > div:nth-child(3) > span"
+              ],
+              [
+                ".atlanta > .team-measures > div:nth-child(3) > b"
+              ],
+              [
+                ".text-link[href=\"/times/1610612737\"][data-discover=\"true\"]"
+              ],
+              [
+                ".atlanta > .profile-scope > strong"
+              ],
+              [
+                ".houston > .team-card-heading > div > .eyebrow"
+              ],
+              [
+                ".houston > .team-card-heading > div > h3"
+              ],
+              [
+                ".houston > .team-card-heading > .sample-pill"
+              ],
+              [
+                ".houston > .team-score > small"
+              ],
+              [
+                ".houston > .team-measures > div:nth-child(1) > span"
+              ],
+              [
+                ".houston > .team-measures > div:nth-child(1) > b"
+              ],
+              [
+                ".houston > .team-measures > div:nth-child(2) > span"
+              ],
+              [
+                ".houston > .team-measures > div:nth-child(2) > b"
+              ],
+              [
+                ".houston > .team-measures > div:nth-child(3) > span"
+              ],
+              [
+                ".houston > .team-measures > div:nth-child(3) > b"
+              ],
+              [
+                ".text-link[href=\"/times/1610612745\"][data-discover=\"true\"]"
+              ],
+              [
+                ".houston > .profile-scope > strong"
+              ]
+            ]
+          }
+        ],
+        "supplemental_color_check_count": 24,
+        "supplemental_color_failures": [],
+        "minimum_normal_text_ratio": 6.3095415524504315,
+        "worst_normal_sample": {
+          "selector": ".atlanta > .profile-scope > strong",
+          "color": "rgb(83, 100, 87)",
+          "background": "rgb(255, 255, 255)",
+          "ratio": 6.3095415524504315,
+          "minimum": 4.5
+        },
+        "minimum_large_text_ratio": null,
+        "worst_large_sample": null
+      },
+      {
+        "route": "/times/1610612737",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                "#medidas > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(13) > td:nth-child(1)"
+              ],
+              [
+                "span[title=\"fração\"]"
+              ],
+              [
+                "tr:nth-child(13) > td:nth-child(3)"
+              ],
+              [
+                "#medidas > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(14) > td:nth-child(1)"
+              ],
+              [
+                "td:nth-child(2) > span[title=\"adimensional\"]"
+              ],
+              [
+                "tr:nth-child(14) > td:nth-child(3)"
+              ],
+              [
+                "text[x=\"65\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[x=\"206\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[x=\"347\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[x=\"488\"]"
+              ],
+              [
+                "text[x=\"628.9999999999999\"]"
+              ],
+              [
+                "text[x=\"770\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[y=\"85\"]"
+              ],
+              [
+                "text[y=\"135\"]"
+              ],
+              [
+                "text[y=\"164\"]"
+              ],
+              [
+                "text[y=\"204\"]"
+              ],
+              [
+                "#boxplot > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > text[x=\"420\"][y=\"284\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[y=\"239\"]"
+              ],
+              [
+                "text[y=\"191.5\"]"
+              ],
+              [
+                "text[y=\"144\"]"
+              ],
+              [
+                "text[y=\"96.5\"]"
+              ],
+              [
+                "text[y=\"49\"]"
+              ],
+              [
+                "text[x=\"65\"][y=\"257\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[x=\"206\"][y=\"257\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[x=\"347\"][y=\"257\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[x=\"488.00000000000006\"]"
+              ],
+              [
+                "text[x=\"629.0000000000001\"]"
+              ],
+              [
+                "text[x=\"770\"][y=\"257\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[y=\"25\"]"
+              ],
+              [
+                "#distribuicao > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > text[x=\"420\"][y=\"284\"][text-anchor=\"middle\"]"
+              ]
+            ]
+          }
+        ],
+        "supplemental_color_check_count": 30,
+        "supplemental_color_failures": [],
+        "minimum_normal_text_ratio": 8.075916662072844,
+        "worst_normal_sample": {
+          "selector": "text[x=\"65\"][y=\"255\"][text-anchor=\"middle\"]",
+          "color": "rgb(70, 84, 63)",
+          "background": "rgb(255, 255, 255)",
+          "ratio": 8.075916662072844,
+          "minimum": 4.5
+        },
+        "minimum_large_text_ratio": null,
+        "worst_large_sample": null
+      },
+      {
+        "route": "/times/1610612745",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                "#medidas > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(13) > td:nth-child(1)"
+              ],
+              [
+                "span[title=\"fração\"]"
+              ],
+              [
+                "tr:nth-child(13) > td:nth-child(3)"
+              ],
+              [
+                "#medidas > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(14) > td:nth-child(1)"
+              ],
+              [
+                "td:nth-child(2) > span[title=\"adimensional\"]"
+              ],
+              [
+                "tr:nth-child(14) > td:nth-child(3)"
+              ],
+              [
+                "text[x=\"65\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[x=\"206\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[x=\"347\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[x=\"488\"]"
+              ],
+              [
+                "text[x=\"629\"]"
+              ],
+              [
+                "text[x=\"770\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[y=\"85\"]"
+              ],
+              [
+                "text[y=\"135\"]"
+              ],
+              [
+                "text[y=\"164\"]"
+              ],
+              [
+                "text[y=\"204\"]"
+              ],
+              [
+                "#boxplot > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > text[x=\"420\"][y=\"284\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[y=\"239\"]"
+              ],
+              [
+                "text[y=\"191.5\"]"
+              ],
+              [
+                "text[y=\"144\"]"
+              ],
+              [
+                "text[y=\"96.5\"]"
+              ],
+              [
+                "text[y=\"49\"]"
+              ],
+              [
+                "text[x=\"65\"][y=\"257\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[x=\"206\"][y=\"257\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[x=\"347\"][y=\"257\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[x=\"488.00000000000006\"]"
+              ],
+              [
+                "text[x=\"629.0000000000001\"]"
+              ],
+              [
+                "text[x=\"770\"][y=\"257\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "text[y=\"25\"]"
+              ],
+              [
+                "#distribuicao > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > text[x=\"420\"][y=\"284\"][text-anchor=\"middle\"]"
+              ]
+            ]
+          }
+        ],
+        "supplemental_color_check_count": 30,
+        "supplemental_color_failures": [],
+        "minimum_normal_text_ratio": 8.075916662072844,
+        "worst_normal_sample": {
+          "selector": "text[x=\"65\"][y=\"255\"][text-anchor=\"middle\"]",
+          "color": "rgb(70, 84, 63)",
+          "background": "rgb(255, 255, 255)",
+          "ratio": 8.075916662072844,
+          "minimum": 4.5
+        },
+        "minimum_large_text_ratio": null,
+        "worst_large_sample": null
+      },
+      {
+        "route": "/comparar",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                "article:nth-child(3) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > g:nth-child(1) > text[x=\"65\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "article:nth-child(3) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > g:nth-child(2) > text[x=\"205.99999999999997\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "article:nth-child(3) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > g:nth-child(3) > text[x=\"347.0000000000001\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "article:nth-child(3) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > g:nth-child(4) > text[x=\"488.00000000000006\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "article:nth-child(3) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > g:nth-child(5) > text[x=\"629\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "article:nth-child(3) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > g:nth-child(6) > text[x=\"770\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "article:nth-child(3) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > text[y=\"85\"][x=\"15\"]"
+              ],
+              [
+                "article:nth-child(3) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > text[y=\"135\"][x=\"15\"]"
+              ],
+              [
+                "article:nth-child(3) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > text[y=\"164\"][x=\"15\"]"
+              ],
+              [
+                "article:nth-child(3) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > text[y=\"204\"][x=\"15\"]"
+              ],
+              [
+                "article:nth-child(3) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > text[x=\"420\"][y=\"284\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "article:nth-child(4) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > g:nth-child(1) > text[x=\"65\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "article:nth-child(4) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > g:nth-child(2) > text[x=\"205.99999999999997\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "article:nth-child(4) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > g:nth-child(3) > text[x=\"347.0000000000001\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "article:nth-child(4) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > g:nth-child(4) > text[x=\"488.00000000000006\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "article:nth-child(4) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > g:nth-child(5) > text[x=\"629\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "article:nth-child(4) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > g:nth-child(6) > text[x=\"770\"][y=\"255\"][text-anchor=\"middle\"]"
+              ],
+              [
+                "article:nth-child(4) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > text[y=\"85\"][x=\"15\"]"
+              ],
+              [
+                "article:nth-child(4) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > text[y=\"135\"][x=\"15\"]"
+              ],
+              [
+                "article:nth-child(4) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > text[y=\"164\"][x=\"15\"]"
+              ],
+              [
+                "article:nth-child(4) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > text[y=\"204\"][x=\"15\"]"
+              ],
+              [
+                "article:nth-child(4) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > text[x=\"420\"][y=\"284\"][text-anchor=\"middle\"]"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(7) > table > tbody > tr:nth-child(13) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(7) > table > tbody > tr:nth-child(13) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(7) > table > tbody > tr:nth-child(13) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(7) > table > tbody > tr:nth-child(13) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(13) > td:nth-child(5) > span[title=\"cestas/jogo\"]"
+              ],
+              [
+                "tr:nth-child(13) > td:nth-child(6) > span[title=\"cestas/jogo\"]"
+              ],
+              [
+                "tr:nth-child(13) > td:nth-child(7) > span[title=\"cestas/jogo\"]"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(7) > table > tbody > tr:nth-child(14) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(7) > table > tbody > tr:nth-child(14) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(7) > table > tbody > tr:nth-child(14) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(7) > table > tbody > tr:nth-child(14) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(14) > td:nth-child(5) > span[title=\"cestas/jogo\"]"
+              ],
+              [
+                "tr:nth-child(14) > td:nth-child(6) > span[title=\"cestas/jogo\"]"
+              ],
+              [
+                "tr:nth-child(14) > td:nth-child(7) > span[title=\"cestas/jogo\"]"
+              ]
+            ]
+          }
+        ],
+        "supplemental_color_check_count": 36,
+        "supplemental_color_failures": [],
+        "minimum_normal_text_ratio": 8.075916662072844,
+        "worst_normal_sample": {
+          "selector": "article:nth-child(3) > figure > svg[viewBox=\"0 0 800 300\"][role=\"img\"] > g:nth-child(1) > text[x=\"65\"][y=\"255\"][text-anchor=\"middle\"]",
+          "color": "rgb(70, 84, 63)",
+          "background": "rgb(255, 255, 255)",
+          "ratio": 8.075916662072844,
+          "minimum": 4.5
+        },
+        "minimum_large_text_ratio": null,
+        "worst_large_sample": null
+      },
+      {
+        "route": "/fora-da-curva",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                "tr:nth-child(1) > td:nth-child(8)"
+              ],
+              [
+                "tr:nth-child(1) > td:nth-child(9)"
+              ],
+              [
+                "tr:nth-child(1) > td:nth-child(10)"
+              ],
+              [
+                "tr:nth-child(1) > td:nth-child(11)"
+              ],
+              [
+                "tr:nth-child(1) > td:nth-child(12)"
+              ],
+              [
+                "tr:nth-child(1) > td:nth-child(13)"
+              ],
+              [
+                "tr:nth-child(2) > td:nth-child(8)"
+              ],
+              [
+                "tr:nth-child(2) > td:nth-child(9)"
+              ],
+              [
+                "tr:nth-child(2) > td:nth-child(10)"
+              ],
+              [
+                "tr:nth-child(2) > td:nth-child(11)"
+              ],
+              [
+                "tr:nth-child(2) > td:nth-child(12)"
+              ],
+              [
+                "tr:nth-child(2) > td:nth-child(13)"
+              ],
+              [
+                "tr:nth-child(3) > td:nth-child(8)"
+              ],
+              [
+                "tr:nth-child(3) > td:nth-child(9)"
+              ],
+              [
+                "tr:nth-child(3) > td:nth-child(10)"
+              ],
+              [
+                "tr:nth-child(3) > td:nth-child(11)"
+              ],
+              [
+                "tr:nth-child(3) > td:nth-child(12)"
+              ],
+              [
+                "tr:nth-child(3) > td:nth-child(13)"
+              ],
+              [
+                "tr:nth-child(4) > td:nth-child(8)"
+              ],
+              [
+                "tr:nth-child(4) > td:nth-child(9)"
+              ],
+              [
+                "tr:nth-child(4) > td:nth-child(10)"
+              ],
+              [
+                "tr:nth-child(4) > td:nth-child(11)"
+              ],
+              [
+                "tr:nth-child(4) > td:nth-child(12)"
+              ],
+              [
+                "tr:nth-child(4) > td:nth-child(13)"
+              ],
+              [
+                "tr:nth-child(10) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(10) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(10) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(10) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(10) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(11) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(11) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(11) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(11) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(11) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(12) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(12) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(12) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(12) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(12) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(13) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(13) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(13) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(13) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(13) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(14) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(14) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(14) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(14) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(14) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(15) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(15) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(15) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(15) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(15) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(16) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(16) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(16) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(16) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(16) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(17) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(17) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(17) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(17) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(17) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(18) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(18) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(18) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(18) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(18) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(19) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(19) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(19) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(19) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(19) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(20) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(20) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(20) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(20) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(20) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(21) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(21) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(21) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(21) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(21) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(22) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(22) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(22) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(22) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(22) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(23) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(23) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(23) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(23) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(23) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(24) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(24) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(24) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(24) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(24) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(25) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(25) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(25) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(25) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(25) > td:nth-child(5)"
+              ]
+            ]
+          }
+        ],
+        "supplemental_color_check_count": 104,
+        "supplemental_color_failures": [],
+        "minimum_normal_text_ratio": 14.632891187170065,
+        "worst_normal_sample": {
+          "selector": "tr:nth-child(1) > td:nth-child(8)",
+          "color": "rgb(28, 44, 36)",
+          "background": "rgb(255, 255, 255)",
+          "ratio": 14.632891187170065,
+          "minimum": 4.5
+        },
+        "minimum_large_text_ratio": null,
+        "worst_large_sample": null
+      },
+      {
+        "route": "/dados",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": [
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(6) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(6) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(6) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(6) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(6) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(6) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(6) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(6) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(7) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(7) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(7) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(7) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(7) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(7) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(7) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(7) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(8) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(8) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(8) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(8) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(8) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(8) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(8) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(8) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(9) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(9) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(9) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(9) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(9) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(9) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(9) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(9) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(10) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(10) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(10) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(10) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(10) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(10) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(10) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(10) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(11) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(11) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(11) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(11) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(11) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(11) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(11) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(11) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(12) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(12) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(12) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(12) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(12) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(12) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(12) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(12) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(13) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(13) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(13) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(13) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(13) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(13) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(13) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(13) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(14) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(14) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(14) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(14) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(14) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(14) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(14) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(14) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(15) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(15) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(15) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(15) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(15) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(15) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(15) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(15) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(16) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(16) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(16) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(16) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(16) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(16) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(16) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(16) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(17) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(17) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(17) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(17) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(17) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(17) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(17) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(17) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(18) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(18) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(18) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(18) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(18) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(18) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(18) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(18) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(19) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(19) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(19) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(19) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(19) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(19) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(19) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(19) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(20) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(20) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(20) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(20) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(20) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(20) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(20) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(20) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(21) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(21) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(21) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(21) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(21) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(21) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(21) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(21) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(22) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(22) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(22) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(22) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(22) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(22) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(22) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(22) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(23) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(23) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(23) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(23) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(23) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(23) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(23) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(23) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(24) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(24) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(24) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(24) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(24) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(24) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(24) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(24) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(25) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(25) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(25) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(25) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(25) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(25) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(25) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(25) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(26) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(26) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(26) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(26) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(26) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(26) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(26) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(26) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(27) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(27) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(27) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(27) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(27) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(27) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(27) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(27) > td:nth-child(8)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(28) > td:nth-child(1)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(28) > td:nth-child(2)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(28) > td:nth-child(3)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(28) > td:nth-child(4)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(28) > td:nth-child(5)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(28) > td:nth-child(6)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(28) > td:nth-child(7)"
+              ],
+              [
+                "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(28) > td:nth-child(8)"
+              ],
+              [
+                "#qualidade > .table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(1) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(1) > td:nth-child(10)"
+              ],
+              [
+                "#qualidade > .table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(2) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(2) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(3) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(3) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(4) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(4) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(5) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(5) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(6) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(6) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(7) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(7) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(8) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(8) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(9) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(9) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(10) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(10) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(11) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(11) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(12) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(12) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(13) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(13) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(14) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(14) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(15) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(15) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(16) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(16) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(16) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(16) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(16) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(16) > td:nth-child(6)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(16) > td:nth-child(7)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(16) > td:nth-child(8)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(16) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(16) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(17) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(17) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(17) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(17) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(17) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(17) > td:nth-child(6)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(17) > td:nth-child(7)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(17) > td:nth-child(8)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(17) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(17) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(18) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(18) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(18) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(18) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(18) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(18) > td:nth-child(6)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(18) > td:nth-child(7)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(18) > td:nth-child(8)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(18) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(18) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(19) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(19) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(19) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(19) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(19) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(19) > td:nth-child(6)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(19) > td:nth-child(7)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(19) > td:nth-child(8)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(19) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(19) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(20) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(20) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(20) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(20) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(20) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(20) > td:nth-child(6)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(20) > td:nth-child(7)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(20) > td:nth-child(8)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(20) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(20) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(21) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(21) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(21) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(21) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(21) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(21) > td:nth-child(6)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(21) > td:nth-child(7)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(21) > td:nth-child(8)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(21) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(21) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(22) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(22) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(22) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(22) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(22) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(22) > td:nth-child(6)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(22) > td:nth-child(7)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(22) > td:nth-child(8)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(22) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(22) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(23) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(23) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(23) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(23) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(23) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(23) > td:nth-child(6)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(23) > td:nth-child(7)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(23) > td:nth-child(8)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(23) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(23) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(24) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(24) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(24) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(24) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(24) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(24) > td:nth-child(6)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(24) > td:nth-child(7)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(24) > td:nth-child(8)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(24) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(24) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(25) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(25) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(25) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(25) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(25) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(25) > td:nth-child(6)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(25) > td:nth-child(7)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(25) > td:nth-child(8)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(25) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(25) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(26) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(26) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(26) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(26) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(26) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(26) > td:nth-child(6)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(26) > td:nth-child(7)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(26) > td:nth-child(8)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(26) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(26) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(27) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(27) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(27) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(27) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(27) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(27) > td:nth-child(6)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(27) > td:nth-child(7)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(27) > td:nth-child(8)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(27) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(27) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(28) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(28) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(28) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(28) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(28) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(28) > td:nth-child(6)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(28) > td:nth-child(7)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(28) > td:nth-child(8)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(28) > td:nth-child(9)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(4) > table > tbody > tr:nth-child(28) > td:nth-child(10)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(9) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(9) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(9) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(9) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(9) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(10) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(10) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(10) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(10) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(10) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(11) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(11) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(11) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(11) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(11) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(12) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(12) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(12) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(12) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(12) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(13) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(13) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(13) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(13) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(13) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(14) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(14) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(14) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(14) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(14) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(15) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(15) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(15) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(15) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(15) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(16) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(16) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(16) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(16) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(16) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(17) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(17) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(17) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(17) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(17) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(18) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(18) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(18) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(18) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(18) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(19) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(19) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(19) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(19) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(19) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(20) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(20) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(20) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(20) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(20) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(21) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(21) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(21) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(21) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(21) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(22) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(22) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(22) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(22) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(22) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(23) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(23) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(23) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(23) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(23) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(24) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(24) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(24) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(24) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(24) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(25) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(25) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(25) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(25) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(25) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(26) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(26) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(26) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(26) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(26) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(27) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(27) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(27) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(27) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(27) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(28) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(28) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(28) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(28) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(28) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(29) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(29) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(29) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(29) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(29) > td:nth-child(5)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(30) > td:nth-child(1)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(30) > td:nth-child(2)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(30) > td:nth-child(3)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(30) > td:nth-child(4)"
+              ],
+              [
+                ".table-scroll[role=\"region\"]:nth-child(8) > table > tbody > tr:nth-child(30) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(31) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(31) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(31) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(31) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(31) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(32) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(32) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(32) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(32) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(32) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(33) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(33) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(33) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(33) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(33) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(34) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(34) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(34) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(34) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(34) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(35) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(35) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(35) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(35) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(35) > td:nth-child(5)"
+              ],
+              [
+                "tr:nth-child(36) > td:nth-child(1)"
+              ],
+              [
+                "tr:nth-child(36) > td:nth-child(2)"
+              ],
+              [
+                "tr:nth-child(36) > td:nth-child(3)"
+              ],
+              [
+                "tr:nth-child(36) > td:nth-child(4)"
+              ],
+              [
+                "tr:nth-child(36) > td:nth-child(5)"
+              ]
+            ]
+          }
+        ],
+        "supplemental_color_check_count": 484,
+        "supplemental_color_failures": [],
+        "minimum_normal_text_ratio": 14.632891187170065,
+        "worst_normal_sample": {
+          "selector": "#dicionario > .table-scroll[role=\"region\"] > table > tbody > tr:nth-child(6) > td:nth-child(1)",
+          "color": "rgb(28, 44, 36)",
+          "background": "rgb(255, 255, 255)",
+          "ratio": 14.632891187170065,
+          "minimum": 4.5
+        },
+        "minimum_large_text_ratio": null,
+        "worst_large_sample": null
+      }
+    ],
+    "chart-contrast.json": {
+      "colors": {
+        "bg": "rgb(255, 255, 255)",
+        "texts": [
+          "rgb(70, 84, 63)",
+          "rgb(70, 84, 63)",
+          "rgb(70, 84, 63)",
+          "rgb(70, 84, 63)",
+          "rgb(70, 84, 63)",
+          "rgb(70, 84, 63)",
+          "rgb(70, 84, 63)",
+          "rgb(70, 84, 63)",
+          "rgb(70, 84, 63)",
+          "rgb(70, 84, 63)",
+          "rgb(70, 84, 63)",
+          "rgb(70, 84, 63)",
+          "rgb(70, 84, 63)"
+        ],
+        "bars": [
+          {
+            "fill": "rgb(184, 204, 154)",
+            "stroke": "rgb(76, 104, 51)"
+          },
+          {
+            "fill": "rgb(184, 204, 154)",
+            "stroke": "rgb(76, 104, 51)"
+          },
+          {
+            "fill": "rgb(184, 204, 154)",
+            "stroke": "rgb(76, 104, 51)"
+          },
+          {
+            "fill": "rgb(184, 204, 154)",
+            "stroke": "rgb(76, 104, 51)"
+          },
+          {
+            "fill": "rgb(184, 204, 154)",
+            "stroke": "rgb(76, 104, 51)"
+          },
+          {
+            "fill": "rgb(184, 204, 154)",
+            "stroke": "rgb(76, 104, 51)"
+          },
+          {
+            "fill": "rgb(184, 204, 154)",
+            "stroke": "rgb(76, 104, 51)"
+          },
+          {
+            "fill": "rgb(184, 204, 154)",
+            "stroke": "rgb(76, 104, 51)"
+          },
+          {
+            "fill": "rgb(184, 204, 154)",
+            "stroke": "rgb(76, 104, 51)"
+          },
+          {
+            "fill": "rgb(184, 204, 154)",
+            "stroke": "rgb(76, 104, 51)"
+          }
+        ]
+      },
+      "textRatios": [
+        8.075916662072844,
+        8.075916662072844,
+        8.075916662072844,
+        8.075916662072844,
+        8.075916662072844,
+        8.075916662072844,
+        8.075916662072844,
+        8.075916662072844,
+        8.075916662072844,
+        8.075916662072844,
+        8.075916662072844,
+        8.075916662072844,
+        8.075916662072844
+      ],
+      "shapeRatios": [
+        6.296419200987239,
+        6.296419200987239,
+        6.296419200987239,
+        6.296419200987239,
+        6.296419200987239,
+        6.296419200987239,
+        6.296419200987239,
+        6.296419200987239,
+        6.296419200987239,
+        6.296419200987239
+      ]
+    },
+    "journey.json": {
+      "evidence": [
+        {
+          "team": "1610612737",
+          "step": "dados",
+          "url": "http://127.0.0.1:4178/dados",
+          "headings": [
+            "Dados e métodos",
+            "Conheça os dados antes de interpretar",
+            "Explore por assunto",
+            "Dimensões e cobertura do recorte",
+            "Origem e limites de proveniência",
+            "Dicionário dos dados",
+            "Auditoria de qualidade",
+            "Ausências: mecanismos e aplicabilidade dos testes",
+            "Métodos, stack e limites da análise"
+          ]
+        },
+        {
+          "team": "1610612737",
+          "step": "perfil",
+          "url": "http://127.0.0.1:4178/times/1610612737#variavel=STL",
+          "headings": [
+            "Perfil dos times",
+            "Atlanta Hawks · Roubos",
+            "Boxplot · STL",
+            "Distribuição e assimetria · STL",
+            "Leitura dos resultados · STL"
+          ]
+        },
+        {
+          "team": "1610612737",
+          "step": "comparacao",
+          "url": "http://127.0.0.1:4178/comparar?venue=home",
+          "headings": [
+            "Comparação",
+            "Pontos · Atlanta × Houston",
+            "Boxplots na mesma escala · PTS",
+            "Dispersão nas sete variáveis",
+            "Interpretação da variável selecionada"
+          ]
+        },
+        {
+          "team": "1610612737",
+          "step": "anomalias",
+          "url": "http://127.0.0.1:4178/fora-da-curva#time=1610612737&metodo=iqr&variavel=STL",
+          "headings": [
+            "Fora da curva",
+            "Escolha uma lente para a análise",
+            "Partidas sob a lente do IQR",
+            "Contagens por método e domínio de aplicação"
+          ]
+        },
+        {
+          "team": "1610612737",
+          "step": "sintese",
+          "url": "http://127.0.0.1:4178/",
+          "headings": [
+            "O jogo, em perspectiva.",
+            "Atlanta Hawks × Houston Rockets",
+            "Os times em foco",
+            "Pontos por partida",
+            "Todo númeroprecisa de contexto.",
+            "Síntese descritiva da seleção",
+            "A base da análise",
+            "Históricos completos e confrontos diretos"
+          ]
+        },
+        {
+          "team": "1610612745",
+          "step": "dados",
+          "url": "http://127.0.0.1:4178/dados",
+          "headings": [
+            "Dados e métodos",
+            "Conheça os dados antes de interpretar",
+            "Explore por assunto",
+            "Dimensões e cobertura do recorte",
+            "Origem e limites de proveniência",
+            "Dicionário dos dados",
+            "Auditoria de qualidade",
+            "Ausências: mecanismos e aplicabilidade dos testes",
+            "Métodos, stack e limites da análise"
+          ]
+        },
+        {
+          "team": "1610612745",
+          "step": "perfil",
+          "url": "http://127.0.0.1:4178/times/1610612745#variavel=STL",
+          "headings": [
+            "Perfil dos times",
+            "Houston Rockets · Roubos",
+            "Boxplot · STL",
+            "Distribuição e assimetria · STL",
+            "Leitura dos resultados · STL"
+          ]
+        },
+        {
+          "team": "1610612745",
+          "step": "comparacao",
+          "url": "http://127.0.0.1:4178/comparar?venue=home",
+          "headings": [
+            "Comparação",
+            "Pontos · Atlanta × Houston",
+            "Boxplots na mesma escala · PTS",
+            "Dispersão nas sete variáveis",
+            "Interpretação da variável selecionada"
+          ]
+        },
+        {
+          "team": "1610612745",
+          "step": "anomalias",
+          "url": "http://127.0.0.1:4178/fora-da-curva#time=1610612745&metodo=iqr&variavel=STL",
+          "headings": [
+            "Fora da curva",
+            "Escolha uma lente para a análise",
+            "Partidas sob a lente do IQR",
+            "Contagens por método e domínio de aplicação"
+          ]
+        },
+        {
+          "team": "1610612745",
+          "step": "sintese",
+          "url": "http://127.0.0.1:4178/",
+          "headings": [
+            "O jogo, em perspectiva.",
+            "Atlanta Hawks × Houston Rockets",
+            "Os times em foco",
+            "Pontos por partida",
+            "Todo númeroprecisa de contexto.",
+            "Síntese descritiva da seleção",
+            "A base da análise",
+            "Históricos completos e confrontos diretos"
+          ]
+        }
+      ],
+      "errors": []
+    },
+    "viewport-sizes.json": [
+      {
+        "path": "/",
+        "width": 320,
+        "scroll": 320
+      },
+      {
+        "path": "/times/1610612737",
+        "width": 320,
+        "scroll": 320
+      },
+      {
+        "path": "/times/1610612745",
+        "width": 320,
+        "scroll": 320
+      },
+      {
+        "path": "/comparar",
+        "width": 320,
+        "scroll": 320
+      },
+      {
+        "path": "/fora-da-curva",
+        "width": 320,
+        "scroll": 320
+      },
+      {
+        "path": "/dados",
+        "width": 320,
+        "scroll": 320
+      },
+      {
+        "path": "/",
+        "width": 390,
+        "scroll": 390
+      },
+      {
+        "path": "/times/1610612737",
+        "width": 390,
+        "scroll": 390
+      },
+      {
+        "path": "/times/1610612745",
+        "width": 390,
+        "scroll": 390
+      },
+      {
+        "path": "/comparar",
+        "width": 390,
+        "scroll": 390
+      },
+      {
+        "path": "/fora-da-curva",
+        "width": 390,
+        "scroll": 390
+      },
+      {
+        "path": "/dados",
+        "width": 390,
+        "scroll": 390
+      },
+      {
+        "path": "/",
+        "width": 768,
+        "scroll": 768
+      },
+      {
+        "path": "/times/1610612737",
+        "width": 768,
+        "scroll": 768
+      },
+      {
+        "path": "/times/1610612745",
+        "width": 768,
+        "scroll": 768
+      },
+      {
+        "path": "/comparar",
+        "width": 768,
+        "scroll": 768
+      },
+      {
+        "path": "/fora-da-curva",
+        "width": 768,
+        "scroll": 768
+      },
+      {
+        "path": "/dados",
+        "width": 768,
+        "scroll": 768
+      }
+    ]
+  },
+  "public_baseline": {
+    "status": {
+      "/": 200,
+      "/dados": 200,
+      "/times/1610612737": 200,
+      "/times/1610612745": 200,
+      "/comparar": 200,
+      "/fora-da-curva": 200,
+      "/api/v1/health": 200
+    },
+    "health": {
+      "status": "ready",
+      "api_version": "1.0.0",
+      "schema_version": "1.0.0",
+      "analysis_version": "1.0.0",
+      "release_id": "ddd1fb5f8683d83e602caef5846027156a5194f257491c51221a27bb3d0a8a94",
+      "dataset_sha256": "fa56bf638ef18be972a88850719043953e615bf39339671a8daa007ba08811b6"
+    },
+    "scope": "Read-only check of existing public deployment; local stage-10 corrections not deployed."
+  },
+  "fixes": [
+    {
+      "issue": "Current profile navigation not announced for Houston",
+      "resolution": "Explicit Link + aria-current for both team profiles."
+    },
+    {
+      "issue": "Histogram non-text contrast below target",
+      "before_min_ratio": 1.7295574285934245,
+      "after_min_ratio": 6.296419200987239,
+      "resolution": "Dark outline preserving fill and data."
+    },
+    {
+      "issue": "Keyboard reached covered content behind mobile navigation",
+      "resolution": "Responsive inert main, post-close focus restoration, Escape and desktop resize verified."
+    },
+    {
+      "issue": "Named generic containers lacked explicit semantics",
+      "resolution": "Table regions, named groups and descriptive image roles for outlier points."
+    },
+    {
+      "issue": "Units were implicit in quartile and density tables",
+      "resolution": "Visible units and reciprocal density units in table headers."
+    },
+    {
+      "issue": "Text did not fully answer cross-variable highlights and sensitivity questions in PDF",
+      "resolution": "Contextual CV/skew highlights, boxplot-tail discussion, skew choice justification, future transform limits and reversible IQR sensitivity diagnostic."
+    }
+  ],
+  "limits": [
+    "Local review and fixes; no commit or deployment requested/performed in stage 10.",
+    "Existing public deployment was checked read-only and still uses the earlier release.",
+    "Chromium automation and keyboard checks are not WCAG certification or NVDA/VoiceOver user testing.",
+    "axe color-contrast incomplete checks were supplemented with computed solid foreground/background color ratios; native graph outlines tested separately.",
+    "Scores/decisions and raw records verified; this does not claim a second independent implementation of all multivariate estimators.",
+    "Release changes and 503/out-of-order responses use controlled browser interception, not altered scientific data.",
+    "R06/Classroom submission and stage 11 remain pending."
+  ],
+  "raw_full_suite_sha256": "29fd393b1850f139fb94c7ed1cb5c50d40d348d4eae824c18c5ca469bdd7769a",
+  "raw_final_accessibility_sha256": "52d3a721182b7025e4e359412f7ce030d24ded6b3f4911de2f039cfef6743c40"
+}

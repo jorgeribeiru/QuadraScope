@@ -1,7 +1,7 @@
 # Plano de implementação — QuadraScope
 
-> Do passo 0 à entrega. Revisão: 29/10/2026. Foco: Atlanta Hawks × Houston Rockets.
-> Estado atual: etapas 0–9 concluídas. Ciência, artefatos reproduzíveis, API FastAPI e base React validados; versão técnica publicada na Vercel e inicialização da aplicação medida com instrumentação própria. Provisionamento completo da plataforma não isolado; relatório completo implementado; revisão integral e preparação da entrega permanecem nas etapas 10–11.
+> Do passo 0 à entrega. Revisão: 30/10/2026. Foco: Atlanta Hawks × Houston Rockets.
+> Estado atual: etapas 0–10 concluídas; correções da revisão ainda locais. Ciência, artefatos reproduzíveis, API FastAPI e base React validados; versão técnica publicada na Vercel e inicialização da aplicação medida com instrumentação própria. Provisionamento completo da plataforma não isolado; relatório completo implementado; revisão integral concluída localmente; preparação da entrega permanece na etapa 11.
 
 ## Uso do plano
 
@@ -194,14 +194,16 @@ As caixas já marcadas na etapa 0 indicam documentação revisada e confirmaçõ
 
 **Dependência:** etapa 9. **Requisitos:** revisão integral R01–R24, exceto submissão final.
 
-- [ ] **P10.01** — Executar verificações científicas/API e testes das interações relevantes; corrigir falhas antes de ampliar escopo.
-- [ ] **P10.02** — Conferir os 14 pares variável/time e os quadros comparativos; validar unidades, casas decimais, títulos, eixos e legendas.
-- [ ] **P10.03** — Conferir cada partida outlier no CSV, tabela e gráfico; diferenciar cerca, bigode, score e decisão do detector.
-- [ ] **P10.04** — Percorrer Dados → Perfil → Comparação → Anomalias → Síntese para ambos os times e registrar evidências por requisito.
-- [ ] **P10.05** — Testar navegação por teclado, leitura de tabelas, contraste, modas sobrepostas e uso em telas menores.
-- [ ] **P10.06** — Testar URL compartilhada, recarga, mudança de filtros, seleção vazia, falha da API e resultados indefinidos.
-- [ ] **P10.07** — Verificar cache após mudança de versão e referência fixa dos detectores; conferir que textos acompanham o contexto.
-- [ ] **P10.08** — Revisar toda a matriz: marcar somente requisitos integralmente atendidos, manter parciais abertos e registrar correções restantes.
+- [X] **P10.01** — Executar verificações científicas/API e testes das interações relevantes; corrigir falhas antes de ampliar escopo.
+- [X] **P10.02** — Conferir os 14 pares variável/time e os quadros comparativos; validar unidades, casas decimais, títulos, eixos e legendas.
+- [X] **P10.03** — Conferir cada partida outlier no CSV, tabela e gráfico; diferenciar cerca, bigode, score e decisão do detector.
+- [X] **P10.04** — Percorrer Dados → Perfil → Comparação → Anomalias → Síntese para ambos os times e registrar evidências por requisito.
+- [X] **P10.05** — Testar navegação por teclado, leitura de tabelas, contraste, modas sobrepostas e uso em telas menores.
+- [X] **P10.06** — Testar URL compartilhada, recarga, mudança de filtros, seleção vazia, falha da API e resultados indefinidos.
+- [X] **P10.07** — Verificar cache após mudança de versão e referência fixa dos detectores; conferir que textos acompanham o contexto.
+- [X] **P10.08** — Revisar toda a matriz: marcar somente requisitos integralmente atendidos, manter parciais abertos e registrar correções restantes.
+
+**Verificado em 30/10/2026:** 245 testes Python, 25 Vitest e 27 Playwright aprovados; contratos/lint/build e release íntegros. Auditoria independente do CSV: 14 pares, matrizes e quartis, 50 análises/3.725 registros; 11 ocorrências nos boxplots e 43 sinalizações conferidas nas telas. Corrigidos foco móvel, página atual de Houston, contraste, semântica acessível e unidades; leituras complementadas frente ao PDF. Seis telas auditadas, 18 cenários de largura, dez paradas de jornada; caches e respostas atrasadas/503 verificados. R06 permanece parcial. [Revisão e limites](../development/validation.md), [evidências](../development/measurements/stage10-verification.json). Alterações ainda sem commit/deploy; a publicação final pertence à etapa 11.
 
 **Verificação/saída:** evidências concretas de funcionamento e conteúdo científico. Testes validam propriedades e contratos, não apenas espelham a implementação. A existência de testes aprovados não substitui a revisão das interpretações.
 

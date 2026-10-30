@@ -1,3 +1,4 @@
+import { VariableHighlights } from '@/components/VariableHighlights'
 import { ReadableParagraph } from '@/components/ReadableParagraph'
 import { statisticLabels, meanContrast } from '@/lib/statistics'
 import { lazy, Suspense } from 'react'
@@ -68,7 +69,11 @@ export function Comparison({ meta, selection }: Props) {
                 Mesmos filtros, unidade e eixo iniciado em zero. São médias por partida em
                 históricos próprios, não médias apenas dos confrontos diretos.
               </ReadableParagraph>
-              <div className="comparison-highlights" aria-label="Resumo dos times na seleção">
+              <div
+                className="comparison-highlights"
+                role="group"
+                aria-label="Resumo dos times na seleção"
+              >
                 {teams.map((team) => {
                   const row = data.selected_summary.find((item) => item.team_id === team.id)
                   return (
@@ -169,6 +174,7 @@ export function Comparison({ meta, selection }: Props) {
                 equivale a um time globalmente mais regular. BLK/STL têm médias pequenas e
                 granularidade inteira, podendo ampliar o CV sem grande dispersão absoluta.
               </ReadableParagraph>
+              <VariableHighlights rows={data.summary} />
               {(['cv', 'iqr'] as const).map((stat) => (
                 <DataTable
                   key={stat}
@@ -211,6 +217,7 @@ export function Comparison({ meta, selection }: Props) {
                 data={data.quartiles}
                 columns={[
                   { accessorKey: 'metric', header: 'Variável' },
+                  { id: 'unit', header: 'Unidade', cell: ({ row }) => row.original.q1.unit },
                   {
                     id: 'team',
                     header: 'Time',
@@ -241,6 +248,11 @@ export function Comparison({ meta, selection }: Props) {
                   data={data.summary}
                   columns={[
                     { accessorKey: 'metric', header: 'Variável' },
+                    {
+                      id: 'unit',
+                      header: 'Unidade',
+                      cell: ({ row }) => row.original.statistics.mean.unit,
+                    },
                     {
                       id: 'team',
                       header: 'Time',

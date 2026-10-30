@@ -29,7 +29,12 @@ export function DataTable<T>({
     getSortedRowModel: getSortedRowModel(),
   })
   return (
-    <div className="table-scroll" tabIndex={0} aria-label={`Tabela rolável: ${caption}`}>
+    <div
+      className="table-scroll"
+      role="region"
+      tabIndex={0}
+      aria-label={`Tabela rolável: ${caption}`}
+    >
       <table>
         <caption>{caption}</caption>
         <thead>

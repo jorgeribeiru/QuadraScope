@@ -53,7 +53,7 @@ export function TeamProfile({ meta, selection }: { meta: Meta; selection: Select
         </ReadableParagraph>
       </div>
       <div className="report-toolbar profile-toolbar">
-        <div className="team-switch" aria-label="Selecionar time">
+        <div className="team-switch" role="group" aria-label="Selecionar time">
           {teams.map((t) => (
             <Button asChild key={t.id} variant={t.id === teamId ? 'default' : 'outline'}>
               <Link
@@ -89,7 +89,7 @@ export function TeamProfile({ meta, selection }: { meta: Meta; selection: Select
                   <Period period={row.period} />
                   <span>{row.unit} · histórico completo do time no CSV</span>
                 </div>
-                <div className="measure-highlights" aria-label="Medidas em destaque">
+                <div className="measure-highlights" role="group" aria-label="Medidas em destaque">
                   {(['mean', 'median', 'std', 'iqr'] as const).map((key) => (
                     <div className={`measure-highlight ${team.className}`} key={key}>
                       <span>{statisticLabels[key]}</span>
@@ -223,6 +223,14 @@ export function TeamProfile({ meta, selection }: { meta: Meta; selection: Select
                   à esquerda. Critério descritivo: |G₁| &lt; 0,5 aproximadamente simétrica; de 0,5
                   até menos de 1 moderada; a partir de 1 forte. Essa classificação não testa
                   normalidade.
+                </ReadableParagraph>
+                <ReadableParagraph>
+                  Foi escolhido o coeficiente ajustado por explicitar a correção amostral do momento
+                  de terceira ordem ao comparar amostras de tamanhos diferentes. Esse ajuste não
+                  elimina a influência dos extremos e não demonstra normalidade. Não foram aplicadas
+                  transformações logarítmicas: elas exigiriam uma análise posterior da escala, e
+                  zeros como os de BLK/STL tornam log(0) indefinido. Uma correção arbitrária como
+                  log(x+1) também precisaria ser justificada.
                 </ReadableParagraph>
                 <ReadableParagraph>
                   Coeficiente atual: <Value measure={row.statistics.skewness} />. Histograma mostra

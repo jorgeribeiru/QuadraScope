@@ -391,3 +391,36 @@ def test_quality_inventory_separates_univariate_and_joint_anomalies(client):
         expected = next(row for row in own if row["method"] == "lof")
         actual = get(client, "/anomalies", {"team_id": team, "method": "lof"})
         assert expected["outlier_count"] == actual["result"]["outlier_count"]
+
+
+def test_iqr_sensitivity_is_contextual_and_does_not_remove_official_games(client):
+    before = get(client, f"/teams/{ATL}/summary")
+    reading = get(
+        client,
+        "/interpretations",
+        {
+            "context": "teams",
+            "team_id": ATL,
+            "metric": "REB",
+        },
+    )["interpretations"][0]
+    diagnostic = reading["sensitivity_diagnostic"]
+    assert reading["n"] == 75
+    assert diagnostic["retained_n"] == 74
+    assert len(diagnostic["excluded_game_ids"]) == 1
+    assert diagnostic["original_iqr"] == diagnostic["retained_iqr"] == 9
+    assert diagnostic["retained_std"] < diagnostic["original_std"]
+    assert "temporária" in reading["text"] and "não remove linhas" in reading["text"]
+    after = get(client, f"/teams/{ATL}/summary")
+    assert before == after
+    filtered = get(
+        client,
+        "/interpretations",
+        {
+            "context": "teams",
+            "team_id": ATL,
+            "metric": "REB",
+            "venue": "home",
+        },
+    )["interpretations"][0]
+    assert filtered["n"] == 38

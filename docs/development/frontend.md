@@ -117,3 +117,7 @@ Validação local: 244 testes Python, 24 Vitest, onze Playwright, contratos, lin
 ## Publicação do relatório completo
 
 Em 29/10/2026, o commit `c51acd9` foi publicado em https://quadrascope.vercel.app. Os onze testes Playwright passaram sem login em 41,9 s. As afirmações de não publicação nos registros intermediários acima descrevem somente aqueles incrementos. [Deploy e evidências](deployment.md#publicação-da-etapa-9--relatório-completo).
+
+## Revisão da etapa 10
+
+Em 30/10/2026: 245 testes Python, 25 Vitest e 27 Playwright aprovados. Correções locais de foco móvel, navegação, semântica e contraste; unidades e leituras complementadas frente ao PDF. O axe é uma dependência de desenvolvimento fixada no lock e não é incluído no runtime da aplicação. Contrastes incompletos foram confrontados pelas cores computadas; não se declara certificação WCAG. [Revisão, limites e reprodução](validation.md). Alterações desta etapa ainda sem commit/deploy; entrega final na etapa 11.

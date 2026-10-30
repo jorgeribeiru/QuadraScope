@@ -168,5 +168,6 @@ class AnalysisService:
         metrics = [query.metric] if query.metric else self.config.metrics
         frame = self.select(query)
         return describe_results(
-            [describe_team(frame, team, metric) for metric in metrics for team in teams]
+            [describe_team(frame, team, metric) for metric in metrics for team in teams],
+            frame.to_dict(orient="records"),
         )
