@@ -2,7 +2,7 @@
 
 Relatório web interativo de análise de dados da NBA, desenvolvido para o Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. O foco do grupo é **Atlanta Hawks × Houston Rockets**, nas variáveis PTS, REB, AST, STL, BLK, PF e FG3M.
 
-**Estado atual:** etapas 0–7 concluídas. Pipeline científico, artefatos reproduzíveis e API FastAPI disponíveis. Gráficos na interface, aplicativo React, interpretações finais e deploy ainda pendentes. A stack **FastAPI + React** foi confirmada pelo grupo.
+**Estado atual:** etapas 0–7 concluídas. Etapa 8 em andamento: base React integrada à API, com navegação, filtros, tabelas e gráfico comparativo. Pipeline científico e API disponíveis; versão técnica publicada e validada na Vercel. Relatório completo e interpretações finais ainda pendentes; cold start isolado limitado pelas métricas disponíveis no Hobby. A stack **FastAPI + React** foi confirmada pelo grupo.
 
 ## Estrutura atual
 
@@ -12,7 +12,7 @@ QuadraScope/
 ├── pyproject.toml         # Dependências, Ruff e pytest
 ├── uv.lock                # Versões resolvidas
 ├── requirements.txt       # Runtime + pipeline, com hashes
-├── requirements-runtime.txt # Dependências da futura API, com hashes
+├── requirements-runtime.txt # Dependências da API, com hashes
 ├── Makefile               # Comandos de desenvolvimento
 ├── backend/
 │   ├── app/               # FastAPI, configuração, contratos e serviços
@@ -25,7 +25,8 @@ QuadraScope/
 ├── data/
 │   ├── raw/stats_times_regular_final.csv
 │   └── processed/         # Releases e intermediários locais; ignorados pelo Git
-├── frontend/src/generated/api.ts # Tipos HTTP; React na etapa 8
+├── frontend/              # React, Vite, testes e contrato HTTP gerado
+├── deployment/            # Templates do pacote FastAPI + SPA
 ├── tools/contracts/       # Gerador de tipos com lock Node
 └── docs/
     ├── README.md
@@ -36,7 +37,9 @@ QuadraScope/
     │   ├── descriptive.md
     │   ├── anomalies.md
     │   ├── artifacts.md
-    │   └── api.md
+    │   ├── api.md
+    │   ├── frontend.md
+    │   └── deployment.md
     ├── api/openapi.json    # Contrato HTTP exportado
     ├── architecture/
     │   ├── architecture.md
@@ -55,11 +58,11 @@ QuadraScope/
         └── Projeto 1.pdf
 ```
 
-`data/raw/` guarda o CSV original sem alterações. `docs/data/` guarda sua documentação. O enunciado acadêmico fica em `docs/references/`; desenho do sistema, planejamento e dados têm pastas próprias. O frontend será adicionado na etapa 8.
+`data/raw/` guarda o CSV original sem alterações. `docs/data/` guarda sua documentação. O enunciado acadêmico fica em `docs/references/`; desenho do sistema, planejamento e dados têm pastas próprias. A base React está em `frontend/`; o pacote de publicação gerado fica em `.deployment/`, ignorado pelo Git.
 
 ## Ambiente e verificações
 
-Usar **Python 3.12** e **uv**; GNU Make fornece os atalhos abaixo. O Node **24** está registrado em `.nvmrc` para o futuro frontend. Com uv instalado, executar da raiz:
+Usar **Python 3.12** e **uv**; GNU Make fornece os atalhos abaixo. O Node **24** está registrado em `.nvmrc` para o frontend. Com uv instalado, executar da raiz:
 
 ```bash
 make setup
@@ -80,6 +83,8 @@ O [guia de desenvolvimento](docs/development/setup.md) apresenta instalação al
 - [Detectores, parâmetros e sensibilidade](docs/development/anomalies.md).
 - [Build completo, manifesto e pacote de runtime](docs/development/artifacts.md).
 - [API: execução, endpoints, filtros e contratos](docs/development/api.md).
+- [Frontend: executar e verificar](docs/development/frontend.md).
+- [Pacote, medições e publicação na Vercel](docs/development/deployment.md).
 - [Plano de implementação e tarefas](docs/planning/implementation-plan.md).
 - [Requisitos, caixas de conclusão e histórico](docs/planning/requirements.md).
 - [Arquitetura](docs/architecture/architecture.md) e [diagrama](docs/architecture/diagrams/quadrascope-arquitetura.svg).
@@ -94,7 +99,7 @@ make data-reproduce
 make data-package-runtime
 ```
 
-O release completo fica em `data/processed/releases/`, identificado pelo manifesto e por `current.json`. O pacote da futura API fica em `data/processed/runtime/`, com dez JSONs e manifesto, dispensando CSV e Parquet. [Contratos, publicação e reprodução](docs/development/artifacts.md).
+O release completo fica em `data/processed/releases/`, identificado pelo manifesto e por `current.json`. O pacote da API fica em `data/processed/runtime/`, com dez JSONs e manifesto, dispensando CSV e Parquet. [Contratos, publicação e reprodução](docs/development/artifacts.md).
 
 Os comandos abaixo continuam disponíveis para diagnóstico intermediário. Para gerar a base canônica e o recorte do grupo:
 
@@ -134,4 +139,15 @@ make api-serve
 
 Abra `http://127.0.0.1:8000/docs` para consultar os endpoints ou `http://127.0.0.1:8000/api/v1/health` para verificar os artefatos. A API aplica filtros inclusivos de data, mando e resultado; descritivas são recalculadas e detectores mantêm a referência completa do time. Se faltar um pacote válido, as rotas de dados retornam 503. [Comandos, exemplos e tratamento dos estados](docs/development/api.md).
 
-`make api-contracts` exporta OpenAPI, gera os tipos TypeScript e verifica sua compilação; exige Node, com ferramentas fixadas em `tools/contracts/`. O aplicativo React começa na etapa 8. Ainda não há interface web do relatório nem deploy.
+Para iniciar o sistema local completo, usando Node 24, Python 3.12 e uv:
+
+```bash
+make setup
+make web-setup
+make data-build
+make dev
+```
+
+Abra **http://127.0.0.1:5173**. O último comando inicia API e frontend juntos; Ctrl+C encerra ambos. A instalação inicial é separada da execução. A interface contém a base de navegação e integração; o relatório completo e as interpretações serão desenvolvidos na etapa 9.
+
+`make web-check` verifica frontend e build; `make check` verifica Python. `make api-contracts` exporta OpenAPI, gera os tipos TypeScript e verifica sua compilação. Para montar o pacote FastAPI + SPA, executar `make web-build` e `make deploy-prepare` após o build dos dados. A topologia foi verificada localmente e na Vercel, com dependências reais. **Versão técnica pública: https://quadrascope.vercel.app**, na equipe `projetos-do-jorge`, plano Hobby. Seis testes de navegador passaram na versão atual publicada; os dez endpoints foram conferidos na publicação inicial. [Deploy, métricas e limites](docs/development/deployment.md).

@@ -1,17 +1,17 @@
-# Ambiente de desenvolvimento — etapas 1–7
+# Ambiente de desenvolvimento — etapas 1–8
 
 ## Versões e dependências
 
 | Ferramenta | Versão do projeto | Registro |
 | --- | --- | --- |
 | Python | 3.12.x | `.python-version` e `requires-python` no pyproject |
-| Node.js | 24.x, reservado para o frontend | `.nvmrc`; frontend começa na etapa 8 |
+| Node.js | 24.x, validado com 24.22.2 | `.nvmrc` e engines/lock do frontend |
 | uv | 0.11.7 usado na validação desta etapa | Gerencia `.venv`, `uv.lock` e exportação |
 | GNU Make | 4.4.1 usado na validação | Atalhos no Makefile; comandos equivalentes abaixo |
 
 Python 3.12 e Node 24 foram escolhidos entre as versões suportadas pela hospedagem prevista. Isso não equivale a uma prova de deploy; ela continua nas etapas 7–8. Referências consultadas em 29/10/2026: [Python na Vercel](https://vercel.com/docs/functions/runtimes/python), [Node na Vercel](https://vercel.com/docs/functions/runtimes/node-js/node-js-versions).
 
-O Python global não precisa ser alterado: `uv sync` usa a versão declarada e cria `.venv` na raiz. Node é necessário somente para a ferramenta de geração/verificação dos tipos HTTP, separada do runtime Python. Com nvm disponível, `nvm install` e `nvm use` na raiz selecionam a versão do futuro frontend.
+O Python global não precisa ser alterado: `uv sync` usa a versão declarada e cria `.venv` na raiz. Node é necessário para desenvolver/compilar React e gerar/verificar os tipos HTTP, separado do runtime Python. Com nvm disponível, `nvm install` e `nvm use` na raiz selecionam a versão do frontend.
 
 `pyproject.toml` declara as dependências de runtime FastAPI, Pydantic, Uvicorn, pandas, NumPy e SciPy. O grupo `pipeline` contém PyArrow, scikit-learn e threadpoolctl, usados offline. O grupo `dev` contém Ruff, pytest e HTTPX para os testes HTTP. Os dois grupos são ativados por padrão no uv para desenvolvimento. `nba_api` não é necessário para analisar o CSV já coletado, e PyOD não integra o ambiente.
 
@@ -71,8 +71,13 @@ Essa alternativa não instala pytest/Ruff; usar o fluxo uv para desenvolvimento.
 | `make api-serve` | Inicia Uvicorn/FastAPI em 127.0.0.1:8000 |
 | `make api-export` | Exporta OpenAPI sem exigir artefatos ou servidor |
 | `make api-contracts` | Instala gerador pelo lock Node, gera e confere os tipos TypeScript |
+| `make web-setup` | Instala frontend com npm ci e lock |
+| `make dev` | Inicia API e Vite juntos; requer dependências e dados já preparados |
+| `make web-check` | ESLint, Prettier, Vitest e build de produção |
+| `make web-e2e` | Build e quatro testes de navegador com API real |
+| `make deploy-prepare` | Monta pacote mínimo validado a partir do release e frontend/dist |
 
-Os guias de [ingestão](ingestion.md) e [qualidade](quality.md) detalham os comandos e suas saídas locais. O [build científico completo](artifacts.md) está disponível desde a etapa 6. A [API](api.md) está disponível desde a etapa 7; iniciar com `make api-serve` depois de `make data-build` e consultar `/docs`. O aplicativo React ainda não existe.
+Os guias de [ingestão](ingestion.md) e [qualidade](quality.md) detalham os comandos e suas saídas locais. O [build científico completo](artifacts.md) está disponível desde a etapa 6. A [API](api.md) está disponível desde a etapa 7; iniciar com `make api-serve` depois de `make data-build` e consultar `/docs`. A [base React](frontend.md) está disponível; `make web-setup`, `make data-build` e `make dev` iniciam o sistema completo depois do setup Python.
 
 ## Configuração e organização do backend
 
@@ -121,7 +126,7 @@ uv run --locked pytest -m analytics
 uv run --locked pytest -m api
 ```
 
-As seleções unit e analytics têm testes de configuração e de ingestão/qualidade, respectivamente. A suíte api tem 61 testes de contratos, filtros, referência, cache, concorrência e indisponibilidade. Os testes de configuração verificam caminhos; os de ingestão verificam contratos, conversões, preservação e roundtrip Parquet. Descritivas e distribuições são cobertas por exemplos manuais, propriedades, referências reais e casos de borda. Os detectores também são cobertos por referências externas, empates e sensibilidade; PyOD não é necessário nos testes normais.
+As seleções unit e analytics têm testes de configuração e de ingestão/qualidade, respectivamente. A suíte api tem 65 testes de contratos, filtros, referência, cache, concorrência e indisponibilidade. Os testes de configuração verificam caminhos; os de ingestão verificam contratos, conversões, preservação e roundtrip Parquet. Descritivas e distribuições são cobertas por exemplos manuais, propriedades, referências reais e casos de borda. Os detectores também são cobertos por referências externas, empates e sensibilidade; PyOD não é necessário nos testes normais.
 
 ## Validação da etapa 1 em 29/10/2026
 
@@ -162,3 +167,11 @@ R01, R05 e R06 permanecem parciais: preparar o ambiente não entrega aplicação
 ## Validação da etapa 7 em 29/10/2026
 
 `make check` aprovado com 232 testes (61 HTTP), Ruff e formatação. As dez rotas foram verificadas também em Uvicorn real com `requirements-runtime.txt`, sem CSV/Parquet ou dependências offline. Tipos OpenAPI/TypeScript gerados por ferramentas com lock e compilação aprovada. Há um aviso de depreciação upstream do TestClient sobre HTTPX; os testes passam sem silenciá-lo. Nenhuma dependência Python foi alterada. Node 26.12.1 foi usado para validar o gerador; o alvo registrado do frontend continua Node 24. [Execução, contratos e limitações](api.md).
+
+## Validação local da etapa 8 em 29/10/2026
+
+236 testes Python, 24 Vitest e quatro Playwright aprovados, com lint/formatação e build. Instalação frontend pelo lock validada com Node 24.22.2. `make dev` e seu proxy `/api` foram verificados e encerrados com Ctrl+C, sem deixar servidores ativos. O pacote FastAPI + SPA foi verificado em ambiente de runtime sem dependências offline, com recargas profundas, API e assets. Há aviso Vite sobre o tamanho sem compressão do chunk ECharts, carregado sob demanda e medido; a depreciação upstream do TestClient permanece visível. A publicação e a medição Vercel não foram realizadas por falta de autenticação/escopo de destino. [Frontend](frontend.md) e [prova local/publicação](deployment.md).
+
+## Publicação da etapa 8 em 29/10/2026
+
+https://quadrascope.vercel.app foi publicada no projeto `quadrascope`, equipe `projetos-do-jorge`, no plano Hobby. Os quatro Playwright também passaram nessa URL, sem login, com os dez endpoints e códigos 404/422/304 conferidos. A Vercel classificou o primeiro deploy como produção apesar da solicitação de preview; é uma versão técnica, ainda sem o relatório completo. CLI 65.8.0 e plugin/MCP foram configurados no usuário. A consulta específica para separar cold start exige Observability Plus, sem upgrade realizado. [Detalhes e reprodução](deployment.md).

@@ -31,3 +31,10 @@ coverage/
 # Artefatos gerados: preservar a pasta, sem versionar resultados incompletos
 /data/processed/*
 !/data/processed/.gitkeep
+
+# Pacote gerado e provas locais da etapa 8
+/.deployment/
+/.deploy-*/
+*.tsbuildinfo
+/frontend/test-results/
+/frontend/playwright-report/

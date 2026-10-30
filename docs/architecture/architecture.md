@@ -1,7 +1,7 @@
 # QuadraScope — Arquitetura do sistema
 
 > Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. Revisão: 29/10/2026.
-> Estado: etapas 0–7 concluídas. Ciência, build reproduzível e API FastAPI validados no snapshot; aplicativo React, interpretação final e deploy ainda pendentes.
+> Estado: etapas 0–7 concluídas. Ciência, build reproduzível e API FastAPI validados no snapshot; base React integrada na etapa 8; publicação técnica verificada em https://quadrascope.vercel.app; interpretação final e cold start isolado na nuvem ainda pendentes.
 
 ## Objetivo e escopo
 
@@ -68,20 +68,20 @@ O recorte soma 149 linhas e 147 partidas distintas. Os contadores acumulados dos
 
 | Área | Decisão |
 | --- | --- |
-| Frontend | React + TypeScript + Vite; Node 24 previsto para build |
+| Frontend | React + TypeScript + Vite; Node 24 usado no build |
 | Design | Tailwind CSS + shadcn/ui; componentes Radix necessários sem abstrações duplicadas |
 | Gráficos | Apache ECharts + echarts-for-react, recebendo estatísticas prontas do Python |
 | Tabelas | TanStack Table e formatação centralizada |
 | Estado remoto | TanStack Query + fetch; cache por versão, filtros e parâmetros |
 | Navegação | React Router; filtros compartilháveis por URL |
-| Backend | Python 3.12 + FastAPI + Pydantic; tipos TypeScript futuramente gerados pelo OpenAPI |
+| Backend | Python 3.12 + FastAPI + Pydantic; tipos TypeScript gerados pelo OpenAPI |
 | Ciência de dados | pandas, NumPy, SciPy, scikit-learn; ECOD próprio validado contra referência |
 | Persistência | CSV imutável, Parquet no pipeline, JSON de resultados; sem banco inicialmente |
 | Verificação futura | pytest para cálculos/API, Vitest para interações relevantes |
 | Qualidade | Ruff, ESLint, Prettier e dependências fixadas |
 | Deploy | Validar FastAPI e frontend na Vercel com dependências e artefatos reais |
 
-**FastAPI + React está confirmado pelo grupo**, com validação externa comunicada em 29/10/2026 (P0.07). FastAPI foi escolhido pelos contratos tipados, validação com Pydantic e documentação OpenAPI. React será a apresentação; o serviço web e toda a análise científica serão Python. A justificativa também deverá aparecer na página de dados e no README final; R01 permanece parcial até sua implementação e apresentação no sistema.
+**FastAPI + React está confirmado pelo grupo**, com validação externa comunicada em 29/10/2026 (P0.07). FastAPI foi escolhido pelos contratos tipados, validação com Pydantic e documentação OpenAPI. React é a camada de apresentação; o serviço web e toda a análise científica serão Python. A justificativa também deverá aparecer na página de dados e no README final; R01 permanece parcial até sua implementação e apresentação no sistema.
 
 ## Responsabilidades e fluxo
 
@@ -136,7 +136,7 @@ Gráficos terão título, eixos, unidades e legenda quando aplicável. Formataç
 
 ## Filtros e referência
 
-Datas inclusivas; condição `all|home|away`; resultado `all|win|loss`. Estado na URL. Comparações aplicam a mesma seleção aos dois times, mostrando n e cobertura efetivos de cada um.
+Datas inclusivas; condição `all|home|away`; resultado `all|win|loss`. Por decisão do usuário em 29/10/2026, a interface oferece filtros somente na Home e na Comparação, compartilhados por URL entre essas duas telas. Perfis, Anomalias e Dados abrem com histórico completo, sem filtros herdados ou query antiga oculta. Comparações aplicam a mesma seleção aos dois times, mostrando n e cobertura efetivos de cada um. A API mantém seus contratos de filtros para consultas HTTP explícitas.
 
 **Descritivas:** recalcular sobre as linhas selecionadas. **Detectores no MVP:** ajustar sobre o histórico completo de cada time neste dataset e filtrar somente a exibição. Informar “anomalia em relação ao histórico completo do time neste dataset”, `reference_n` e `display_n`.
 
@@ -193,7 +193,8 @@ quadrascope/
 │   ├── planning/               # requisitos e plano de implementação
 │   └── references/             # enunciado acadêmico original
 ├── tools/contracts/            # gerador OpenAPI/TypeScript com lock
-├── frontend/src/               # somente generated/api.ts implementado na etapa 7
+├── deployment/                 # templates do pacote mínimo FastAPI + SPA
+├── frontend/src/               # base React integrada na etapa 8
 │   ├── app/                    # providers, layout e rotas
 │   ├── features/               # synthesis, teams, compare, anomalies, data
 │   ├── components/             # gráficos, tabelas e estados acessíveis
@@ -209,7 +210,7 @@ quadrascope/
     └── tests/                  # casos científicos e contratos
 ```
 
-As etapas 1–2 criaram ambiente e normalização em `data/processed/ingestion/`. A etapa 3 gera diagnóstico e intermediários enriquecidos em `data/processed/quality/`, somente após aprovação das regras internas. Esses arquivos não são o conjunto final de publicação. A etapa 4 calcula descritivas, boxplots e distribuições em `data/processed/descriptive/`, com estados por medida e metadados. A etapa 5 gera 50 resultados e sensibilidade em `data/processed/anomalies/`; parâmetros e relatório compacto da revisão são versionados. A etapa 6 integra as análises em um build único, valida os schemas e as consistências antes da promoção, confere dois builds independentes e exporta o pacote JSON da futura API. A etapa 7 fornece a API sobre um snapshot validado em memória, com filtros, referência fixa dos detectores, erros e identidade de cache. OpenAPI exportado e tipos TypeScript precedem o aplicativo React da etapa 8. Evitar um segundo arquivo de arquitetura concorrente.
+As etapas 1–2 criaram ambiente e normalização em `data/processed/ingestion/`. A etapa 3 gera diagnóstico e intermediários enriquecidos em `data/processed/quality/`, somente após aprovação das regras internas. Esses arquivos não são o conjunto final de publicação. A etapa 4 calcula descritivas, boxplots e distribuições em `data/processed/descriptive/`, com estados por medida e metadados. A etapa 5 gera 50 resultados e sensibilidade em `data/processed/anomalies/`; parâmetros e relatório compacto da revisão são versionados. A etapa 6 integra as análises em um build único, valida os schemas e as consistências antes da promoção, confere dois builds independentes e exporta o pacote JSON da futura API. A etapa 7 fornece a API sobre um snapshot validado em memória, com filtros, referência fixa dos detectores, erros e identidade de cache. A etapa 8 implementa a base React com Router/Query/Table/ECharts, filtros na URL e cache por release/seleção. A prova local usa um pacote mínimo com runtime científico e SPA; publicação e testes na Vercel foram concluídos; medição isolada de cold start permaneceu indisponível no Hobby. Evitar um segundo arquivo de arquitetura concorrente.
 
 ## Entrega e pendências
 
@@ -217,6 +218,6 @@ Validar hospedagem com roteamento `/api`, recarga de rotas React, tamanho do pac
 
 O README futuro terá versões necessárias, `requirements.txt`, preparação de artefatos e comando único de execução local. A aplicação deve estar acessível para avaliação, com instruções locais como alternativa prevista no enunciado. Sem banco, filas ou microsserviços sem necessidade demonstrada.
 
-Confirmados: origem NBA via `nba_api` (com detalhes de coleta não informados documentados) e stack FastAPI + React. Parâmetros dos detectores revisados para o snapshot na etapa 5; limitações de sensibilidade documentadas. Pendência técnica externa: topologia final da hospedagem. Publicação dos resultados depende da validação correspondente.
+Confirmados: origem NBA via `nba_api` (com detalhes de coleta não informados documentados) e stack FastAPI + React. Parâmetros dos detectores revisados para o snapshot na etapa 5; limitações de sensibilidade documentadas. Topologia escolhida para a prova: um projeto FastAPI com SPA estática na mesma origem, sem exigir Services beta. O [pacote, a publicação e as medições](../development/deployment.md) foram verificados na Vercel. Destino: `projetos-do-jorge/quadrascope`, Hobby, sem alteração do plano. Pendência: cold start isolado requer métrica não disponível no Hobby; detalhes e limites estão registrados. Publicação dos resultados depende da validação correspondente.
 
 Referências: [FastAPI na Vercel](https://vercel.com/docs/frameworks/backend/fastapi), [Vercel Services](https://vercel.com/docs/services). Referências científicas estão na [metodologia](../data/methodology.md).

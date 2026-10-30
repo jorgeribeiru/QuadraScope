@@ -1,0 +1,133 @@
+import {
+  Activity,
+  ArrowUpRight,
+  BarChart3,
+  BookOpen,
+  ChevronRight,
+  Database,
+  LayoutDashboard,
+  PanelLeftClose,
+  ScanLine,
+  Users,
+} from 'lucide-react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
+import { useState } from 'react'
+import { FilterBar } from './FilterBar'
+import { teams } from '@/lib/format'
+import { selectionHref, supportsFilters } from '@/lib/filters'
+
+const navigation = [
+  { to: '/', label: 'Visão geral', Icon: LayoutDashboard },
+  { to: '/times/1610612737', label: 'Perfil dos times', Icon: Users },
+  { to: '/comparar', label: 'Comparação', Icon: BarChart3 },
+  { to: '/fora-da-curva', label: 'Fora da curva', Icon: ScanLine },
+  { to: '/dados', label: 'Dados e métodos', Icon: Database },
+]
+export function Layout({ children }: { children: React.ReactNode }) {
+  const location = useLocation()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const active = navigation.find((item) =>
+    item.to === '/'
+      ? location.pathname === '/'
+      : location.pathname.startsWith(item.to.split('/').slice(0, 2).join('/')),
+  )
+  return (
+    <div className="app-shell">
+      <a className="skip-link" href="#conteudo">
+        Pular para o conteúdo
+      </a>
+      <aside className={`sidebar ${menuOpen ? 'is-open' : ''}`}>
+        <Link to={selectionHref('/', location.search)} className="brand">
+          <img src="/favicon.svg" alt="" width="36" height="36" />
+          <span>
+            QuadraScope<small>O JOGO EM DADOS</small>
+          </span>
+        </Link>
+        <div className="sidebar-season">
+          <span className="live-dot" />
+          NBA · 2025–26<span className="season-phase">Temporada regular</span>
+        </div>
+        <p className="nav-label">EXPLORAR</p>
+        <nav aria-label="Navegação principal">
+          {navigation.map(({ to, label, Icon }) => (
+            <NavLink
+              key={to}
+              to={selectionHref(to, location.search)}
+              end={to === '/'}
+              className={() => `nav-item ${active?.to === to ? 'active' : ''}`}
+              onClick={() => setMenuOpen(false)}
+            >
+              <Icon size={19} />
+              {label}
+              {active?.to === to && <ChevronRight size={15} />}
+            </NavLink>
+          ))}
+        </nav>
+        <div className="sidebar-teams">
+          <p className="nav-label">EM FOCO</p>
+          {teams.map((team) => (
+            <Link to={`/times/${team.id}`} className="sidebar-team" key={team.id}>
+              <span className={`team-monogram ${team.className}`}>{team.short}</span>
+              <span>
+                {team.city}
+                <strong>{team.nickname}</strong>
+              </span>
+              <ArrowUpRight size={15} />
+            </Link>
+          ))}
+        </div>
+        <div className="sidebar-footer">
+          <BookOpen size={18} />
+          <div>
+            Laboratório de Ciência de Dados<small>UFAPE · 2026.2</small>
+          </div>
+        </div>
+      </aside>
+      <div className="workspace">
+        <header className="topbar">
+          <div>
+            <button
+              className="menu-toggle"
+              aria-label="Alternar navegação"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <PanelLeftClose size={20} />
+            </button>
+            <span className="breadcrumb">RELATÓRIO NBA</span>
+            <ChevronRight size={14} />
+            <span>{active?.label || 'Página'}</span>
+          </div>
+          <span className="topbar-status">
+            <Activity size={15} />
+            Análise descritiva
+          </span>
+        </header>
+        <main id="conteudo" tabIndex={-1}>
+          <div className="page-heading">
+            <div>
+              <div className="eyebrow">ATLANTA HAWKS × HOUSTON ROCKETS</div>
+              <h1>
+                {active?.to === '/'
+                  ? 'O jogo, em perspectiva.'
+                  : active?.label || 'Página não encontrada'}
+              </h1>
+              <p>Estatísticas por partida. Contexto antes da conclusão.</p>
+            </div>
+            <span className="season-tag">
+              2025<span>—</span>26
+            </span>
+          </div>
+          {supportsFilters(location.pathname) && <FilterBar />}
+          {children}
+          <footer className="page-footer">
+            <span>QuadraScope · Dados reais, análise com contexto.</span>
+            <a href="/api/v1/meta" target="_blank" rel="noreferrer">
+              Consultar metadados <ArrowUpRight size={13} />
+            </a>
+          </footer>
+        </main>
+      </div>
+    </div>
+  )
+}

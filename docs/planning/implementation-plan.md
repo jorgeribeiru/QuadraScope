@@ -1,7 +1,7 @@
 # Plano de implementação — QuadraScope
 
 > Do passo 0 à entrega. Revisão: 29/10/2026. Foco: Atlanta Hawks × Houston Rockets.
-> Estado atual: etapas 0–7 concluídas. Ciência, artefatos reproduzíveis e API FastAPI validados; aplicativo React, relatório interpretativo e deploy ainda pendentes.
+> Estado atual: etapas 0–7 concluídas. Ciência, artefatos reproduzíveis e API FastAPI validados; base React da etapa 8 integrada, publicada e validada na Vercel; relatório interpretativo ainda pendente e cold start isolado na nuvem limitado pelo Hobby.
 
 ## Uso do plano
 
@@ -152,16 +152,20 @@ As caixas já marcadas na etapa 0 indicam documentação revisada e confirmaçõ
 
 **Requisitos:** R01, R03–R05.
 
-- [ ] **P8.01** — Criar frontend Vite/React/TypeScript, lock de dependências e configuração de lint/formatação/Vitest.
-- [ ] **P8.02** — Instalar e configurar roteador, TanStack Query/Table, ECharts e componentes visuais necessários.
-- [ ] **P8.03** — Criar layout, navegação, tokens visuais, rótulos e formatação centralizada de unidades/casas decimais.
-- [ ] **P8.04** — Criar cliente HTTP tipado, filtros na URL e chaves de cache com versão e contexto; invalidar ao trocar dataset/análise.
-- [ ] **P8.05** — Criar componentes de carregamento, erro, vazio, insuficiência de amostra, avisos e tabelas acessíveis.
-- [ ] **P8.06** — Preparar configuração local de frontend/API e escolher topologia de deploy mediante prova com dependências reais.
-- [ ] **P8.07** — Publicar uma versão de validação técnica e verificar `/api`, health, artefatos, recarga de rota profunda e CORS se houver duas origens.
+- [X] **P8.01** — Criar frontend Vite/React/TypeScript, lock de dependências e configuração de lint/formatação/Vitest.
+- [X] **P8.02** — Instalar e configurar roteador, TanStack Query/Table, ECharts e componentes visuais necessários.
+- [X] **P8.03** — Criar layout, navegação, tokens visuais, rótulos e formatação centralizada de unidades/casas decimais.
+- [X] **P8.04** — Criar cliente HTTP tipado, filtros na URL e chaves de cache com versão e contexto; invalidar ao trocar dataset/análise.
+- [X] **P8.05** — Criar componentes de carregamento, erro, vazio, insuficiência de amostra, avisos e tabelas acessíveis.
+- [X] **P8.06** — Preparar configuração local de frontend/API e escolher topologia de deploy mediante prova com dependências reais.
+- [X] **P8.07** — Publicar uma versão de validação técnica e verificar `/api`, health, artefatos, recarga de rota profunda e CORS se houver duas origens.
 - [ ] **P8.08** — Medir tamanho do pacote, cold start e duração de consultas representativas; documentar limites e corrigir incompatibilidades.
 
-**Verificação/saída:** estrutura navegável e integração funcionando localmente e em ambiente de validação. A URL técnica ainda não comprova conclusão do relatório acadêmico.
+**Verificação local em 29/10/2026:** P8.01–P8.06 concluídos: base React navegável com API real; 236 testes Python, 24 Vitest e quatro Playwright aprovados, Node 24.22.2, lint/formatação e build. URL compartilhável, recarga profunda, navegação móvel, vazio/erro e invalidação por release verificados. Pacote mínimo de origem única testado com runtime real, cerca de 256 MB estimados, início local mediano de 0,97 s; consultas e JS medidos. [Frontend](../development/frontend.md), [pacote e medições](../development/deployment.md), [testes do navegador](../../frontend/e2e/base.spec.ts).
+
+**Publicação P8.07 em 29/10/2026:** https://quadrascope.vercel.app, equipe `projetos-do-jorge`, Hobby, projeto `quadrascope`, estado READY. A Vercel classificou o primeiro deploy como produção, apesar da solicitação de preview; essa versão é uma validação técnica. Dez endpoints, 404/422/304, quatro testes Playwright sem login, filtros, assets e recarga profunda aprovados. Build reportado de 22 s e latências HTTP reais registrados no [guia](../development/deployment.md).
+
+**Pendência P8.08:** tamanho de output da função e latências na nuvem foram medidos; a consulta de métricas por início frio retornou `payment_required` para Observability Plus. O Hobby foi mantido. Cold start isolado não foi medido, e o tempo local não foi usado como equivalente. A tarefa permanece parcial até obter essa medição ou revisar seu aceite para documentar a limitação. O relatório completo continua na etapa 9.
 
 ## Etapa 9 — Implementar as páginas do relatório
 

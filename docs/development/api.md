@@ -1,6 +1,6 @@
 # API FastAPI — etapa 7
 
-A API oferece dez rotas de leitura sob `/api/v1`, exclusivamente para análise de Atlanta Hawks (`1610612737`) e Houston Rockets (`1610612745`). Os 30 times continuam no catálogo e no contexto dos jogos. O aplicativo React e a prova de hospedagem pertencem à etapa 8.
+A API oferece dez rotas de leitura sob `/api/v1`, exclusivamente para análise de Atlanta Hawks (`1610612737`) e Houston Rockets (`1610612745`). Os 30 times continuam no catálogo e no contexto dos jogos. A [base React](frontend.md) foi integrada na etapa 8; a [prova de hospedagem](deployment.md) tem validação local, com publicação ainda pendente.
 
 ## Executar localmente
 
@@ -121,7 +121,7 @@ Para regenerar os tipos do frontend e conferir seu uso:
 make api-contracts
 ```
 
-O comando instala a ferramenta pelo lock de [tools/contracts](../../tools/contracts/package.json), executa `openapi-typescript` 7.13.0 e TypeScript 5.9.3, e atualiza [frontend/src/generated/api.ts](../../frontend/src/generated/api.ts). Node 24 é o alvo registrado; a geração também foi verificada com Node 26.12.1 disponível nesta máquina. A pasta frontend contém somente os tipos nesta etapa; ainda não há aplicativo React. Ferramentas Node não integram o runtime Python nem precisam ser instaladas para servir a API. Os testes verificam divergência do OpenAPI exportado; alterações de contrato exigem regenerar e conferir os tipos.
+O comando instala a ferramenta pelo lock de [tools/contracts](../../tools/contracts/package.json), executa `openapi-typescript` 7.13.0 e TypeScript 5.9.3, e atualiza [frontend/src/generated/api.ts](../../frontend/src/generated/api.ts). Node 24 é o alvo registrado; a geração também foi verificada com Node 26.12.1 disponível nesta máquina. A etapa 7 gerou os tipos; a etapa 8 adicionou a base React e seu próprio lock. Ferramentas Node não integram o runtime Python nem precisam ser instaladas para servir a API. Os testes verificam divergência do OpenAPI exportado; alterações de contrato exigem regenerar e conferir os tipos.
 
 Referência de uso dos modelos de consulta com rejeição de extras: [documentação oficial FastAPI](https://fastapi.tiangolo.com/tutorial/query-param-models/).
 

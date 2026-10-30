@@ -1,6 +1,7 @@
 UV ?= uv
+NPM ?= npm
 
-.PHONY: help setup check-env lint format test check export-requirements data-normalize data-quality data-describe data-anomalies data-build data-validate data-reproduce data-package-runtime api-serve api-export api-contracts
+.PHONY: help setup check-env lint format test check export-requirements data-normalize data-quality data-describe data-anomalies data-build data-validate data-reproduce data-package-runtime api-serve api-export api-contracts web-setup web-dev web-build web-check web-e2e dev deploy-prepare
 
 help:
 	@echo "setup                Instala Python 3.12 e sincroniza .venv pelo lock"
@@ -22,6 +23,14 @@ help:
 	@echo "api-export           Exporta o contrato OpenAPI sem carregar artefatos"
 	@echo "api-contracts        Gera e confere tipos TypeScript a partir do OpenAPI"
 
+	@echo "web-setup            Instala dependências frontend pelo lock (Node 24)"
+	@echo "web-dev              Inicia Vite em 127.0.0.1:5173"
+	@echo "web-build            Compila TypeScript e gera frontend/dist"
+	@echo "web-check            ESLint, Prettier, Vitest e build React"
+	@echo "web-e2e              Testa frontend e API reais no navegador"
+	@echo "dev                  Inicia API e frontend juntos; encerra com Ctrl+C"
+	@echo "deploy-prepare       Empacota runtime Python, dados e SPA em .deployment"
+
 setup:
 	$(UV) sync --locked
 
@@ -29,11 +38,11 @@ check-env:
 	$(UV) run --locked python -m backend.scripts.check_environment
 
 lint:
-	$(UV) run --locked ruff check backend
-	$(UV) run --locked ruff format --check backend
+	$(UV) run --locked ruff check backend deployment
+	$(UV) run --locked ruff format --check backend deployment
 
 format:
-	$(UV) run --locked ruff format backend
+	$(UV) run --locked ruff format backend deployment
 
 test:
 	$(UV) run --locked pytest
@@ -78,3 +87,24 @@ api-contracts: api-export
 	npm ci --ignore-scripts --prefix tools/contracts
 	npm run generate --prefix tools/contracts
 	npm run check --prefix tools/contracts
+
+web-setup:
+	$(NPM) ci --prefix frontend
+
+web-dev:
+	$(NPM) run dev --prefix frontend
+
+web-build:
+	$(NPM) run build --prefix frontend
+
+web-check:
+	$(NPM) run check --prefix frontend
+
+web-e2e: web-build
+	$(NPM) run test:e2e --prefix frontend
+
+dev:
+	$(UV) run --locked python -m backend.scripts.develop
+
+deploy-prepare:
+	$(UV) run --locked python -m backend.scripts.prepare_deployment

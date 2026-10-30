@@ -1,0 +1,25 @@
+import { fileURLToPath, URL } from 'node:url'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from 'vitest/config'
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
+  server: {
+    port: 5173,
+    strictPort: true,
+    proxy: { '/api': process.env.QUADRASCOPE_API_PROXY || 'http://127.0.0.1:8000' },
+  },
+  preview: {
+    port: 4173,
+    strictPort: true,
+    proxy: { '/api': process.env.QUADRASCOPE_API_PROXY || 'http://127.0.0.1:8000' },
+  },
+  build: { target: 'es2022' },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/tests/setup.ts'],
+    include: ['src/**/*.test.{ts,tsx}'],
+  },
+})
