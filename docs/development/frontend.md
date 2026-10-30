@@ -72,7 +72,7 @@ make web-check
 make api-contracts
 ```
 
-O primeiro executa ESLint, Prettier, os **24 testes Vitest** e TypeScript/build de produção. O segundo regenera/verifica o contrato HTTP com a ferramenta separada em `tools/contracts/`. `make check` cobre os **241 testes Python**, incluindo os testes do pacote de deploy.
+O primeiro executa ESLint, Prettier, os **24 testes Vitest** e TypeScript/build de produção. O segundo regenera/verifica o contrato HTTP com a ferramenta separada em `tools/contracts/`. `make check` cobre os **244 testes Python**, incluindo os testes do pacote de deploy.
 
 Para testes com navegador, instalar o Chromium do Playwright uma vez e gerar os dados:
 
@@ -82,7 +82,7 @@ make data-build
 make web-e2e
 ```
 
-`web-e2e` compila o frontend e inicia API/Vite preview nas portas 8018/4178, sem reutilizar servidores já existentes. Os oito testes locais atuais cobrem dados reais, filtros, URL compartilhável, recarga profunda, seleção vazia, 503, URL inválida e navegação móvel, além da auditoria e conteúdo completo de Dados e métodos. Os servidores de teste são encerrados ao terminar. Capturas locais ficam em `frontend/test-results/`, ignoradas pelo Git.
+`web-e2e` compila o frontend e inicia API/Vite preview nas portas 8018/4178, sem reutilizar servidores já existentes. Os onze testes locais atuais cobrem dados reais, filtros, URL compartilhável, recarga profunda, seleção vazia, 503, URL inválida e navegação móvel, além da auditoria e conteúdo completo de Dados e métodos. Os servidores de teste são encerrados ao terminar. Capturas locais ficam em `frontend/test-results/`, ignoradas pelo Git.
 
 Em 29/10/2026, as verificações foram executadas com Node **24.22.2** e Python **3.12.13**. O gráfico ECharts produz um aviso de chunk acima de 500 kB sem compressão; ele é carregado separadamente e seu tamanho comprimido foi medido. Não houve aumento artificial do limite para ocultar o aviso. Medições, pacote e pendências de publicação estão no [guia de deploy](deployment.md).
 
@@ -113,3 +113,7 @@ Validação deste incremento em 29/10/2026: `npm run check --prefix frontend` co
 P9.01–P9.12 implementados; organização final em `features/{Reports,DataReport,TeamReport,ComparisonReport,AnomalyReport}.tsx`. Componentes científicos SVG e leituras contextuais têm responsabilidades próprias. Seletor de variável do perfil e time/método/variável/exibição de anomalias são compartilháveis no fragmento da URL; a barra global permanece somente na Home e Comparação.
 
 Validação local: 244 testes Python, 24 Vitest, onze Playwright, contratos, lint, formatação e build. [Critérios, métodos e casos cobertos](report.md). A etapa 10 continua aberta para revisão integral.
+
+## Publicação do relatório completo
+
+Em 29/10/2026, o commit `c51acd9` foi publicado em https://quadrascope.vercel.app. Os onze testes Playwright passaram sem login em 41,9 s. As afirmações de não publicação nos registros intermediários acima descrevem somente aqueles incrementos. [Deploy e evidências](deployment.md#publicação-da-etapa-9--relatório-completo).

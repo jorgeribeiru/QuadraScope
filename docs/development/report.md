@@ -66,3 +66,5 @@ make web-e2e
 Em 29/10/2026: 244 testes Python, 24 Vitest, lint/formatação, contratos TypeScript e build aprovados. Onze Playwright cobrem dados/qualidade, filtros, erros, navegação móvel, os 14 pares de perfis, sete métodos em ambos os times, seleção univariada, recarga dos fragmentos e leituras sob filtros/n=0/n=1. As verificações do navegador utilizam API e gráficos reais; não substituem a revisão completa da etapa 10.
 
 [Plano](../planning/implementation-plan.md), [rastreabilidade](../planning/requirements.md) e [publicação](deployment.md).
+
+A etapa 9 foi publicada no commit `c51acd9`, em https://quadrascope.vercel.app. Onze Playwright passaram sem login na versão pública. [Evidências do deployment e métricas](measurements/stage9-verification.json).

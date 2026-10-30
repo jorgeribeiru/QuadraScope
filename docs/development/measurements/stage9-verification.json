@@ -1,0 +1,432 @@
+{
+  "task": "P9.01–P9.12",
+  "date_local": "2026-10-29",
+  "timezone": "America/Recife",
+  "source_commit": "c51acd9ebdbfa2564da98dd718c4e4e8d0fa38cf",
+  "source_git_dirty_at_data_build": false,
+  "url": "https://quadrascope.vercel.app",
+  "immutable_url": "https://quadrascope-7lcrqdpob-projetos-do-jorge.vercel.app",
+  "deployment_id": "dpl_9nyXQ9PXGkw4vwwZ9jpi6K4GgJqL",
+  "target": "production",
+  "status": "READY",
+  "team": "projetos-do-jorge",
+  "project": "quadrascope",
+  "framework": "fastapi",
+  "plan_changed": false,
+  "deployment_protection_changed": false,
+  "release_id": "ddd1fb5f8683d83e602caef5846027156a5194f257491c51221a27bb3d0a8a94",
+  "build": {
+    "builder_duration_seconds": 20,
+    "time_to_ready_ms": 37304,
+    "provider_function_output_size_bytes": 74060131,
+    "runtime": "python3.12",
+    "regions": [
+      "iad1"
+    ]
+  },
+  "validation": {
+    "python_tests": 244,
+    "vitest_tests": 24,
+    "public_playwright_tests": 11,
+    "public_playwright_duration_seconds": 41.9,
+    "local_playwright_duration_seconds": 14.4,
+    "api_contracts": "passed",
+    "lint": "passed",
+    "format": "passed",
+    "build": "passed",
+    "candidate_authenticated_checks": {
+      "anomaly_inventory": 50,
+      "filtered_interpretations_n": 38
+    },
+    "http": {
+      "checks": {
+        "/": 200,
+        "/times/1610612737": 200,
+        "/times/1610612745": 200,
+        "/comparar?venue=home": 200,
+        "/fora-da-curva": 200,
+        "/dados": 200,
+        "/api/v1/health": 200,
+        "/api/v1/meta": 200,
+        "/api/v1/dictionary": 200,
+        "/api/v1/teams": 200,
+        "/api/v1/teams/1610612737/summary": 200,
+        "/api/v1/distributions?team_id=1610612745&metric=PTS": 200,
+        "/api/v1/comparisons": 200,
+        "/api/v1/anomalies?team_id=1610612745&method=dbscan": 200,
+        "/api/v1/quality": 200,
+        "/api/v1/interpretations?context=overview": 200,
+        "/api/v1/missing": 404,
+        "/assets/missing.js": 404,
+        "/api/v1/comparisons?venue=neutral": 422,
+        "health_etag": 304
+      },
+      "assets": [
+        "/assets/index-DAKMV9pe.js"
+      ],
+      "html_accept_header": "text/html"
+    },
+    "runtime_errors_query": [
+      {
+        "type": "summary",
+        "recordsReturned": 0,
+        "timeRange": {
+          "start": "2026-10-30T01:35:45.167Z",
+          "end": "2026-10-30T01:50:45.167Z"
+        },
+        "pagination": {
+          "hasMore": false,
+          "next": null
+        },
+        "excludedIntervals": []
+      }
+    ]
+  },
+  "local_package": {
+    "package_manifest_sha256": "7a1b506af263c0148079ea8030b8e2ce8290bdb8e1360f826570e56e1bb8742d",
+    "source_size_bytes": 4823909,
+    "runtime_site_packages_bytes": 251286927,
+    "estimated_uncompressed_bytes": 256110836,
+    "cold_start_seconds": [
+      1.0376277710001887,
+      0.9905151610000758,
+      1.1413869670004715
+    ],
+    "cold_start_median_seconds": 1.0376277710001887,
+    "observed_rss_bytes": [
+      216387584,
+      216293376,
+      216395776
+    ],
+    "latency_ms": {
+      "/api/v1/anomalies?team_id=1610612745&method=lof&venue=home": {
+        "max": 8.067481000580301,
+        "median": 5.364903000554477,
+        "p95": 7.290787600413751,
+        "samples": 15
+      },
+      "/api/v1/comparisons?venue=home&metric=PTS": {
+        "max": 75.28540900057124,
+        "median": 51.96520299978147,
+        "p95": 72.36179109995646,
+        "samples": 15
+      },
+      "/api/v1/teams/1610612737/summary?venue=home": {
+        "max": 17.2202229996401,
+        "median": 10.196299999734038,
+        "p95": 13.272673799747281,
+        "samples": 15
+      }
+    },
+    "routing_checks": {
+      "/": 200,
+      "/api/v1/missing": 404,
+      "/assets/missing.js": 404,
+      "/comparar?venue=home": 200,
+      "/times/1610612745?venue=home": 200
+    },
+    "frontend_bundles": {
+      "assets/PointsChart-CSVm9wTq.js": {
+        "bytes": 515594,
+        "gzip_bytes": 172337
+      },
+      "assets/index-DAKMV9pe.js": {
+        "bytes": 460604,
+        "gzip_bytes": 141136
+      }
+    }
+  },
+  "cloud_benchmark": {
+    "generated_at": "2026-10-30T01:50:33.631169+00:00",
+    "base_url": "https://quadrascope.vercel.app",
+    "deployment_id": "dpl_9nyXQ9PXGkw4vwwZ9jpi6K4GgJqL",
+    "release_id": "ddd1fb5f8683d83e602caef5846027156a5194f257491c51221a27bb3d0a8a94",
+    "status": "passed",
+    "first_http_observed": false,
+    "method": "application_instrumentation_and_client_http",
+    "platform_provisioning_isolated": false,
+    "limitations": [
+      "Importação começa na execução de app.py, após importar time.",
+      "Startup é a entrada no lifespan, incluindo validação/carregamento dos artefatos.",
+      "Tempos de inicialização são recuperados também nas respostas quentes.",
+      "Primeira requisição HTTP do worker pode ocorrer após pré-aquecimento.",
+      "HTTP inclui rede/TLS e plataforma; não isola custo causal do cold start.",
+      "qs_app mede atendimento até os headers; não inclui envio do corpo.",
+      "Amostra pequena e sequencial; p95 usa nearest-rank e não estima SLA."
+    ],
+    "workers": {
+      "f4c3bf6706c24b1aa1825ed2d86c3056": {
+        "import_ms": 4348.556,
+        "startup_ms": 787.913,
+        "application_initialization_ms": 5136.468999999999
+      }
+    },
+    "first_requests": [],
+    "summary": {
+      "health": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 434.2658770001435,
+          "p95_nearest_rank_ms": 441.4751399999659,
+          "max_ms": 441.4751399999659
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 1.137,
+          "p95_nearest_rank_ms": 1.534,
+          "max_ms": 1.534
+        }
+      },
+      "summary_atlanta_home": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 462.78434099986043,
+          "p95_nearest_rank_ms": 518.010366999988,
+          "max_ms": 518.010366999988
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 21.715,
+          "p95_nearest_rank_ms": 63.608,
+          "max_ms": 63.608
+        }
+      },
+      "comparison_home": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 600.3883800003678,
+          "p95_nearest_rank_ms": 650.627441999859,
+          "max_ms": 650.627441999859
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 123.974,
+          "p95_nearest_rank_ms": 138.974,
+          "max_ms": 138.974
+        }
+      },
+      "lof_houston_home": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 438.39884600038204,
+          "p95_nearest_rank_ms": 443.2867460000125,
+          "max_ms": 443.2867460000125
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 7.692,
+          "p95_nearest_rank_ms": 8.605,
+          "max_ms": 8.605
+        }
+      }
+    },
+    "records": [
+      {
+        "scenario": "health",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 441.20560199917236,
+        "http_total_ms": 441.4751399999659,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 1.534
+      },
+      {
+        "scenario": "health",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 429.85772300016833,
+        "http_total_ms": 430.12278900005185,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 1.137
+      },
+      {
+        "scenario": "health",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 431.2913289995777,
+        "http_total_ms": 431.4883400002145,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 1.081
+      },
+      {
+        "scenario": "health",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 434.0009569996255,
+        "http_total_ms": 434.2658770001435,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 1.154
+      },
+      {
+        "scenario": "health",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 439.0495469997404,
+        "http_total_ms": 439.26083099995594,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 1.035
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 461.90251799998805,
+        "http_total_ms": 462.78434099986043,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 29.814
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 438.9566649997505,
+        "http_total_ms": 440.34066299991537,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 21.715
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 443.15787400046247,
+        "http_total_ms": 444.1357780006001,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 18.051
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 517.2196570001688,
+        "http_total_ms": 518.010366999988,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 63.608
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 474.44090800036065,
+        "http_total_ms": 475.3522669998347,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 20.601
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 599.4239680003375,
+        "http_total_ms": 650.627441999859,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 138.974
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 555.1092219993734,
+        "http_total_ms": 606.341775999681,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 127.108
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 543.561301000409,
+        "http_total_ms": 592.5664890000917,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 111.668
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 550.9286649994465,
+        "http_total_ms": 599.8417129994777,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 116.273
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 550.9366940004838,
+        "http_total_ms": 600.3883800003678,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 123.974
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 439.46126100036054,
+        "http_total_ms": 439.92494700069074,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 7.654
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 438.1181030003063,
+        "http_total_ms": 438.39884600038204,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 7.766
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 436.047889999827,
+        "http_total_ms": 436.70328200005315,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 8.605
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 442.3612190003041,
+        "http_total_ms": 443.2867460000125,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 7.629
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "f4c3bf6706c24b1aa1825ed2d86c3056",
+        "first_http_in_worker": false,
+        "http_headers_ms": 430.4002929993658,
+        "http_total_ms": 431.00085699916235,
+        "qs_import": 4348.556,
+        "qs_startup": 787.913,
+        "qs_app": 7.692
+      }
+    ]
+  },
+  "limitations": [
+    "Platform provisioning was not isolated; retained application initialization is not total platform cold start.",
+    "HTTP benchmark and HTTP smoke checks ran in the same time window; not an isolated load test or SLA.",
+    "Provider function output size is not assumed to be the full uncompressed size.",
+    "Stages 10–11 remain pending; submission has not been confirmed."
+  ]
+}

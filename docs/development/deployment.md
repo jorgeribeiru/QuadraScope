@@ -213,3 +213,32 @@ O ID informado identifica o deployment inspecionado pelo operador; o coletor con
 Referências: [diagnóstico oficial de funções lentas](https://vercel.com/docs/functions/debug-slow-functions) e [runtime Python](https://vercel.com/docs/functions/runtimes/python). A comparação entre acessos sugerida pelo diagnóstico é complementada aqui por tempos do worker; nenhuma diferença entre requisições foi usada como medição exata de cold start.
 
 Validação final desta revisão: `make check` aprovado com **241 testes Python**, Ruff e formatação; seis testes Playwright aprovados na URL pública. A prova local utilizou somente as vinte dependências de runtime, sem PyArrow/scikit-learn/threadpoolctl/PyOD, e conferiu API/SPA/assets e erros 404. Na consulta `level:error OR level:fatal`, filtrada pelo deployment e janela de 15 minutos, foram retornados zero registros; essa observação não garante ausência permanente de erros. Drains não foram configurados.
+
+## Publicação da etapa 9 — relatório completo
+
+Em 29/10/2026, o commit **`c51acd9`** foi publicado em **https://quadrascope.vercel.app**. P9.01–P9.12 estão implementados; etapas 10–11 e submissão continuam pendentes. A publicação não mudou o Hobby nem Deployment Protection.
+
+| Campo | Evidência |
+| --- | --- |
+| Deployment | `dpl_9nyXQ9PXGkw4vwwZ9jpi6K4GgJqL` |
+| URL imutável | https://quadrascope-7lcrqdpob-projetos-do-jorge.vercel.app |
+| Target / estado / framework | production / READY / FastAPI |
+| Commit de origem | `c51acd9ebdbfa2564da98dd718c4e4e8d0fa38cf` |
+| Release dos dados | `ddd1fb5f8683d83e602caef5846027156a5194f257491c51221a27bb3d0a8a94` |
+| Build reportado / até READY | 20 s / 37,304 s |
+| Runtime / região | Python 3.12 / iad1 |
+| Output da função reportado pela Vercel | 74.060.131 bytes; não equivale necessariamente ao tamanho completo sem compressão |
+| Fonte / estimativa local sem compressão | 4.823.909 / 256.110.836 bytes |
+| Bundle inicial publicado | `/assets/index-DAKMV9pe.js` |
+
+O código foi commitado antes do build dos dados. O manifesto registra o commit acima e `git_dirty=false`. O pacote reduzido foi montado e testado com as vinte dependências reais de runtime, sem as dependências offline. O benchmark local iniciou três processos novos, com mediana até health de 1,038 s. A estimativa de tamanho permanece abaixo do limite documentado; o empacotador da Vercel aceitou a função.
+
+O candidato foi gerado com `--prod --skip-domain` e metadados `sourceCommit`/`stage=9`, no projeto/equipe previamente verificados. O health autenticado foi consultado com `vercel curl`, usando o link do pacote `.deployment/`; confirmou o release. `/quality` confirmou inventário de 50 análises e `/interpretations` confirmou leitura filtrada de Atlanta em casa com n=38. O acesso ao candidato foi autenticado, sem apresentar essa verificação como acesso público. O mesmo deployment de produção foi promovido sem rebuild.
+
+Depois da promoção, **onze Playwright passaram sem login em 41,9 s**. A suíte percorreu os 14 pares variável/time e os sete métodos nos dois times; verificou seleção univariada, recarga dos fragmentos, filtros, erros, n=0/n=1, contexto fixo separado e navegação móvel. Vinte verificações HTTP confirmaram seis rotas web, dez endpoints, 404/422 e ETag 304. Rotas web profundas enviam `Accept: text/html`, como um navegador; requisições sem negociação HTML podem receber o 404 de API. O HTML público serviu o bundle acima e os endpoints conferiram o release.
+
+Nova coleta de desempenho: vinte chamadas sequenciais no coletor (cinco por cenário), na mesma janela da conferência HTTP funcional. Medianas HTTP: health 434 ms, summary Atlanta em casa 463 ms, comparação 600 ms e LOF Houston em casa 438 ms. Um worker preservou 4.348,556 ms de importação e 787,913 ms de startup (soma observável 5.136,469 ms). A primeira requisição desse worker não foi recebida pelo coletor; os tempos foram recuperados de respostas posteriores. Não se mediu o provisionamento anterior ao Python, penalidade HTTP causal de cold start ou SLA; também não se afirma isolamento de concorrência nessa coleta.
+
+Na consulta `level:error OR level:fatal`, filtrada por esse deployment e janela de 15 minutos, foram retornados zero registros, sem intervalos excluídos. Isso descreve aquela janela, não garante ausência permanente de erros. Drains não foram configurados. A limitação do chunk ECharts sob demanda acima de 500 kB e o aviso de depreciação no cliente de testes permanecem documentados.
+
+[Relatório versionado de evidências](measurements/stage9-verification.json), [mapa das páginas](report.md) e [testes](../../frontend/e2e/report.spec.ts). A atualização documental posterior à publicação apenas registra essas evidências; o código executável publicado é o commit `c51acd9`.
