@@ -1490,8 +1490,8 @@ select {
   font-size: 12px;
   font-weight: 650;
 }
-.measure-highlight strong,
-.comparison-highlight strong {
+.measure-highlight > strong,
+.comparison-highlight > strong {
   display: block;
   margin: 8px 0 3px;
   color: var(--ink);
@@ -1520,10 +1520,31 @@ select {
   color: var(--ink-muted);
   font-size: 12px;
 }
-.report-section .comparison-highlight p {
-  margin: 14px 0 0;
+.comparison-measures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.comparison-measures dt {
+  color: var(--ink-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.comparison-measures dd {
+  margin: 5px 0 0;
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+.comparison-highlight .measure-state {
   color: var(--ink-muted);
   font-size: 12px;
+  font-weight: 400;
 }
 .report-section .comparison-reading {
   padding: 14px 16px;
@@ -1696,4 +1717,71 @@ th {
 }
 .context-panel li span {
   color: #4b6140;
+}
+
+/* Aproxima textos auxiliares do tamanho de leitura usado nos relatórios. */
+table,
+th,
+td,
+td:not(:first-child),
+.data-report td,
+caption,
+.scientific-chart figcaption,
+.chart-footnote,
+.scientific-json,
+.report-context,
+.report-control,
+.report-definitions dt,
+.measure-state,
+.comparison-highlight .measure-state {
+  font-size: 13px;
+  line-height: 1.6;
+}
+.sidebar-team,
+.sidebar-team strong,
+.season-phase,
+.sidebar-footer,
+.sidebar-footer small,
+.breadcrumb,
+.eyebrow,
+.team-card .eyebrow,
+.scope-label,
+.filter-bar label,
+.text-link,
+.report-index strong,
+.report-index span,
+.selection-summary li,
+.selection-count span,
+.selection-count small,
+.overview-facts span,
+.overview-facts small,
+.profile-scope,
+.measure-highlight > span,
+.measure-highlight small,
+.comparison-highlight-label,
+.comparison-highlight > small,
+.comparison-highlight-heading > span,
+.anomaly-count span,
+.anomaly-count small,
+.sample-pill,
+.team-score > span,
+.team-score small,
+.team-measures span,
+.stat-card > span,
+.stat-card small,
+.tag,
+.subtle,
+.context-panel li,
+.context-panel a {
+  font-size: 13px;
+  line-height: 1.5;
+}
+@media (max-width: 700px) {
+  .topbar-status {
+    display: none;
+  }
+  .breadcrumb,
+  .page-heading .eyebrow {
+    font-size: 13px;
+  }
 }

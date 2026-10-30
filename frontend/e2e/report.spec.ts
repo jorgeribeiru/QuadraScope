@@ -22,6 +22,14 @@ test('destaques preservam os valores, amostras e escopos dos perfis e da compara
   await expect(cards).toContainText('38 jogos')
   await expect(cards).toContainText('35 jogos')
   await expect(cards).toContainText('Rebotes')
+  const measures = cards.locator('article').first().locator('.comparison-measures')
+  await expect(measures.locator('dt')).toHaveText(['Mediana', 'Desvio padrão amostral'])
+  await expect(measures.locator('dd').first()).not.toHaveText('—')
+  const sizes = await measures.evaluate((node) => ({
+    label: parseFloat(getComputedStyle(node.querySelector('dt')!).fontSize),
+    value: parseFloat(getComputedStyle(node.querySelector('dd')!).fontSize),
+  }))
+  expect(sizes.value).toBeGreaterThan(sizes.label)
   await expect(page.locator('#comparacao')).toContainText('diferença é descritiva')
   await expect(page.locator('#boxplots-comparacao')).toContainText(
     'Mesma seleção, unidade e domínio',

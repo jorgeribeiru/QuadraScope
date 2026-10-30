@@ -82,10 +82,16 @@ export function Comparison({ meta, selection }: Props) {
                       </span>
                       <strong>{row ? <Value measure={row.statistics.mean} /> : '—'}</strong>
                       <small>{row?.statistics.mean.unit}</small>
-                      <ReadableParagraph>
-                        Mediana: {row ? <Value measure={row.statistics.median} /> : '—'} · Desvio
-                        padrão amostral: {row ? <Value measure={row.statistics.std} /> : '—'}
-                      </ReadableParagraph>
+                      <dl className="comparison-measures">
+                        <div>
+                          <dt>Mediana</dt>
+                          <dd>{row ? <Value measure={row.statistics.median} /> : '—'}</dd>
+                        </div>
+                        <div>
+                          <dt>Desvio padrão amostral</dt>
+                          <dd>{row ? <Value measure={row.statistics.std} /> : '—'}</dd>
+                        </div>
+                      </dl>
                     </article>
                   )
                 })}
