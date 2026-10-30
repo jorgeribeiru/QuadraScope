@@ -1,3 +1,4 @@
+import { ReadableParagraph } from '@/components/ReadableParagraph'
 import { useQueries, useQueryClient } from '@tanstack/react-query'
 import { api, type Meta } from '@/lib/api'
 import type { Selection } from '@/lib/filters'
@@ -44,10 +45,10 @@ export function ComparisonBoxes({ meta, selection }: { meta: Meta; selection: Se
       title={`Boxplots na mesma escala · ${selection.metric}`}
       requirements="R17 · R19 · R22 · R23"
     >
-      <p>
+      <ReadableParagraph>
         Mesma seleção, unidade e domínio horizontal nos dois gráficos. Os perfis individuais abrem o
         histórico completo, sem os filtros desta comparação.
-      </p>
+      </ReadableParagraph>
       {queries.map((query, i) => (
         <QueryBoundary key={teams[i].id} query={query}>
           {(data) => (
@@ -60,11 +61,11 @@ export function ComparisonBoxes({ meta, selection }: { meta: Meta; selection: Se
           )}
         </QueryBoundary>
       ))}
-      <p>
+      <ReadableParagraph>
         Q1/Q3, mediana, média, cercas e bigodes correspondem aos dados desta seleção. Todas as modas
-        e partidas fora das cercas permanecem identificáveis. A tabela de quartis acima usa a mesma
-        interpolação linear.
-      </p>
+        e partidas fora das cercas permanecem identificáveis. A tabela de quartis na seção de
+        dispersão usa a mesma interpolação linear.
+      </ReadableParagraph>
       {queries.every((q) => q.isSuccess) &&
         (outliers.length ? (
           <DataTable
@@ -87,7 +88,9 @@ export function ComparisonBoxes({ meta, selection }: { meta: Meta; selection: Se
             caption="Partidas fora das cercas dos boxplots — seleção atual dos dois times."
           />
         ) : (
-          <p>Nenhuma partida fora das cercas nos resultados carregados.</p>
+          <ReadableParagraph>
+            Nenhuma partida fora das cercas nos resultados carregados.
+          </ReadableParagraph>
         ))}
     </ReportSection>
   )

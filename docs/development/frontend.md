@@ -45,7 +45,7 @@ frontend/
 
 Versões resolvidas no lock: React 19.3.1, React Router 7.18.5, Vite 8.3.5, TypeScript 5.9.3, TanStack Query 5.105.0, Table 8.21.3, ECharts 6.1.0 e echarts-for-react 3.0.6. Tailwind 4, Radix Slot, CVA e componentes locais seguem a organização shadcn/ui, sem criar um segundo sistema de componentes. ESLint 10, Prettier, Vitest e Playwright verificam código e comportamento.
 
-O layout usa fundo claro, navegação escura e cores distintas para Atlanta/Houston. Fontes Manrope e DM Mono são locais; não dependem de requisições a serviços de fontes. As licenças OFL acompanham o build. O favicon é SVG do projeto. Não foram usados logotipos de terceiros.
+O layout usa fundo claro, navegação escura e cores distintas para Atlanta/Houston. Fontes Manrope e DM Mono são locais; não dependem de requisições a serviços de fontes. As licenças OFL acompanham o build. O favicon é SVG do projeto. Os escudos dos times são arquivos locais obtidos do CDN oficial da NBA: [Atlanta](https://cdn.nba.com/logos/nba/1610612737/primary/L/logo.svg) e [Houston](https://cdn.nba.com/logos/nba/1610612745/primary/L/logo.svg).
 
 ## Dados, seleção e cache
 

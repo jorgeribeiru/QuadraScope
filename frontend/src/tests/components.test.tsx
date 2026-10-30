@@ -6,11 +6,20 @@ import { FilterBar } from '@/components/FilterBar'
 import { EmptyState, ErrorState, Loading } from '@/components/States'
 import { ApiError } from '@/lib/api'
 import { DataTable } from '@/components/DataTable'
+import { ReadableParagraph } from '@/components/ReadableParagraph'
 
 function Location() {
   const location = useLocation()
   return <output aria-label="URL">{location.search}</output>
 }
+it('destaca medidas sem alterar texto, ressalvas ou interpretar HTML', () => {
+  const text = 'Média: 114,41 pontos/jogo. A diferença não demonstra superioridade. <teste>'
+  const { container } = render(<ReadableParagraph>{text}</ReadableParagraph>)
+  const paragraph = container.querySelector('p')!
+  expect(paragraph.textContent).toBe(text)
+  expect(paragraph.querySelectorAll('strong').length).toBeGreaterThan(0)
+  expect(paragraph.querySelector('teste')).toBeNull()
+})
 it('grava filtros na URL e permite limpá-los', async () => {
   const user = userEvent.setup()
   render(

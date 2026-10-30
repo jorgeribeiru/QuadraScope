@@ -1,3 +1,4 @@
+import { ReadableParagraph } from '@/components/ReadableParagraph'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { components } from '@/generated/api'
@@ -131,6 +132,9 @@ function Section({
         <span className="tag">{requirements}</span>
       </div>
       {children}
+      <a className="data-back-link" href="#indice-dados">
+        Voltar ao índice de Dados e métodos
+      </a>
     </section>
   )
 }
@@ -151,22 +155,22 @@ function Coverage({ coverage }: { coverage: Quality['coverage'] }) {
   ]
   return (
     <>
-      <p>
+      <ReadableParagraph>
         Unidade de análise: <strong>um time em uma partida</strong>. Cada jogo aparece em duas
         linhas, uma por adversário. A base contém {count(coverage.unique_games)} jogos distintos de{' '}
         {count(coverage.teams)} times, de {date(coverage.from)} a {date(coverage.to)}.
-      </p>
+      </ReadableParagraph>
       <DataTable
         data={focusTeams}
         columns={coverageColumns}
         caption="Cobertura dos históricos de Atlanta e Houston no CSV completo."
       />
-      <p>
+      <ReadableParagraph>
         O recorte do grupo reúne {count(focus.rows)} observações em {count(focus.unique_games)}{' '}
         jogos distintos. Seus {count(focus.head_to_head_games)} confrontos diretos pertencem aos
         dois históricos; não representam uma amostra independente adicional. Prorrogações são
         mantidas, pois alteram a exposição dos totais por partida.
-      </p>
+      </ReadableParagraph>
       <details>
         <summary>Cobertura dos 30 times e confrontos diretos</summary>
         <DataTable
@@ -209,13 +213,13 @@ function Missingness({ report }: { report: Quality }) {
       title="Ausências: mecanismos e aplicabilidade dos testes"
       requirements="R12 · R13"
     >
-      <p>
+      <ReadableParagraph>
         Foram encontradas{' '}
         <strong>{count(global.missing_cells)} células ausentes na base completa</strong> e{' '}
         {count(focus.missing_cells)} no recorte Atlanta/Houston. Não houve imputação. O mecanismo de
         ausência não foi identificado: ausência de células vazias não demonstra MCAR nem cobertura
         integral da temporada.
-      </p>
+      </ReadableParagraph>
       <dl className="report-definitions">
         {Object.entries(mechanisms).map(([name, explanation]) => (
           <div key={name}>
@@ -224,25 +228,25 @@ function Missingness({ report }: { report: Quality }) {
           </div>
         ))}
       </dl>
-      <p>
+      <ReadableParagraph>
         Rejeitar MCAR não identifica automaticamente MAR ou MNAR. Um teste não significativo também
         não prova MCAR. Em geral, MAR e MNAR exigem hipóteses adicionais e não são distinguíveis
         apenas pelos valores observados.
-      </p>
+      </ReadableParagraph>
       <div className="method-grid">
         {methods.map((method) => (
           <article className="method-card" key={text(method.id)}>
             <h3>{text(method.name)}</h3>
-            <p>
+            <ReadableParagraph>
               <strong>Teoria.</strong> {text(method.theory)}
-            </p>
-            <p>
+            </ReadableParagraph>
+            <ReadableParagraph>
               <strong>Quando usar.</strong> {text(method.why_use)}
-            </p>
-            <p>
+            </ReadableParagraph>
+            <ReadableParagraph>
               <strong>Pressupostos.</strong> {text(method.requirements)}
-            </p>
-            <p className="method-status">
+            </ReadableParagraph>
+            <ReadableParagraph className="method-status">
               <strong>
                 {method.status === 'not_applicable'
                   ? 'Não aplicável neste recorte'
@@ -250,11 +254,11 @@ function Missingness({ report }: { report: Quality }) {
                 .
               </strong>{' '}
               {text(method.reason)}
-            </p>
-            <p>
+            </ReadableParagraph>
+            <ReadableParagraph>
               Execução: {method.executed === false ? 'não executado' : 'não informada'}. Estatística
               e p-valor: não calculados.
-            </p>
+            </ReadableParagraph>
           </article>
         ))}
       </div>
@@ -296,18 +300,18 @@ function QualityReport({ report }: { report: Quality }) {
   return (
     <>
       <Section id="qualidade" title="Auditoria de qualidade" requirements="R11 · R12 · R14">
-        <p>
+        <ReadableParagraph>
           A auditoria aprovada encontrou {integer(missing)} células ausentes, {integer(invalid)}{' '}
           valores fora do domínio, {count(report.duplicates.row_excess)} linhas duplicadas
           excedentes e {count(report.duplicates.key_excess)} chaves time-partida duplicadas
           excedentes. A aprovação comprova consistência segundo as regras verificadas; não autentica
           externamente os resultados esportivos.
-        </p>
-        <p>
+        </ReadableParagraph>
+        <ReadableParagraph>
           Zeros são preservados quando válidos no domínio. Um zero em BLK ou STL pode representar
           uma partida sem tocos ou roubos. Negativos e ausências são contados separadamente; valores
           atípicos não são automaticamente erros de domínio.
-        </p>
+        </ReadableParagraph>
         <DataTable
           data={report.columns}
           columns={qualityColumns}
@@ -322,12 +326,12 @@ function QualityReport({ report }: { report: Quality }) {
           />
         </details>
         <h3>Consistências dentro e entre partidas</h3>
-        <p>
+        <ReadableParagraph>
           As verificações abaixo são distintas da auditoria de células: incluem pontos, rebotes,
           acumulados, pareamento dos adversários, mando e exposição por prorrogação. A quantidade
           indica registros afetados ou ocorrências conforme a descrição da regra; não representa uma
           contagem de jogos distintos em todas as linhas.
-        </p>
+        </ReadableParagraph>
         <DataTable
           data={checks}
           columns={checkColumns}
@@ -359,13 +363,54 @@ export function DataPage({ meta }: { meta: Meta }) {
   })
   return (
     <div className="data-report">
-      <nav className="report-index" aria-label="Seções de Dados e métodos">
-        <a href="#base">Base e cobertura</a>
-        <a href="#origem">Origem</a>
-        <a href="#dicionario">Dicionário</a>
-        <a href="#qualidade">Qualidade</a>
-        <a href="#ausencias">Ausências</a>
-        <a href="#metodos">Métodos</a>
+      <div className="analysis-scope data-intro">
+        <span className="scope-label">DOCUMENTAÇÃO DA BASE COMPLETA</span>
+        <h2>Conheça os dados antes de interpretar</h2>
+        <ReadableParagraph>
+          Consulte a cobertura, a origem, o dicionário, a auditoria e as escolhas metodológicas do
+          QuadraScope. Esta documentação tem escopo fixo e não muda com os filtros das análises.
+        </ReadableParagraph>
+      </div>
+      <nav id="indice-dados" className="report-index" aria-label="Seções de Dados e métodos">
+        <h2>Explore por assunto</h2>
+        <ul>
+          <li>
+            <a href="#base">
+              <strong>Base e cobertura</strong>
+              <span>Dimensões, times e partidas</span>
+            </a>
+          </li>
+          <li>
+            <a href="#origem">
+              <strong>Origem</strong>
+              <span>Proveniência e limites da coleta</span>
+            </a>
+          </li>
+          <li>
+            <a href="#dicionario">
+              <strong>Dicionário</strong>
+              <span>Colunas, unidades e transformações</span>
+            </a>
+          </li>
+          <li>
+            <a href={quality.isSuccess ? '#qualidade' : '#auditoria'}>
+              <strong>Qualidade</strong>
+              <span>Regras e resultados da auditoria</span>
+            </a>
+          </li>
+          <li>
+            <a href={quality.isSuccess ? '#ausencias' : '#auditoria'}>
+              <strong>Ausências</strong>
+              <span>Mecanismos e testes aplicáveis</span>
+            </a>
+          </li>
+          <li>
+            <a href="#metodos">
+              <strong>Métodos</strong>
+              <span>Convenções, detectores e limites</span>
+            </a>
+          </li>
+        </ul>
       </nav>
       <Section id="base" title="Dimensões e cobertura do recorte" requirements="R07 · R08">
         <div className="stat-grid data-stat-grid">
@@ -386,6 +431,10 @@ export function DataPage({ meta }: { meta: Meta }) {
         </QueryBoundary>
       </Section>
       <Section id="origem" title="Origem e limites de proveniência" requirements="R07 · R08">
+        <ReadableParagraph>
+          A origem foi declarada pela equipe. Os detalhes disponíveis e os não informados estão
+          registrados abaixo, sem presumir uma verificação externa.
+        </ReadableParagraph>
         <QueryBoundary query={documentation}>
           {(data) => {
             const provenance = data.provenance
@@ -430,22 +479,22 @@ export function DataPage({ meta }: { meta: Meta }) {
             )
           }}
         </QueryBoundary>
-        <p>
+        <ReadableParagraph>
           O CSV original é preservado; o pipeline confere sua identidade antes de processar. Nome:{' '}
           <code>{meta.source.filename}</code>. Delimitador: <code>{meta.source.delimiter}</code>.
-        </p>
-        <p className="source-identity">
+        </ReadableParagraph>
+        <ReadableParagraph className="source-identity">
           SHA-256 da fonte: <code>{meta.source.sha256}</code>
           <br />
           Release da análise: <code>{meta.context.release_id}</code>
-        </p>
+        </ReadableParagraph>
       </Section>
       <Section id="dicionario" title="Dicionário dos dados" requirements="R07 · R08 · R09 · R10">
-        <p>
+        <ReadableParagraph>
           As 28 colunas originais são preservadas com nomes canônicos explícitos. As sete variáveis
           do vetor são PTS, REB, AST, STL, BLK, PF e FG3M. Cada exclusão está justificada na última
           coluna.
-        </p>
+        </ReadableParagraph>
         <QueryBoundary query={dictionary}>
           {(data) => (
             <DataTable
@@ -483,33 +532,35 @@ export function DataPage({ meta }: { meta: Meta }) {
             permanecem disponíveis para contexto e auditoria.
           </li>
         </ul>
-        <p>
+        <ReadableParagraph>
           Identificadores, nomes, resultados e acumulados permanecem como contexto. Não entram nas
           distâncias entre desempenhos. Em uma futura previsão, resultado e acumulados pós-jogo
           poderiam causar vazamento de informação; o vetor atual é descritivo e não é um modelo
           preditivo.
-        </p>
+        </ReadableParagraph>
       </Section>
-      <QueryBoundary query={quality}>
-        {(data) => <QualityReport report={data.report} />}
-      </QueryBoundary>
+      <div id="auditoria" className="data-quality-sections">
+        <QueryBoundary query={quality}>
+          {(data) => <QualityReport report={data.report} />}
+        </QueryBoundary>
+      </div>
       <Section
         id="metodos"
         title="Métodos, stack e limites da análise"
         requirements="R01 · R10 · R14"
       >
-        <p>
+        <ReadableParagraph>
           A análise científica é executada em Python. FastAPI reutiliza as funções validadas,
           verifica parâmetros e publica contratos OpenAPI. React organiza navegação, tabelas e
           gráficos interativos; os indicadores vêm da API, evitando reproduzir fórmulas estatísticas
           no navegador. A combinação FastAPI + React foi confirmada pelo grupo.
-        </p>
+        </ReadableParagraph>
         <QueryBoundary query={documentation}>
           {(data) => {
             const methodology = data.methodology
             return (
               <>
-                <p>{text(methodology.unit_of_analysis)}</p>
+                <ReadableParagraph>{text(methodology.unit_of_analysis)}</ReadableParagraph>
                 <h3>Convenções descritivas</h3>
                 <ul>
                   {Object.values(object(methodology.descriptives)).map((value) => (
@@ -525,11 +576,11 @@ export function DataPage({ meta }: { meta: Meta }) {
                     </div>
                   ))}
                 </dl>
-                <p>
+                <ReadableParagraph>
                   Z-score, IQR e Grubbs são univariados. ECOD, k-NN, LOF e DBSCAN analisam o vetor
                   das sete variáveis. Grubbs testa um extremo sob pressupostos; DBSCAN identifica
                   ruído, sem score contínuo inventado.
-                </p>
+                </ReadableParagraph>
                 <ul>
                   {list(methodology.limitations).map((value) => (
                     <li key={text(value)}>{text(value)}</li>
@@ -539,16 +590,16 @@ export function DataPage({ meta }: { meta: Meta }) {
             )
           }}
         </QueryBoundary>
-        <p>
+        <ReadableParagraph>
           Históricos com calendários, adversários e quantidades diferentes são comparados de forma
           descritiva. Não se conclui causalidade, eficiência por posse ou superioridade global a
           partir desses totais.
-        </p>
-        <p className="chart-footnote">
+        </ReadableParagraph>
+        <ReadableParagraph className="chart-footnote">
           Os códigos R01–R24 nas seções permitem localizar as exigências do relatório. Esta página
           apresenta os requisitos de dados e qualidade; os resultados estatísticos por time
           pertencem aos perfis e às páginas de comparação e anomalias.
-        </p>
+        </ReadableParagraph>
       </Section>
     </div>
   )

@@ -11,7 +11,7 @@ import {
   Users,
 } from 'lucide-react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FilterBar } from './FilterBar'
 import { teams } from '@/lib/format'
 import { selectionHref, supportsFilters } from '@/lib/filters'
@@ -26,6 +26,18 @@ const navigation = [
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
+  const brandRef = useRef<HTMLAnchorElement>(null)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const mainRef = useRef<HTMLElement>(null)
+  useEffect(() => {
+    if (menuOpen) brandRef.current?.focus()
+  }, [menuOpen])
+  function closeNavigation() {
+    if (menuOpen) {
+      setMenuOpen(false)
+      mainRef.current?.focus()
+    }
+  }
   const active = navigation.find((item) =>
     item.to === '/'
       ? location.pathname === '/'
@@ -36,8 +48,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <a className="skip-link" href="#conteudo">
         Pular para o conteúdo
       </a>
-      <aside className={`sidebar ${menuOpen ? 'is-open' : ''}`}>
-        <Link to={selectionHref('/', location.search)} className="brand">
+      <aside
+        id="navegacao"
+        className={`sidebar ${menuOpen ? 'is-open' : ''}`}
+        onKeyDown={(event) => {
+          if (event.key === 'Escape' && menuOpen) {
+            setMenuOpen(false)
+            menuButtonRef.current?.focus()
+          }
+        }}
+      >
+        <Link
+          ref={brandRef}
+          to={selectionHref('/', location.search)}
+          className="brand"
+          onClick={closeNavigation}
+        >
           <img src="/favicon.svg" alt="" width="36" height="36" />
           <span>
             QuadraScope<small>O JOGO EM DADOS</small>
@@ -54,8 +80,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
               key={to}
               to={selectionHref(to, location.search)}
               end={to === '/'}
+              aria-current={active?.to === to ? 'page' : undefined}
               className={() => `nav-item ${active?.to === to ? 'active' : ''}`}
-              onClick={() => setMenuOpen(false)}
+              onClick={closeNavigation}
             >
               <Icon size={19} />
               {label}
@@ -66,8 +93,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="sidebar-teams">
           <p className="nav-label">EM FOCO</p>
           {teams.map((team) => (
-            <Link to={`/times/${team.id}`} className="sidebar-team" key={team.id}>
-              <span className={`team-monogram ${team.className}`}>{team.short}</span>
+            <Link
+              to={`/times/${team.id}`}
+              className="sidebar-team"
+              key={team.id}
+              onClick={closeNavigation}
+            >
+              <img className="team-logo" src={team.logo} alt="" width="32" height="32" />
               <span>
                 {team.city}
                 <strong>{team.nickname}</strong>
@@ -87,9 +119,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <header className="topbar">
           <div>
             <button
+              ref={menuButtonRef}
               className="menu-toggle"
               aria-label="Alternar navegação"
               aria-expanded={menuOpen}
+              aria-controls="navegacao"
               onClick={() => setMenuOpen(!menuOpen)}
             >
               <PanelLeftClose size={20} />
@@ -103,7 +137,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             Análise descritiva
           </span>
         </header>
-        <main id="conteudo" tabIndex={-1}>
+        <main ref={mainRef} id="conteudo" tabIndex={-1}>
           <div className="page-heading">
             <div>
               <div className="eyebrow">ATLANTA HAWKS × HOUSTON ROCKETS</div>

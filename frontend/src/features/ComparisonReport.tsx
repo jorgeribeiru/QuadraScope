@@ -1,3 +1,4 @@
+import { ReadableParagraph } from '@/components/ReadableParagraph'
 import { statisticLabels, meanContrast } from '@/lib/statistics'
 import { lazy, Suspense } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -51,15 +52,47 @@ export function Comparison({ meta, selection }: Props) {
           <EmptyState />
         ) : (
           <div className="report-stack">
+            <div className="analysis-scope">
+              <span className="scope-label">SELEÇÃO APLICADA</span>
+              <ReadableParagraph>
+                Os resultados desta página acompanham os filtros aplicados. Os perfis individuais e
+                os detectores usam o histórico completo de cada time.
+              </ReadableParagraph>
+            </div>
             <ReportSection
               id="comparacao"
               title={`${metricLabels[selection.metric]} · Atlanta × Houston`}
               requirements="R03 · R04 · R18"
             >
-              <p>
+              <ReadableParagraph>
                 Mesmos filtros, unidade e eixo iniciado em zero. São médias por partida em
                 históricos próprios, não médias apenas dos confrontos diretos.
-              </p>
+              </ReadableParagraph>
+              <div className="comparison-highlights" aria-label="Resumo dos times na seleção">
+                {teams.map((team) => {
+                  const row = data.selected_summary.find((item) => item.team_id === team.id)
+                  return (
+                    <article className={`comparison-highlight ${team.className}`} key={team.id}>
+                      <div className="comparison-highlight-heading">
+                        <h3>{team.name}</h3>
+                        <span>{row ? `${row.n} jogos` : 'Sem observações disponíveis'}</span>
+                      </div>
+                      <span className="comparison-highlight-label">
+                        Média · {metricLabels[selection.metric]}
+                      </span>
+                      <strong>{row ? <Value measure={row.statistics.mean} /> : '—'}</strong>
+                      <small>{row?.statistics.mean.unit}</small>
+                      <ReadableParagraph>
+                        Mediana: {row ? <Value measure={row.statistics.median} /> : '—'} · Desvio
+                        padrão amostral: {row ? <Value measure={row.statistics.std} /> : '—'}
+                      </ReadableParagraph>
+                    </article>
+                  )
+                })}
+              </div>
+              <ReadableParagraph className="comparison-reading">
+                {meanContrast(data.summary, selection.metric)}
+              </ReadableParagraph>
               <Suspense fallback={<Loading />}>
                 <PointsChart rows={data.selected_summary} metric={selection.metric} />
               </Suspense>
@@ -95,39 +128,41 @@ export function Comparison({ meta, selection }: Props) {
                 ]}
                 caption={`${metricLabels[selection.metric]} — comparação descritiva por partida. Mesma unidade para os dois times.`}
               />
-              <p>{meanContrast(data.summary, selection.metric)}</p>
-              <p>{comparisonText(data.summary, selection.metric)}</p>
+              <ReadableParagraph>
+                {comparisonText(data.summary, selection.metric)}
+              </ReadableParagraph>
               {data.context.warnings.map((w) => (
                 <Warning key={w}>{w}</Warning>
               ))}
               <details>
                 <summary>Onde o z-score pode ser usado</summary>
-                <p>
+                <ReadableParagraph>
                   z = (x − x̄)/s é adimensional. Para mostrar os dois times em uma escala padronizada
                   comum, declare uma referência conjunta (por exemplo, os dois históricos na
                   seleção) e calcule sua média/desvio sobre essa mesma referência. Não compare
                   médias de z calculadas separadamente em cada time: cada uma fica centrada em zero
                   por construção.
-                </p>
-                <p>
+                </ReadableParagraph>
+                <ReadableParagraph>
                   As barras acima mantêm as unidades originais. O detector Z-score usa média e
                   desvio amostral do próprio time, e os métodos de vizinhança usam StandardScaler
                   com desvio populacional por feature no histórico do próprio time. Essas
                   referências têm objetivos diferentes e não produzem um ranking comum de scores.
-                </p>
+                </ReadableParagraph>
               </details>
             </ReportSection>
+            <ComparisonBoxes meta={meta} selection={selection} />
             <ReportSection
               id="regularidade"
               title="Dispersão nas sete variáveis"
               requirements="R20 · R21 · R22 · R23"
             >
-              <p>
+              <ReadableParagraph>
                 CV = 100 × s/x̄, com s = √[Σ(xᵢ−x̄)²/(n−1)]. Requer escala de razão, média positiva e
                 n ≥ 2. Um CV menor indica menor dispersão relativa nesta variável e seleção; não
                 equivale a um time globalmente mais regular. BLK/STL têm médias pequenas e
                 granularidade inteira, podendo ampliar o CV sem grande dispersão absoluta.
-              </p>
+              </ReadableParagraph>
               {(['cv', 'iqr'] as const).map((stat) => (
                 <DataTable
                   key={stat}
@@ -159,13 +194,13 @@ export function Comparison({ meta, selection }: Props) {
                   caption={`Quadro 7×2 de ${stat === 'cv' ? 'CV (%)' : 'IQR (unidades por variável)'} — seleção atual.`}
                 />
               ))}
-              <p>
+              <ReadableParagraph>
                 IQR = Q3 − Q1 usa quartis com interpolação linear, iguais aos boxplots na mesma
                 seleção. IQR resume os 50% centrais; amplitude usa apenas extremos e o desvio
                 considera todos os valores com distâncias quadráticas. IQR/mediana é uma alternativa
                 relativa robusta, não outro nome para CV: exige mediana positiva e não é
                 automaticamente percentual.
-              </p>
+              </ReadableParagraph>
               <DataTable
                 data={data.quartiles}
                 columns={[
@@ -191,7 +226,9 @@ export function Comparison({ meta, selection }: Props) {
                 {Object.keys(metricLabels).map((metric) => (
                   <article key={metric}>
                     <h3>{metricLabels[metric as Metric]}</h3>
-                    <p>{comparisonText(data.summary, metric as Metric)}</p>
+                    <ReadableParagraph>
+                      {comparisonText(data.summary, metric as Metric)}
+                    </ReadableParagraph>
                   </article>
                 ))}
                 <DataTable
@@ -222,7 +259,6 @@ export function Comparison({ meta, selection }: Props) {
                 estados de validade.
               </Warning>
             </ReportSection>
-            <ComparisonBoxes meta={meta} selection={selection} />
             <ReportSection
               id="leituras-comparacao"
               title="Interpretação da variável selecionada"
@@ -234,10 +270,10 @@ export function Comparison({ meta, selection }: Props) {
                 filters={selection.filters}
                 metric={selection.metric}
               />
-              <p>
+              <ReadableParagraph>
                 As leituras acompanham os filtros. Os perfis individuais e os detectores usam o
                 histórico completo do time no CSV; abrir um perfil não mantém esta seleção.
-              </p>
+              </ReadableParagraph>
             </ReportSection>
           </div>
         )

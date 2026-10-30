@@ -1,3 +1,4 @@
+import { ReadableParagraph } from '@/components/ReadableParagraph'
 import { statisticLabels } from '@/lib/statistics'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router-dom'
@@ -44,11 +45,23 @@ export function TeamProfile({ meta, selection }: { meta: Meta; selection: Select
     )
   return (
     <div className="report-stack">
-      <div className="report-toolbar">
+      <div className="analysis-scope">
+        <span className="scope-label">HISTÓRICO COMPLETO DO TIME</span>
+        <ReadableParagraph>
+          Este perfil considera todas as partidas do time no CSV. Os filtros da Visão geral e da
+          Comparação não são aplicados aqui.
+        </ReadableParagraph>
+      </div>
+      <div className="report-toolbar profile-toolbar">
         <div className="team-switch" aria-label="Selecionar time">
           {teams.map((t) => (
             <Button asChild key={t.id} variant={t.id === teamId ? 'default' : 'outline'}>
-              <Link to={`/times/${t.id}#variavel=${metric}`}>{t.name}</Link>
+              <Link
+                to={`/times/${t.id}#variavel=${metric}`}
+                aria-current={t.id === teamId ? 'page' : undefined}
+              >
+                {t.name}
+              </Link>
             </Button>
           ))}
         </div>
@@ -76,6 +89,18 @@ export function TeamProfile({ meta, selection }: { meta: Meta; selection: Select
                   <Period period={row.period} />
                   <span>{row.unit} · histórico completo do time no CSV</span>
                 </div>
+                <div className="measure-highlights" aria-label="Medidas em destaque">
+                  {(['mean', 'median', 'std', 'iqr'] as const).map((key) => (
+                    <div className={`measure-highlight ${team.className}`} key={key}>
+                      <span>{statisticLabels[key]}</span>
+                      <strong>
+                        <Value measure={row.statistics[key]} />
+                      </strong>
+                      <small>{row.statistics[key].unit}</small>
+                    </div>
+                  ))}
+                </div>
+                <h3>Todas as medidas</h3>
                 <DataTable
                   data={measures}
                   columns={[
@@ -89,12 +114,12 @@ export function TeamProfile({ meta, selection }: { meta: Meta; selection: Select
                   ]}
                   caption={`Todas as medidas de ${metric} — ${team.name}.`}
                 />
-                <p>
+                <ReadableParagraph>
                   Moda: todos os valores com frequência máxima repetida; frequência{' '}
                   {row.statistics.modes.frequency ?? 'indisponível'}. Nenhum valor repetido
                   significa ausência de moda sob esta convenção. Variância e desvio são amostrais
                   (n−1); quartis usam interpolação linear.
-                </p>
+                </ReadableParagraph>
                 <details>
                   <summary>Resumo das sete variáveis</summary>
                   <DataTable
@@ -141,11 +166,11 @@ export function TeamProfile({ meta, selection }: { meta: Meta; selection: Select
                   ]}
                   caption={`Elementos do boxplot de ${metric} — mesmos quartis da tabela de medidas.`}
                 />
-                <p>
+                <ReadableParagraph>
                   Cercas = Q1 − 1,5 × IQR e Q3 + 1,5 × IQR; IQR = Q3 − Q1. Bigodes são valores
                   observados dentro das cercas. Estar exatamente na cerca não sinaliza outlier. Uma
                   cerca negativa é um limite teórico, não uma contagem observada.
-                </p>
+                </ReadableParagraph>
                 {b.outliers.length ? (
                   <DataTable
                     data={b.outliers}
@@ -172,10 +197,10 @@ export function TeamProfile({ meta, selection }: { meta: Meta; selection: Select
                     caption={`Partidas fora das cercas IQR de ${metric} — ${team.name}.`}
                   />
                 ) : (
-                  <p>
+                  <ReadableParagraph>
                     Nenhuma partida fora das cercas de IQR para esta variável. Não se força uma
                     sinalização inexistente.
-                  </p>
+                  </ReadableParagraph>
                 )}
               </ReportSection>
               <ReportSection
@@ -192,19 +217,19 @@ export function TeamProfile({ meta, selection }: { meta: Meta; selection: Select
                     )
                   }
                 </QueryBoundary>
-                <p>
+                <ReadableParagraph>
                   Assimetria ajustada de Fisher–Pearson: G₁ = [n/((n−1)(n−2))] Σ[(xᵢ − x̄)/s]³, com s
                   amostral. Exige n ≥ 3 e variação. Sinal positivo indica cauda à direita; negativo,
                   à esquerda. Critério descritivo: |G₁| &lt; 0,5 aproximadamente simétrica; de 0,5
                   até menos de 1 moderada; a partir de 1 forte. Essa classificação não testa
                   normalidade.
-                </p>
-                <p>
+                </ReadableParagraph>
+                <ReadableParagraph>
                   Coeficiente atual: <Value measure={row.statistics.skewness} />. Histograma mostra
                   concentração nas classes, KDE destaca suavização e boxplot localiza centro e
                   extremos; discretização e caudas podem produzir leituras diferentes, sobretudo em
                   BLK/STL.
-                </p>
+                </ReadableParagraph>
               </ReportSection>
               <ReportSection
                 id="leitura"

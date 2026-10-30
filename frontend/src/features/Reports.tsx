@@ -1,7 +1,8 @@
+import { ReadableParagraph } from '@/components/ReadableParagraph'
 import { meanContrast } from '@/lib/statistics'
 import { lazy, Suspense } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { ArrowRight, BarChart3, Database, Layers3, Target } from 'lucide-react'
+import { ArrowRight, BarChart3, Database, Target } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { api, type Meta } from '@/lib/api'
 import { analysisKey, requireRelease } from '@/lib/queries'
@@ -35,6 +36,20 @@ function array(v: unknown): unknown[] {
 function show(v: unknown) {
   return typeof v === 'number' ? integer(v) : typeof v === 'string' ? v : 'não informado'
 }
+function selectionDescription(selection: Selection) {
+  const { from, to, venue, outcome } = selection.filters
+  const period =
+    from && to
+      ? `${formatDate(from)} a ${formatDate(to)}`
+      : from
+        ? `Desde ${formatDate(from)}`
+        : to
+          ? `Até ${formatDate(to)}`
+          : 'Todo o período disponível'
+  const venueLabel = { all: 'Casa e fora', home: 'Em casa', away: 'Fora de casa' }[venue]
+  const outcomeLabel = { all: 'Todos os resultados', win: 'Vitórias', loss: 'Derrotas' }[outcome]
+  return [period, venueLabel, outcomeLabel, metricLabels[selection.metric]]
+}
 function FullHistoryContext({ meta }: { meta: Meta }) {
   const coverage = meta.coverage,
     focus = record(coverage.focus)
@@ -51,12 +66,12 @@ function FullHistoryContext({ meta }: { meta: Meta }) {
         Escopo fixo: CSV completo. Este bloco de cobertura não é recalculado pelos filtros acima. As
         conclusões da seleção ficam na seção anterior.
       </Warning>
-      <p>
+      <ReadableParagraph>
         O recorte reúne {show(focus.rows)} observações em {show(focus.unique_games)} jogos
         distintos. Os {show(focus.head_to_head_games)} confrontos diretos aparecem em ambos os
         históricos, não são amostra independente adicional e não substituem a comparação de todas as
         partidas.
-      </p>
+      </ReadableParagraph>
       <ul>
         {history.map((row) => (
           <li key={show(row.team_id)}>
@@ -91,11 +106,11 @@ function FullHistoryContext({ meta }: { meta: Meta }) {
         ]}
         caption="Confrontos diretos no CSV completo — escopo fixo, separado da seleção atual."
       />
-      <p>
+      <ReadableParagraph>
         Prorrogações aumentam a exposição dos totais por jogo; não se atribui a elas uma diferença
         isolada entre times. Calendário, adversários e quantidade de jogos também variam. Não há
         ajuste por posses, previsão, causalidade ou verificação externa de completude.
-      </p>
+      </ReadableParagraph>
       <Link to="/dados#base" className="text-link">
         Auditar cobertura e métodos <ArrowRight size={15} />
       </Link>
@@ -109,42 +124,28 @@ export function Overview(props: Props) {
     <Boundary query={query}>
       {(data) => (
         <>
-          <div className="stat-grid">
-            <div className="stat-card">
-              <span>
-                <Layers3 size={17} />
-                Observações selecionadas
-              </span>
+          <section className="overview-selection" aria-labelledby="overview-selection-title">
+            <div>
+              <span className="scope-label">SELEÇÃO APLICADA</span>
+              <h2 id="overview-selection-title">Atlanta Hawks × Houston Rockets</h2>
+              <ReadableParagraph>
+                Explore estatísticas por partida dos históricos próprios dos dois times na temporada
+                regular da NBA. A análise acadêmica é descritiva e respeita a seleção abaixo.
+              </ReadableParagraph>
+              <ul className="selection-summary" aria-label="Resumo da seleção aplicada">
+                {selectionDescription(props.selection).map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="selection-count">
+              <span>Observações selecionadas</span>
               <strong>
                 {integer(Object.values(data.context.n_by_team).reduce((sum, n) => sum + n, 0))}
               </strong>
               <small>Um registro por time em uma partida</small>
             </div>
-            <div className="stat-card">
-              <span>
-                <Target size={17} />
-                Times em foco
-              </span>
-              <strong>02</strong>
-              <small>Históricos próprios, mesma seleção</small>
-            </div>
-            <div className="stat-card">
-              <span>
-                <BarChart3 size={17} />
-                Variáveis de análise
-              </span>
-              <strong>07</strong>
-              <small>De pontos a cestas de três</small>
-            </div>
-            <div className="stat-card">
-              <span>
-                <Database size={17} />
-                Base de contexto
-              </span>
-              <strong>{integer(props.meta.source.row_count)}</strong>
-              <small>Registros dos 30 times da liga</small>
-            </div>
-          </div>
+          </section>
           {data.context.status === 'empty' ? (
             <EmptyState />
           ) : (
@@ -164,9 +165,13 @@ export function Overview(props: Props) {
                   return (
                     <article className={`team-card ${team.className}`} key={team.id}>
                       <div className="team-card-heading">
-                        <span className={`team-monogram large ${team.className}`}>
-                          {team.short}
-                        </span>
+                        <img
+                          className="team-logo large"
+                          src={team.logo}
+                          alt=""
+                          width="48"
+                          height="48"
+                        />
                         <div>
                           <span className="eyebrow">{team.city}</span>
                           <h3>{team.nickname}</h3>
@@ -197,6 +202,9 @@ export function Overview(props: Props) {
                       <Link to={`/times/${team.id}`} className="text-link">
                         Explorar perfil <ArrowRight size={16} />
                       </Link>
+                      <ReadableParagraph className="profile-scope">
+                        O perfil usa o histórico completo do time e não mantém esta seleção.
+                      </ReadableParagraph>
                     </article>
                   )
                 })}
@@ -213,10 +221,13 @@ export function Overview(props: Props) {
                   <Suspense fallback={<Loading label="Preparando gráfico…" />}>
                     <PointsChart rows={data.selected_summary} metric={props.selection.metric} />
                   </Suspense>
-                  <p className="chart-footnote">
+                  <ReadableParagraph className="overview-reading">
+                    {meanContrast(data.selected_summary, props.selection.metric)}
+                  </ReadableParagraph>
+                  <ReadableParagraph className="chart-footnote">
                     Mesma unidade e eixo iniciado em zero. A tabela em Comparação apresenta os
                     valores.
-                  </p>
+                  </ReadableParagraph>
                   <Link to={selectionHref('/comparar', location.search)} className="text-link">
                     Abrir comparação <ArrowRight size={15} />
                   </Link>
@@ -255,11 +266,11 @@ export function Overview(props: Props) {
               title="Síntese descritiva da seleção"
               requirements="R02 · R21 · R24"
             >
-              <p>
+              <ReadableParagraph>
                 As linhas abaixo descrevem os históricos próprios de Atlanta e Houston na seleção
                 atual. Não são um ranking global dos times. Quantidades, médias e dispersões mudam
                 com os filtros.
-              </p>
+              </ReadableParagraph>
               <DataTable
                 data={Object.keys(metricLabels).map((code) => ({
                   metric: code as Metric,
@@ -320,13 +331,48 @@ export function Overview(props: Props) {
                 filters={props.selection.filters}
                 metric={props.selection.metric}
               />
-              <p>
+              <ReadableParagraph>
                 IQR descreve o centro, desvio considera todos os afastamentos e CV os relativiza
                 pela média. Discordâncias não autorizam escolher um vencedor único; consulte os
                 quadros, assimetria e boxplots na mesma referência.
-              </p>
+              </ReadableParagraph>
             </ReportSection>
           )}
+          <section className="overview-context" aria-labelledby="overview-context-title">
+            <div className="section-heading">
+              <div>
+                <span className="scope-label">CONTEXTO FIXO</span>
+                <h2 id="overview-context-title">A base da análise</h2>
+                <ReadableParagraph>
+                  Os indicadores abaixo descrevem o projeto e a base completa; não mudam com os
+                  filtros.
+                </ReadableParagraph>
+              </div>
+            </div>
+            <div className="overview-facts">
+              <div>
+                <Target size={19} />
+                <span>
+                  Times em foco<strong>02</strong>
+                  <small>Atlanta e Houston</small>
+                </span>
+              </div>
+              <div>
+                <BarChart3 size={19} />
+                <span>
+                  Variáveis de análise<strong>07</strong>
+                  <small>De pontos a cestas de três</small>
+                </span>
+              </div>
+              <div>
+                <Database size={19} />
+                <span>
+                  Base de contexto<strong>{integer(props.meta.source.row_count)}</strong>
+                  <small>Registros dos 30 times da liga</small>
+                </span>
+              </div>
+            </div>
+          </section>
           <FullHistoryContext meta={props.meta} />
         </>
       )}

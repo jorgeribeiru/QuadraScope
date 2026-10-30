@@ -1,3 +1,4 @@
+import { ReadableParagraph } from '@/components/ReadableParagraph'
 import type { components } from '@/generated/api'
 import { decimal, formatDate } from '@/lib/format'
 import { DataTable } from './DataTable'
@@ -255,12 +256,12 @@ export function DistributionChart({
           ]}
           caption="Histograma: intervalos fechados à esquerda, abertos à direita, último fechado nas duas pontas."
         />
-        <p>
+        <ReadableParagraph>
           KDE: método Scott; fator{' '}
           {kde.bandwidth_factor === null ? 'indefinido' : decimal(kde.bandwidth_factor)}, largura{' '}
           {kde.bandwidth === null ? 'indefinida' : decimal(kde.bandwidth)} {unit}. Série com {kde.n}{' '}
           observações.
-        </p>
+        </ReadableParagraph>
         <DataTable
           data={kde.x.map((value, i) => ({ value, density: kde.density[i] }))}
           columns={[

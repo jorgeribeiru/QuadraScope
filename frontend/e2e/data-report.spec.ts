@@ -1,5 +1,23 @@
 import { test, expect } from '@playwright/test'
 
+test('índice orienta para as seções e permite voltar por teclado', async ({ page }) => {
+  await page.goto('/dados')
+  const index = page.getByRole('navigation', { name: 'Seções de Dados e métodos' })
+  await expect(page.getByText('DOCUMENTAÇÃO DA BASE COMPLETA')).toBeVisible()
+  await expect(index.getByRole('link')).toHaveCount(6)
+  const dictionary = index.getByRole('link', { name: /Dicionário/ })
+  await dictionary.focus()
+  await page.keyboard.press('Enter')
+  await expect(page).toHaveURL(/#dicionario$/)
+  await expect(page.getByRole('heading', { name: 'Dicionário dos dados' })).toBeVisible()
+  const back = page
+    .locator('#dicionario')
+    .getByRole('link', { name: 'Voltar ao índice de Dados e métodos' })
+  await back.focus()
+  await page.keyboard.press('Enter')
+  await expect(page).toHaveURL(/#indice-dados$/)
+})
+
 test('Dados apresenta dimensões, todas as colunas e auditoria com escopos distintos', async ({
   page,
 }) => {
@@ -67,6 +85,12 @@ test('falha na auditoria não vira qualidade aprovada nem oculta o dicionário',
   await page.goto('/dados')
   await expect(page.getByRole('table', { name: /Dicionário completo:/ })).toBeVisible()
   await expect(page.getByRole('alert').first()).toContainText('temporariamente indisponíveis')
+  const qualityLink = page
+    .getByRole('navigation', { name: 'Seções de Dados e métodos' })
+    .getByRole('link', { name: /Qualidade/ })
+  await expect(qualityLink).toHaveAttribute('href', '#auditoria')
+  await qualityLink.click()
+  await expect(page).toHaveURL(/#auditoria$/)
   await expect(
     page.getByRole('heading', { name: 'Auditoria de qualidade', exact: true }),
   ).toHaveCount(0)

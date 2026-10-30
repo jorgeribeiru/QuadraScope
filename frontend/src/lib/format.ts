@@ -19,6 +19,7 @@ export const teams = [
   {
     id: '1610612737',
     short: 'ATL',
+    logo: '/teams/atlanta-hawks.svg',
     city: 'Atlanta',
     name: 'Atlanta Hawks',
     nickname: 'Hawks',
@@ -27,6 +28,7 @@ export const teams = [
   {
     id: '1610612745',
     short: 'HOU',
+    logo: '/teams/houston-rockets.svg',
     city: 'Houston',
     name: 'Houston Rockets',
     nickname: 'Rockets',

@@ -1,3 +1,4 @@
+import { ReadableParagraph } from '@/components/ReadableParagraph'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, type Meta } from '@/lib/api'
 import { analysisKey, requireRelease } from '@/lib/queries'
@@ -27,10 +28,10 @@ export function Interpretations({
     <QueryBoundary query={query}>
       {(data) => (
         <div className="interpretation-readings" aria-live="polite">
-          <p>
+          <ReadableParagraph>
             Escopo: seleção desta seção. As leituras são descritivas, vinculadas ao release e às
             medidas exibidas.
-          </p>
+          </ReadableParagraph>
           {data.interpretations.map((reading, i) => {
             const id = typeof reading.team_id === 'string' ? reading.team_id : ''
             const code = typeof reading.metric === 'string' ? (reading.metric as Metric) : 'PTS'
@@ -39,7 +40,9 @@ export function Interpretations({
                 <h3>
                   {teams.find((t) => t.id === id)?.name} · {metricLabels[code]}
                 </h3>
-                <p>{typeof reading.text === 'string' ? reading.text : 'Leitura indisponível.'}</p>
+                <ReadableParagraph>
+                  {typeof reading.text === 'string' ? reading.text : 'Leitura indisponível.'}
+                </ReadableParagraph>
               </article>
             )
           })}

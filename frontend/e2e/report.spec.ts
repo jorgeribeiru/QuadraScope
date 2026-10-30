@@ -3,6 +3,33 @@ const teams = ['1610612737', '1610612745']
 const metrics = ['PTS', 'REB', 'AST', 'STL', 'BLK', 'PF', 'FG3M']
 const number = (v: number) =>
   v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+test('destaques preservam os valores, amostras e escopos dos perfis e da comparação', async ({
+  page,
+}) => {
+  const summary = await (await page.request.get(`/api/v1/teams/${teams[0]}/summary`)).json()
+  const points = summary.results.find((row: { metric: string }) => row.metric === 'PTS')
+  await page.goto(`/times/${teams[0]}`)
+  await expect(page.getByText('HISTÓRICO COMPLETO DO TIME', { exact: true })).toBeVisible()
+  await expect(page.locator('.measure-highlights')).toContainText(
+    number(points.statistics.mean.value),
+  )
+  await expect(page.locator('.measure-highlights')).toContainText(
+    number(points.statistics.iqr.value),
+  )
+  await expect(page.getByRole('table', { name: /^Todas as medidas de PTS/ })).toHaveCount(1)
+  await page.goto('/comparar?venue=home&metric=REB')
+  const cards = page.locator('.comparison-highlights')
+  await expect(cards).toContainText('38 jogos')
+  await expect(cards).toContainText('35 jogos')
+  await expect(cards).toContainText('Rebotes')
+  await expect(page.locator('#comparacao')).toContainText('diferença é descritiva')
+  await expect(page.locator('#boxplots-comparacao')).toContainText(
+    'Mesma seleção, unidade e domínio',
+  )
+  await page.goto('/comparar?from=2025-10-22&to=2025-10-22')
+  await expect(page.locator('#comparacao')).toContainText('Um dos times não tem observações')
+  await expect(page.locator('.comparison-highlights')).toContainText('Desvio amostral exige n≥2')
+})
 test('os 14 pares variável/time apresentam medidas, boxplot, distribuição e interpretação coerentes', async ({
   page,
 }) => {
@@ -70,6 +97,27 @@ test('os sete métodos funcionam para os dois times, com scores ou ruído e refe
   await expect(page.getByRole('combobox', { name: 'Método', exact: true })).toHaveValue('dbscan')
   await expect(page.getByLabel('Time das anomalias')).toHaveValue(teams[1])
   await page.screenshot({ path: 'test-results/stage9-anomalies.png', fullPage: true })
+})
+test('fora da curva apresenta critérios próprios, limites e sinais com precisão explícita', async ({
+  page,
+}) => {
+  await page.goto('/fora-da-curva#time=1610612737&metodo=iqr&variavel=PTS')
+  const detector = page.locator('#detector')
+  await expect(page.getByText('HISTÓRICO COMPLETO DO TIME', { exact: true })).toBeVisible()
+  await expect(detector).toContainText('Uma variável · PTS · Pontos')
+  await expect(detector).toContainText('Cerca inferior: 87,25; cerca superior: 149,25 pontos/jogo')
+  await expect(detector).toContainText('as decisões usam a precisão integral')
+  await expect(detector.getByRole('table', { name: /sinalizações e candidatos/ })).toContainText(
+    '22500396',
+  )
+  await page.getByRole('combobox', { name: 'Método', exact: true }).selectOption('grubbs')
+  await expect(detector).toContainText('Valor crítico do teste global')
+  await expect(detector).toContainText('Candidatos:')
+  await page.getByRole('combobox', { name: 'Método', exact: true }).selectOption('lof')
+  await expect(detector).toContainText('Multivariado · vetor das sete variáveis')
+  await expect(detector).toContainText('Corte de score: 1,254995')
+  await page.getByRole('combobox', { name: 'Método', exact: true }).selectOption('dbscan')
+  await expect(detector).toContainText('Não há limiar de score contínuo')
 })
 test('comparação e síntese acompanham filtros e não inventam regularidade com uma observação', async ({
   page,

@@ -1,6 +1,7 @@
 import { AlertCircle, Inbox, LoaderCircle } from 'lucide-react'
 import { ApiError } from '@/lib/api'
 import { Button } from './ui/button'
+import { ReadableText } from './ReadableParagraph'
 
 export function Loading({ label = 'Carregando dados validados…' }: { label?: string }) {
   return (
@@ -42,7 +43,9 @@ export function Warning({ children }: { children: React.ReactNode }) {
   return (
     <div className="warning" role="note">
       <AlertCircle size={16} />
-      <span>{children}</span>
+      <span>
+        <ReadableText>{children}</ReadableText>
+      </span>
     </div>
   )
 }
