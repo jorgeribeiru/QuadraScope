@@ -351,7 +351,14 @@ def validate_relationships(documents: dict, manifest: dict, config: Settings = s
         variants += len(entries)
     require(variants == 44, "Quantidade de variantes divergente.")
     content = documents["content.json"]
-    require(not content["interpretations"], "Síntese ainda não revisada na etapa 9.")
+    from backend.analytics.interpretations import describe_results
+
+    require(content["interpretation_status"] == "descriptive_available", "Leituras ausentes.")
+    require(
+        _index(content["interpretations"], ["team_id", "metric"])
+        == _index(describe_results(list(descriptions.values())), ["team_id", "metric"]),
+        "Leituras não correspondem às evidências descritivas.",
+    )
     require(len(content["missingness"]["methods"]) == 4, "Discussão de missingness incompleta.")
 
 

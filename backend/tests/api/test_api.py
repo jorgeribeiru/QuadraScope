@@ -247,15 +247,22 @@ def test_cache_identity_etag_and_parameter_normalization(client):
     assert default == reversed_order
 
 
-def test_quality_and_pending_interpretations_do_not_invent_filtered_conclusions(client):
+def test_quality_and_interpretations_use_actual_filtered_evidence(client):
     quality = get(client, "/quality")
     assert quality["context"]["reference_scope"] == "full_dataset"
     assert quality["report"]["status"] == "passed"
     interpretations = get(
         client, "/interpretations", {"context": "teams", "team_id": ATL, "venue": "home"}
     )
-    assert interpretations["interpretation_status"] == "pending_stage_9"
-    assert interpretations["interpretations"] == []
+    assert interpretations["interpretation_status"] == "descriptive_available"
+    assert all(
+        row["team_id"] == ATL and row["n"] == 38 for row in interpretations["interpretations"]
+    )
+    summary = get(client, f"/teams/{ATL}/summary", {"venue": "home"})
+    assert (
+        interpretations["interpretations"][0]["evidence"]["mean"]
+        == summary["results"][0]["statistics"]["mean"]["value"]
+    )
     assert interpretations["context"]["n_by_team"][ATL] == 38
     assert interpretations["provenance"]["extracted_at"] is None
 
@@ -344,3 +351,43 @@ def test_parallel_requests_do_not_mix_team_or_filter_state(client):
     with ThreadPoolExecutor(max_workers=4) as pool:
         keys = list(pool.map(query, selections))
     assert len(set(keys)) == 4
+
+
+@pytest.mark.parametrize(
+    ("start", "end", "expected_n"),
+    [("2099-01-01", "2099-01-02", 0), ("2025-10-22", "2025-10-22", 1)],
+)
+def test_interpretations_do_not_invent_regularity_with_empty_or_single_game(
+    client, start, end, expected_n
+):
+    payload = get(
+        client,
+        "/interpretations",
+        {
+            "context": "teams",
+            "team_id": ATL,
+            "metric": "PTS",
+            "from": start,
+            "to": end,
+        },
+    )
+    reading = payload["interpretations"][0]
+    assert reading["n"] == expected_n
+    assert reading["evidence"]["cv"] is None
+    assert reading["evidence"]["std"] is None
+    assert "CV de" not in reading["text"]
+    assert ("Sem observações" if expected_n == 0 else "CV indisponível") in reading["text"]
+
+
+def test_quality_inventory_separates_univariate_and_joint_anomalies(client):
+    data = get(client, "/quality")
+    inventory = data["anomaly_summary"]
+    assert len(inventory) == 50
+    for team, n in [(ATL, 75), (HOU, 74)]:
+        own = [row for row in inventory if row["team_id"] == team]
+        assert len(own) == 25
+        assert all(row["reference_n"] == n for row in own)
+        assert len([row for row in own if row["metric"] is None]) == 4
+        expected = next(row for row in own if row["method"] == "lof")
+        actual = get(client, "/anomalies", {"team_id": team, "method": "lof"})
+        assert expected["outlier_count"] == actual["result"]["outlier_count"]

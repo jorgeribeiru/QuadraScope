@@ -7,6 +7,7 @@ from pydantic import Field
 
 from backend.artifacts.models import (
     Anomaly,
+    AnomalySummary,
     Contract,
     Count,
     Description,
@@ -113,11 +114,12 @@ class AnomalyResponse(Response):
 
 class QualityResponse(Response):
     report: Quality
+    anomaly_summary: list[AnomalySummary]
 
 
 class InterpretationResponse(Response):
     requested_context: str
-    interpretation_status: Literal["pending_stage_9"]
+    interpretation_status: Literal["descriptive_available"]
     reason: str
     interpretations: list[JSONMap]
     provenance: JSONMap

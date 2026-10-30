@@ -62,7 +62,8 @@ def test_complete_release_has_hashes_schemas_provenance_and_readonly_access(publ
     assert len(repository.get("descriptives.json")["results"]) == 14
     assert len(repository.get("anomalies.json")["results"]) == 50
     content = repository.get("content.json")
-    assert content["interpretation_status"] == "pending_stage_9"
+    assert content["interpretation_status"] == "descriptive_available"
+    assert len(content["interpretations"]) == 14
     assert content["provenance"]["extracted_at"] is None
     assert "BSD 2-Clause" in content["licenses"]["pyod_ecod_reference"]
     changed = repository.get("games.json")

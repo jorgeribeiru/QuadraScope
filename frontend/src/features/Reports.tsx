@@ -1,39 +1,21 @@
+import { meanContrast } from '@/lib/statistics'
 import { lazy, Suspense } from 'react'
-import { useQuery, useQueryClient, type UseQueryResult } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { ArrowRight, BarChart3, Database, Layers3, Target } from 'lucide-react'
-import { Link, useLocation, useParams } from 'react-router-dom'
-import type { ColumnDef } from '@tanstack/react-table'
-import type { components } from '@/generated/api'
+import { Link, useLocation } from 'react-router-dom'
 import { api, type Meta } from '@/lib/api'
 import { analysisKey, requireRelease } from '@/lib/queries'
-import { selectionHref, type Selection } from '@/lib/filters'
-import { decimal, formatDate, formatMeasure, integer, metricLabels, teams } from '@/lib/format'
+import { selectionHref, selectionParams, type Selection, type Metric } from '@/lib/filters'
+import { integer, metricLabels, teams, formatMeasure, formatDate } from '@/lib/format'
 import { DataTable } from '@/components/DataTable'
-import {
-  EmptyState,
-  ErrorState,
-  Loading,
-  PendingInterpretation,
-  Warning,
-} from '@/components/States'
-import { Button } from '@/components/ui/button'
-
+import { QueryBoundary as Boundary } from '@/components/QueryBoundary'
+import { EmptyState, Loading, Warning } from '@/components/States'
+import { ReportSection, Value } from '@/components/ReportPrimitives'
+import { Interpretations } from '@/components/Interpretations'
 const PointsChart = lazy(() =>
-  import('@/components/PointsChart').then((module) => ({ default: module.PointsChart })),
+  import('@/components/PointsChart').then((m) => ({ default: m.PointsChart })),
 )
 type Props = { meta: Meta; selection: Selection }
-type Description = components['schemas']['Description']
-function Boundary<T>({
-  query,
-  children,
-}: {
-  query: UseQueryResult<T, Error>
-  children: (data: T) => React.ReactNode
-}) {
-  if (query.isPending) return <Loading />
-  if (query.isError) return <ErrorState error={query.error} retry={() => void query.refetch()} />
-  return children(query.data)
-}
 function useComparisons({ meta, selection }: Props) {
   const client = useQueryClient()
   return useQuery({
@@ -42,48 +24,84 @@ function useComparisons({ meta, selection }: Props) {
       requireRelease(api.comparisons(selection.filters, selection.metric, signal), meta, client),
   })
 }
-function Value({ measure }: { measure: components['schemas']['Measure'] }) {
+function record(v: unknown): Record<string, unknown> {
+  return v !== null && typeof v === 'object' && !Array.isArray(v)
+    ? Object.fromEntries(Object.entries(v))
+    : {}
+}
+function array(v: unknown): unknown[] {
+  return Array.isArray(v) ? v : []
+}
+function show(v: unknown) {
+  return typeof v === 'number' ? integer(v) : typeof v === 'string' ? v : 'não informado'
+}
+function FullHistoryContext({ meta }: { meta: Meta }) {
+  const coverage = meta.coverage,
+    focus = record(coverage.focus)
+  const history = array(coverage.by_team)
+    .map(record)
+    .filter((r) => teams.some((t) => t.id === r.team_id))
   return (
-    <span title={measure.reason || measure.unit}>
-      {formatMeasure(measure)}
-      {measure.status === 'insufficient_sample' && (
-        <small className="measure-state">amostra insuficiente</small>
-      )}
-    </span>
+    <ReportSection
+      id="contexto-completo"
+      title="Históricos completos e confrontos diretos"
+      requirements="R07 · R24"
+    >
+      <Warning>
+        Escopo fixo: CSV completo. Este bloco de cobertura não é recalculado pelos filtros acima. As
+        conclusões da seleção ficam na seção anterior.
+      </Warning>
+      <p>
+        O recorte reúne {show(focus.rows)} observações em {show(focus.unique_games)} jogos
+        distintos. Os {show(focus.head_to_head_games)} confrontos diretos aparecem em ambos os
+        históricos, não são amostra independente adicional e não substituem a comparação de todas as
+        partidas.
+      </p>
+      <ul>
+        {history.map((row) => (
+          <li key={show(row.team_id)}>
+            {show(row.team_name)}: {show(row.rows)} jogos; {show(row.home)} em casa,{' '}
+            {show(row.away)} fora e {show(row.overtime_games)} com prorrogação. Cobertura de{' '}
+            {typeof row.from === 'string' ? formatDate(row.from) : '—'} a{' '}
+            {typeof row.to === 'string' ? formatDate(row.to) : '—'}.
+          </li>
+        ))}
+      </ul>
+      <DataTable
+        data={array(focus.head_to_head).map(record)}
+        columns={[
+          {
+            id: 'date',
+            header: 'Data',
+            cell: ({ row }) =>
+              typeof row.original.date === 'string' ? formatDate(row.original.date) : '—',
+          },
+          { id: 'id', header: 'ID da partida', cell: ({ row }) => show(row.original.game_id) },
+          {
+            id: 'points',
+            header: 'Placar nos registros',
+            cell: ({ row }) =>
+              array(row.original.team_ids)
+                .map(
+                  (id, i) =>
+                    `${teams.find((t) => t.id === id)?.name ?? show(id)} ${show(array(row.original.points)[i])}`,
+                )
+                .join(' × '),
+          },
+        ]}
+        caption="Confrontos diretos no CSV completo — escopo fixo, separado da seleção atual."
+      />
+      <p>
+        Prorrogações aumentam a exposição dos totais por jogo; não se atribui a elas uma diferença
+        isolada entre times. Calendário, adversários e quantidade de jogos também variam. Não há
+        ajuste por posses, previsão, causalidade ou verificação externa de completude.
+      </p>
+      <Link to="/dados#base" className="text-link">
+        Auditar cobertura e métodos <ArrowRight size={15} />
+      </Link>
+    </ReportSection>
   )
 }
-const descriptionColumns: ColumnDef<Description>[] = [
-  {
-    accessorKey: 'metric',
-    header: 'Variável',
-    cell: ({ row }) => (
-      <span className="metric-cell">
-        <b>{row.original.metric}</b>
-        {metricLabels[row.original.metric]}
-      </span>
-    ),
-  },
-  {
-    id: 'mean',
-    accessorFn: (row) =>
-      typeof row.statistics.mean.value === 'number' ? row.statistics.mean.value : undefined,
-    header: 'Média',
-    cell: ({ row }) => <Value measure={row.original.statistics.mean} />,
-  },
-  {
-    id: 'median',
-    header: 'Mediana',
-    cell: ({ row }) => <Value measure={row.original.statistics.median} />,
-  },
-  {
-    id: 'std',
-    header: 'Desvio padrão',
-    cell: ({ row }) => <Value measure={row.original.statistics.std} />,
-  },
-  { id: 'cv', header: 'CV (%)', cell: ({ row }) => <Value measure={row.original.statistics.cv} /> },
-  { accessorKey: 'n', header: 'Jogos' },
-]
-
 export function Overview(props: Props) {
   const query = useComparisons(props)
   const location = useLocation()
@@ -231,242 +249,92 @@ export function Overview(props: Props) {
           {data.context.warnings.map((warning) => (
             <Warning key={warning}>{warning}</Warning>
           ))}
-          <PendingInterpretation />
+          {data.context.status !== 'empty' && (
+            <ReportSection
+              id="sintese"
+              title="Síntese descritiva da seleção"
+              requirements="R02 · R21 · R24"
+            >
+              <p>
+                As linhas abaixo descrevem os históricos próprios de Atlanta e Houston na seleção
+                atual. Não são um ranking global dos times. Quantidades, médias e dispersões mudam
+                com os filtros.
+              </p>
+              <DataTable
+                data={Object.keys(metricLabels).map((code) => ({
+                  metric: code as Metric,
+                  rows: data.summary.filter((r) => r.metric === code),
+                }))}
+                columns={[
+                  {
+                    id: 'metric',
+                    header: 'Variável',
+                    cell: ({ row }) => metricLabels[row.original.metric],
+                  },
+                  ...teams.map((team) => ({
+                    id: team.id,
+                    header: team.name,
+                    cell: ({
+                      row,
+                    }: {
+                      row: { original: { metric: Metric; rows: typeof data.summary } }
+                    }) => {
+                      const r = row.original.rows.find((r) => r.team_id === team.id)
+                      return r ? (
+                        <span>
+                          n={r.n} · média <Value measure={r.statistics.mean} /> · CV{' '}
+                          <Value measure={r.statistics.cv} />
+                        </span>
+                      ) : (
+                        'Sem observações'
+                      )
+                    },
+                  })),
+                  {
+                    id: 'evidence',
+                    header: 'Evidência na seleção',
+                    cell: ({ row }) => (
+                      <Link
+                        to={selectionHref(
+                          '/comparar',
+                          `?${selectionParams(props.selection.filters, row.original.metric).toString()}`,
+                        )}
+                      >
+                        Comparar {row.original.metric}
+                      </Link>
+                    ),
+                  },
+                ]}
+                caption="Síntese das sete variáveis — médias e CV na seleção atual, com acesso às evidências."
+              />
+              <ul>
+                {Object.entries(metricLabels).map(([metric, label]) => (
+                  <li key={metric}>
+                    <strong>{label}.</strong> {meanContrast(data.summary, metric as Metric)}
+                  </li>
+                ))}
+              </ul>
+              <Interpretations
+                meta={props.meta}
+                context="overview"
+                filters={props.selection.filters}
+                metric={props.selection.metric}
+              />
+              <p>
+                IQR descreve o centro, desvio considera todos os afastamentos e CV os relativiza
+                pela média. Discordâncias não autorizam escolher um vencedor único; consulte os
+                quadros, assimetria e boxplots na mesma referência.
+              </p>
+            </ReportSection>
+          )}
+          <FullHistoryContext meta={props.meta} />
         </>
       )}
     </Boundary>
   )
 }
 
-export function TeamProfile({ meta, selection }: Props) {
-  const { teamId = '' } = useParams()
-  const team = teams.find((team) => team.id === teamId)
-  const client = useQueryClient()
-  const query = useQuery({
-    queryKey: analysisKey(meta, 'summary', { teamId, ...selection.filters }),
-    queryFn: ({ signal }) =>
-      requireRelease(api.summary(teamId, selection.filters, signal), meta, client),
-    enabled: Boolean(team),
-  })
-  if (!team)
-    return (
-      <Warning>
-        Este time não faz parte do recorte analítico. Selecione Atlanta ou Houston na navegação.
-      </Warning>
-    )
-  return (
-    <>
-      <div className="team-switch" aria-label="Selecionar time">
-        {teams.map((t) => (
-          <Button asChild key={t.id} variant={t.id === teamId ? 'default' : 'outline'}>
-            <Link to={`/times/${t.id}`}>{t.name}</Link>
-          </Button>
-        ))}
-      </div>
-      <Boundary query={query}>
-        {(data) =>
-          data.context.status === 'empty' ? (
-            <EmptyState />
-          ) : (
-            <section className="panel">
-              <div className="panel-heading">
-                <div>
-                  <span className="eyebrow">PERFIL DA SELEÇÃO</span>
-                  <h2>{team.name}</h2>
-                </div>
-                <span className="tag">{data.context.n_by_team[team.id]} jogos</span>
-              </div>
-              <DataTable
-                data={data.results}
-                columns={descriptionColumns}
-                caption={`Estatísticas por partida — ${team.name}. Unidades por variável; CV em percentual.`}
-              />
-              <Warning>
-                O CV deve ser lido com média, desvio e assimetria. Não há um corte universal de
-                regularidade.
-              </Warning>
-              <PendingInterpretation />
-            </section>
-          )
-        }
-      </Boundary>
-    </>
-  )
-}
-
-export function Comparison(props: Props) {
-  const query = useComparisons(props)
-  const columns: ColumnDef<components['schemas']['SummaryRow']>[] = [
-    {
-      accessorKey: 'team_id',
-      header: 'Time',
-      cell: ({ row }) => teams.find((team) => team.id === row.original.team_id)?.name,
-    },
-    {
-      id: 'mean',
-      header: 'Média',
-      cell: ({ row }) => <Value measure={row.original.statistics.mean} />,
-    },
-    {
-      id: 'std',
-      header: 'Desvio padrão',
-      cell: ({ row }) => <Value measure={row.original.statistics.std} />,
-    },
-    {
-      id: 'cv',
-      header: 'CV (%)',
-      cell: ({ row }) => <Value measure={row.original.statistics.cv} />,
-    },
-    {
-      id: 'iqr',
-      header: 'IQR',
-      cell: ({ row }) => <Value measure={row.original.statistics.iqr} />,
-    },
-    { accessorKey: 'n', header: 'Jogos' },
-  ]
-  return (
-    <Boundary query={query}>
-      {(data) =>
-        data.context.status === 'empty' ? (
-          <EmptyState />
-        ) : (
-          <section className="panel">
-            <div className="panel-heading">
-              <div>
-                <span className="eyebrow">MESMOS FILTROS · REFERÊNCIAS EXPLÍCITAS</span>
-                <h2>{metricLabels[props.selection.metric]} · Atlanta × Houston</h2>
-              </div>
-            </div>
-            <Suspense fallback={<Loading />}>
-              <PointsChart rows={data.selected_summary} metric={props.selection.metric} />
-            </Suspense>
-            <DataTable
-              data={data.selected_summary}
-              columns={columns}
-              caption={`${metricLabels[props.selection.metric]} — comparação descritiva por partida. Mesma unidade para os dois times.`}
-            />
-            {data.context.warnings.map((w) => (
-              <Warning key={w}>{w}</Warning>
-            ))}
-            <PendingInterpretation />
-          </section>
-        )
-      }
-    </Boundary>
-  )
-}
-
-export function Anomalies({ meta, selection }: Props) {
-  const client = useQueryClient()
-  const query = useQuery({
-    queryKey: analysisKey(meta, 'anomalies', {
-      ...selection.filters,
-      team_id: teams[0].id,
-      method: 'lof',
-    }),
-    queryFn: ({ signal }) =>
-      requireRelease(api.anomalies(teams[0].id, selection.filters, signal), meta, client),
-  })
-  const columns: ColumnDef<components['schemas']['AnomalyRecord']>[] = [
-    {
-      accessorKey: 'game_date',
-      header: 'Data',
-      cell: ({ getValue }) => formatDate(String(getValue())),
-    },
-    { accessorKey: 'matchup', header: 'Confronto' },
-    { accessorKey: 'game_id', header: 'Partida' },
-    {
-      accessorKey: 'score',
-      header: 'Score LOF',
-      cell: ({ row }) => (row.original.score === null ? '—' : decimal(row.original.score)),
-    },
-    {
-      accessorKey: 'is_outlier',
-      header: 'Sinalização',
-      cell: ({ row }) =>
-        row.original.is_outlier === null
-          ? 'Indefinida'
-          : row.original.is_outlier
-            ? 'Atípica'
-            : 'Não sinalizada',
-    },
-  ]
-  return (
-    <Boundary query={query}>
-      {(data) => (
-        <section className="panel">
-          <div className="panel-heading">
-            <div>
-              <span className="eyebrow">ATLANTA HAWKS · VETOR DAS SETE VARIÁVEIS</span>
-              <h2>Partidas sob a lente do LOF</h2>
-            </div>
-            <span className="tag">Referência: {data.result.reference_n} jogos</span>
-          </div>
-          <Warning>
-            O método foi ajustado ao histórico completo do próprio time. As {data.result.display_n}
-            partidas exibidas pertencem a essa referência. Scores maiores indicam maior atipicidade;
-            não são probabilidades.
-          </Warning>
-          {data.context.status === 'empty' ? (
-            <EmptyState />
-          ) : (
-            <DataTable
-              data={data.result.records}
-              columns={columns}
-              caption="LOF — partidas de Atlanta na seleção. Scores e flags preservam a referência completa."
-            />
-          )}
-          <PendingInterpretation />
-        </section>
-      )}
-    </Boundary>
-  )
-}
-
-export function DataPage({ meta }: Props) {
-  const client = useQueryClient()
-  const query = useQuery({
-    queryKey: analysisKey(meta, 'dictionary', {}),
-    queryFn: ({ signal }) => requireRelease(api.dictionary(signal), meta, client),
-  })
-  const columns: ColumnDef<components['schemas']['DictionaryColumn']>[] = [
-    { accessorKey: 'original', header: 'Original' },
-    { accessorKey: 'canonical', header: 'Nome canônico' },
-    { accessorKey: 'label', header: 'Significado' },
-    { accessorKey: 'kind', header: 'Tipo' },
-    { accessorKey: 'unit', header: 'Unidade' },
-  ]
-  return (
-    <>
-      <div className="data-banner">
-        <Database size={26} />
-        <div>
-          <h2>Uma base preservada. Uma análise rastreável.</h2>
-          <p>
-            NBA 2025–26 · API oficial via nba_api · {integer(meta.source.row_count)} registros,{' '}
-            {meta.source.column_count} colunas.
-          </p>
-        </div>
-      </div>
-      <Warning>
-        Este dicionário descreve a base completa. A data exata e os detalhes da extração não foram
-        informados pelo grupo.
-      </Warning>
-      <Boundary query={query}>
-        {(data) => (
-          <section className="panel">
-            <div className="panel-heading">
-              <h2>Dicionário dos dados</h2>
-              <span className="tag">28 colunas</span>
-            </div>
-            <DataTable
-              data={data.columns}
-              columns={columns}
-              caption="Colunas originais e canônicas do dataset completo."
-            />
-          </section>
-        )}
-      </Boundary>
-    </>
-  )
-}
+export { TeamProfile } from './TeamReport'
+export { Comparison } from './ComparisonReport'
+export { Anomalies } from './AnomalyReport'
+export { DataPage } from './DataReport'

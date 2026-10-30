@@ -85,7 +85,7 @@ Para anomalias, `method` admite `zscore`, `iqr`, `grubbs`, `ecod`, `knn`, `lof`,
 
 `result.reference`, `reference_n`, `threshold`, parâmetros, estatísticas de Grubbs, quartis e `outlier_count` continuam relativos ao histórico completo do próprio time. Os registros preservam scores, flags, clusters e demais evidências originais; somente sua exibição é filtrada. `display_n` e o campo separado `display_outlier_count` descrevem a seleção visível. Um resultado pode ter referência válida e exibição vazia; o estado da seleção está em `context.status`. Scores de times diferentes não compõem ranking absoluto comum.
 
-Os contextos de interpretação admitidos são `overview`, `teams`, `comparisons`, `anomalies`, `quality`, `methodology`. As interpretações permanecem vazias com `interpretation_status=pending_stage_9`, inclusive quando há filtros. Os blocos de teoria e proveniência são explicitamente relativos ao dataset completo/métodos; nenhuma conclusão do histórico é reutilizada como conclusão da seleção.
+Os contextos de interpretação admitidos são `overview`, `teams`, `comparisons`, `anomalies`, `quality`, `methodology`. As leituras usam `interpretation_status=descriptive_available` e são geradas a partir das medidas recalculadas na seleção, respeitando time/variável. Para `quality` e `methodology`, a lista de leituras fica vazia; os blocos de teoria/proveniência sempre descrevem a base completa. `/quality` também expõe `anomaly_summary`, com as 50 contagens por time/método/domínio da referência integral. [Relatório e limites](report.md).
 
 ## Metadados, erros e cache
 

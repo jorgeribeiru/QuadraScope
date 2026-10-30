@@ -1,6 +1,6 @@
-# Frontend React — etapa 8
+# Frontend React — etapas 8 e 9
 
-A base React já consulta a API real. Há navegação entre visão geral, perfis de Atlanta/Houston, comparação, partidas LOF de Atlanta e dicionário. As páginas são uma base de integração; o relatório acadêmico completo, os demais gráficos/métodos e as interpretações continuam na etapa 9.
+A base React consulta a API real. Há navegação entre visão geral, perfis de Atlanta/Houston, comparação, partidas LOF de Atlanta e Dados e métodos. P9.01–P9.12 completam o relatório com perfis, gráficos, comparação, anomalias e síntese contextual. [Mapa e comportamento do relatório](report.md). Os registros abaixo preservam as verificações intermediárias; a revisão integral permanece na etapa 10.
 
 ## Executar
 
@@ -72,7 +72,7 @@ make web-check
 make api-contracts
 ```
 
-O primeiro executa ESLint, Prettier, os **24 testes Vitest** e TypeScript/build de produção. O segundo regenera/verifica o contrato HTTP com a ferramenta separada em `tools/contracts/`. `make check` cobre os **236 testes Python**, incluindo os testes do pacote de deploy.
+O primeiro executa ESLint, Prettier, os **24 testes Vitest** e TypeScript/build de produção. O segundo regenera/verifica o contrato HTTP com a ferramenta separada em `tools/contracts/`. `make check` cobre os **241 testes Python**, incluindo os testes do pacote de deploy.
 
 Para testes com navegador, instalar o Chromium do Playwright uma vez e gerar os dados:
 
@@ -82,7 +82,7 @@ make data-build
 make web-e2e
 ```
 
-`web-e2e` compila o frontend e inicia API/Vite preview nas portas 8018/4178, sem reutilizar servidores já existentes. Os quatro testes cobrem dados reais, filtros, URL compartilhável, recarga profunda, seleção vazia, 503, URL inválida e navegação móvel. Os servidores de teste são encerrados ao terminar. Capturas locais ficam em `frontend/test-results/`, ignoradas pelo Git.
+`web-e2e` compila o frontend e inicia API/Vite preview nas portas 8018/4178, sem reutilizar servidores já existentes. Os oito testes locais atuais cobrem dados reais, filtros, URL compartilhável, recarga profunda, seleção vazia, 503, URL inválida e navegação móvel, além da auditoria e conteúdo completo de Dados e métodos. Os servidores de teste são encerrados ao terminar. Capturas locais ficam em `frontend/test-results/`, ignoradas pelo Git.
 
 Em 29/10/2026, as verificações foram executadas com Node **24.22.2** e Python **3.12.13**. O gráfico ECharts produz um aviso de chunk acima de 500 kB sem compressão; ele é carregado separadamente e seu tamanho comprimido foi medido. Não houve aumento artificial do limite para ocultar o aviso. Medições, pacote e pendências de publicação estão no [guia de deploy](deployment.md).
 
@@ -93,3 +93,23 @@ Em 29/10/2026, os quatro testes de navegador também passaram em **https://quadr
 ## Ajuste de escopo dos filtros em 29/10/2026
 
 A barra foi restrita à Home e Comparação conforme pedido do usuário. Os links para as demais telas não carregam a seleção; links antigos são normalizados e os perfis mostram 75 jogos de Atlanta e 74 de Houston. A regressão de navegador verifica ausência da barra, ausência de requisição de perfil com filtro herdado, compartilhamento entre Home/Comparação e tratamento de URLs anteriores.
+
+## Etapa 9 — Dados e métodos (P9.01–P9.02)
+
+O primeiro incremento está implementado e verificado localmente. A versão pública permanece no P8.08; estes novos conteúdos ainda não foram publicados nem commitados. P9.03–P9.12 permanecem abertos.
+
+[DataReport.tsx](../../frontend/src/features/DataReport.tsx) implementa `/dados` em seções navegáveis, com códigos de requisitos, tabelas acessíveis e blocos expansíveis. O dicionário, a auditoria e a documentação são carregados independentemente pela API, sempre vinculados ao release. Uma falha em qualidade não é convertida em contagem zero/aprovação e não bloqueia o dicionário válido. A documentação usa os metadados de `/interpretations?context=methodology`; não apresenta seu campo de interpretações analíticas, ainda pendente.
+
+A tela apresenta dimensões, tamanho/codificação/delimitador, SHA-256, períodos, cobertura de todos os times e do foco, prorrogações, históricos distintos de confrontos diretos, fonte declarada e detalhes não informados. As 28 colunas incluem nomes, tipos, unidades, domínios, papéis e motivos de exclusão; W/L, WL, datas e cinco campos derivados têm explicação própria. A stack confirmada é justificada na seção de métodos.
+
+Qualidade tem tabelas separadas para a base completa e o recorte Atlanta/Houston, preservando a diferença entre zero e não aplicável. Regras entre partidas ficam separadas dos domínios de células. Os quatro métodos de ausência mostram teoria, uso, pressupostos, motivo da inaplicabilidade e ausência de execução/estatística/p-valor; mecanismos MCAR/MAR/MNAR e limites de identificação são discutidos. Nenhuma data de extração ou completude externa foi inferida.
+
+As tabelas possuem rolagem contida e cabeçalhos fixos para permitir leitura das 28 linhas sem tornar a página inteira uma tabela. Informações de origem não são afetadas por filtros globais; URLs antigas com query são normalizadas conforme a regra de navegação existente. A revisão integral de acessibilidade permanece na etapa 10.
+
+Validação deste incremento em 29/10/2026: `npm run check --prefix frontend` com lint, formatação, 24 Vitest e TypeScript/build; oito Playwright com API real, incluindo dois testes novos em [data-report.spec.ts](../../frontend/e2e/data-report.spec.ts). Conferidos 75 jogos/duas prorrogações de Atlanta, 74/oito de Houston, 28 linhas por tabela, zeros de BLK (33 na base completa e zero no foco), não execução dos quatro testes e comportamento móvel/503. O backend científico e os artefatos não foram alterados nesta etapa; os 241 testes Python passaram no trabalho anterior do P8.08.
+
+## Conclusão da etapa 9
+
+P9.01–P9.12 implementados; organização final em `features/{Reports,DataReport,TeamReport,ComparisonReport,AnomalyReport}.tsx`. Componentes científicos SVG e leituras contextuais têm responsabilidades próprias. Seletor de variável do perfil e time/método/variável/exibição de anomalias são compartilháveis no fragmento da URL; a barra global permanece somente na Home e Comparação.
+
+Validação local: 244 testes Python, 24 Vitest, onze Playwright, contratos, lint, formatação e build. [Critérios, métodos e casos cobertos](report.md). A etapa 10 continua aberta para revisão integral.

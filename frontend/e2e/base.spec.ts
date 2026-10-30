@@ -14,8 +14,16 @@ test('consulta real, URL compartilhável e recarga de rota profunda', async ({ p
   await page.getByRole('link', { name: 'Comparação', exact: true }).click()
   await expect(page).toHaveURL(/comparar\?venue=home/)
   await page.reload()
-  await expect(page.getByRole('table')).toContainText('118,11')
-  await expect(page.getByRole('table')).toContainText('113,11')
+  await expect(
+    page.getByRole('table', {
+      name: 'Pontos — comparação descritiva por partida. Mesma unidade para os dois times.',
+    }),
+  ).toContainText('118,11')
+  await expect(
+    page.getByRole('table', {
+      name: 'Pontos — comparação descritiva por partida. Mesma unidade para os dois times.',
+    }),
+  ).toContainText('113,11')
   await page.goBack()
   await expect(page.getByText('38 jogos', { exact: true })).toBeVisible()
 })
@@ -52,7 +60,7 @@ test('navegação móvel, tabela acessível e layout sem transbordamento', async
   await expect(page.getByRole('heading', { name: 'Os times em foco' })).toBeVisible()
   await page.getByRole('button', { name: 'Alternar navegação' }).click()
   await page.getByRole('link', { name: 'Perfil dos times', exact: true }).click()
-  await expect(page.getByRole('table')).toBeVisible()
+  await expect(page.getByRole('table', { name: /^Todas as medidas/ })).toBeVisible()
   await expect(page.locator('aside')).not.toBeInViewport()
   await page.screenshot({ path: 'test-results/profile-mobile.png', fullPage: true })
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
@@ -77,7 +85,7 @@ test('filtros ficam apenas na Home e Comparação, sem seleção oculta nos perf
   await expect(page.getByRole('region', { name: 'Filtros da análise' })).toHaveCount(0)
   await expect(page.getByText('75 jogos', { exact: true })).toBeVisible()
   await page.getByRole('link', { name: 'Houston Rockets', exact: true }).click()
-  await expect(page).toHaveURL(/\/times\/1610612745$/)
+  await expect(page).toHaveURL(/\/times\/1610612745#variavel=PTS$/)
   await expect(page.getByText('74 jogos', { exact: true })).toBeVisible()
   expect(filteredProfiles).toEqual([])
   await page.getByRole('link', { name: 'Fora da curva', exact: true }).click()

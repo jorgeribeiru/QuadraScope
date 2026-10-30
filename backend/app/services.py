@@ -5,6 +5,7 @@ import pandas as pd
 from backend.analytics.comparisons import descriptive_reports
 from backend.analytics.descriptive import describe_team
 from backend.analytics.distributions import compare_distributions
+from backend.analytics.interpretations import describe_results
 from backend.analytics.metrics import get_metric
 from backend.app.config import Settings
 from backend.app.queries import Filters
@@ -159,3 +160,13 @@ class AnalysisService:
         if result["outlier_count"] is None:
             count = None
         return {"result": result, "display_outlier_count": count}
+
+    def interpretations(self, query):
+        if query.context in {"quality", "methodology"}:
+            return []
+        teams = [query.team_id] if query.team_id else self.config.team_ids
+        metrics = [query.metric] if query.metric else self.config.metrics
+        frame = self.select(query)
+        return describe_results(
+            [describe_team(frame, team, metric) for metric in metrics for team in teams]
+        )

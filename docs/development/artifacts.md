@@ -48,7 +48,7 @@ São **13 artefatos**, além do manifesto. As pastas geradas são ignoradas pelo
 
 Os JSONs usam UTF-8, chaves ordenadas, números finitos e datas civis ISO `YYYY-MM-DD`. Contagens não aceitam booleanos ou strings numéricas; campos inesperados e chaves JSON repetidas são rejeitados. Medidas indefinidas mantêm `null`, estado e motivo. Na base aprovada atual, linhas canônicas/enriquecidas não admitem valores ausentes; o Parquet usa schema físico explícito, inclusive `date32` e IDs textuais.
 
-`content.json` preserva as limitações da coleta e a teoria de missingness, sem inventar data de extração ou execução de testes. As interpretações continuam vazias com `interpretation_status=pending_stage_9`: sua redação e apresentação pertencem à etapa 9.
+`content.json` preserva as limitações da coleta e a teoria de missingness, sem inventar data de extração ou execução de testes. O build inclui 14 leituras descritivas do histórico completo com `interpretation_status=descriptive_available`; sua correspondência com as medidas é validada. A API gera leituras equivalentes para seleções filtradas. [Escopo e limites](report.md).
 
 ## Manifesto e reprodução
 

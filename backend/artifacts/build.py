@@ -16,6 +16,7 @@ from threadpoolctl import threadpool_limits
 from backend.analytics.anomaly_reports import anomaly_reports
 from backend.analytics.comparisons import descriptive_reports
 from backend.analytics.ingestion import ingest, select_focus
+from backend.analytics.interpretations import describe_results
 from backend.analytics.metrics import COLUMNS
 from backend.analytics.quality import audit_quality
 from backend.analytics.sensitivity import sensitivity_report
@@ -138,6 +139,8 @@ def _compute(config: Settings):
         "kind": "content",
         "metadata": metadata,
         **context,
+        "interpretation_status": "descriptive_available",
+        "interpretations": describe_results(reports["descriptives"]["results"]),
         "missingness": read_json(CODE_ROOT / "backend/content/missingness.json"),
         "licenses": {
             "pyod_ecod_reference": (CODE_ROOT / "docs/references/pyod-ecod-LICENSE.txt").read_text()

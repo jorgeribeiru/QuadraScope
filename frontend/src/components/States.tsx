@@ -46,10 +46,3 @@ export function Warning({ children }: { children: React.ReactNode }) {
     </div>
   )
 }
-export function PendingInterpretation() {
-  return (
-    <p className="interpretation-note">
-      As medidas descrevem a seleção atual. As interpretações do relatório estão em revisão.
-    </p>
-  )
-}

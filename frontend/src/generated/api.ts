@@ -282,6 +282,29 @@ export interface components {
             display_outlier_count: number | null;
             result: components["schemas"]["Anomaly"];
         };
+        /** AnomalySummary */
+        AnomalySummary: {
+            /** Features */
+            features: ("PTS" | "REB" | "AST" | "STL" | "BLK" | "PF" | "FG3M")[];
+            /**
+             * Method
+             * @enum {string}
+             */
+            method: "zscore" | "iqr" | "grubbs" | "ecod" | "knn" | "lof" | "dbscan";
+            /** Metric */
+            metric: ("PTS" | "REB" | "AST" | "STL" | "BLK" | "PF" | "FG3M") | null;
+            /** Outlier Count */
+            outlier_count: number | null;
+            /** Reference N */
+            reference_n: number;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "ok" | "empty" | "insufficient_sample" | "constant_series" | "not_applicable";
+            /** Team Id */
+            team_id: string;
+        };
         /** BoxOutlier */
         BoxOutlier: {
             /**
@@ -675,7 +698,7 @@ export interface components {
              * Interpretation Status
              * @constant
              */
-            interpretation_status: "pending_stage_9";
+            interpretation_status: "descriptive_available";
             /** Interpretations */
             interpretations: {
                 [key: string]: components["schemas"]["JsonValue"];
@@ -882,6 +905,8 @@ export interface components {
         };
         /** QualityResponse */
         QualityResponse: {
+            /** Anomaly Summary */
+            anomaly_summary: components["schemas"]["AnomalySummary"][];
             context: components["schemas"]["Context"];
             report: components["schemas"]["Quality"];
         };

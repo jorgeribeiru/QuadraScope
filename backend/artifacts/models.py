@@ -413,7 +413,7 @@ class ContentArtifact(Envelope):
     provenance: JSONMap
     methodology: JSONMap
     missingness: JSONMap
-    interpretation_status: Literal["pending_stage_9"]
+    interpretation_status: Literal["pending_stage_9", "descriptive_available"]
     interpretations: list[JSONMap]
     licenses: dict[str, str]
 

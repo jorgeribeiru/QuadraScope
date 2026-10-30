@@ -14,7 +14,7 @@ from backend.repositories.artifacts import ArtifactRepository
 
 RUNTIME_MODULES = {
     "app": ("config", "main", "queries", "schemas", "services", "telemetry"),
-    "analytics": ("metrics", "descriptive", "distributions", "comparisons"),
+    "analytics": ("metrics", "descriptive", "distributions", "comparisons", "interpretations"),
     "artifacts": ("models", "serialization", "validation"),
     "repositories": ("artifacts",),
 }

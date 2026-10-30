@@ -1,7 +1,7 @@
 # Plano de implementação — QuadraScope
 
 > Do passo 0 à entrega. Revisão: 29/10/2026. Foco: Atlanta Hawks × Houston Rockets.
-> Estado atual: etapas 0–8 concluídas. Ciência, artefatos reproduzíveis, API FastAPI e base React validados; versão técnica publicada na Vercel e inicialização da aplicação medida com instrumentação própria. Provisionamento completo da plataforma não isolado; relatório interpretativo ainda pendente.
+> Estado atual: etapas 0–9 concluídas. Ciência, artefatos reproduzíveis, API FastAPI e base React validados; versão técnica publicada na Vercel e inicialização da aplicação medida com instrumentação própria. Provisionamento completo da plataforma não isolado; relatório completo implementado; revisão integral e preparação da entrega permanecem nas etapas 10–11.
 
 ## Uso do plano
 
@@ -171,18 +171,22 @@ As caixas já marcadas na etapa 0 indicam documentação revisada e confirmaçõ
 
 **Dependência:** etapas 4–8. **Requisitos:** R02–R04 e R07–R24.
 
-- [ ] **P9.01** — Criar `/dados` com dimensões, período, origem/limitação, dicionário completo, tipos e transformações.
-- [ ] **P9.02** — Apresentar qualidade por coluna, inconsistências entre linhas, missingness e teoria/aplicabilidade dos testes exigidos.
-- [ ] **P9.03** — Criar perfil dos dois times com seleção de variável e tabela de todas as medidas obrigatórias.
-- [ ] **P9.04** — Construir boxplot com quartis, média, mediana, todas as modas, cercas, bigodes e outliers identificáveis.
-- [ ] **P9.05** — Construir histograma/KDE e bloco de assimetria com fórmula, direção, intensidade e discussão visual.
-- [ ] **P9.06** — Criar `/comparar` com barras de mesma unidade e escala; explicar onde o z-score pode ser usado e suas referências.
-- [ ] **P9.07** — Exibir quadros CV/IQR 7×2 e tabela Q1/Q3/IQR; discutir média, desvio, amplitude, assimetria e alternativas robustas.
-- [ ] **P9.08** — Criar `/fora-da-curva` com seleção de método, parâmetros, referência, scores/ruído e tabela das partidas sinalizadas.
-- [ ] **P9.09** — Redigir interpretações por variável/time a partir dos resultados validados; discutir prorrogações e diferenças de cobertura sem inferência causal.
-- [ ] **P9.10** — Criar síntese na página inicial, ligando conclusões às evidências; separar históricos completos de confrontos diretos.
-- [ ] **P9.11** — Vincular cada seção aos requisitos correspondentes e disponibilizar métodos/limitações junto dos resultados relevantes.
-- [ ] **P9.12** — Revisar textos após filtros: recalcular o que for contextual ou identificar claramente o escopo fixo; não manter conclusão incompatível com a seleção.
+- [X] **P9.01** — Criar `/dados` com dimensões, período, origem/limitação, dicionário completo, tipos e transformações.
+- [X] **P9.02** — Apresentar qualidade por coluna, inconsistências entre linhas, missingness e teoria/aplicabilidade dos testes exigidos.
+- [X] **P9.03** — Criar perfil dos dois times com seleção de variável e tabela de todas as medidas obrigatórias.
+- [X] **P9.04** — Construir boxplot com quartis, média, mediana, todas as modas, cercas, bigodes e outliers identificáveis.
+- [X] **P9.05** — Construir histograma/KDE e bloco de assimetria com fórmula, direção, intensidade e discussão visual.
+- [X] **P9.06** — Criar `/comparar` com barras de mesma unidade e escala; explicar onde o z-score pode ser usado e suas referências.
+- [X] **P9.07** — Exibir quadros CV/IQR 7×2 e tabela Q1/Q3/IQR; discutir média, desvio, amplitude, assimetria e alternativas robustas.
+- [X] **P9.08** — Criar `/fora-da-curva` com seleção de método, parâmetros, referência, scores/ruído e tabela das partidas sinalizadas.
+- [X] **P9.09** — Redigir interpretações por variável/time a partir dos resultados validados; discutir prorrogações e diferenças de cobertura sem inferência causal.
+- [X] **P9.10** — Criar síntese na página inicial, ligando conclusões às evidências; separar históricos completos de confrontos diretos.
+- [X] **P9.11** — Vincular cada seção aos requisitos correspondentes e disponibilizar métodos/limitações junto dos resultados relevantes.
+- [X] **P9.12** — Revisar textos após filtros: recalcular o que for contextual ou identificar claramente o escopo fixo; não manter conclusão incompatível com a seleção.
+
+**Primeiro incremento em 29/10/2026:** P9.01–P9.02 implementados localmente. `/dados` apresenta dimensões/bytes/período, cobertura global e dos dois times, proveniência e seus limites, dicionário de 28 colunas, transformações e exclusões, qualidade global/foco por coluna e regras entre partidas. MCAR/MAR/MNAR e os quatro testes são apresentados com pressupostos e inaplicabilidade real, sem p-valores inventados. `web-check` aprovado (24 Vitest, lint, formatação, TypeScript/build) e oito Playwright com API real, incluindo dois novos casos de dados/qualidade/503 e viewport móvel. [Implementação](../../frontend/src/features/DataReport.tsx), [teste](../../frontend/e2e/data-report.spec.ts), [guia](../development/frontend.md#etapa-9--dados-e-métodos-p901p902). A versão pública permanece no commit P8.08; este incremento ainda não foi publicado. P9.03–P9.12 continuam abertos.
+
+**Conclusão local da etapa 9 em 29/10/2026:** P9.01–P9.12 implementados. Perfis completos, SVG boxplot/histograma/KDE, comparação com matrizes e leituras contextuais, sete métodos para os dois times e síntese vinculada às evidências. 244 testes Python, 24 Vitest, contratos/lint/build e onze Playwright aprovados; erros e n=0/n=1 conferidos. [Mapa do relatório e verificação](../development/report.md), [testes](../../frontend/e2e/report.spec.ts). A publicação desta revisão será registrada no guia de deploy; a revisão integral da etapa 10 e a submissão continuam pendentes.
 
 **Verificação/saída:** todos os itens acadêmicos localizáveis dentro da aplicação; documentação do repositório não substitui o relatório web. Cada página apresenta dados e interpretação.
 

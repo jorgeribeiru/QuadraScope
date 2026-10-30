@@ -44,7 +44,7 @@ export function App() {
             path="/fora-da-curva"
             element={<Anomalies meta={meta.data} selection={selection} />}
           />
-          <Route path="/dados" element={<DataPage meta={meta.data} selection={selection} />} />
+          <Route path="/dados" element={<DataPage meta={meta.data} />} />
           <Route
             path="*"
             element={

@@ -2,6 +2,7 @@ import createClient from 'openapi-fetch'
 import type { components, paths } from '@/generated/api'
 import type { Filters, Metric } from './filters'
 export type Meta = components['schemas']['MetaResponse']
+export type Method = components['schemas']['Anomaly']['method']
 export type Context = components['schemas']['Context']
 export class ApiError extends Error {
   constructor(
@@ -53,10 +54,50 @@ export const api = {
     unwrap(
       client.GET('/api/v1/comparisons', { params: { query: { ...filters, metric } }, signal }),
     ),
-  anomalies: (team: string, filters: Filters, signal?: AbortSignal) =>
+  anomalies: (
+    team: string,
+    filters: Filters,
+    signal?: AbortSignal,
+    method: Method = 'lof',
+    metric?: Metric,
+  ) =>
     unwrap(
       client.GET('/api/v1/anomalies', {
-        params: { query: { ...filters, team_id: team, method: 'lof' } },
+        params: { query: { ...filters, team_id: team, method, ...(metric ? { metric } : {}) } },
+        signal,
+      }),
+    ),
+  distribution: (team: string, metric: Metric, filters: Filters, signal?: AbortSignal) =>
+    unwrap(
+      client.GET('/api/v1/distributions', {
+        params: { query: { ...filters, team_id: team, metric } },
+        signal,
+      }),
+    ),
+  interpretations: (
+    context: 'overview' | 'teams' | 'comparisons',
+    filters: Filters,
+    team?: string,
+    metric?: Metric,
+    signal?: AbortSignal,
+  ) =>
+    unwrap(
+      client.GET('/api/v1/interpretations', {
+        params: {
+          query: {
+            context,
+            ...filters,
+            ...(team ? { team_id: team } : {}),
+            ...(metric ? { metric } : {}),
+          },
+        },
+        signal,
+      }),
+    ),
+  documentation: (signal?: AbortSignal) =>
+    unwrap(
+      client.GET('/api/v1/interpretations', {
+        params: { query: { context: 'methodology' } },
         signal,
       }),
     ),

@@ -269,6 +269,7 @@ def create_app(config: Settings = settings, artifact_root: Path | None = None) -
             {
                 "context": analysis.context("quality", Filters(), scope="full_dataset"),
                 "report": analysis.repository.get("quality.json")["report"],
+                "anomaly_summary": analysis.repository.get("anomalies.json")["summary"],
             },
         )
 
@@ -290,10 +291,10 @@ def create_app(config: Settings = settings, artifact_root: Path | None = None) -
                     [query.metric] if query.metric else None,
                 ),
                 "requested_context": query.context,
-                "interpretation_status": content["interpretation_status"],
-                "reason": "Interpretações analíticas serão redigidas e revisadas na etapa 9. "
-                "Proveniência e metodologia abaixo descrevem o dataset completo e os métodos.",
-                "interpretations": content["interpretations"],
+                "interpretation_status": "descriptive_available",
+                "reason": "Leituras descritivas acompanham a seleção atual; "
+                "proveniência e metodologia descrevem a base completa.",
+                "interpretations": analysis.interpretations(query),
                 "provenance": content["provenance"],
                 "methodology": content["methodology"],
                 "missingness": content["missingness"],
