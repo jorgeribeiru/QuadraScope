@@ -242,3 +242,16 @@ Nova coleta de desempenho: vinte chamadas sequenciais no coletor (cinco por cen�
 Na consulta `level:error OR level:fatal`, filtrada por esse deployment e janela de 15 minutos, foram retornados zero registros, sem intervalos excluídos. Isso descreve aquela janela, não garante ausência permanente de erros. Drains não foram configurados. A limitação do chunk ECharts sob demanda acima de 500 kB e o aviso de depreciação no cliente de testes permanecem documentados.
 
 [Relatório versionado de evidências](measurements/stage9-verification.json), [mapa das páginas](report.md) e [testes](../../frontend/e2e/report.spec.ts). A atualização documental posterior à publicação apenas registra essas evidências; o código executável publicado é o commit `c51acd9`.
+
+
+## Publicação da etapa 10 — revisão e correções
+
+Em **30/10/2026**, o commit `83e82768758ae43df8a905e428b2abf700747ffb` foi publicado em **https://quadrascope.vercel.app**, na equipe `projetos-do-jorge`, sem alteração de plano ou proteção. Deployment `dpl_J3xghwzHXBPShUFoVqBSSw4U7sYT`, estado `READY`, alvo `production`; o alias público foi conferido contra esse ID. A versão candidata foi testada com autenticação antes da promoção do mesmo build.
+
+O release `27a55bc15c275c249d281378360b79ffa19f2a230942b345105b3ea0d6ef5534` foi gerado após o commit, com `git_dirty=false`. O CSV permanece intacto. Build de 19 s; saída de função reportada pelo provedor: 74.066.356 bytes, Python 3.12 em `iad1`, 2.048 MB e timeout de 60 s. Esse tamanho não representa o tamanho descomprimido do ambiente.
+
+**Validação pública:** 27 Playwright aprovados em 147,95 s, sem falhas, testes ignorados ou instáveis; 19 verificações HTTP sem login, cobrindo seis rotas HTML, os dez endpoints, respostas 404/422 e ETag/304. As telas carregaram o bundle `index-BRZbTNN1.js`. A auditoria inclui dados exibidos versus CSV, acessibilidade, teclado/menu móvel, filtros, cache e respostas atrasadas. Validação local anterior: 245 testes Python, 25 Vitest, contratos, lint, formatação e build.
+
+O pacote mínimo passou em ambiente isolado, sem bibliotecas do pipeline offline. Nova coleta de vinte chamadas recuperou inicialização da aplicação de aproximadamente 5,29–5,80 s em dois workers; não houve primeira resposta HTTP observada nessa coleta, e o provisionamento anterior ao Python continua sem medição isolada. A coleta ocorreu durante os testes de navegador e não representa carga isolada. Nenhum registro `error`/`fatal` foi retornado na janela de quinze minutos consultada para esse deployment; essa observação não garante ausência futura de erros.
+
+[Evidências da publicação](measurements/stage10-deployment.json), [revisão e limites](validation.md). O commit posterior de documentação registra a publicação; o código executável publicado é `83e8276`. A etapa 11 e a confirmação da submissão pelo grupo permanecem pendentes.

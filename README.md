@@ -2,9 +2,9 @@
 
 Relatório web interativo de análise de dados da NBA, desenvolvido para o Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. O foco do grupo é **Atlanta Hawks × Houston Rockets**, nas variáveis PTS, REB, AST, STL, BLK, PF e FG3M.
 
-**Estado atual:** etapas 0–9 implementadas, publicadas e validadas em https://quadrascope.vercel.app. Relatório completo de Atlanta/Houston com dados e qualidade, perfis das sete variáveis, boxplots, distribuições, comparação, sete métodos de anomalias e síntese contextual. Revisão integral concluída localmente na etapa 10; reprodução final e submissão permanecem na etapa 11. A stack **FastAPI + React** foi confirmada pelo grupo. [Relatório e limites](docs/development/report.md).
+**Estado atual:** etapas 0–10 implementadas, publicadas e validadas em https://quadrascope.vercel.app. Relatório completo de Atlanta/Houston com dados e qualidade, perfis das sete variáveis, boxplots, distribuições, comparação, sete métodos de anomalias e síntese contextual. Revisão integral da etapa 10 publicada; reprodução final e submissão permanecem na etapa 11. A stack **FastAPI + React** foi confirmada pelo grupo. [Relatório e limites](docs/development/report.md).
 
-**Etapa 10 concluída localmente em 30/10/2026:** integração, ciência, conteúdo e acessibilidade revisados. 245 testes Python, 25 Vitest e 27 de navegador aprovados. Correções ainda sem commit/deploy; entrega final na etapa 11. [Evidências e limites](docs/development/validation.md).
+**Etapa 10 publicada em 30/10/2026 (commit `83e8276`):** integração, ciência, conteúdo e acessibilidade revisados. 245 testes Python, 25 Vitest e 27 de navegador aprovados. Correções publicadas; entrega final na etapa 11. [Evidências e limites](docs/development/validation.md).
 
 ## Estrutura atual
 
@@ -151,6 +151,6 @@ make data-build
 make dev
 ```
 
-Abra **http://127.0.0.1:5173**. O último comando inicia API e frontend juntos; Ctrl+C encerra ambos. A instalação inicial é separada da execução. A interface apresenta o relatório completo da etapa 9. A revisão integral e a preparação da entrega continuam nas etapas 10–11.
+Abra **http://127.0.0.1:5173**. O último comando inicia API e frontend juntos; Ctrl+C encerra ambos. A instalação inicial é separada da execução. A interface apresenta o relatório completo, com as correções da etapa 10. A preparação da entrega continua na etapa 11.
 
-`make web-check` verifica frontend e build; `make check` verifica Python. `make api-contracts` exporta OpenAPI, gera os tipos TypeScript e verifica sua compilação. Para montar o pacote FastAPI + SPA, executar `make web-build` e `make deploy-prepare` após o build dos dados. A topologia foi verificada localmente e na Vercel, com dependências reais. **Versão técnica pública: https://quadrascope.vercel.app**, na equipe `projetos-do-jorge`, plano Hobby. Onze testes de navegador e os dez endpoints foram conferidos na publicação da etapa 9, commit `c51acd9`. [Deploy, métricas e limites](docs/development/deployment.md).
+`make web-check` verifica frontend e build; `make check` verifica Python. `make api-contracts` exporta OpenAPI, gera os tipos TypeScript e verifica sua compilação. Para montar o pacote FastAPI + SPA, executar `make web-build` e `make deploy-prepare` após o build dos dados. A topologia foi verificada localmente e na Vercel, com dependências reais. **Versão técnica pública: https://quadrascope.vercel.app**, na equipe `projetos-do-jorge`, plano Hobby. Na publicação da etapa 10, commit `83e8276`, passaram 27 testes de navegador e 19 verificações HTTP, cobrindo seis páginas e os dez endpoints. [Deploy, métricas e limites](docs/development/deployment.md).

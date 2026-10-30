@@ -1,6 +1,6 @@
 # Revisão de integração, conteúdo e acessibilidade — etapa 10
 
-Revisão realizada em **30/10/2026**, sobre a base `ab40cac` e alterações locais desta etapa. P10.01–P10.08 concluídos. **As correções ainda não foram commitadas nem publicadas.** A entrega, a instalação a partir de checkout limpo, CI e a publicação final permanecem na etapa 11; R06 depende da submissão pelo grupo.
+Revisão realizada em **30/10/2026**, sobre a base `ab40cac` e alterações locais desta etapa. P10.01–P10.08 concluídos. **Correções commitadas em `83e8276` e publicadas em https://quadrascope.vercel.app.** [Evidências da publicação](measurements/stage10-deployment.json). A entrega, a instalação a partir de checkout limpo, CI e a publicação final permanecem na etapa 11; R06 depende da submissão pelo grupo.
 
 A história conferida foi: seleção no navegador → cliente HTTP/cache → API FastAPI → release validado → resposta → medidas, gráficos e interpretação. Foram preservadas as alterações visuais e de legibilidade dos commits `da48068` e `ab40cac`.
 
@@ -20,6 +20,10 @@ A história conferida foi: seleção no navegador → cliente HTTP/cache → API
 | Publicação existente | Seis rotas HTML e health responderam 200 sem login, em leitura apenas. Release público anterior: `ddd1fb5f8683d83e602caef5846027156a5194f257491c51221a27bb3d0a8a94` |
 
 O relatório [stage10-verification.json](measurements/stage10-verification.json) preserva hashes, resultados científicos, ocorrências sinalizadas, nomes dos testes, jornada, cores e escopo de cada verificação. Relatórios completos e capturas locais ficam em `data/processed/stage10-*` e `frontend/test-results/`, ignorados pelo Git. A suíte completa passou antes do último ajuste pontual de `role=group` no resumo de comparação; esse ajuste foi conferido na reexecução específica da auditoria das seis telas.
+
+## Publicação após a revisão
+
+Correções publicadas no commit `83e8276`, release `27a55bc15c275c249d281378360b79ffa19f2a230942b345105b3ea0d6ef5534`. No domínio público, **27 Playwright passaram em 147,95 s**, sem falhas, testes ignorados ou instáveis; **19 verificações HTTP** aprovaram páginas, endpoints, erros esperados e cache. A evidência local acima preserva o estado histórico da revisão; [stage10-deployment.json](measurements/stage10-deployment.json) registra o estado efetivamente publicado.
 
 ## Correções encontradas e realizadas
 
@@ -57,7 +61,7 @@ Também foram exercitados Tab, Enter, Escape, seleção por setas, link de salto
 
 As simulações de troca de release/versão, resposta incompatível, atraso e 503 alteram apenas o transporte nos testes. Não fabricam resultados científicos nem são publicadas. Anomalias continuam ajustadas ao histórico completo do próprio time; filtros HTTP afetam só exibição, e as telas sem barra global não herdam seleção oculta. Foram revisadas as convenções: medidas descritivas com duas casas, contagens inteiras, scores/cortes com até seis casas para preservar leitura de decisões próximas e densidades com precisão significativa identificada.
 
-**Limites:** a revisão utiliza Chromium e não certifica conformidade WCAG integral, tampouco substitui testes com usuários ou NVDA/VoiceOver. Não mede completude externa do calendário, autenticidade de cada jogo, causalidade ou acurácia dos detectores sem rótulos. A versão pública anterior continua em funcionamento, mas as correções locais deverão ser publicadas na etapa 11. Permanecem os avisos conhecidos do chunk ECharts sob demanda e da depreciação do cliente de testes Starlette/httpx.
+**Limites:** a revisão utiliza Chromium e não certifica conformidade WCAG integral, tampouco substitui testes com usuários ou NVDA/VoiceOver. Não mede completude externa do calendário, autenticidade de cada jogo, causalidade ou acurácia dos detectores sem rótulos. As correções foram publicadas após a revisão; a preparação e submissão finais permanecem na etapa 11. Permanecem os avisos conhecidos do chunk ECharts sob demanda e da depreciação do cliente de testes Starlette/httpx.
 
 ## Matriz R01–R24 revisada
 

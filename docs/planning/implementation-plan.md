@@ -1,7 +1,7 @@
 # Plano de implementação — QuadraScope
 
 > Do passo 0 à entrega. Revisão: 30/10/2026. Foco: Atlanta Hawks × Houston Rockets.
-> Estado atual: etapas 0–10 concluídas; correções da revisão ainda locais. Ciência, artefatos reproduzíveis, API FastAPI e base React validados; versão técnica publicada na Vercel e inicialização da aplicação medida com instrumentação própria. Provisionamento completo da plataforma não isolado; relatório completo implementado; revisão integral concluída localmente; preparação da entrega permanece na etapa 11.
+> Estado atual: etapas 0–10 concluídas; correções da revisão publicadas. Ciência, artefatos reproduzíveis, API FastAPI e base React validados; versão técnica publicada na Vercel e inicialização da aplicação medida com instrumentação própria. Provisionamento completo da plataforma não isolado; relatório completo implementado; revisão integral publicada; preparação da entrega permanece na etapa 11.
 
 ## Uso do plano
 
@@ -203,7 +203,7 @@ As caixas já marcadas na etapa 0 indicam documentação revisada e confirmaçõ
 - [X] **P10.07** — Verificar cache após mudança de versão e referência fixa dos detectores; conferir que textos acompanham o contexto.
 - [X] **P10.08** — Revisar toda a matriz: marcar somente requisitos integralmente atendidos, manter parciais abertos e registrar correções restantes.
 
-**Verificado em 30/10/2026:** 245 testes Python, 25 Vitest e 27 Playwright aprovados; contratos/lint/build e release íntegros. Auditoria independente do CSV: 14 pares, matrizes e quartis, 50 análises/3.725 registros; 11 ocorrências nos boxplots e 43 sinalizações conferidas nas telas. Corrigidos foco móvel, página atual de Houston, contraste, semântica acessível e unidades; leituras complementadas frente ao PDF. Seis telas auditadas, 18 cenários de largura, dez paradas de jornada; caches e respostas atrasadas/503 verificados. R06 permanece parcial. [Revisão e limites](../development/validation.md), [evidências](../development/measurements/stage10-verification.json). Alterações ainda sem commit/deploy; a publicação final pertence à etapa 11.
+**Verificado em 30/10/2026:** 245 testes Python, 25 Vitest e 27 Playwright aprovados; contratos/lint/build e release íntegros. Auditoria independente do CSV: 14 pares, matrizes e quartis, 50 análises/3.725 registros; 11 ocorrências nos boxplots e 43 sinalizações conferidas nas telas. Corrigidos foco móvel, página atual de Houston, contraste, semântica acessível e unidades; leituras complementadas frente ao PDF. Seis telas auditadas, 18 cenários de largura, dez paradas de jornada; caches e respostas atrasadas/503 verificados. R06 permanece parcial. [Revisão e limites](../development/validation.md), [evidências](../development/measurements/stage10-verification.json). Correções publicadas no commit `83e8276`; preparação da entrega e submissão final permanecem na etapa 11. [Publicação e evidências](../development/measurements/stage10-deployment.json).
 
 **Verificação/saída:** evidências concretas de funcionamento e conteúdo científico. Testes validam propriedades e contratos, não apenas espelham a implementação. A existência de testes aprovados não substitui a revisão das interpretações.
 

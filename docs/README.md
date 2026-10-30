@@ -25,4 +25,4 @@
 | Dados | [Metodologia](data/methodology.md) | Fórmulas, pressupostos e validação científica |
 | Dados | [Sensibilidade versionada](data/anomaly-sensitivity.json) | Revisão 1.0.0 das 44 variantes no snapshot do projeto |
 
-O [CSV original](../data/raw/stats_times_regular_final.csv) fica fora da documentação, em `data/raw/`. O backend inclui ciência, build reproduzível e API FastAPI. A etapa 9 completa localmente o relatório web; a versão técnica está publicada na Vercel; a inicialização da aplicação foi medida em workers reais, com limites documentados para o provisionamento da plataforma. Voltar ao [README do projeto](../README.md).
+O [CSV original](../data/raw/stats_times_regular_final.csv) fica fora da documentação, em `data/raw/`. O backend inclui ciência, build reproduzível e API FastAPI. O relatório web completo e as correções da revisão da etapa 10 estão publicados na Vercel; a inicialização da aplicação foi medida em workers reais, com limites documentados para o provisionamento da plataforma. Voltar ao [README do projeto](../README.md).

@@ -71,4 +71,4 @@ A etapa 9 foi publicada no commit `c51acd9`, em https://quadrascope.vercel.app. 
 
 ## Revisão da etapa 10
 
-Em 30/10/2026, P10.01–P10.08 foram concluídos localmente. Foram corrigidos navegação/foco, contraste, semântica e unidades, e complementadas leituras e destaques entre variáveis. O novo diagnóstico de sensibilidade reutiliza funções científicas Python e não altera medidas oficiais ou detectores; é conferido independentemente no CSV. A versão pública anterior não foi atualizada nesta etapa. [Revisão completa](validation.md), [evidências](measurements/stage10-verification.json).
+Em 30/10/2026, P10.01–P10.08 foram concluídos localmente. Foram corrigidos navegação/foco, contraste, semântica e unidades, e complementadas leituras e destaques entre variáveis. O novo diagnóstico de sensibilidade reutiliza funções científicas Python e não altera medidas oficiais ou detectores; é conferido independentemente no CSV. As correções foram publicadas no commit `83e8276`, em https://quadrascope.vercel.app. [Evidências da publicação](measurements/stage10-deployment.json). [Revisão completa](validation.md), [evidências](measurements/stage10-verification.json).

@@ -1,0 +1,706 @@
+{
+  "task": "Publicação das correções e revisão da etapa 10",
+  "date_local": "2026-10-30",
+  "timezone": "America/Recife",
+  "recorded_at_utc": "2026-10-30T04:33:37.948567+00:00",
+  "source_commit": "83e82768758ae43df8a905e428b2abf700747ffb",
+  "source_git_dirty_at_data_build": false,
+  "url": "https://quadrascope.vercel.app",
+  "immutable_url": "https://quadrascope-almaxal9n-projetos-do-jorge.vercel.app",
+  "deployment_id": "dpl_J3xghwzHXBPShUFoVqBSSw4U7sYT",
+  "target": "production",
+  "status": "READY",
+  "team": "projetos-do-jorge",
+  "project": "quadrascope",
+  "framework": "fastapi",
+  "plan_changed": false,
+  "deployment_protection_changed": false,
+  "release_id": "27a55bc15c275c249d281378360b79ffa19f2a230942b345105b3ea0d6ef5534",
+  "dataset_sha256": "fa56bf638ef18be972a88850719043953e615bf39339671a8daa007ba08811b6",
+  "build": {
+    "builder_duration_seconds": 19,
+    "time_to_ready_ms": 37005,
+    "provider_function_output_size_bytes": 74066356,
+    "runtime": "python3.12",
+    "regions": [
+      "iad1"
+    ],
+    "memory_mb": 2048,
+    "timeout_seconds": 60
+  },
+  "validation": {
+    "python_tests": 245,
+    "vitest_tests": 25,
+    "local_review_evidence": "stage10-verification.json",
+    "public_playwright": {
+      "stats": {
+        "startTime": "2026-10-30T04:30:29.649Z",
+        "duration": 147953.372,
+        "expected": 27,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "title": "consulta real, URL compartilhável e recarga de rota profunda",
+          "status": "expected",
+          "duration_ms": 4313
+        },
+        {
+          "title": "estado vazio é diferente de indisponibilidade da API",
+          "status": "expected",
+          "duration_ms": 1505
+        },
+        {
+          "title": "visão geral distingue seleção aplicada, edição pendente e contexto fixo",
+          "status": "expected",
+          "duration_ms": 3237
+        },
+        {
+          "title": "URL inválida não dispara consultas analíticas",
+          "status": "expected",
+          "duration_ms": 479
+        },
+        {
+          "title": "navegação móvel, tabela acessível e layout sem transbordamento",
+          "status": "expected",
+          "duration_ms": 2374
+        },
+        {
+          "title": "menu móvel posiciona o foco e permite fechar ou navegar pelo teclado",
+          "status": "expected",
+          "duration_ms": 528
+        },
+        {
+          "title": "filtros ficam apenas na Home e Comparação, sem seleção oculta nos perfis",
+          "status": "expected",
+          "duration_ms": 1779
+        },
+        {
+          "title": "URLs antigas dos perfis são normalizadas antes de consultar o histórico completo",
+          "status": "expected",
+          "duration_ms": 1274
+        },
+        {
+          "title": "troca de release e versão não conserva resultados antigos durante falha da API",
+          "status": "expected",
+          "duration_ms": 3085
+        },
+        {
+          "title": "resposta de outro release é rejeitada antes da apresentação e força atualizar metadados",
+          "status": "expected",
+          "duration_ms": 2079
+        },
+        {
+          "title": "resposta atrasada de um filtro anterior não substitui a seleção aplicada depois",
+          "status": "expected",
+          "duration_ms": 2423
+        },
+        {
+          "title": "índice orienta para as seções e permite voltar por teclado",
+          "status": "expected",
+          "duration_ms": 792
+        },
+        {
+          "title": "Dados apresenta dimensões, todas as colunas e auditoria com escopos distintos",
+          "status": "expected",
+          "duration_ms": 1886
+        },
+        {
+          "title": "falha na auditoria não vira qualidade aprovada nem oculta o dicionário",
+          "status": "expected",
+          "duration_ms": 1296
+        },
+        {
+          "title": "destaques preservam os valores, amostras e escopos dos perfis e da comparação",
+          "status": "expected",
+          "duration_ms": 3451
+        },
+        {
+          "title": "os 14 pares variável/time apresentam medidas, boxplot, distribuição e interpretação coerentes",
+          "status": "expected",
+          "duration_ms": 6889
+        },
+        {
+          "title": "os sete métodos funcionam para os dois times, com scores ou ruído e referência fixa",
+          "status": "expected",
+          "duration_ms": 10642
+        },
+        {
+          "title": "fora da curva apresenta critérios próprios, limites e sinais com precisão explícita",
+          "status": "expected",
+          "duration_ms": 1835
+        },
+        {
+          "title": "comparação e síntese acompanham filtros e não inventam regularidade com uma observação",
+          "status": "expected",
+          "duration_ms": 4422
+        },
+        {
+          "title": "auditoria automática de acessibilidade nas seis telas, com gráficos carregados",
+          "status": "expected",
+          "duration_ms": 18459
+        },
+        {
+          "title": "cada outlier do boxplot e cada sinalização dos sete métodos coincide com o CSV",
+          "status": "expected",
+          "duration_ms": 36958
+        },
+        {
+          "title": "teclado, menu móvel, tabelas e página atual nos dois perfis",
+          "status": "expected",
+          "duration_ms": 1550
+        },
+        {
+          "title": "contraste de textos SVG e limites das barras do histograma",
+          "status": "expected",
+          "duration_ms": 1304
+        },
+        {
+          "title": "menu móvel aberto não permite foco oculto atrás da navegação",
+          "status": "expected",
+          "duration_ms": 619
+        },
+        {
+          "title": "jornada Dados → Perfil → Comparação → Anomalias → Síntese nos dois times",
+          "status": "expected",
+          "duration_ms": 7894
+        },
+        {
+          "title": "refluxo em 320/390/768 px e todas as modas, inclusive coincidentes com a mediana",
+          "status": "expected",
+          "duration_ms": 23870
+        },
+        {
+          "title": "interpretação explicita destaques de CV/assimetria e diagnóstico sem mudar as medidas",
+          "status": "expected",
+          "duration_ms": 2354
+        }
+      ]
+    },
+    "candidate_authenticated_checks": [
+      {
+        "path": "/api/v1/teams/1610612737/summary?venue=home",
+        "release_id": "27a55bc15c275c249d281378360b79ffa19f2a230942b345105b3ea0d6ef5534",
+        "status": "passed"
+      },
+      {
+        "path": "/api/v1/comparisons?metric=REB",
+        "release_id": "27a55bc15c275c249d281378360b79ffa19f2a230942b345105b3ea0d6ef5534",
+        "status": "passed"
+      },
+      {
+        "path": "/api/v1/anomalies?team_id=1610612745&method=lof",
+        "release_id": "27a55bc15c275c249d281378360b79ffa19f2a230942b345105b3ea0d6ef5534",
+        "status": "passed"
+      }
+    ],
+    "anonymous_health": {
+      "status": "ready",
+      "api_version": "1.0.0",
+      "schema_version": "1.0.0",
+      "analysis_version": "1.0.0",
+      "release_id": "27a55bc15c275c249d281378360b79ffa19f2a230942b345105b3ea0d6ef5534",
+      "dataset_sha256": "fa56bf638ef18be972a88850719043953e615bf39339671a8daa007ba08811b6"
+    },
+    "http": [
+      {
+        "path": "/",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "path": "/times/1610612737",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "path": "/times/1610612745",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "path": "/comparar",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "path": "/fora-da-curva",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "path": "/dados",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "path": "/api/v1/health",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/meta",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/dictionary",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/teams",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/teams/1610612737/summary",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/distributions?team_id=1610612745&metric=PTS",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/comparisons?metric=REB",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/anomalies?team_id=1610612745&method=lof",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/quality",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/interpretations?context=comparisons&metric=REB",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/missing",
+        "expected_status": 404,
+        "actual_status": 404,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/comparisons?metric=INVALID",
+        "expected_status": 422,
+        "actual_status": 422,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/meta",
+        "expected_status": 304,
+        "actual_status": 304,
+        "content_type": null
+      }
+    ],
+    "public_alias_deployment_matches": true,
+    "runtime_error_query": {
+      "filter": "level:error OR level:fatal",
+      "deployment_id": "dpl_J3xghwzHXBPShUFoVqBSSw4U7sYT",
+      "records": [
+        {
+          "type": "summary",
+          "recordsReturned": 0,
+          "timeRange": {
+            "start": "2026-10-30T04:18:24.748Z",
+            "end": "2026-10-30T04:33:24.748Z"
+          },
+          "pagination": {
+            "hasMore": false,
+            "next": null
+          },
+          "excludedIntervals": []
+        }
+      ],
+      "coverage": "Janela de 15 minutos consultada; não é garantia de ausência permanente de erros."
+    }
+  },
+  "local_package": {
+    "cloud_verified": false,
+    "cold_start_median_seconds": 0.9940569830032473,
+    "cold_start_seconds": [
+      1.6811889040000096,
+      0.9918743939997512,
+      0.9940569830032473
+    ],
+    "environment": "local_linux_uvicorn",
+    "estimated_uncompressed_bytes": 256156504,
+    "frontend_bundles": {
+      "assets/PointsChart-CxfX4Aul.js": {
+        "bytes": 515594,
+        "gzip_bytes": 172339
+      },
+      "assets/index-BRZbTNN1.js": {
+        "bytes": 472800,
+        "gzip_bytes": 144433
+      }
+    },
+    "latency_ms": {
+      "/api/v1/anomalies?team_id=1610612745&method=lof&venue=home": {
+        "max": 8.303709997562692,
+        "median": 5.567022999457549,
+        "p95": 8.003785899200011,
+        "samples": 15
+      },
+      "/api/v1/comparisons?venue=home&metric=PTS": {
+        "max": 76.19266799883917,
+        "median": 63.430873000470456,
+        "p95": 70.58009179891087,
+        "samples": 15
+      },
+      "/api/v1/teams/1610612737/summary?venue=home": {
+        "max": 14.369937001902144,
+        "median": 9.34468300329172,
+        "p95": 12.609487401277875,
+        "samples": 15
+      }
+    },
+    "observed_rss_bytes": [
+      216403968,
+      217407488,
+      217300992
+    ],
+    "package_manifest_sha256": "1d4553970b39fe3a07649daaf2c1025d3319a827da9eca7a080871e19a35ece8",
+    "release_id": "27a55bc15c275c249d281378360b79ffa19f2a230942b345105b3ea0d6ef5534",
+    "routing_checks": {
+      "/": 200,
+      "/api/v1/missing": 404,
+      "/assets/missing.js": 404,
+      "/comparar?venue=home": 200,
+      "/times/1610612745?venue=home": 200
+    },
+    "runtime": {
+      "offline_absent": true,
+      "python": "3.12.13"
+    },
+    "runtime_site_packages_bytes": 251286927,
+    "source_size_bytes": 4869577,
+    "status": "passed"
+  },
+  "cloud_benchmark": {
+    "generated_at": "2026-10-30T04:31:36.285016+00:00",
+    "base_url": "https://quadrascope.vercel.app",
+    "deployment_id": "dpl_J3xghwzHXBPShUFoVqBSSw4U7sYT",
+    "release_id": "27a55bc15c275c249d281378360b79ffa19f2a230942b345105b3ea0d6ef5534",
+    "status": "passed",
+    "first_http_observed": false,
+    "method": "application_instrumentation_and_client_http",
+    "platform_provisioning_isolated": false,
+    "limitations": [
+      "Importação começa na execução de app.py, após importar time.",
+      "Startup é a entrada no lifespan, incluindo validação/carregamento dos artefatos.",
+      "Tempos de inicialização são recuperados também nas respostas quentes.",
+      "Primeira requisição HTTP do worker pode ocorrer após pré-aquecimento.",
+      "HTTP inclui rede/TLS e plataforma; não isola custo causal do cold start.",
+      "qs_app mede atendimento até os headers; não inclui envio do corpo.",
+      "Amostra pequena e sequencial; p95 usa nearest-rank e não estima SLA."
+    ],
+    "workers": {
+      "c3f37963a31c481b9261589372f7274b": {
+        "import_ms": 5135.11,
+        "startup_ms": 666.864,
+        "application_initialization_ms": 5801.974
+      },
+      "cf431f65701c46a185d79510b725ee8b": {
+        "import_ms": 4485.079,
+        "startup_ms": 806.061,
+        "application_initialization_ms": 5291.139999999999
+      }
+    },
+    "first_requests": [],
+    "summary": {
+      "health": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 340.2608149990556,
+          "p95_nearest_rank_ms": 343.85695300079533,
+          "max_ms": 343.85695300079533
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 1.163,
+          "p95_nearest_rank_ms": 1.705,
+          "max_ms": 1.705
+        }
+      },
+      "summary_atlanta_home": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 359.70287099917186,
+          "p95_nearest_rank_ms": 437.02128699806053,
+          "max_ms": 437.02128699806053
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 17.186,
+          "p95_nearest_rank_ms": 47.16,
+          "max_ms": 47.16
+        }
+      },
+      "comparison_home": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 452.8537489968585,
+          "p95_nearest_rank_ms": 463.5002909999457,
+          "max_ms": 463.5002909999457
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 90.018,
+          "p95_nearest_rank_ms": 100.228,
+          "max_ms": 100.228
+        }
+      },
+      "lof_houston_home": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 345.13788699769066,
+          "p95_nearest_rank_ms": 349.2083740020462,
+          "max_ms": 349.2083740020462
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 8.147,
+          "p95_nearest_rank_ms": 9.864,
+          "max_ms": 9.864
+        }
+      }
+    },
+    "records": [
+      {
+        "scenario": "health",
+        "worker_id": "c3f37963a31c481b9261589372f7274b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 341.39008299825946,
+        "http_total_ms": 341.51655700043193,
+        "qs_import": 5135.11,
+        "qs_startup": 666.864,
+        "qs_app": 1.338
+      },
+      {
+        "scenario": "health",
+        "worker_id": "c3f37963a31c481b9261589372f7274b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 331.45469399823924,
+        "http_total_ms": 331.6304250001849,
+        "qs_import": 5135.11,
+        "qs_startup": 666.864,
+        "qs_app": 1.094
+      },
+      {
+        "scenario": "health",
+        "worker_id": "cf431f65701c46a185d79510b725ee8b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 328.87812499757274,
+        "http_total_ms": 329.1751270007808,
+        "qs_import": 4485.079,
+        "qs_startup": 806.061,
+        "qs_app": 1.705
+      },
+      {
+        "scenario": "health",
+        "worker_id": "cf431f65701c46a185d79510b725ee8b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 343.7608009990072,
+        "http_total_ms": 343.85695300079533,
+        "qs_import": 4485.079,
+        "qs_startup": 806.061,
+        "qs_app": 1.16
+      },
+      {
+        "scenario": "health",
+        "worker_id": "cf431f65701c46a185d79510b725ee8b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 340.1597829979437,
+        "http_total_ms": 340.2608149990556,
+        "qs_import": 4485.079,
+        "qs_startup": 806.061,
+        "qs_app": 1.163
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "cf431f65701c46a185d79510b725ee8b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 358.51559300135705,
+        "http_total_ms": 359.02779400203144,
+        "qs_import": 4485.079,
+        "qs_startup": 806.061,
+        "qs_app": 16.33
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "cf431f65701c46a185d79510b725ee8b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 359.38603799877455,
+        "http_total_ms": 359.70287099917186,
+        "qs_import": 4485.079,
+        "qs_startup": 806.061,
+        "qs_app": 16.893
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "cf431f65701c46a185d79510b725ee8b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 351.27097799704643,
+        "http_total_ms": 352.00462200009497,
+        "qs_import": 4485.079,
+        "qs_startup": 806.061,
+        "qs_app": 17.186
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "c3f37963a31c481b9261589372f7274b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 370.92615999790723,
+        "http_total_ms": 371.85828799920273,
+        "qs_import": 5135.11,
+        "qs_startup": 666.864,
+        "qs_app": 47.16
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "c3f37963a31c481b9261589372f7274b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 435.84869699770934,
+        "http_total_ms": 437.02128699806053,
+        "qs_import": 5135.11,
+        "qs_startup": 666.864,
+        "qs_app": 22.648
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "c3f37963a31c481b9261589372f7274b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 441.68917600109125,
+        "http_total_ms": 458.89229500244255,
+        "qs_import": 5135.11,
+        "qs_startup": 666.864,
+        "qs_app": 90.018
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "c3f37963a31c481b9261589372f7274b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 420.3390770016995,
+        "http_total_ms": 438.10724899958586,
+        "qs_import": 5135.11,
+        "qs_startup": 666.864,
+        "qs_app": 86.563
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "c3f37963a31c481b9261589372f7274b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 419.58641900055227,
+        "http_total_ms": 437.0981949978159,
+        "qs_import": 5135.11,
+        "qs_startup": 666.864,
+        "qs_app": 88.973
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "c3f37963a31c481b9261589372f7274b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 445.5118420009967,
+        "http_total_ms": 463.5002909999457,
+        "qs_import": 5135.11,
+        "qs_startup": 666.864,
+        "qs_app": 92.202
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "cf431f65701c46a185d79510b725ee8b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 435.2218179992633,
+        "http_total_ms": 452.8537489968585,
+        "qs_import": 4485.079,
+        "qs_startup": 806.061,
+        "qs_app": 100.228
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "cf431f65701c46a185d79510b725ee8b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 346.58392800338333,
+        "http_total_ms": 346.8657630000962,
+        "qs_import": 4485.079,
+        "qs_startup": 806.061,
+        "qs_app": 8.115
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "cf431f65701c46a185d79510b725ee8b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 348.96216000197455,
+        "http_total_ms": 349.2083740020462,
+        "qs_import": 4485.079,
+        "qs_startup": 806.061,
+        "qs_app": 8.286
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "cf431f65701c46a185d79510b725ee8b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 344.88400999907753,
+        "http_total_ms": 345.13788699769066,
+        "qs_import": 4485.079,
+        "qs_startup": 806.061,
+        "qs_app": 7.985
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "c3f37963a31c481b9261589372f7274b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 336.5928669991263,
+        "http_total_ms": 336.8517710005108,
+        "qs_import": 5135.11,
+        "qs_startup": 666.864,
+        "qs_app": 9.864
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "cf431f65701c46a185d79510b725ee8b",
+        "first_http_in_worker": false,
+        "http_headers_ms": 341.33202500015614,
+        "http_total_ms": 341.80239000124857,
+        "qs_import": 4485.079,
+        "qs_startup": 806.061,
+        "qs_app": 8.147
+      }
+    ]
+  },
+  "limitations": [
+    "Chromium; auditoria automática complementada por teclado e cores computadas, sem certificação integral WCAG.",
+    "Benchmark HTTP coletado durante testes de navegador; não representa carga isolada.",
+    "Inicialização de aplicação não inclui provisionamento anterior ao Python; respeitar first_http_observed.",
+    "Entrega/reprodução final e submissão do grupo permanecem na etapa 11 (R06 parcial).",
+    "Commit posterior de documentação registra estas evidências; código publicado é o source_commit."
+  ]
+}
