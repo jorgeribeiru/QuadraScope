@@ -1,7 +1,7 @@
 # Plano de implementação — QuadraScope
 
 > Do passo 0 à entrega. Revisão: 29/10/2026. Foco: Atlanta Hawks × Houston Rockets.
-> Estado atual: etapas 0–7 concluídas. Ciência, artefatos reproduzíveis e API FastAPI validados; base React da etapa 8 integrada, publicada e validada na Vercel; relatório interpretativo ainda pendente e cold start isolado na nuvem limitado pelo Hobby.
+> Estado atual: etapas 0–8 concluídas. Ciência, artefatos reproduzíveis, API FastAPI e base React validados; versão técnica publicada na Vercel e inicialização da aplicação medida com instrumentação própria. Provisionamento completo da plataforma não isolado; relatório interpretativo ainda pendente.
 
 ## Uso do plano
 
@@ -159,13 +159,13 @@ As caixas já marcadas na etapa 0 indicam documentação revisada e confirmaçõ
 - [X] **P8.05** — Criar componentes de carregamento, erro, vazio, insuficiência de amostra, avisos e tabelas acessíveis.
 - [X] **P8.06** — Preparar configuração local de frontend/API e escolher topologia de deploy mediante prova com dependências reais.
 - [X] **P8.07** — Publicar uma versão de validação técnica e verificar `/api`, health, artefatos, recarga de rota profunda e CORS se houver duas origens.
-- [ ] **P8.08** — Medir tamanho do pacote, cold start e duração de consultas representativas; documentar limites e corrigir incompatibilidades.
+- [X] **P8.08** — Medir tamanho do pacote, cold start e duração de consultas representativas; documentar limites e corrigir incompatibilidades.
 
 **Verificação local em 29/10/2026:** P8.01–P8.06 concluídos: base React navegável com API real; 236 testes Python, 24 Vitest e quatro Playwright aprovados, Node 24.22.2, lint/formatação e build. URL compartilhável, recarga profunda, navegação móvel, vazio/erro e invalidação por release verificados. Pacote mínimo de origem única testado com runtime real, cerca de 256 MB estimados, início local mediano de 0,97 s; consultas e JS medidos. [Frontend](../development/frontend.md), [pacote e medições](../development/deployment.md), [testes do navegador](../../frontend/e2e/base.spec.ts).
 
 **Publicação P8.07 em 29/10/2026:** https://quadrascope.vercel.app, equipe `projetos-do-jorge`, Hobby, projeto `quadrascope`, estado READY. A Vercel classificou o primeiro deploy como produção, apesar da solicitação de preview; essa versão é uma validação técnica. Dez endpoints, 404/422/304, quatro testes Playwright sem login, filtros, assets e recarga profunda aprovados. Build reportado de 22 s e latências HTTP reais registrados no [guia](../development/deployment.md).
 
-**Pendência P8.08:** tamanho de output da função e latências na nuvem foram medidos; a consulta de métricas por início frio retornou `payment_required` para Observability Plus. O Hobby foi mantido. Cold start isolado não foi medido, e o tempo local não foi usado como equivalente. A tarefa permanece parcial até obter essa medição ou revisar seu aceite para documentar a limitação. O relatório completo continua na etapa 9.
+**P8.08 executado em 29/10/2026:** instrumentação própria publicada no Hobby; inicialização da aplicação recuperada em dois workers reais (5,22–5,94 s para importação + lifespan), quarenta chamadas HTTP em duas coletas, tamanhos e limites registrados. Não foi observada a primeira resposta HTTP desses workers; nenhuma latência quente foi rotulada como cold start. O provisionamento anterior ao Python segue sem medição isolada e não está incluído nesses tempos. [Método, limitações e reprodução](../development/deployment.md#p808--medição-com-instrumentação-própria), [amostras e hashes versionados](../development/measurements/p8-08.json). O relatório completo continua na etapa 9.
 
 ## Etapa 9 — Implementar as páginas do relatório
 

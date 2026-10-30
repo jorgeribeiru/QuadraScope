@@ -1,6 +1,6 @@
 # Pacote e prova de hospedagem — etapa 8
 
-A topologia preparada usa **uma origem**: FastAPI em `/api/v1`, React nos demais caminhos e assets estáticos. O pacote foi verificado localmente com as dependências reais de runtime. **Publicado e verificado em https://quadrascope.vercel.app** em 29/10/2026. P8.07 concluído; P8.08 tem tamanho/latências registrados e continua parcial porque a Vercel exige Observability Plus para isolar as métricas de cold start consultadas. O plano Hobby foi mantido.
+A topologia preparada usa **uma origem**: FastAPI em `/api/v1`, React nos demais caminhos e assets estáticos. O pacote foi verificado localmente com as dependências reais de runtime. **Publicado e verificado em https://quadrascope.vercel.app** em 29/10/2026. P8.07 e P8.08 executados. A seção final registra tamanho, consultas e inicialização da aplicação em workers reais com instrumentação própria; o provisionamento completo da plataforma não foi isolado. O plano Hobby foi mantido. As seções anteriores preservam o histórico das tentativas de medição.
 
 ## Preparar o pacote
 
@@ -145,3 +145,71 @@ vercel metrics vercel.function_invocation.function_duration_ms \
 A CLI retornou novamente `payment_required`, com a mensagem `Observability Plus is required for this query.` Isso confirma a limitação dessa consulta; não prova que toda forma alternativa de instrumentação exija pagamento. Medir importação/carregamento dos artefatos dentro da aplicação seria possível sem mudar o plano, mas deixaria de fora o provisionamento e parte da inicialização da plataforma. Essa medição parcial não deve ser apresentada como cold start completo. Nenhum critério de aceite foi alterado: P8.08 continua aberto para essa métrica.
 
 Antes do commit, `make check` passou com 236 testes Python e Ruff/formatação, e `npm run check --prefix frontend` passou com 24 testes Vitest, ESLint, Prettier, TypeScript e build. Os seis Playwright já haviam passado na versão pública atual, cujo bundle permanece `index-Bbpt0Khg.js`. Os avisos conhecidos são a depreciação Starlette/httpx no cliente de testes e o chunk ECharts acima de 500 kB sem compressão, carregado sob demanda.
+
+### P8.08 — medição com instrumentação própria
+
+O P8.08 foi executado com tempos da **inicialização da aplicação em workers reais da Vercel**, tamanho do pacote e consultas representativas. O escopo medido é o trabalho Python observável; o provisionamento anterior ao entrypoint continua sem medição isolada. Essa limitação permanece registrada e não foi substituída pelo tempo local ou por uma diferença entre chamadas HTTP.
+
+A instrumentação em [telemetry.py](../../backend/app/telemetry.py) é ativada somente pelo entrypoint de publicação. Não cria endpoints nem muda corpos JSON, OpenAPI ou ETags. Em respostas `/api/*`, acrescenta:
+
+| Campo | Significado |
+| --- | --- |
+| `Server-Timing: qs_import` | Do início de `app.py`, após importar `time`, até configurar a aplicação: imports, factory e rotas |
+| `Server-Timing: qs_startup` | Entrada no lifespan: validação/carregamento dos artefatos; não inclui espera pelo primeiro acesso |
+| `Server-Timing: qs_app` | Atendimento ASGI até emitir os headers; exclui startup anterior e envio do corpo |
+| `X-QuadraScope-Worker` | Identificador aleatório do processo instrumentado; permite agrupar amostras sem expor hostname/PID |
+| `X-QuadraScope-First-Request` | `1` somente na primeira requisição HTTP atendida pelo middleware, incluindo caminhos fora da API; não garante ausência de pré-aquecimento |
+
+Tempos de importação e startup são preservados para consulta em respostas posteriores. Assim, é possível medir a inicialização mesmo quando o coletor não recebe a primeira resposta do worker. Não se soma `qs_import` a cada consulta quente.
+
+Em 29/10/2026, foram observados dois workers do deployment `dpl_6u6uKif3jD8ZmoLmD1QGamTvQU7N`, produção READY, Python 3.12/iad1, Hobby. Cada coleta fez cinco chamadas sequenciais por cenário, totalizando quarenta chamadas. O estado READY levou 29,423 s; o builder reportou 13 s. Código: base `820bf12` mais instrumentação local ainda sem commit. A URL imutável é https://quadrascope-7o1bw0b6m-projetos-do-jorge.vercel.app; o domínio público permanece https://quadrascope.vercel.app.
+
+| Worker observado | Importação | Startup dos artefatos | Soma das fases observadas |
+| --- | --- | --- | --- |
+| `d159cd16…` | 5.276,015 ms | 664,485 ms | 5.940,500 ms |
+| `7f560931…` | 4.445,789 ms | 778,913 ms | 5.224,702 ms |
+
+Nenhuma coleta recebeu o marcador de primeira requisição. Portanto, as latências HTTP abaixo são de acessos posteriores à primeira requisição do worker; **não estimam penalidade HTTP de cold start**. A inicialização foi recuperada dos tempos preservados. As duas observações são insuficientes para estimar uma distribuição de cold starts ou SLA. O custo de inicialização observável ficou entre 5,22 e 5,94 s; não foi assumido como tempo completo da plataforma.
+
+Resultados da segunda coleta, com cinco amostras por cenário:
+
+| Consulta | HTTP total mediana / p95 | Aplicação até headers mediana / p95 |
+| --- | --- | --- |
+| Health | 443,04 / 484,06 ms | 1,25 / 1,74 ms |
+| Summary Atlanta em casa | 452,67 / 459,84 ms | 16,61 / 16,80 ms |
+| Comparação em casa | 581,94 / 597,91 ms | 109,01 / 125,00 ms |
+| LOF Houston em casa | 433,65 / 456,76 ms | 8,13 / 10,91 ms |
+
+O p95 usa nearest-rank; com cinco amostras ele coincide com o máximo. HTTP inclui rede/TLS/plataforma; a diferença para `qs_app` não é atribuída integralmente à Vercel. LOF manteve referência de 74 jogos e exibição de 35, e todas as respostas conferiram o release esperado.
+
+| Tamanho/limite | Medição atual |
+| --- | --- |
+| Arquivos de origem preparados, sem o próprio manifesto | 4.748.249 bytes |
+| Site-packages local do runtime reduzido | 251.286.927 bytes |
+| Estimativa local sem compressão | 256.035.176 bytes |
+| Output da função reportado pela Vercel | 74.092.783 bytes; não identificado como tamanho completo sem compressão |
+| Memória configurada / duração máxima | 2.048 MB / 60 s |
+| Processos locais novos, até health pronto | 2,971 / 0,976 / 0,976 s; mediana 0,976 s |
+
+O pacote foi aceito pela Vercel e a estimativa local permanece abaixo do limite documentado de 500 MB para Python. Não foi necessário aumentar plano, memória ou timeout. A separação das dependências offline e o carregamento lazy do ECharts continuam aplicados. O aviso do chunk acima de 500 kB sem compressão permanece documentado; ele não impediu os testes nem o deploy. Não se adicionou pré-aquecimento artificial ou chamadas periódicas.
+
+#### Reproduzir e auditar
+
+A [evidência versionada](measurements/p8-08.json) preserva todas as amostras das duas coletas, hashes do código de instrumentação/empacotamento, release, tamanhos e medições locais. O primeiro coletor exigia observar a primeira resposta e registrou `no_first_request_observed`; suas amostras de inicialização foram preservadas. A versão final separa o sucesso da medição de inicialização do campo `first_http_observed`, sem inventar uma chamada fria.
+
+```bash
+make deploy-prepare
+uv run --locked python -m backend.scripts.benchmark_deployment \
+  --python "$PWD/data/processed/tooling/runtime/bin/python"
+uv run --locked python -m backend.scripts.benchmark_cloud \
+  --base-url https://quadrascope.vercel.app \
+  --release c4ce845dd875a68e054fb3db2ffac5c98d2e6e818fb52cb8898621ed99bb4e37 \
+  --deployment dpl_6u6uKif3jD8ZmoLmD1QGamTvQU7N \
+  --output data/processed/p8-08-cloud-verified.json
+```
+
+O ID informado identifica o deployment inspecionado pelo operador; o coletor confere release e instrumentação das respostas, mas não resolve aliases da Vercel. Em nova publicação, conferir primeiro o deployment/domínio e substituir esse ID. Workers e tempos podem mudar em uma repetição. A coleta rejeita releases divergentes, instrumentação ausente e respostas HTTP de erro; não depende de tokens ou acesso pago.
+
+Referências: [diagnóstico oficial de funções lentas](https://vercel.com/docs/functions/debug-slow-functions) e [runtime Python](https://vercel.com/docs/functions/runtimes/python). A comparação entre acessos sugerida pelo diagnóstico é complementada aqui por tempos do worker; nenhuma diferença entre requisições foi usada como medição exata de cold start.
+
+Validação final desta revisão: `make check` aprovado com **241 testes Python**, Ruff e formatação; seis testes Playwright aprovados na URL pública. A prova local utilizou somente as vinte dependências de runtime, sem PyArrow/scikit-learn/threadpoolctl/PyOD, e conferiu API/SPA/assets e erros 404. Na consulta `level:error OR level:fatal`, filtrada pelo deployment e janela de 15 minutos, foram retornados zero registros; essa observação não garante ausência permanente de erros. Drains não foram configurados.

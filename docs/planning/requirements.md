@@ -1,6 +1,6 @@
 # Requisitos e acompanhamento — QuadraScope
 
-> Base: [Projeto 1.pdf](<../references/Projeto 1.pdf>), cinco páginas. Revisão: 29/10/2026. Etapas 0–7 concluídas; ciência, build reproduzível e API FastAPI validados. A base React da etapa 8 está publicada e validada na Vercel; cold start isolado segue limitado pelo Hobby. Os requisitos acadêmicos permanecem pendentes ou parciais.
+> Base: [Projeto 1.pdf](<../references/Projeto 1.pdf>), cinco páginas. Revisão: 29/10/2026. Etapas 0–8 concluídas; ciência, build reproduzível, API FastAPI e base React validados. Inicialização da aplicação medida na Vercel com instrumentação própria; provisionamento completo da plataforma não isolado. Os requisitos acadêmicos permanecem pendentes ou parciais.
 
 A ordem de trabalho e as tarefas detalhadas estão no [plano de implementação](implementation-plan.md). Este arquivo acompanha o cumprimento dos requisitos do enunciado.
 
@@ -133,13 +133,15 @@ Registrar uma linha a cada atividade concluída, mesmo quando o requisito ainda 
 
 | 29/10/2026 | P8.08 — revisão antes do commit | R05 — infraestrutura validada | Consulta de duração agrupada por functionStartType repetida: payment_required. Mantidos Hobby e aceite original; inicialização local e latência HTTP não substituem cold start completo. make check aprovado com 236 testes Python; frontend com 24 Vitest, lint e build | [Consulta reproduzível e limites](../development/deployment.md#revisão-do-p808-antes-do-commit) | Codex |
 
-Etapas 1–7 e P8.01–P8.07 concluídos e validados em 29/10/2026. A base React está acessível publicamente e foi verificada na nuvem, atendendo R05. O relatório completo e suas interpretações continuam na etapa 9. P8.08 permanece parcial somente para cold start isolado; tempos locais/HTTP com rede não foram apresentados como essa métrica. A publicação técnica não conclui os demais requisitos acadêmicos.
+| 29/10/2026 | P8.08 — concluído com limites documentados | R05 — infraestrutura validada | Instrumentação própria publicada no Hobby: importação + lifespan de dois workers reais em 5,22–5,94 s; quarenta chamadas, tamanhos e limites registrados. Primeira resposta HTTP não observada; provisionamento anterior ao Python não isolado. Sem compra ou upgrade | [Método](../development/deployment.md#p808--medição-com-instrumentação-própria), [amostras/hashes](../development/measurements/p8-08.json), [coletor](../../backend/scripts/benchmark_cloud.py) | Codex |
+
+Etapas 1–7 e P8.01–P8.08 concluídos e validados em 29/10/2026. A base React está acessível publicamente e foi verificada na nuvem, atendendo R05. O relatório completo e suas interpretações continuam na etapa 9. P8.08 mede o cold start da aplicação nas fases observáveis e documenta o limite de provisionamento da plataforma; tempos locais/HTTP quentes não foram apresentados como essa métrica. A publicação técnica não conclui os demais requisitos acadêmicos.
 
 ## Pendências e responsabilidade
 
 | Pendência | Responsável / momento de resolução |
 | --- | --- |
-| Cold start isolado no Hobby ou revisão explícita do aceite dessa métrica | Implementação/grupo; P8.08, pois consulta de métricas requer Observability Plus |
+| Repetir medições quando o pacote final mudar; manter explícita a exclusão do provisionamento da plataforma | Implementação; validação da entrega nas etapas 10–11 |
 | Relatório completo, revisão e identificação do código final de entrega | Etapas 9–11; revalidar a URL e R05 com a versão final |
 
 Origem e stack foram confirmadas pelo grupo e registradas no histórico. Oráculo, parâmetros e sensibilidade foram concluídos na etapa 5. Data exata da extração, endpoints, versão da biblioteca e tratamentos prévios permanecem não informados, conforme a [proveniência](../data/provenance.md); isso não reabre P0.06, que admite o registro explícito das limitações.

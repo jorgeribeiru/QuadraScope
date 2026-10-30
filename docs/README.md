@@ -23,4 +23,4 @@
 | Dados | [Metodologia](data/methodology.md) | Fórmulas, pressupostos e validação científica |
 | Dados | [Sensibilidade versionada](data/anomaly-sensitivity.json) | Revisão 1.0.0 das 44 variantes no snapshot do projeto |
 
-O [CSV original](../data/raw/stats_times_regular_final.csv) fica fora da documentação, em `data/raw/`. O backend inclui ciência, build reproduzível e API FastAPI. A etapa 8 já fornece a base React integrada; a versão técnica está publicada na Vercel; a medição isolada de cold start continua limitada pelo Hobby. Voltar ao [README do projeto](../README.md).
+O [CSV original](../data/raw/stats_times_regular_final.csv) fica fora da documentação, em `data/raw/`. O backend inclui ciência, build reproduzível e API FastAPI. A etapa 8 já fornece a base React integrada; a versão técnica está publicada na Vercel; a inicialização da aplicação foi medida em workers reais, com limites documentados para o provisionamento da plataforma. Voltar ao [README do projeto](../README.md).

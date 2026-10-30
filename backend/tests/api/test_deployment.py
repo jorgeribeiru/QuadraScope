@@ -1,6 +1,7 @@
 """Pacote mínimo e navegação SPA sem mascarar erros da API ou de assets."""
 
 import json
+import re
 import runpy
 import shutil
 from dataclasses import replace
@@ -90,11 +91,47 @@ def test_spa_fallback_keeps_api_404_and_static_asset_semantics(source, monkeypat
     monkeypatch.setattr(main, "create_app", lambda: factory(replace(source, project_root=root)))
     application = runpy.run_path(str(root / "app.py"))["app"]
     with TestClient(application) as client:
-        assert client.get("/api/v1/health").json()["status"] == "ready"
+        health = client.get("/api/v1/health")
+        assert health.json()["status"] == "ready"
+        assert health.headers["x-quadrascope-first-request"] == "1"
+        worker = health.headers["x-quadrascope-worker"]
+        assert re.fullmatch(r"[a-f0-9]{32}", worker)
+        assert set(re.findall(r"(qs_\w+);dur=", health.headers["server-timing"])) == {
+            "qs_import",
+            "qs_startup",
+            "qs_app",
+        }
+        cached = client.get("/api/v1/health", headers={"If-None-Match": health.headers["etag"]})
+        assert cached.status_code == 304 and cached.content == b""
+        assert cached.headers["x-quadrascope-first-request"] == "0"
+        assert cached.headers["x-quadrascope-worker"] == worker
         response = client.get("/times/1610612745?venue=home", headers={"Accept": "text/html"})
         assert response.status_code == 200 and "QuadraScope SPA" in response.text
+        assert "server-timing" not in response.headers
         assert client.get("/assets/app.js").status_code == 200
         assert client.get("/assets/missing.js", headers={"Accept": "text/html"}).status_code == 404
         response = client.get("/api/v1/missing", headers={"Accept": "text/html"})
         assert response.status_code == 404 and response.json()["error"]["code"] == "not_found"
         assert len(json.loads(client.get("/openapi.json").text)["paths"]) == 10
+
+
+def test_telemetry_preserves_unavailable_artifacts_and_validation_errors(source, monkeypatch):
+    from backend.app import main
+
+    prepare_deployment(source)
+    root = source.project_root / ".deployment"
+    factory = main.create_app
+    monkeypatch.setattr(main, "create_app", lambda: factory(artifact_root=root / "missing"))
+    application = runpy.run_path(str(root / "app.py"))["app"]
+    with TestClient(application) as client:
+        unavailable = client.get("/api/v1/health")
+        assert unavailable.status_code == 503
+        assert unavailable.json()["error"]["code"] == "artifacts_unavailable"
+        assert unavailable.headers["x-quadrascope-first-request"] == "1"
+        assert "qs_startup;dur=" in unavailable.headers["server-timing"]
+        invalid = client.get("/api/v1/health?a=1&a=2")
+        assert invalid.status_code == 422
+        assert invalid.headers["x-quadrascope-first-request"] == "0"
+        assert (
+            invalid.headers["x-quadrascope-worker"] == unavailable.headers["x-quadrascope-worker"]
+        )

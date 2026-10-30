@@ -2,7 +2,7 @@
 
 Relatório web interativo de análise de dados da NBA, desenvolvido para o Projeto 1 de Laboratório de Ciência de Dados — UFAPE, 2026.2. O foco do grupo é **Atlanta Hawks × Houston Rockets**, nas variáveis PTS, REB, AST, STL, BLK, PF e FG3M.
 
-**Estado atual:** etapas 0–7 concluídas. Etapa 8 em andamento: base React integrada à API, com navegação, filtros, tabelas e gráfico comparativo. Pipeline científico e API disponíveis; versão técnica publicada e validada na Vercel. Relatório completo e interpretações finais ainda pendentes; cold start isolado limitado pelas métricas disponíveis no Hobby. A stack **FastAPI + React** foi confirmada pelo grupo.
+**Estado atual:** etapas 0–8 concluídas: base React integrada à API, com navegação, filtros, tabelas e gráfico comparativo. Pipeline científico e API disponíveis; versão técnica publicada e validada na Vercel. Relatório completo e interpretações finais ainda pendentes; inicialização da aplicação medida em workers reais, com limites documentados para o provisionamento da plataforma. A stack **FastAPI + React** foi confirmada pelo grupo.
 
 ## Estrutura atual
 

@@ -13,7 +13,7 @@ from backend.artifacts.validation import require
 from backend.repositories.artifacts import ArtifactRepository
 
 RUNTIME_MODULES = {
-    "app": ("config", "main", "queries", "schemas", "services"),
+    "app": ("config", "main", "queries", "schemas", "services", "telemetry"),
     "analytics": ("metrics", "descriptive", "distributions", "comparisons"),
     "artifacts": ("models", "serialization", "validation"),
     "repositories": ("artifacts",),

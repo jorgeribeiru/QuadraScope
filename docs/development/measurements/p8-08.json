@@ -1,0 +1,668 @@
+{
+  "task": "P8.08",
+  "measured_date_local": "2026-10-29",
+  "timezone": "America/Recife",
+  "base_url": "https://quadrascope.vercel.app",
+  "deployment_id": "dpl_6u6uKif3jD8ZmoLmD1QGamTvQU7N",
+  "immutable_url": "https://quadrascope-7o1bw0b6m-projetos-do-jorge.vercel.app",
+  "git_base": "820bf12",
+  "uncommitted_instrumentation": true,
+  "release_id": "c4ce845dd875a68e054fb3db2ffac5c98d2e6e818fb52cb8898621ed99bb4e37",
+  "measurement_scope": "Application initialization on real Vercel workers; platform provisioning not isolated.",
+  "cloud": {
+    "runtime": "python3.12",
+    "region": "iad1",
+    "memory_mb": 2048,
+    "timeout_seconds": 60,
+    "build_seconds": 13,
+    "time_to_ready_ms": 29423,
+    "provider_reported_function_output_bytes": 74092783
+  },
+  "local": {
+    "package_manifest_sha256": "3e79495968b7e61bdf7406b265924b7478fed8fe6c4e84f135d1f1b1623b2e30",
+    "source_size_bytes": 4748249,
+    "runtime_site_packages_bytes": 251286927,
+    "estimated_uncompressed_bytes": 256035176,
+    "cold_start_seconds": [
+      2.971312090000538,
+      0.9757493910001358,
+      0.9758878640004696
+    ],
+    "cold_start_median_seconds": 0.9758878640004696,
+    "observed_rss_bytes": [
+      228106240,
+      215793664,
+      215998464
+    ],
+    "latency_ms": {
+      "/api/v1/anomalies?team_id=1610612745&method=lof&venue=home": {
+        "max": 8.27005800056213,
+        "median": 5.10936800037598,
+        "p95": 6.931070699647535,
+        "samples": 15
+      },
+      "/api/v1/comparisons?venue=home&metric=PTS": {
+        "max": 72.12437799989857,
+        "median": 59.28286299968022,
+        "p95": 69.97718260008696,
+        "samples": 15
+      },
+      "/api/v1/teams/1610612737/summary?venue=home": {
+        "max": 23.75122499961435,
+        "median": 9.615236000172445,
+        "p95": 15.936437599793862,
+        "samples": 15
+      }
+    },
+    "frontend_bundles": {
+      "assets/PointsChart-DbquJvir.js": {
+        "bytes": 515594,
+        "gzip_bytes": 172336
+      },
+      "assets/index-Bbpt0Khg.js": {
+        "bytes": 410610,
+        "gzip_bytes": 125989
+      }
+    }
+  },
+  "source_sha256": {
+    "deployment/app.py": "197e0a26c45b9324c290158f7234dcd973b9d52115eeab0a211c44251adbb136",
+    "backend/app/telemetry.py": "715dfda8598de1a2c4e89d96b50c2bda8f3a7bc7b99811edf9bf0f017eca055a",
+    "backend/scripts/benchmark_cloud.py": "c92dec954d40d6c044d179a74540dc7047a1820b207ec5ae4d463aa3b94f57e9",
+    "backend/scripts/prepare_deployment.py": "1651252c719b6ac8126c45d101fcb0a6f927214868fa195b80ee1757352378ca",
+    "backend/scripts/benchmark_deployment.py": "a36b58403fadeb3d9dcd1648a166dc31142baef43f856b39c23810f390b1eaf3"
+  },
+  "initial_capture": {
+    "generated_at": "2026-10-30T01:04:45.373827+00:00",
+    "base_url": "https://quadrascope.vercel.app",
+    "deployment_id": "dpl_6u6uKif3jD8ZmoLmD1QGamTvQU7N",
+    "release_id": "c4ce845dd875a68e054fb3db2ffac5c98d2e6e818fb52cb8898621ed99bb4e37",
+    "status": "no_first_request_observed",
+    "method": "application_instrumentation_and_client_http",
+    "platform_provisioning_isolated": false,
+    "limitations": [
+      "Importação começa na execução de app.py, após importar time.",
+      "Startup é a entrada no lifespan, incluindo validação/carregamento dos artefatos.",
+      "Primeira requisição HTTP do worker pode ocorrer após pré-aquecimento.",
+      "HTTP inclui rede/TLS e plataforma; não isola custo causal do cold start.",
+      "qs_app mede atendimento até os headers; não inclui envio do corpo.",
+      "Amostra pequena e sequencial; p95 usa nearest-rank e não estima SLA."
+    ],
+    "workers": {
+      "d159cd16816c4547bd6ff34260835776": {
+        "import_ms": 5276.015
+      }
+    },
+    "first_requests": [],
+    "summary": {
+      "health": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 580.5214370002432,
+          "p95_nearest_rank_ms": 675.7992390002983,
+          "max_ms": 675.7992390002983
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 1.326,
+          "p95_nearest_rank_ms": 1.768,
+          "max_ms": 1.768
+        }
+      },
+      "summary_atlanta_home": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 458.4597709999798,
+          "p95_nearest_rank_ms": 467.9792090000774,
+          "max_ms": 467.9792090000774
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 22.238,
+          "p95_nearest_rank_ms": 25.659,
+          "max_ms": 25.659
+        }
+      },
+      "comparison_home": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 581.7191260002801,
+          "p95_nearest_rank_ms": 612.047010000424,
+          "max_ms": 612.047010000424
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 95.433,
+          "p95_nearest_rank_ms": 99.775,
+          "max_ms": 99.775
+        }
+      },
+      "lof_houston_home": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 441.2852639998164,
+          "p95_nearest_rank_ms": 455.7470589998047,
+          "max_ms": 455.7470589998047
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 9.496,
+          "p95_nearest_rank_ms": 11.908,
+          "max_ms": 11.908
+        }
+      }
+    },
+    "records": [
+      {
+        "scenario": "health",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 675.6764299998395,
+        "http_total_ms": 675.7992390002983,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 1.768
+      },
+      {
+        "scenario": "health",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 607.5050049994388,
+        "http_total_ms": 607.6146329996845,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 1.167
+      },
+      {
+        "scenario": "health",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 574.1346869999688,
+        "http_total_ms": 574.3975060004232,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 1.224
+      },
+      {
+        "scenario": "health",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 580.2018100002897,
+        "http_total_ms": 580.5214370002432,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 1.326
+      },
+      {
+        "scenario": "health",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 428.32057000032364,
+        "http_total_ms": 428.61665000054927,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 1.37
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 466.7881989998932,
+        "http_total_ms": 467.9792090000774,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 25.659
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 457.300801999736,
+        "http_total_ms": 458.4597709999798,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 22.238
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 450.77142999980424,
+        "http_total_ms": 452.00445799946465,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 21.972
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 458.6298200001693,
+        "http_total_ms": 459.7319350004909,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 23.438
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 450.105034000444,
+        "http_total_ms": 451.1426230001234,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 22.187
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 562.3266680004235,
+        "http_total_ms": 612.047010000424,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 99.775
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 530.6153049996283,
+        "http_total_ms": 581.7191260002801,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 95.433
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 548.5991530003957,
+        "http_total_ms": 599.6091400002115,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 98.979
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 509.9085669999113,
+        "http_total_ms": 561.7885810006555,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 83.187
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 527.7351510003427,
+        "http_total_ms": 576.8758880003588,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 90.6
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 442.60059999942314,
+        "http_total_ms": 443.66040299973974,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 11.908
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 431.35119399994437,
+        "http_total_ms": 431.7932620006104,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 9.496
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 438.62446599996474,
+        "http_total_ms": 438.8887760005673,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 9.46
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 454.91575699998066,
+        "http_total_ms": 455.7470589998047,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 9.221
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "d159cd16816c4547bd6ff34260835776",
+        "first_http_in_worker": false,
+        "http_headers_ms": 441.03064899991296,
+        "http_total_ms": 441.2852639998164,
+        "qs_import": 5276.015,
+        "qs_startup": 664.485,
+        "qs_app": 9.589
+      }
+    ]
+  },
+  "verified_capture": {
+    "generated_at": "2026-10-30T01:06:08.717908+00:00",
+    "base_url": "https://quadrascope.vercel.app",
+    "deployment_id": "dpl_6u6uKif3jD8ZmoLmD1QGamTvQU7N",
+    "release_id": "c4ce845dd875a68e054fb3db2ffac5c98d2e6e818fb52cb8898621ed99bb4e37",
+    "status": "passed",
+    "first_http_observed": false,
+    "method": "application_instrumentation_and_client_http",
+    "platform_provisioning_isolated": false,
+    "limitations": [
+      "Importação começa na execução de app.py, após importar time.",
+      "Startup é a entrada no lifespan, incluindo validação/carregamento dos artefatos.",
+      "Tempos de inicialização são recuperados também nas respostas quentes.",
+      "Primeira requisição HTTP do worker pode ocorrer após pré-aquecimento.",
+      "HTTP inclui rede/TLS e plataforma; não isola custo causal do cold start.",
+      "qs_app mede atendimento até os headers; não inclui envio do corpo.",
+      "Amostra pequena e sequencial; p95 usa nearest-rank e não estima SLA."
+    ],
+    "workers": {
+      "7f56093180f4456c849ccc9d18213ac2": {
+        "import_ms": 4445.789,
+        "startup_ms": 778.913,
+        "application_initialization_ms": 5224.701999999999
+      }
+    },
+    "first_requests": [],
+    "summary": {
+      "health": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 443.03886000034254,
+          "p95_nearest_rank_ms": 484.06005699962407,
+          "max_ms": 484.06005699962407
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 1.246,
+          "p95_nearest_rank_ms": 1.735,
+          "max_ms": 1.735
+        }
+      },
+      "summary_atlanta_home": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 452.6677040003051,
+          "p95_nearest_rank_ms": 459.8424599998907,
+          "max_ms": 459.8424599998907
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 16.611,
+          "p95_nearest_rank_ms": 16.804,
+          "max_ms": 16.804
+        }
+      },
+      "comparison_home": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 581.9401099997776,
+          "p95_nearest_rank_ms": 597.9071799993108,
+          "max_ms": 597.9071799993108
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 109.008,
+          "p95_nearest_rank_ms": 124.997,
+          "max_ms": 124.997
+        }
+      },
+      "lof_houston_home": {
+        "http_total": {
+          "n": 5,
+          "median_ms": 433.6486109996258,
+          "p95_nearest_rank_ms": 456.76343600007385,
+          "max_ms": 456.76343600007385
+        },
+        "app_until_headers": {
+          "n": 5,
+          "median_ms": 8.129,
+          "p95_nearest_rank_ms": 10.911,
+          "max_ms": 10.911
+        }
+      }
+    },
+    "records": [
+      {
+        "scenario": "health",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 483.82217699963803,
+        "http_total_ms": 484.06005699962407,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 1.735
+      },
+      {
+        "scenario": "health",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 458.52175500021985,
+        "http_total_ms": 458.7142219997986,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 1.232
+      },
+      {
+        "scenario": "health",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 442.7659630000562,
+        "http_total_ms": 443.03886000034254,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 1.246
+      },
+      {
+        "scenario": "health",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 436.04986799982726,
+        "http_total_ms": 436.2498649998088,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 1.154
+      },
+      {
+        "scenario": "health",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 425.83297200053494,
+        "http_total_ms": 426.0535710000113,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 1.576
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 452.48396300030436,
+        "http_total_ms": 453.3303380003417,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 16.611
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 451.5667229998144,
+        "http_total_ms": 452.37499100039713,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 16.751
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 459.09445300003426,
+        "http_total_ms": 459.8424599998907,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 16.374
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 451.68236599965894,
+        "http_total_ms": 452.6677040003051,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 16.154
+      },
+      {
+        "scenario": "summary_atlanta_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 445.61258199973963,
+        "http_total_ms": 446.348613999362,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 16.804
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 548.6851859996023,
+        "http_total_ms": 597.9071799993108,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 109.572
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 530.3376799993202,
+        "http_total_ms": 581.9401099997776,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 104.292
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 543.9306899997973,
+        "http_total_ms": 593.2287699997687,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 124.997
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 534.7498129995074,
+        "http_total_ms": 581.7850449993784,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 95.119
+      },
+      {
+        "scenario": "comparison_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 532.160931999897,
+        "http_total_ms": 581.2788399998681,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 109.008
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 455.9662199999366,
+        "http_total_ms": 456.76343600007385,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 10.911
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 443.4275969997543,
+        "http_total_ms": 444.23784199989313,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 8.129
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 426.76428999948257,
+        "http_total_ms": 427.4370299999646,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 8.239
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 433.0660519999583,
+        "http_total_ms": 433.6486109996258,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 7.985
+      },
+      {
+        "scenario": "lof_houston_home",
+        "worker_id": "7f56093180f4456c849ccc9d18213ac2",
+        "first_http_in_worker": false,
+        "http_headers_ms": 432.3853100004271,
+        "http_total_ms": 432.9681770004754,
+        "qs_import": 4445.789,
+        "qs_startup": 778.913,
+        "qs_app": 8.003
+      }
+    ]
+  },
+  "validation": {
+    "public_playwright_passed": 6,
+    "public_playwright_seconds": 13.7,
+    "python_tests_passed": 241,
+    "ruff": "passed",
+    "format": "passed",
+    "runtime_routing": "passed",
+    "runtime_offline_dependencies_absent": true,
+    "runtime_error_scan": {
+      "records_returned": 0,
+      "query": "level:error OR level:fatal",
+      "window": "15m",
+      "deployment_id": "dpl_6u6uKif3jD8ZmoLmD1QGamTvQU7N"
+    },
+    "drains": "not configured"
+  },
+  "limits": [
+    "No platform-wide isolated cold-start metric: Observability Plus query unavailable on Hobby.",
+    "First HTTP request not observed in either capture; initialization recovered from retained worker timings.",
+    "Two worker observations only; no cold HTTP penalty or SLA inferred.",
+    "Local estimate is not the provider uncompressed bundle size.",
+    "First capture used a stricter first-request check and returned no_first_request_observed; its timing samples remain valid."
+  ]
+}
