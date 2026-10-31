@@ -6,18 +6,21 @@ import { CanvasRenderer } from 'echarts/renderers'
 import type { components } from '@/generated/api'
 import { formatMeasure, metricLabels, teams } from '@/lib/format'
 import type { Metric } from '@/lib/filters'
+import { statisticLabels, type ComparisonMeasure } from '@/lib/statistics'
 
 echarts.use([BarChart, GridComponent, TooltipComponent, AriaComponent, CanvasRenderer])
 export function PointsChart({
   rows,
   metric,
+  measure = 'mean',
 }: {
   rows: components['schemas']['SummaryRow'][]
   metric: Metric
+  measure?: ComparisonMeasure
 }) {
   const values = teams.map((team) => {
     const row = rows.find((row) => row.team_id === team.id)
-    const value = row?.statistics.mean.value
+    const value = row?.statistics[measure].value
     return {
       value: typeof value === 'number' ? value : null,
       itemStyle: {
@@ -29,14 +32,14 @@ export function PointsChart({
   const description = teams
     .map((team) => {
       const row = rows.find((row) => row.team_id === team.id)
-      return `${team.name}: ${row ? formatMeasure(row.statistics.mean) : 'indisponível'}`
+      return `${team.name}: ${row ? formatMeasure(row.statistics[measure]) : 'indisponível'}`
     })
     .join('; ')
   return (
     <div
       className="comparison-chart"
       role="img"
-      aria-label={`Média de ${metricLabels[metric]}. ${description}.`}
+      aria-label={`${statisticLabels[measure]} de ${metricLabels[metric]}. ${description}. Unidade: ${rows[0]?.statistics[measure].unit ?? 'indisponível'}.`}
     >
       <ReactEChartsCore
         echarts={echarts}
@@ -62,7 +65,7 @@ export function PointsChart({
           yAxis: {
             type: 'value',
             min: 0,
-            name: rows[0]?.statistics.mean.unit || '',
+            name: rows[0]?.statistics[measure].unit || '',
             nameTextStyle: { color: '#68736c', align: 'left' },
             splitLine: { lineStyle: { color: '#edf0e9' } },
           },

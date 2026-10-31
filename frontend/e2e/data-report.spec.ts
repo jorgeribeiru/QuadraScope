@@ -88,7 +88,7 @@ test('falha na auditoria não vira qualidade aprovada nem oculta o dicionário',
   const qualityLink = page
     .getByRole('navigation', { name: 'Seções de Dados e métodos' })
     .getByRole('link', { name: /Qualidade/ })
-  await expect(qualityLink).toHaveAttribute('href', '#auditoria')
+  await expect(qualityLink).toHaveAttribute('href', '/dados#auditoria')
   await qualityLink.click()
   await expect(page).toHaveURL(/#auditoria$/)
   await expect(

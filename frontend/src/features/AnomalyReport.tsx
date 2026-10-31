@@ -9,6 +9,7 @@ import { QueryBoundary } from '@/components/QueryBoundary'
 import { DataTable } from '@/components/DataTable'
 import { ReportSection } from '@/components/ReportPrimitives'
 import { Warning } from '@/components/States'
+import { ReportIndex } from '@/components/ReportNavigation'
 const methodNames: Record<Method, string> = {
   zscore: 'Z-score',
   iqr: 'IQR',
@@ -20,15 +21,15 @@ const methodNames: Record<Method, string> = {
 }
 const methodReadings: Record<Method, string> = {
   zscore:
-    'Distância em desvios amostrais da média do próprio time. Score é |z|, não probabilidade. Um ponto além do corte pode ser legítimo e a referência não é a média conjunta dos times.',
-  iqr: 'Sinaliza observações estritamente fora de Q1−1,5×IQR e Q3+1,5×IQR. Os quartis coincidem com os boxplots do histórico completo. Bigode é observação; cerca é limite teórico.',
+    'Calculamos a distância de cada valor à média do próprio time em desvios amostrais. Usamos |z| como score e sinalizamos os valores que ultrapassam o corte. Essa distância indica atipicidade, não a probabilidade de um erro.',
+  iqr: 'Usamos os mesmos quartis dos boxplots e sinalizamos os valores fora de Q1−1,5×IQR e Q3+1,5×IQR. Distinguimos as cercas, que são limites calculados, dos bigodes, que correspondem a valores observados.',
   grubbs:
-    'Teste bilateral para um extremo, sob normalidade aproximada. Alpha nominal de 5% por teste; múltiplos testes aumentam o risco de falsos positivos. Não houve remoção iterativa. Em empate ambíguo, os candidatos não são convertidos em um outlier individual confirmado.',
-  ecod: 'Combina caudas empíricas inclusivas das sete variáveis, considerando assimetria. Não usa StandardScaler. Contribuições por variável explicam o score, sem representar causalidade ou probabilidade de erro.',
-  knn: 'Distância euclidiana ao décimo vizinho externo, excluindo o próprio ponto. As sete variáveis são padronizadas no histórico do próprio time. A distância é relativa a essa referência e não permite ranking comum entre times.',
-  lof: 'Compara densidade local com a dos dez vizinhos. O score mostrado é o negativo de negative_outlier_factor_; valores maiores indicam mais atipicidade. A decisão final usa o corte relativo explícito, não os rótulos automáticos da biblioteca.',
+    'Aplicamos o teste bilateral para um extremo, com alpha de 5% por teste e pressuposto de normalidade aproximada. Como realizamos vários testes, consideramos o risco de falsos positivos. Não removemos valores para repetir o procedimento; em caso de empate ambíguo, mantemos a atribuição como indefinida.',
+  ecod: 'Combinamos as caudas empíricas das sete variáveis, levando em conta a assimetria. No ECOD, usamos os valores originais, sem StandardScaler, e apresentamos a contribuição de cada variável para o score.',
+  knn: 'Usamos a distância euclidiana ao décimo vizinho, excluindo o próprio ponto. Antes disso, padronizamos as sete variáveis no histórico de cada time. Assim, interpretamos as distâncias dentro da referência de Atlanta ou de Houston.',
+  lof: 'Comparamos a densidade local de cada partida com a de seus dez vizinhos. Apresentamos o negativo de negative_outlier_factor_, de modo que scores maiores indiquem mais atipicidade. Adotamos um corte relativo explícito para a decisão final.',
   dbscan:
-    'Agrupamento por densidade no vetor padronizado. Cluster −1 significa ruído, não erro comprovado. Não há score contínuo ou ranking inventado. eps=2,5 e min_samples=5 foram revisados para este snapshot; a grade não sustenta múltiplos grupos estáveis.',
+    'Aplicamos o agrupamento por densidade às sete variáveis padronizadas, com eps=2,5 e min_samples=5. Apresentamos o cluster −1 como ruído. Na comparação de parâmetros, não encontramos uma divisão estável em vários grupos; por isso, interpretamos esse resultado com cuidado.',
 }
 const precise = (value: number) => value.toLocaleString('pt-BR', { maximumFractionDigits: 6 })
 
@@ -67,15 +68,18 @@ export function Anomalies({ meta, selection }: { meta: Meta; selection: Selectio
       <div className="analysis-scope">
         <span className="scope-label">HISTÓRICO COMPLETO DO TIME</span>
         <ReadableParagraph>
-          Os detectores usam uma referência fixa para cada time; os filtros da Visão geral e da
-          Comparação não são aplicados aqui. A exibição das partidas não recalcula o método.
+          Aplicamos os métodos ao histórico completo de cada time. Os controles desta página
+          permitem consultar os resultados já calculados; os filtros da Visão geral e da Comparação
+          ficam restritos àquelas páginas.
         </ReadableParagraph>
       </div>
+      <ReportIndex />
       <div className="anomaly-intro">
-        <h2>Escolha uma lente para a análise</h2>
+        <h2>Como buscamos partidas atípicas</h2>
         <ReadableParagraph>
-          Z-score, IQR e Grubbs analisam uma variável. ECOD, k-NN, LOF e DBSCAN analisam o vetor
-          completo de sete variáveis. Métodos diferentes podem sinalizar partidas diferentes.
+          Usamos Z-score, IQR e Grubbs para examinar uma variável por vez. Com ECOD, k-NN, LOF e
+          DBSCAN, analisamos as sete variáveis em conjunto. Abaixo, mostramos quais partidas cada
+          método identificou.
         </ReadableParagraph>
       </div>
       <div className="report-toolbar">
@@ -141,7 +145,7 @@ export function Anomalies({ meta, selection }: { meta: Meta; selection: Selectio
           return (
             <ReportSection
               id="detector"
-              title={`Partidas sob a lente do ${methodNames[method]}`}
+              title={`Resultados de ${methodNames[method]}`}
               requirements="R14 · R15 · R23"
             >
               <div className="report-context">
@@ -166,9 +170,9 @@ export function Anomalies({ meta, selection }: { meta: Meta; selection: Selectio
               </div>
               <ReadableParagraph className="anomaly-reference">
                 <strong>{result.outlier_count ?? 'Indefinida'} sinalizações na referência</strong>;{' '}
-                {result.display_n} partidas disponíveis e {rows.length} linhas na tabela atual. O
-                controle de exibição não reajusta o detector. Referência fixa: histórico completo do
-                próprio time no CSV; não herda filtros da Home.
+                {result.display_n} partidas disponíveis e {rows.length} linhas na tabela atual. Para
+                esta análise, usamos o histórico completo do próprio time no CSV. Alterar as
+                partidas exibidas muda a consulta, mas mantém os resultados do método.
               </ReadableParagraph>
               {result.status !== 'ok' && <Warning>{result.reason ?? result.status}</Warning>}
               {result.test && (
@@ -232,6 +236,29 @@ export function Anomalies({ meta, selection }: { meta: Meta; selection: Selectio
               {rows.length ? (
                 <DataTable
                   data={rows}
+                  search={{
+                    label: 'Consultar partidas do detector',
+                    placeholder: 'ID, confronto ou data (DD/MM/AAAA)',
+                    text: (row) =>
+                      `${row.game_id} ${row.matchup} ${formatDate(row.game_date)} ${row.game_date} ${row.is_outlier ? 'sinalizada' : 'não sinalizada'}`,
+                  }}
+                  filters={[
+                    {
+                      id: 'decision',
+                      label: 'Decisão da partida',
+                      value: (row) =>
+                        row.is_outlier === null
+                          ? 'undefined'
+                          : row.is_outlier
+                            ? 'flagged'
+                            : 'unflagged',
+                      options: [
+                        { value: 'flagged', label: 'Sinalizada' },
+                        { value: 'unflagged', label: 'Não sinalizada' },
+                        { value: 'undefined', label: 'Indefinida' },
+                      ],
+                    },
+                  ]}
                   columns={[
                     { accessorKey: 'game_id', header: 'ID da partida' },
                     {
@@ -291,7 +318,7 @@ export function Anomalies({ meta, selection }: { meta: Meta; selection: Selectio
                 </ReadableParagraph>
               )}
               <details>
-                <summary>Parâmetros e evidências completas do detector</summary>
+                <summary>Parâmetros e detalhes do cálculo</summary>
                 <ReadableParagraph>
                   Parâmetros efetivamente usados, incluindo referência de padronização quando
                   aplicável. StandardScaler usa desvio populacional por feature; descritivas e
@@ -324,14 +351,22 @@ export function Anomalies({ meta, selection }: { meta: Meta; selection: Selectio
                   )}
                 </pre>
               </details>
-              {result.warnings.map((w) => (
-                <Warning key={w}>{w}</Warning>
-              ))}
-              <Warning>
-                Sem rótulos verdadeiros, não há acurácia demonstrada. Métodos diferentes podem
-                sinalizar partidas diferentes: concordância não comprova correção. Escala, k, eps e
-                limiar alteram os resultados; não houve remoção automática de partidas.
-              </Warning>
+              <ReadableParagraph>
+                Mantivemos todas as partidas na base. Usamos as sinalizações para investigar
+                resultados diferentes do padrão de cada time, considerando que os métodos e os
+                parâmetros podem levar a conjuntos distintos de jogos. Como a base não tem rótulos
+                de anomalia, não calculamos acurácia para esses detectores.
+              </ReadableParagraph>
+              {result.warnings.length > 0 && (
+                <details>
+                  <summary>Observações sobre o método</summary>
+                  <ul>
+                    {result.warnings.map((warning) => (
+                      <li key={warning}>{warning}</li>
+                    ))}
+                  </ul>
+                </details>
+              )}
             </ReportSection>
           )
         }}
@@ -352,6 +387,23 @@ export function Anomalies({ meta, selection }: { meta: Meta; selection: Selectio
               </ReadableParagraph>
               <DataTable
                 data={data.anomaly_summary.filter((r) => r.team_id === teamId)}
+                search={{
+                  label: 'Consultar inventário de anomalias',
+                  placeholder: 'Ex.: Grubbs, BLK, tocos ou multivariado',
+                  text: (row) =>
+                    `${methodNames[row.method]} ${row.metric ?? 'multivariado'} ${row.metric ? metricLabels[row.metric] : row.features.map((metric) => metricLabels[metric]).join(' ')}`,
+                }}
+                filters={[
+                  {
+                    id: 'method',
+                    label: 'Método no inventário',
+                    value: (row) => row.method,
+                    options: Object.entries(methodNames).map(([value, label]) => ({
+                      value,
+                      label,
+                    })),
+                  },
+                ]}
                 columns={[
                   {
                     id: 'method',

@@ -118,7 +118,8 @@ test('resposta atrasada de um filtro anterior não substitui a seleção aplicad
     }
   })
   await page.goto('/comparar')
-  await expect(page.locator('#comparacao table')).toBeVisible()
+  const comparison = page.getByRole('table', { name: /comparação descritiva por partida/ })
+  await expect(comparison).toBeVisible()
   await page.getByRole('combobox', { name: 'Mando', exact: true }).selectOption('home')
   await page.getByRole('button', { name: 'Aplicar', exact: true }).click()
   await expect.poll(() => received).toBe(true)
@@ -130,9 +131,9 @@ test('resposta atrasada de um filtro anterior não substitui a seleção aplicad
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })
-  await expect(page.locator('#comparacao table')).toContainText(mean)
+  await expect(comparison).toContainText(mean)
   unlock()
   await expect.poll(() => settled).toBe(true)
   await expect(page).toHaveURL(/venue=away/)
-  await expect(page.locator('#comparacao table')).toContainText(mean)
+  await expect(comparison).toContainText(mean)
 })
