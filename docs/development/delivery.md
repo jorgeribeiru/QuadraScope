@@ -30,11 +30,21 @@ npm exec --prefix frontend -- playwright install chromium
 npm run test:e2e --prefix frontend
 ```
 
-Em um checkout Git, `make ci` executa ambiente, Ruff, testes científicos/API, build/validação/auditoria dos artefatos, reprodução independente, comparação dos exports de dependências, geração/checagem dos contratos TypeScript e build/testes do frontend. O workflow [.github/workflows/ci.yml](../../.github/workflows/ci.yml) repete esses comandos no Ubuntu 24.04, instala Chromium com bibliotecas do sistema e executa os testes de navegador. Actions são fixadas por SHA, com permissão de leitura e sem credenciais de hospedagem. Não faz deploy automático.
+Em um checkout Git, `make ci` executa ambiente, Ruff, testes científicos/API, build/validação/auditoria dos artefatos, reprodução independente, comparação dos exports de dependências, geração/checagem dos contratos TypeScript e build/testes do frontend. O job `verify` do workflow [.github/workflows/ci.yml](../../.github/workflows/ci.yml) repete esses comandos no Ubuntu 24.04, instala Chromium com bibliotecas do sistema e executa os testes de navegador. Actions são fixadas por SHA, com permissão de leitura. As verificações não recebem credenciais de hospedagem.
 
-O workflow será executado pelo GitHub quando estes arquivos forem enviados ao repositório. Executar os comandos localmente não é evidência de uma execução remota aprovada. Os testes iniciam serviços isolados em 8018/4178 e os encerram ao terminar.
+O workflow executa em pushes, pull requests e acionamento manual. A primeira execução remota da CI, no commit `162d33f`, foi aprovada no GitHub. Os testes iniciam serviços isolados em 8018/4178 e os encerram ao terminar.
 
 No ZIP sem `.git`, os comandos de execução `make install` e `make run` funcionam normalmente; para verificar o código sem as comparações Git do CI, executar `make check`, `make data-validate`, `make report-audit` e `make web-check` após o primeiro `make run`.
+
+## Deploy automático da main
+
+O job `deploy` depende da aprovação integral de `verify` e executa somente na branch `main`, em push ou acionamento manual. Pull requests e outras branches executam as verificações. O runtime `.deployment/` gerado pela CI é transferido entre jobs como artefato de um dia; `.python-version` é preservado e `.vercel/` é excluído.
+
+Configuração inicial: criar um token com acesso à equipe `projetos-do-jorge` em [Vercel → Tokens](https://vercel.com/account/settings/tokens) e cadastrar seu valor como **`VERCEL_SECRET_2`** em [GitHub → Actions secrets](https://github.com/JorgRibeiro/QuadraScope/settings/secrets/actions). O token deve ser inserido diretamente no GitHub. Renovar o secret antes da expiração ou após revogar o token. Os IDs da equipe e do projeto já estão no workflow; nenhuma outra variável é necessária.
+
+O ambiente GitHub `production` restringe publicação à `main`, sem aprovação manual. A CLI Vercel está fixada em 65.8.0. O job envia somente o runtime mínimo à Vercel com `--prod --skip-domain`. O build remoto é necessário: na validação da CLI 65.8.0, `vercel build` local seguido de `--prebuilt` deixou de gerar as rotas CDN de `app.frontend()` e `/comparar` retornou 404. Confere health, identidade do release e HTML da Home e de `/comparar` na candidata, usando `vercel curl` para preservar Deployment Protection. Somente depois promove a mesma versão e verifica o health público. Falhas anteriores à promoção deixam o domínio público na versão anterior; falhas posteriores são reportadas na CI e exigem inspecionar a publicação e, se necessário, seguir o procedimento de recuperação abaixo.
+
+O secret é exposto somente aos passos que conferem a credencial ou autenticam na Vercel. `.vercel/` não é publicado como artefato. Execuções da `main` são serializadas para não interromper uma publicação em andamento. O projeto Vercel permanece sem integração Git direta: o deploy usa o pacote mínimo validado, sem enviar ferramentas científicas offline para o runtime.
 
 ## Pacote identificado e verificável
 

@@ -124,7 +124,7 @@ vercel deploy .deployment --project quadrascope --scope projetos-do-jorge --envi
 
 A criação inicial do projeto utilizou `--create-if-missing`; esse flag não é necessário agora. A publicação usa o pacote `.deployment/`, e não o checkout completo. Não conectar automaticamente o repositório raiz ao projeto: o build remoto precisa receber o pacote mínimo, ou ter uma preparação equivalente explicitamente configurada.
 
-Acompanhar o estado com `vercel inspect <deployment-url> --scope projetos-do-jorge`; logs com `vercel logs --project quadrascope --scope projetos-do-jorge`. Publicação de outra versão de produção e integração Git/CI terão procedimento próprio na entrega. O acesso público atual comprova a infraestrutura, mas não conclui o relatório acadêmico ou a submissão final.
+Acompanhar o estado com `vercel inspect <deployment-url> --scope projetos-do-jorge`; logs com `vercel logs --project quadrascope --scope projetos-do-jorge`. A publicação automática da `main` e a recuperação manual estão documentadas na [entrega](delivery.md#deploy-automático-da-main). O acesso público atual comprova a infraestrutura, mas não conclui o relatório acadêmico ou a submissão final.
 
 ### Revisão do escopo dos filtros
 

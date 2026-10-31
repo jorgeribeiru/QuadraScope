@@ -10,7 +10,7 @@ permissions:
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   verify:
@@ -43,3 +43,112 @@ jobs:
         run: npm run test:e2e --prefix frontend
       - name: Preparar e conferir pacote de entrega
         run: make delivery
+      - name: Guardar runtime validado para publicação
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: quadrascope-runtime
+          path: |
+            .deployment/
+            !.deployment/.vercel/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
+
+  deploy:
+    name: Publicar produção
+    needs: verify
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: https://quadrascope.vercel.app
+    defaults:
+      run:
+        working-directory: .deployment
+        shell: bash
+    env:
+      VERCEL_ORG_ID: team_JDuD2phoQjG3Sx7VTDMBtXEC
+      VERCEL_PROJECT_ID: prj_oGV8643PcgkFpvxC4NBeYdEnkNgR
+      VERCEL_CLI_VERSION: '65.8.0'
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: quadrascope-runtime
+          path: .deployment
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24'
+      - name: Instalar CLI de publicação
+        run: npm install --global "vercel@${VERCEL_CLI_VERSION}"
+      - name: Conferir credencial de publicação
+        run: |
+          if [[ -z "$VERCEL_TOKEN" ]]; then
+            echo "::error::Cadastre o secret VERCEL_SECRET_2 nas configurações de Actions do repositório."
+            exit 1
+          fi
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_SECRET_2 }}
+      - name: Publicar candidata sem alterar o domínio
+        id: candidate
+        run: |
+          # O builder remoto promove app.frontend() para CDN; o build local da CLI
+          # 65.8.0 omite essas rotas. Enviar somente o runtime mínimo validado.
+          vercel deploy --project quadrascope --prod --skip-domain --yes --json --scope projetos-do-jorge \
+            --meta githubCommitSha="$GITHUB_SHA" --meta githubCommitRef=main > "$RUNNER_TEMP/deployment.json"
+          node --input-type=module -e '
+            import { readFileSync, appendFileSync } from "node:fs";
+            import assert from "node:assert/strict";
+            const result = JSON.parse(readFileSync(`${process.env.RUNNER_TEMP}/deployment.json`));
+            assert.equal(result.deployment.readyState, "READY");
+            assert.equal(result.deployment.target, "production");
+            const value = result.deployment.url;
+            const url = new URL(value);
+            if (url.protocol !== "https:" || url.origin !== value || !url.hostname.endsWith(".vercel.app")) process.exit(1);
+            appendFileSync(process.env.GITHUB_OUTPUT, `url=${value}\n`);
+          '
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_SECRET_2 }}
+      - name: Conferir API, dados e navegação da candidata
+        run: |
+          vercel curl /api/v1/health --deployment "$DEPLOYMENT_URL" --scope projetos-do-jorge \
+            -- --fail --silent --show-error --retry 3 --retry-all-errors --max-time 60 \
+            --output "$RUNNER_TEMP/candidate-health.json"
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            import assert from "node:assert/strict";
+            const health = JSON.parse(readFileSync(`${process.env.RUNNER_TEMP}/candidate-health.json`));
+            const expected = JSON.parse(readFileSync("data/processed/current.json"));
+            assert.equal(health.status, "ready");
+            assert.equal(health.release_id, expected.release_id);
+          '
+          for route in / /comparar; do
+            vercel curl "$route" --deployment "$DEPLOYMENT_URL" --scope projetos-do-jorge \
+              -- --fail --silent --show-error --max-time 60 --output "$RUNNER_TEMP/candidate-page.html"
+            node --input-type=module -e '
+              import { readFileSync } from "node:fs";
+              import assert from "node:assert/strict";
+              assert.match(readFileSync(`${process.env.RUNNER_TEMP}/candidate-page.html`, "utf8"), /id="root"/);
+            '
+          done
+        env:
+          DEPLOYMENT_URL: ${{ steps.candidate.outputs.url }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_SECRET_2 }}
+      - name: Promover a versão conferida
+        run: vercel promote "$DEPLOYMENT_URL" --yes --scope projetos-do-jorge
+        env:
+          DEPLOYMENT_URL: ${{ steps.candidate.outputs.url }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_SECRET_2 }}
+      - name: Conferir acesso público
+        run: |
+          curl --fail --silent --show-error --retry 3 --retry-all-errors --max-time 60 \
+            https://quadrascope.vercel.app/api/v1/health --output "$RUNNER_TEMP/public-health.json"
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            import assert from "node:assert/strict";
+            const health = JSON.parse(readFileSync(`${process.env.RUNNER_TEMP}/public-health.json`));
+            const expected = JSON.parse(readFileSync("data/processed/current.json"));
+            assert.equal(health.status, "ready");
+            assert.equal(health.release_id, expected.release_id);
+          '
