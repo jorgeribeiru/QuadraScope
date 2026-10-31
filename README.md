@@ -8,7 +8,7 @@ Relatório web interativo de análise de dados da NBA, desenvolvido para o Proje
 
 **Preparação de entrega validada em 31/10/2026:** instalação isolada e ZIP sem `.git` comprovados; 245 testes Python, 25 Vitest, 27 Playwright locais e 27 públicos aprovados. Primeira CI remota aprovada no commit `162d33f`. O ZIP identifica o snapshot entregue pelo SHA-256. [Guia](docs/development/delivery.md), [evidências](docs/development/measurements/stage11-verification.json).
 
-**Deploy automático:** após cadastrar o secret `VERCEL_SECRET_2` no GitHub, cada push na `main` publica na Vercel quando todas as verificações passam. A candidata é conferida antes da promoção para https://quadrascope.vercel.app. [Configuração e fluxo](docs/development/delivery.md#deploy-automático-da-main).
+**Deploy automático:** após cadastrar o secret `VERCEL_TOKEN` no GitHub, cada push na `main` publica na Vercel quando todas as verificações passam. A candidata é conferida antes da promoção para https://quadrascope.vercel.app. [Configuração e fluxo](docs/development/delivery.md#deploy-automático-da-main).
 
 ## Executar o sistema
 

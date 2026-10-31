@@ -85,12 +85,12 @@ jobs:
       - name: Conferir credencial e obter configuração de produção
         run: |
           if [[ -z "$VERCEL_TOKEN" ]]; then
-            echo "::error::Cadastre o secret VERCEL_SECRET_2 nas configurações de Actions do repositório."
+            echo "::error::Cadastre o secret VERCEL_TOKEN nas configurações de Actions do repositório."
             exit 1
           fi
           vercel pull --yes --environment=production --scope projetos-do-jorge
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_SECRET_2 }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       - name: Publicar candidata sem alterar o domínio
         id: candidate
         run: |
@@ -110,7 +110,7 @@ jobs:
             appendFileSync(process.env.GITHUB_OUTPUT, `url=${value}\n`);
           '
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_SECRET_2 }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       - name: Conferir API, dados e navegação da candidata
         run: |
           vercel curl /api/v1/health --deployment "$DEPLOYMENT_URL" --scope projetos-do-jorge \
@@ -135,12 +135,12 @@ jobs:
           done
         env:
           DEPLOYMENT_URL: ${{ steps.candidate.outputs.url }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_SECRET_2 }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       - name: Promover a versão conferida
         run: vercel promote "$DEPLOYMENT_URL" --yes --scope projetos-do-jorge
         env:
           DEPLOYMENT_URL: ${{ steps.candidate.outputs.url }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_SECRET_2 }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       - name: Conferir acesso público
         run: |
           curl --fail --silent --show-error --retry 3 --retry-all-errors --max-time 60 \
