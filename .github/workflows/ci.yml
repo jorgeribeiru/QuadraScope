@@ -96,15 +96,16 @@ jobs:
         run: |
           # O builder remoto mantém a integração FastAPI/CDN já usada pelo projeto.
           # Enviar somente o runtime mínimo validado, com os rewrites da SPA.
-          vercel deploy --project quadrascope --prod --skip-domain --yes --json --scope projetos-do-jorge \
+          vercel deploy --project quadrascope --prod --skip-domain --yes --non-interactive --json --scope projetos-do-jorge \
             --meta githubCommitSha="$GITHUB_SHA" --meta githubCommitRef=main > "$RUNNER_TEMP/deployment.json"
           node --input-type=module -e '
             import { readFileSync, appendFileSync } from "node:fs";
             import assert from "node:assert/strict";
             const result = JSON.parse(readFileSync(`${process.env.RUNNER_TEMP}/deployment.json`));
-            assert.equal(result.deployment.readyState, "READY");
-            assert.equal(result.deployment.target, "production");
-            const value = result.deployment.url;
+            const deployment = result.deployment ?? result;
+            assert.equal(deployment.readyState, "READY");
+            assert.equal(deployment.target, "production");
+            const value = deployment.url;
             const url = new URL(value);
             if (url.protocol !== "https:" || url.origin !== value || !url.hostname.endsWith(".vercel.app")) process.exit(1);
             appendFileSync(process.env.GITHUB_OUTPUT, `url=${value}\n`);
