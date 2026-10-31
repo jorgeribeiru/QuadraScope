@@ -1,7 +1,7 @@
 # Plano de implementação — QuadraScope
 
 > Do passo 0 à entrega. Revisão: 30/10/2026. Foco: Atlanta Hawks × Houston Rockets.
-> Estado atual: etapas 0–10 concluídas; correções da revisão publicadas. Ciência, artefatos reproduzíveis, API FastAPI e base React validados; versão técnica publicada na Vercel e inicialização da aplicação medida com instrumentação própria. Provisionamento completo da plataforma não isolado; relatório completo implementado; revisão integral publicada; preparação da entrega permanece na etapa 11.
+> Estado atual: etapas 0–10 concluídas; correções da revisão publicadas. Ciência, artefatos reproduzíveis, API FastAPI e base React validados; versão técnica publicada na Vercel e inicialização da aplicação medida com instrumentação própria. Provisionamento completo da plataforma não isolado; relatório completo implementado; revisão integral publicada; P11.01–P11.09 preparados e validados; P11.10 aguarda confirmação do grupo.
 
 ## Uso do plano
 
@@ -211,16 +211,18 @@ As caixas já marcadas na etapa 0 indicam documentação revisada e confirmaçõ
 
 **Dependência:** etapa 10 sem falhas impeditivas. **Requisitos:** R05, R06 e fechamento dos demais.
 
-- [ ] **P11.01** — Completar o README inicial com requisitos de ambiente, stack justificada, limitações de execução e URL da aplicação; manter os links e a estrutura atualizados.
-- [ ] **P11.02** — Disponibilizar requirements.txt/locks e comando único que orquestre artefatos, API e frontend; documentar a instalação inicial separadamente.
-- [ ] **P11.03** — Reproduzir instalação e execução a partir de checkout limpo, sem depender de arquivos locais não entregues.
-- [ ] **P11.04** — Configurar CI para lint, verificações científicas/API, validação de artefatos e build do frontend; corrigir falhas.
-- [ ] **P11.05** — Atualizar o deploy com a versão validada e verificar acesso público em sessão limpa, rotas profundas e consultas reais.
-- [ ] **P11.06** — Registrar procedimento de restabelecimento da hospedagem e alternativa local; conferir artefatos e dependências finais.
-- [ ] **P11.07** — Identificar a revisão de entrega e preparar repositório ou zip completo, incluindo insumos cuja distribuição seja permitida e instruções necessárias.
-- [ ] **P11.08** — Fazer revisão final de R01–R24 com evidências e datas; R06 permanece parcial enquanto a submissão exigida não estiver confirmada.
-- [ ] **P11.09** — Entregar ao grupo o código, link público e instruções; conferir os arquivos e URLs destinados ao Classroom.
+- [X] **P11.01** — Completar o README inicial com requisitos de ambiente, stack justificada, limitações de execução e URL da aplicação; manter os links e a estrutura atualizados.
+- [X] **P11.02** — Disponibilizar requirements.txt/locks e comando único que orquestre artefatos, API e frontend; documentar a instalação inicial separadamente.
+- [X] **P11.03** — Reproduzir instalação e execução a partir de checkout limpo, sem depender de arquivos locais não entregues.
+- [X] **P11.04** — Configurar CI para lint, verificações científicas/API, validação de artefatos e build do frontend; corrigir falhas.
+- [X] **P11.05** — Atualizar o deploy com a versão validada e verificar acesso público em sessão limpa, rotas profundas e consultas reais.
+- [X] **P11.06** — Registrar procedimento de restabelecimento da hospedagem e alternativa local; conferir artefatos e dependências finais.
+- [X] **P11.07** — Identificar a revisão de entrega e preparar repositório ou zip completo, incluindo insumos cuja distribuição seja permitida e instruções necessárias.
+- [X] **P11.08** — Fazer revisão final de R01–R24 com evidências e datas; R06 permanece parcial enquanto a submissão exigida não estiver confirmada.
+- [X] **P11.09** — Entregar ao grupo o código, link público e instruções; conferir os arquivos e URLs destinados ao Classroom.
 - [ ] **P11.10** — Grupo realiza a submissão no Classroom e confirma o envio; registrar confirmação e fechar R06 quando o critério completo for atendido.
+
+**Execução em 31/10/2026:** `make install`/`make run`, CI com actions fixadas por SHA e empacotamento ZIP com manifesto implementados. Instalação isolada de clone + snapshot de trabalho, sem ambientes/artefatos copiados: 245 testes Python, 25 Vitest e 27 Playwright aprovados; 13 artefatos reproduzíveis. ZIP sem `.git` também instalado/executado com sucesso; Ctrl+C encerrou ambos os servidores. Workflow e comandos conferidos localmente; nenhuma execução remota do GitHub ou submissão foi inventada. Pacote identificado por hash antes do commit de preparação. [Guia de entrega](../development/delivery.md), [evidências](../development/measurements/stage11-verification.json). Nova publicação na Vercel: 27 Playwright públicos aprovados em 148,04 s e 19 verificações HTTP; deployment `dpl_BbSEwceZB9iRzVYzi2Ga92x6DNcJ`. P11.10 e R06 dependem da confirmação do envio pelo grupo.
 
 **Verificação/saída:** versão reproduzível, aplicação acessível, requisitos comprovados e submissão confirmada pelo grupo. Preparar a entrega não equivale a enviá-la.
 

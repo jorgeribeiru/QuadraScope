@@ -14,6 +14,7 @@
 | Desenvolvimento | [Pacote e hospedagem](development/deployment.md) | Topologia, publicação Vercel, verificações reais e limitação das métricas Hobby |
 | Desenvolvimento | [Relatório web](development/report.md) | Páginas da etapa 9, interpretação contextual, gráficos, métodos e mapa dos requisitos |
 | Desenvolvimento | [Validação do relatório](development/validation.md) | Revisão da etapa 10, correções, auditoria CSV, acessibilidade e matriz R01–R24 |
+| Entrega | [Reprodução, CI e Classroom](development/delivery.md) | Instalação limpa, comando único, ZIP com hashes e recuperação da hospedagem |
 | API | [OpenAPI exportado](api/openapi.json) | Contratos HTTP usados para gerar os tipos TypeScript |
 | Planejamento | [Requisitos e acompanhamento](planning/requirements.md) | Matriz R01–R24, critérios de aceite e histórico |
 | Planejamento | [Plano de implementação](planning/implementation-plan.md) | Tarefas P0–P11, dependências e verificações |

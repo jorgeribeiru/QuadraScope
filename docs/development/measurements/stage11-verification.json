@@ -1,0 +1,783 @@
+{
+  "task": "Etapa 11: reprodução, CI e preparação de entrega",
+  "date_local": "2026-10-31",
+  "timezone": "America/Recife",
+  "source": {
+    "base_commit": "cabb95087e18c6457de1da5195f755dd29dea247",
+    "tested_snapshot_sha256": "9a2d802f46c8656ef574e6654b9cfa10680ab1039f5f784d967d8c8d2b8d68d0",
+    "git_dirty": true,
+    "revision_kind": "working_tree_snapshot",
+    "tested_code_and_automation_files": {
+      ".github/workflows/ci.yml": "fe96f2342e7f80135e295998b207df356af0d2f0c600217d840cfbb8fa4c933c",
+      ".nvmrc": "68ca3fba3b7e864770cb61aeb306d4bd4354b68ab4dd38450860c5d823e42a53",
+      ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+      "Makefile": "835677457acb8cbebe1a7966f07d590eaa1a05cc014a825d82a7a5785d843063",
+      "backend/__init__.py": "26fb0d28df74057f17bc90f71364fafcb9a627f1245fae20a64632720742862f",
+      "backend/analytics/__init__.py": "8620845e5d78f64ab67dd69a9a305786a41f9102aff59d543539eee2eaed6480",
+      "backend/analytics/anomaly_contracts.py": "a55e5e3addb33e1e44d2c6e6ef7668b1e6f93bbf72ddbcc3c019751ee4f2181c",
+      "backend/analytics/anomaly_reports.py": "05ec09cee4cf60ed0eb1d9da75f64ad97a2f98616824c354dbc27d15543ffbc8",
+      "backend/analytics/comparisons.py": "4080e143cae3a39f80ebd73bcbf78f2f9e61d4d747ad6ed772e1b75ca0d7a80f",
+      "backend/analytics/descriptive.py": "f3b8c8eaa05fdc3dd5d2db8b322dc7565f329df2798fc12df8035ff2dbe12dee",
+      "backend/analytics/distributions.py": "3dd5f4b4a4ed16ebb00002ccb4993fd01f32299eda0f5b9feee10e8a09b5b0da",
+      "backend/analytics/ecod.py": "25e2dab2d2dfb15e12ecc10cbad6446d3ef4fac49b723a6abbdb3ad3855f7875",
+      "backend/analytics/ingestion.py": "09b1c385e405d2412ebcfe33aad65287391de83374933a65cb003596e7b7bf46",
+      "backend/analytics/interpretations.py": "680531fd691b373f2289077209756592f6017ce448830466a5c1994807cf3b10",
+      "backend/analytics/metrics.py": "17d0eacabad5fe6ced5ae04ff545dd6a24ef1f2ad4d90bb0e3ea9ed0c0c1e6e1",
+      "backend/analytics/missingness.py": "0c3d94710eb4e03589ac642b74412ed1e26e51f3531de7bf9239cc4230e35b66",
+      "backend/analytics/multivariate_anomalies.py": "febbdce6196d11a3597f7b0e4161bddd9e90ad7cf6f446909fc9193c4bf63c41",
+      "backend/analytics/quality.py": "e4178250c4903628a9b42796c80740f6b01fff5a0687112d22ab0d69faf47839",
+      "backend/analytics/sensitivity.py": "ea1228f5964922d6d959961fd524c351a99035c1405c9055ef89360af0e3b8e5",
+      "backend/analytics/univariate_anomalies.py": "c18aab5158928842f5de7c2a73a33d60ffe8855d66d51f8e23bc7e2970c9dc8c",
+      "backend/app/__init__.py": "cbc162de80090f1258db6e53b56da82e5f5001f2ada7e762bfb3bc5fff0fd276",
+      "backend/app/config.py": "fd68c93029873202a8f62f41a4a51d000dbb39b4625c99aad04598878b7d7068",
+      "backend/app/main.py": "dcc9f8d2782c3a5cb2040951283a26f721c8baa6ab4f60a8c9c67d7fb7e6698b",
+      "backend/app/queries.py": "7b975cc41f294cf1ddd7124cb02346c703b769c26c907d8e26870fbd85913bbe",
+      "backend/app/schemas.py": "5c677196ef4d899c5a3c08a7bd339a21db9b21e824ef34c207d6affc8b6edd43",
+      "backend/app/services.py": "1b9cc9837ac423113e718b91034979ce547d320e6713a2d353b50c73037c6c02",
+      "backend/app/telemetry.py": "715dfda8598de1a2c4e89d96b50c2bda8f3a7bc7b99811edf9bf0f017eca055a",
+      "backend/artifacts/__init__.py": "ff8f13ad8cedf2546dfb33017bbd65589aec5f4853c4a767b2830df7fc2ce797",
+      "backend/artifacts/build.py": "50d513c329442fb38183ebacaa0deb0b5abb82f46a16e2de668c7ab22f551106",
+      "backend/artifacts/models.py": "8d82d9e0379daefe47ab1c5509986e7e78164718f58efea7a3e4b6fa750a4b06",
+      "backend/artifacts/package.py": "3110d7c3cc4550884b4e40d2e98151bac42e7606a0ece12c4343137855ee4aab",
+      "backend/artifacts/parquet.py": "4555aa31b1e0b702a6787c856c8bee635fc48d8bc1361af2fcb0f120f3ebe308",
+      "backend/artifacts/reproducibility.py": "0c5b2807e9acdae4f37cf6d66587b87202ec52a72e51d9160d1915abbcfc1fd8",
+      "backend/artifacts/serialization.py": "58d747fc4d642ae9e8c9c21c3ca41552fc47d51cff56146931974c68017e7348",
+      "backend/artifacts/validation.py": "b9148af4b650478688bcfc6663526a8aece12b60604883b2744d798f7a3c11ec",
+      "backend/content/anomaly-parameters.json": "284dce7e285a759966fa7cfaa66bd72c7e41b4a1a86b40d78945c49696b1170f",
+      "backend/content/missingness.json": "f167fc65fdf51e29d8e31a6dfbb30493bed047631bbc0e804a50e1ccbdb5a28b",
+      "backend/content/report-context.json": "48a0c3412c3d560d1a9fd9b4ee7f1fb827a73ce179ebccc6e54d48f16fe55bd3",
+      "backend/repositories/__init__.py": "2fa9ee49f70ceb1875a0bb8f6e6947ddbefe55dc69dc995dfa635133a0937781",
+      "backend/repositories/artifacts.py": "c2e535bd7bb3f87142f9031fc68321d60d273d4feaee2eab5e88cc71816324e5",
+      "backend/scripts/__init__.py": "c553264bc9bca78751397933057b015f1407c34c298dfbccfd55213b8f4d61ed",
+      "backend/scripts/audit_data.py": "6c28831f7062142093c446affc589929893ee9a135708f82d5514a8af8dfc4df",
+      "backend/scripts/benchmark_cloud.py": "c92dec954d40d6c044d179a74540dc7047a1820b207ec5ae4d463aa3b94f57e9",
+      "backend/scripts/benchmark_deployment.py": "a36b58403fadeb3d9dcd1648a166dc31142baef43f856b39c23810f390b1eaf3",
+      "backend/scripts/build_data.py": "8ce13616b7cdf27c9065b907cbc2b58987dfdf15e87813bbc6ecb685469b975b",
+      "backend/scripts/check_environment.py": "a9e0acca33f10d2667243a957a8704aaaf0f8330c042bb7aba945887692d4b88",
+      "backend/scripts/describe_data.py": "54982bdeca94ad751ff446896baad961823472fb5ccffefcc556bd71aad225f7",
+      "backend/scripts/detect_anomalies.py": "e96601d74822b26b2291caaf634ae8332c6d3cfe20b7addc0df56866b46350be",
+      "backend/scripts/develop.py": "73ed4f771a52624f8b5680110f05ab82876b8d3962c03845ef31aefd34be42a3",
+      "backend/scripts/export_api.py": "982ebf528dc19dcac65bf574b05320328061f0d5c12417b70018144bd3903cb0",
+      "backend/scripts/export_sensitivity_review.py": "e5b03a0ce48524b747a7e73c4fb5dc5c7406f2fa905e527a0d624d69db58aba2",
+      "backend/scripts/generate_ecod_reference.py": "db5015596fe7b5adaeafa9dd7e0858d1cf02188813898c2e21cdb595a2252fbb",
+      "backend/scripts/normalize_data.py": "67991bd9049fd204cd751a99e770997d10e213606eaf694a59037d5040144ba9",
+      "backend/scripts/prepare_delivery.py": "392cf0ab9bce467733ea0ba1cdff7311cf7be1355050c226c1e8d29fd5420d9c",
+      "backend/scripts/prepare_deployment.py": "fc65ec0f60f7ddf2518f92c1e2d094dd20e8d4f828b1da6f13607c4c75676890",
+      "backend/scripts/verify_report.py": "de266ccb454964035f4975d24896556b089f8c02b7ffbdf1d380e5dcb8a0efcf",
+      "backend/tests/analytics/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "backend/tests/analytics/test_anomalies.py": "ddd2f8b11c7f82892290ba56f91c217440a0d061d40d4359fa6adff49a0bd5eb",
+      "backend/tests/analytics/test_anomaly_pipeline.py": "a7f0dc94a0138d844bb3247aada387f8ff4df8dd1d3ea1633f9d74afbb73f088",
+      "backend/tests/analytics/test_artifacts.py": "a455b99cf6e01c691b0e704ebbf7e4f80e11ca588665cdbdd025bc555c09e304",
+      "backend/tests/analytics/test_describe_data.py": "553d9a8e5814236c710c99d5caa96e69462b43af94b3fc2f9a2a4b0b45d4e41f",
+      "backend/tests/analytics/test_descriptive.py": "02ec741fcd2ca11be65430d7c1993b90793c0f9d3d5a71fcba3d32212f02583e",
+      "backend/tests/analytics/test_distributions.py": "9cd4bd7aaacaddf735f10cd1ef1ab061bd9dd7bb983cf7d907430847dc662aeb",
+      "backend/tests/analytics/test_ecod.py": "0011ea2606cc4a0c84044a0da0a2c047cb0ef855821b8f7ac21fac109005f8f5",
+      "backend/tests/analytics/test_ingestion.py": "855525b0dbbb13f497f5ea5d92ba534ed15d27a92c2297de08353bd735b79f57",
+      "backend/tests/analytics/test_quality.py": "06a237f9b0bc863b55bc89f329e521ad6a7cefdf47391c051e00407f3ed709ae",
+      "backend/tests/api/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "backend/tests/api/test_api.py": "3e736523ca8eddedcc0139f3e94d5c6a8e9440e99c6a1c2eba99b90df076b580",
+      "backend/tests/api/test_benchmark_cloud.py": "3262327d8a0307928b344138d5805c77951ca6ba3a9eebaab7bbfa69032b905e",
+      "backend/tests/api/test_deployment.py": "dfdfe721abac55244ee3c5eeb98a34181303390ce4f5c4e84d345dc1e4725f95",
+      "backend/tests/fixtures/ecod-reference.json": "c307f6f52ac1efa026270ad31c159114601923096bf345a31566e311f662fcd2",
+      "backend/tests/unit/test_config.py": "9b919c54caff5b7d1ce0c9adebec0d487d43f41301b6fb2f9d4a10a8b5037072",
+      "deployment/app.py": "197e0a26c45b9324c290158f7234dcd973b9d52115eeab0a211c44251adbb136",
+      "deployment/vercel.json": "29d31bb196046f983e8132415bce89033e7716f330285e11969833b3c0af048b",
+      "frontend/.env.example": "13d89a6ba7daa5c34ad2f1579165ccec647ad95fa9c1907499a0e242f7fcae1d",
+      "frontend/.prettierignore": "0f5f3e08cb05d3c70e94aee3a5ccd39a420caa268abe018feea35700b111c527",
+      "frontend/.prettierrc.json": "cc09daf020695fe6a4a76a514710514b30247d8647d5885890bdf03a177c6ed3",
+      "frontend/components.json": "1d4d6727ad491482f465656013c01a27194e143ffa09dd77232ee15c8f808d67",
+      "frontend/e2e/base.spec.ts": "ad97ddf27f41a4561d9ae0d088c1e458fe2b84960d7903e899fe54a5bc690651",
+      "frontend/e2e/context-review.spec.ts": "2ed5735f1b04c98c3c11c54aab6c8490ceb70007984f202312f4ffc819c713d9",
+      "frontend/e2e/data-report.spec.ts": "f2ced557f6355e671b5049edef8ad1e0848fd573545c07b0927c56fabc661350",
+      "frontend/e2e/report.spec.ts": "7b4e4ab7cd2eda557943e0436b842372edf7d269b109f90a53d972c56529e93b",
+      "frontend/e2e/review.spec.ts": "67ebba7e7bfbd83ea81ec1ce4e4044a1082e5a7c38bb778669942f937caff36c",
+      "frontend/eslint.config.js": "1e7ba698db4495af695b4f2d2f27150868d679fdd4cbef318347b2b06cdd8f42",
+      "frontend/index.html": "8356c4cb66a56f0d0f5822fb4be01a48caa6f6e8fde9c0fbe8d06eb04e8f1878",
+      "frontend/package-lock.json": "58b409c8443021630ba80f4d4c417de8ed856c8b5fc4e440c489a9be40488d5a",
+      "frontend/package.json": "4d0cce17252a682e2157ccc72c50268339851ab24fde5624d469d9bb98daaeaa",
+      "frontend/playwright.config.ts": "7abb41fc70b36bf558c538c0b8d3d090d94146b6613aca43bb776ff9e41002a5",
+      "frontend/public/favicon.svg": "0eeadcb0495dddf759586c85d7de9c20ce375d8af3363daab869b080744dbd33",
+      "frontend/public/licenses/dm-mono-OFL.txt": "d2766c396a8534cba53340f8af2037749b6a0a1dd3587348c917a70e779d2e32",
+      "frontend/public/licenses/manrope-OFL.txt": "d826ab6583b12c26807d8716a545bdbbb672df04f48608a364ba9efdbe501c30",
+      "frontend/public/teams/atlanta-hawks.svg": "d62007cd62bd276fe959420813342c81191f57bf0997dc02905cb547aada6c96",
+      "frontend/public/teams/houston-rockets.svg": "9a0fd3d351f0726db427e8bed6db098bf88d15e98582b4b8dfd5a3638d6263f0",
+      "frontend/src/app/App.tsx": "1c40ff662cb38d75a21aa3ad6d088df9435f56c607b3118c973649d89757e73d",
+      "frontend/src/components/ComparisonBoxes.tsx": "c9ee7e37dd58d08b0a44505281561ecd9e7e9382a3054ab6291d5b9a2fd1febb",
+      "frontend/src/components/DataTable.tsx": "eb31ea17a6c05071678fac27da999ad42d63364e77727e28d8eae390c49795e5",
+      "frontend/src/components/FilterBar.tsx": "03022a14cac2a54110bb43bff772244cd10c2cf23378a5d64f10339f5f69ffee",
+      "frontend/src/components/Interpretations.tsx": "5353ffd99a61486ccad0a4632f92b5f7b81c65cc125f3ac09a3b12c578952099",
+      "frontend/src/components/Layout.tsx": "e4bf53cda17c4662ca4284ed10a3fe948c20579ee0e376f5d79e435159d363e4",
+      "frontend/src/components/PointsChart.tsx": "7a064eec2359c7c85e7bfbcb9aada175ba15ef6f421611f715eb6b6b36953d07",
+      "frontend/src/components/QueryBoundary.tsx": "44403f2fa9ce12ef2577b735c97397837830529dbab1fe8213d8964a582da6a8",
+      "frontend/src/components/ReadableParagraph.tsx": "2f48b0c7f3cfcc7ec13f2d81d9cf3236fa10e3814929a89ec66355d0dfba482c",
+      "frontend/src/components/ReportPrimitives.tsx": "fcee080adabae8ae85cf00f6d18d1a2e770f80071ff1159eeae29035c3f09a21",
+      "frontend/src/components/ScientificCharts.tsx": "0670200b175496e945d0e4704f24cff955b929fe3d429d0444400d6f1a31d430",
+      "frontend/src/components/States.tsx": "784d399b40dcd87c69f8350f712d1919fb73c90bc5ad77a15d1698d938d2fe64",
+      "frontend/src/components/VariableHighlights.tsx": "68a7c8d3d01c569791515d579a75f3c9b6e0670d3bf3612b9c2e7d0b71e2c3d1",
+      "frontend/src/components/ui/button.tsx": "057dfcbff37a689b3ae6336041797c78835eb9108e0be6d26f4e8f5e5d3623fe",
+      "frontend/src/features/AnomalyReport.tsx": "d43e4e4d328573760c9950b393a8314a4bfee0f2ae533cc08fd2568ac361fab3",
+      "frontend/src/features/ComparisonReport.tsx": "41ca96a6beb02efdb4f5377886c1d35af365e834513951414bc6451eb1f7ad5a",
+      "frontend/src/features/DataReport.tsx": "11111ad28e08ed815158ff01ed19068da621592da2ab1a3ad32e544079d22e00",
+      "frontend/src/features/Reports.tsx": "3c1e87b528e0937b283774ddcb9cd872b41b809d971c9415d3b3183e92f2d68c",
+      "frontend/src/features/TeamReport.tsx": "d2363837e6849a469562690b4c53806a6260b7a9e1fb684190cf56343a7e39df",
+      "frontend/src/generated/api.ts": "e667ad10b4f213a71727f33f2f7c6ed55d25b52088c52858f561aba0c683cafd",
+      "frontend/src/lib/api.ts": "f9b03537ba25efdf76100224156f3069e98e8ed643bea317dc54b369581b30a5",
+      "frontend/src/lib/filters.ts": "1af1559a87c5c1c7ef12a96de19271272dbf1fc1941f38866dbeeb8e1b600ea5",
+      "frontend/src/lib/format.ts": "46b5326b8acd51524f306935ac9aa793ac8fd53cd4a4cdb3809eef47e52a518d",
+      "frontend/src/lib/queries.ts": "dd1aab514fa3d7d0a20e8f98c75c145c2793ccc5cb3518af91e0e9bc662e4135",
+      "frontend/src/lib/report-hash.ts": "44a48663bc8b7a57f3a6d8309c8ff265070492aaff8eedb481a57897880c98cc",
+      "frontend/src/lib/statistics.ts": "0968ecc24e37f5721c7e28e5558207dca76aff7eb8ab771069b5f3afa581ea27",
+      "frontend/src/lib/utils.ts": "352c1b01069ec8a78b65062328bb86fbbfa223c0b0344d6149f30717c42c48fb",
+      "frontend/src/main.tsx": "d2287519a8e50c00ccd32aa136100f3837cf4447e4ac3be4e11e819b2c7bdd1a",
+      "frontend/src/styles.css": "238a4a84f3584955bed6b4772a759566852326689354aafad0f660340f495b0d",
+      "frontend/src/tests/api.test.ts": "be91213f7bd24e9fad797918b045d6d30605a875ab8997c3d5b8acc6adad303d",
+      "frontend/src/tests/components.test.tsx": "e364e2d716a014e034bc9540e287ed83a6260877464e64e1b9d98ee91e718400",
+      "frontend/src/tests/filters.test.ts": "ec97dba805558185d4675e914b289c803c03cea4f709821e46886b54cef10351",
+      "frontend/src/tests/queries.test.ts": "e1398b0939290dd5f964c0a1683bcc736209041b39eca1945ee511baca182928",
+      "frontend/src/tests/setup.ts": "164996c5d613340bc940d3d472ac6e8e23bd183b99e73b47a6d6827fcea1130f",
+      "frontend/tsconfig.json": "710a3186c534d25bba33737a785c0d020c2abbc67326a768d1bbf08ef622d6c1",
+      "frontend/vite.config.ts": "e98d5ef5b2c959eecdbab858dd170484de640f8b9aec2304fa80cb109a02af7e",
+      "pyproject.toml": "97ea3ddaed55cc5abd8763903548b2997ab7ef5361153cbeff87ab1344ed5f4f",
+      "requirements-runtime.txt": "ca3526d1c30632c67e731ead5ca885b3017e0326117e2d22f1bc3cb1ee94a245",
+      "requirements.txt": "654005f7f150a058998e56861547eed5f9c36962e4d878fb9236cd52e8bf7d0f",
+      "tools/contracts/contract-smoke.ts": "e5c0e5a4c4c5820a2d72f019009c942925a5270840cb1dc4d110067d53804ef3",
+      "tools/contracts/package-lock.json": "26a9d480d0df54500bd393aa066baadf75073adb2b32b9028aa6445454276f13",
+      "tools/contracts/package.json": "aa1e997ab63dddd3013e4792b6ab083756f936da2e871c077963bdfe2d6445de",
+      "uv.lock": "44a127e74724c7672560b37bb0843edc447bd5baf6551499197941d098b8732c"
+    },
+    "final_documentation": "Documentação/evidências atualizadas após os testes; manifesto final externo em dist/delivery/manifest.json identifica o ZIP entregue, sem referência circular."
+  },
+  "environment": {
+    "os": "Linux x86_64",
+    "python": "3.12.13",
+    "node": "24.22.2",
+    "uv": "0.11.7",
+    "fresh_venv": true,
+    "fresh_node_modules": true,
+    "no_copied_processed_data": true,
+    "download_caches_reused": true,
+    "secrets_required_to_run_locally": false
+  },
+  "clean_install": {
+    "method": "Clone local sem hardlinks da revisão-base + snapshot das alterações da etapa 11, em diretório temporário fora do projeto. Ambientes, node_modules e processed gerados novamente.",
+    "commands": [
+      "make install",
+      "make ci",
+      "npm run test:e2e --prefix frontend"
+    ],
+    "install_exit_code": 0,
+    "ci_exit_code": 0,
+    "python_tests": 245,
+    "vitest_tests": 25,
+    "actionlint": {
+      "version": "1.7.7",
+      "status": "passed"
+    },
+    "playwright_stats": {
+      "startTime": "2026-10-31T04:45:05.959Z",
+      "duration": 57635.574,
+      "expected": 27,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "playwright_tests": [
+      {
+        "title": "consulta real, URL compartilhável e recarga de rota profunda",
+        "passed": true
+      },
+      {
+        "title": "estado vazio é diferente de indisponibilidade da API",
+        "passed": true
+      },
+      {
+        "title": "visão geral distingue seleção aplicada, edição pendente e contexto fixo",
+        "passed": true
+      },
+      {
+        "title": "URL inválida não dispara consultas analíticas",
+        "passed": true
+      },
+      {
+        "title": "navegação móvel, tabela acessível e layout sem transbordamento",
+        "passed": true
+      },
+      {
+        "title": "menu móvel posiciona o foco e permite fechar ou navegar pelo teclado",
+        "passed": true
+      },
+      {
+        "title": "filtros ficam apenas na Home e Comparação, sem seleção oculta nos perfis",
+        "passed": true
+      },
+      {
+        "title": "URLs antigas dos perfis são normalizadas antes de consultar o histórico completo",
+        "passed": true
+      },
+      {
+        "title": "troca de release e versão não conserva resultados antigos durante falha da API",
+        "passed": true
+      },
+      {
+        "title": "resposta de outro release é rejeitada antes da apresentação e força atualizar metadados",
+        "passed": true
+      },
+      {
+        "title": "resposta atrasada de um filtro anterior não substitui a seleção aplicada depois",
+        "passed": true
+      },
+      {
+        "title": "índice orienta para as seções e permite voltar por teclado",
+        "passed": true
+      },
+      {
+        "title": "Dados apresenta dimensões, todas as colunas e auditoria com escopos distintos",
+        "passed": true
+      },
+      {
+        "title": "falha na auditoria não vira qualidade aprovada nem oculta o dicionário",
+        "passed": true
+      },
+      {
+        "title": "destaques preservam os valores, amostras e escopos dos perfis e da comparação",
+        "passed": true
+      },
+      {
+        "title": "os 14 pares variável/time apresentam medidas, boxplot, distribuição e interpretação coerentes",
+        "passed": true
+      },
+      {
+        "title": "os sete métodos funcionam para os dois times, com scores ou ruído e referência fixa",
+        "passed": true
+      },
+      {
+        "title": "fora da curva apresenta critérios próprios, limites e sinais com precisão explícita",
+        "passed": true
+      },
+      {
+        "title": "comparação e síntese acompanham filtros e não inventam regularidade com uma observação",
+        "passed": true
+      },
+      {
+        "title": "auditoria automática de acessibilidade nas seis telas, com gráficos carregados",
+        "passed": true
+      },
+      {
+        "title": "cada outlier do boxplot e cada sinalização dos sete métodos coincide com o CSV",
+        "passed": true
+      },
+      {
+        "title": "teclado, menu móvel, tabelas e página atual nos dois perfis",
+        "passed": true
+      },
+      {
+        "title": "contraste de textos SVG e limites das barras do histograma",
+        "passed": true
+      },
+      {
+        "title": "menu móvel aberto não permite foco oculto atrás da navegação",
+        "passed": true
+      },
+      {
+        "title": "jornada Dados → Perfil → Comparação → Anomalias → Síntese nos dois times",
+        "passed": true
+      },
+      {
+        "title": "refluxo em 320/390/768 px e todas as modas, inclusive coincidentes com a mediana",
+        "passed": true
+      },
+      {
+        "title": "interpretação explicita destaques de CV/assimetria e diagnóstico sem mudar as medidas",
+        "passed": true
+      }
+    ],
+    "run_smoke": {
+      "status": "passed",
+      "command": "make run",
+      "checks": [
+        {
+          "port": 8000,
+          "path": "/api/v1/health",
+          "status": 200
+        },
+        {
+          "port": 5173,
+          "path": "/",
+          "status": 200
+        },
+        {
+          "port": 5173,
+          "path": "/times/1610612745",
+          "status": 200
+        },
+        {
+          "port": 5173,
+          "path": "/api/v1/teams/1610612737/summary?venue=home",
+          "status": 200
+        }
+      ],
+      "ctrl_c_stopped_both_servers": true
+    }
+  },
+  "zip_without_git": {
+    "tested_snapshot_sha256": "9a2d802f46c8656ef574e6654b9cfa10680ab1039f5f784d967d8c8d2b8d68d0",
+    "command_sequence": [
+      "make install",
+      "make run"
+    ],
+    "run_smoke": {
+      "status": "passed",
+      "command": "make run",
+      "checks": [
+        {
+          "port": 8000,
+          "path": "/api/v1/health",
+          "status": 200
+        },
+        {
+          "port": 5173,
+          "path": "/",
+          "status": 200
+        },
+        {
+          "port": 5173,
+          "path": "/times/1610612745",
+          "status": 200
+        },
+        {
+          "port": 5173,
+          "path": "/api/v1/teams/1610612737/summary?venue=home",
+          "status": 200
+        }
+      ],
+      "ctrl_c_stopped_both_servers": true
+    },
+    "scientific_git_commit": null,
+    "scientific_git_dirty": null,
+    "source_tree_sha256": "8901bea0f1ee8f6aeb8f6a3c9cba39d16872b618e0f8b6a09019391fe1a1f802",
+    "source_csv_sha256": "fa56bf638ef18be972a88850719043953e615bf39339671a8daa007ba08811b6"
+  },
+  "reproducibility": {
+    "artifact_count": 13,
+    "artifact_hashes_equal": true,
+    "dataset_sha256": "fa56bf638ef18be972a88850719043953e615bf39339671a8daa007ba08811b6",
+    "excluded_manifest_fields": [
+      "generated_at"
+    ],
+    "generation_timestamps": [
+      "2026-10-31T04:44:34.220099Z",
+      "2026-10-31T04:44:35.954452Z"
+    ],
+    "release_id": "8fe1ced7e2eae1fb2405a4f096ee0d07f567871e71b672e524591c4619653b25",
+    "source_tree_sha256": "8901bea0f1ee8f6aeb8f6a3c9cba39d16872b618e0f8b6a09019391fe1a1f802",
+    "status": "passed"
+  },
+  "scientific_audit": {
+    "status": "passed",
+    "pair_count": 14,
+    "anomaly_analyses": 50,
+    "detector_records_checked": 3725,
+    "boxplot_occurrences": 11,
+    "flagged_occurrences": 43
+  },
+  "dependency_exports_and_api_contracts": {
+    "status": "passed",
+    "exports_unchanged": true,
+    "openapi_and_types_unchanged": true
+  },
+  "npm_audit": {
+    "frontend_all": {
+      "info": 0,
+      "low": 0,
+      "moderate": 12,
+      "high": 0,
+      "critical": 0,
+      "total": 12
+    },
+    "frontend_production": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "contracts_tooling": {
+      "info": 0,
+      "low": 0,
+      "moderate": 3,
+      "high": 0,
+      "critical": 0,
+      "total": 3
+    }
+  },
+  "minimal_runtime": {
+    "cloud_verified": false,
+    "cold_start_median_seconds": 1.0574622339991038,
+    "cold_start_seconds": [
+      2.087605430999247,
+      1.0574622339991038,
+      1.0329044230020372
+    ],
+    "environment": "local_linux_uvicorn",
+    "estimated_uncompressed_bytes": 256156608,
+    "frontend_bundles": {
+      "assets/PointsChart-CxfX4Aul.js": {
+        "bytes": 515594,
+        "gzip_bytes": 172339
+      },
+      "assets/index-BRZbTNN1.js": {
+        "bytes": 472800,
+        "gzip_bytes": 144433
+      }
+    },
+    "latency_ms": {
+      "/api/v1/anomalies?team_id=1610612745&method=lof&venue=home": {
+        "max": 7.224466004117858,
+        "median": 5.509851995157078,
+        "p95": 7.218877202103613,
+        "samples": 15
+      },
+      "/api/v1/comparisons?venue=home&metric=PTS": {
+        "max": 76.98183199681807,
+        "median": 32.07156999997096,
+        "p95": 71.31392500014044,
+        "samples": 15
+      },
+      "/api/v1/teams/1610612737/summary?venue=home": {
+        "max": 11.62594699417241,
+        "median": 10.253984997689258,
+        "p95": 11.312246201123344,
+        "samples": 15
+      }
+    },
+    "observed_rss_bytes": [
+      216436736,
+      216203264,
+      215814144
+    ],
+    "package_manifest_sha256": "8aeda4d1b06be9b97593e4377c4b4d7f12b71f3eef9a37007b72d4fc0a90ec23",
+    "release_id": "8fe1ced7e2eae1fb2405a4f096ee0d07f567871e71b672e524591c4619653b25",
+    "routing_checks": {
+      "/": 200,
+      "/api/v1/missing": 404,
+      "/assets/missing.js": 404,
+      "/comparar?venue=home": 200,
+      "/times/1610612745?venue=home": 200
+    },
+    "runtime": {
+      "offline_absent": true,
+      "python": "3.12.13"
+    },
+    "runtime_site_packages_bytes": 251286927,
+    "source_size_bytes": 4869681,
+    "status": "passed"
+  },
+  "publication": {
+    "deployment_id": "dpl_BbSEwceZB9iRzVYzi2Ga92x6DNcJ",
+    "immutable_url": "https://quadrascope-d3mrcmnth-projetos-do-jorge.vercel.app",
+    "public_url": "https://quadrascope.vercel.app",
+    "ready_state": "READY",
+    "target": "production",
+    "team": "projetos-do-jorge",
+    "project": "quadrascope",
+    "source_base_commit": "cabb95087e18c6457de1da5195f755dd29dea247",
+    "source_snapshot_sha256": "9a2d802f46c8656ef574e6654b9cfa10680ab1039f5f784d967d8c8d2b8d68d0",
+    "release_id": "8fe1ced7e2eae1fb2405a4f096ee0d07f567871e71b672e524591c4619653b25",
+    "source_tree_sha256": "8901bea0f1ee8f6aeb8f6a3c9cba39d16872b618e0f8b6a09019391fe1a1f802",
+    "dataset_sha256": "fa56bf638ef18be972a88850719043953e615bf39339671a8daa007ba08811b6",
+    "alias_matches": true,
+    "candidate_checks": [
+      {
+        "path": "/api/v1/teams/1610612737/summary?venue=home",
+        "status": "passed",
+        "release_id": "8fe1ced7e2eae1fb2405a4f096ee0d07f567871e71b672e524591c4619653b25"
+      },
+      {
+        "path": "/api/v1/comparisons?metric=REB",
+        "status": "passed",
+        "release_id": "8fe1ced7e2eae1fb2405a4f096ee0d07f567871e71b672e524591c4619653b25"
+      },
+      {
+        "path": "/api/v1/interpretations?context=teams&team_id=1610612737&metric=REB",
+        "status": "passed",
+        "release_id": "8fe1ced7e2eae1fb2405a4f096ee0d07f567871e71b672e524591c4619653b25"
+      }
+    ],
+    "anonymous_http": [
+      {
+        "path": "/",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "path": "/times/1610612737",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "path": "/times/1610612745",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "path": "/comparar",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "path": "/fora-da-curva",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "path": "/dados",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "path": "/api/v1/health",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/meta",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/dictionary",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/teams",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/teams/1610612737/summary",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/distributions?team_id=1610612745&metric=PTS",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/comparisons?metric=REB",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/anomalies?team_id=1610612745&method=lof",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/quality",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/interpretations?context=comparisons&metric=REB",
+        "expected_status": 200,
+        "actual_status": 200,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/missing",
+        "expected_status": 404,
+        "actual_status": 404,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/comparisons?metric=INVALID",
+        "expected_status": 422,
+        "actual_status": 422,
+        "content_type": "application/json"
+      },
+      {
+        "path": "/api/v1/meta",
+        "expected_status": 304,
+        "actual_status": 304,
+        "content_type": null
+      }
+    ],
+    "playwright_stats": {
+      "startTime": "2026-10-31T04:48:37.071Z",
+      "duration": 148041.834,
+      "expected": 27,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "playwright_tests": [
+      {
+        "title": "consulta real, URL compartilhável e recarga de rota profunda",
+        "passed": true
+      },
+      {
+        "title": "estado vazio é diferente de indisponibilidade da API",
+        "passed": true
+      },
+      {
+        "title": "visão geral distingue seleção aplicada, edição pendente e contexto fixo",
+        "passed": true
+      },
+      {
+        "title": "URL inválida não dispara consultas analíticas",
+        "passed": true
+      },
+      {
+        "title": "navegação móvel, tabela acessível e layout sem transbordamento",
+        "passed": true
+      },
+      {
+        "title": "menu móvel posiciona o foco e permite fechar ou navegar pelo teclado",
+        "passed": true
+      },
+      {
+        "title": "filtros ficam apenas na Home e Comparação, sem seleção oculta nos perfis",
+        "passed": true
+      },
+      {
+        "title": "URLs antigas dos perfis são normalizadas antes de consultar o histórico completo",
+        "passed": true
+      },
+      {
+        "title": "troca de release e versão não conserva resultados antigos durante falha da API",
+        "passed": true
+      },
+      {
+        "title": "resposta de outro release é rejeitada antes da apresentação e força atualizar metadados",
+        "passed": true
+      },
+      {
+        "title": "resposta atrasada de um filtro anterior não substitui a seleção aplicada depois",
+        "passed": true
+      },
+      {
+        "title": "índice orienta para as seções e permite voltar por teclado",
+        "passed": true
+      },
+      {
+        "title": "Dados apresenta dimensões, todas as colunas e auditoria com escopos distintos",
+        "passed": true
+      },
+      {
+        "title": "falha na auditoria não vira qualidade aprovada nem oculta o dicionário",
+        "passed": true
+      },
+      {
+        "title": "destaques preservam os valores, amostras e escopos dos perfis e da comparação",
+        "passed": true
+      },
+      {
+        "title": "os 14 pares variável/time apresentam medidas, boxplot, distribuição e interpretação coerentes",
+        "passed": true
+      },
+      {
+        "title": "os sete métodos funcionam para os dois times, com scores ou ruído e referência fixa",
+        "passed": true
+      },
+      {
+        "title": "fora da curva apresenta critérios próprios, limites e sinais com precisão explícita",
+        "passed": true
+      },
+      {
+        "title": "comparação e síntese acompanham filtros e não inventam regularidade com uma observação",
+        "passed": true
+      },
+      {
+        "title": "auditoria automática de acessibilidade nas seis telas, com gráficos carregados",
+        "passed": true
+      },
+      {
+        "title": "cada outlier do boxplot e cada sinalização dos sete métodos coincide com o CSV",
+        "passed": true
+      },
+      {
+        "title": "teclado, menu móvel, tabelas e página atual nos dois perfis",
+        "passed": true
+      },
+      {
+        "title": "contraste de textos SVG e limites das barras do histograma",
+        "passed": true
+      },
+      {
+        "title": "menu móvel aberto não permite foco oculto atrás da navegação",
+        "passed": true
+      },
+      {
+        "title": "jornada Dados → Perfil → Comparação → Anomalias → Síntese nos dois times",
+        "passed": true
+      },
+      {
+        "title": "refluxo em 320/390/768 px e todas as modas, inclusive coincidentes com a mediana",
+        "passed": true
+      },
+      {
+        "title": "interpretação explicita destaques de CV/assimetria e diagnóstico sem mudar as medidas",
+        "passed": true
+      }
+    ],
+    "plan_or_protection_changed": false,
+    "builder_duration_seconds": 28,
+    "runtime_error_query": {
+      "filter": "level:error OR level:fatal",
+      "window_minutes": 15,
+      "response": [
+        {
+          "type": "summary",
+          "recordsReturned": 0,
+          "timeRange": {
+            "start": "2026-10-31T04:36:17.748Z",
+            "end": "2026-10-31T04:51:17.748Z"
+          },
+          "pagination": {
+            "hasMore": false,
+            "next": null
+          },
+          "excludedIntervals": []
+        }
+      ],
+      "limitations": "Janela consultada após os testes; não é garantia de ausência permanente de erros."
+    }
+  },
+  "ci_remote": {
+    "workflow": ".github/workflows/ci.yml",
+    "configured": true,
+    "commands_verified_locally": true,
+    "remote_run_observed": false,
+    "next_trigger": "Push dos arquivos ao GitHub ou workflow_dispatch após publicação do workflow; não foi realizado push nesta etapa."
+  },
+  "classroom": {
+    "group_submission_confirmed": false,
+    "R06": "partial",
+    "P11.10": "pending"
+  },
+  "limitations": [
+    "Sem certificação WCAG integral; navegador Chromium.",
+    "Produção frontend sem alertas reportados; 12 alertas moderados nas ferramentas frontend e 3 no gerador de contratos permanecem registrados; nenhuma atualização forçada de dependências.",
+    "Procedimento de rollback documentado, sem provocar indisponibilidade para testá-lo.",
+    "Nenhuma nova confirmação de origem/licença do CSV foi inventada; a coleta não é refeita.",
+    "Alterações locais ainda não commitadas; a revisão do pacote é um hash de snapshot."
+  ]
+}

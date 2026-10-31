@@ -255,3 +255,14 @@ O release `27a55bc15c275c249d281378360b79ffa19f2a230942b345105b3ea0d6ef5534` foi
 O pacote mínimo passou em ambiente isolado, sem bibliotecas do pipeline offline. Nova coleta de vinte chamadas recuperou inicialização da aplicação de aproximadamente 5,29–5,80 s em dois workers; não houve primeira resposta HTTP observada nessa coleta, e o provisionamento anterior ao Python continua sem medição isolada. A coleta ocorreu durante os testes de navegador e não representa carga isolada. Nenhum registro `error`/`fatal` foi retornado na janela de quinze minutos consultada para esse deployment; essa observação não garante ausência futura de erros.
 
 [Evidências da publicação](measurements/stage10-deployment.json), [revisão e limites](validation.md). O commit posterior de documentação registra a publicação; o código executável publicado é `83e8276`. A etapa 11 e a confirmação da submissão pelo grupo permanecem pendentes.
+
+
+## Publicação da etapa 11 — preparação da entrega
+
+Em **31/10/2026**, o pacote validado na instalação isolada foi publicado e promovido em https://quadrascope.vercel.app, equipe `projetos-do-jorge`, projeto `quadrascope`, sem mudar plano ou proteção. Deployment **`dpl_BbSEwceZB9iRzVYzi2Ga92x6DNcJ`**, estado `READY`, alvo `production`; candidata: https://quadrascope-d3mrcmnth-projetos-do-jorge.vercel.app. O alias público foi conferido contra esse ID.
+
+Não houve novo commit/push. A revisão executável está identificada pela base `cabb95087e18c6457de1da5195f755dd29dea247` e pelo SHA-256 do snapshot testado `9a2d802f46c8656ef574e6654b9cfa10680ab1039f5f784d967d8c8d2b8d68d0`, gravados nos metadados da publicação; o manifesto científico declara `git_dirty=true`. Não atribuir essas alterações à versão remota do commit-base. Release: `8fe1ced7e2eae1fb2405a4f096ee0d07f567871e71b672e524591c4619653b25`. O CSV e os resultados científicos foram preservados; a nova identidade inclui os arquivos de preparação e o contexto Git.
+
+Build de 28 s. A candidata teve health e consultas de resumo, comparação e interpretação conferidos por acesso autenticado antes da promoção. Após promover o mesmo build, passaram **27 Playwright públicos em 148,04 s** e **19 verificações HTTP** sem autenticação, com páginas profundas, dez endpoints, respostas esperadas 404/422 e cache ETag/304. Os mesmos 27 testes passaram localmente na instalação isolada. O bundle React permanece `index-BRZbTNN1.js`.
+
+O pacote mínimo foi conferido no ambiente de runtime isolado, com estimativa local de 256.156.608 bytes descomprimidos; essa estimativa não é uma medição do limite da plataforma. Não foi feita nova medição isolada de provisionamento da Vercel. [Reprodução, entrega e recuperação](delivery.md), [evidências](measurements/stage11-verification.json). O procedimento de rollback está documentado; não foi provocado um rollback em produção para testá-lo.

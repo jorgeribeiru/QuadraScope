@@ -1,9 +1,13 @@
 UV ?= uv
 NPM ?= npm
 
-.PHONY: help setup check-env lint format test check export-requirements data-normalize data-quality data-describe data-anomalies data-build data-validate data-reproduce data-package-runtime api-serve api-export api-contracts web-setup web-dev web-build web-check web-e2e dev deploy-prepare report-audit
+.PHONY: help install run ci delivery setup check-env lint format test check export-requirements data-normalize data-quality data-describe data-anomalies data-build data-validate data-reproduce data-package-runtime api-serve api-export api-contracts web-setup web-dev web-build web-check web-e2e dev deploy-prepare report-audit
 
 help:
+	@echo "install              Instala Python e frontend pelos locks (primeira execução)"
+	@echo "run                  Gera/valida dados e inicia API + frontend; Ctrl+C encerra"
+	@echo "ci                   Executa os checks de integração contínua"
+	@echo "delivery             Gera ZIP do código atual e manifesto de hashes"
 	@echo "report-audit         Confere medidas e partidas diretamente no CSV original"
 	@echo "setup                Instala Python 3.12 e sincroniza .venv pelo lock"
 	@echo "check-env            Verifica ambiente, dependências e caminhos"
@@ -85,9 +89,9 @@ api-export:
 	$(UV) run --locked python -m backend.scripts.export_api
 
 api-contracts: api-export
-	npm ci --ignore-scripts --prefix tools/contracts
-	npm run generate --prefix tools/contracts
-	npm run check --prefix tools/contracts
+	$(NPM) ci --ignore-scripts --prefix tools/contracts
+	$(NPM) run generate --prefix tools/contracts
+	$(NPM) run check --prefix tools/contracts
 
 web-setup:
 	$(NPM) ci --prefix frontend
@@ -112,3 +116,27 @@ deploy-prepare:
 
 report-audit:
 	$(UV) run --locked python -m backend.scripts.verify_report
+
+install:
+	$(MAKE) setup
+	$(MAKE) web-setup
+
+run:
+	$(MAKE) data-build
+	$(MAKE) dev
+
+ci:
+	$(MAKE) check
+	$(MAKE) data-build
+	$(MAKE) data-validate
+	$(MAKE) report-audit
+	$(MAKE) data-reproduce
+	$(MAKE) export-requirements
+	git diff --exit-code -- requirements.txt requirements-runtime.txt
+	$(MAKE) api-contracts
+	git diff --exit-code -- docs/api/openapi.json frontend/src/generated/api.ts
+	$(MAKE) web-check
+	$(MAKE) deploy-prepare
+
+delivery:
+	$(UV) run --locked python -m backend.scripts.prepare_delivery

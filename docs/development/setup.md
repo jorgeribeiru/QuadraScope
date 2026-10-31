@@ -1,4 +1,6 @@
-# Ambiente de desenvolvimento — etapas 1–8
+# Ambiente de desenvolvimento
+
+Para instalar e executar o sistema completo, usar `make install` uma vez e `make run` nas execuções seguintes. O segundo comando gera e valida os artefatos antes de iniciar API + frontend. O [guia de entrega](delivery.md) documenta requisitos de sistema, CI e recuperação da hospedagem.
 
 ## Versões e dependências
 
@@ -9,13 +11,13 @@
 | uv | 0.11.7 usado na validação desta etapa | Gerencia `.venv`, `uv.lock` e exportação |
 | GNU Make | 4.4.1 usado na validação | Atalhos no Makefile; comandos equivalentes abaixo |
 
-Python 3.12 e Node 24 foram escolhidos entre as versões suportadas pela hospedagem prevista. Isso não equivale a uma prova de deploy; ela continua nas etapas 7–8. Referências consultadas em 29/10/2026: [Python na Vercel](https://vercel.com/docs/functions/runtimes/python), [Node na Vercel](https://vercel.com/docs/functions/runtimes/node-js/node-js-versions).
+Python 3.12 e Node 24 foram escolhidos entre as versões suportadas pela hospedagem prevista. A aplicação foi posteriormente publicada e verificada; [provas e limites da hospedagem](deployment.md). Referências consultadas em 29/10/2026: [Python na Vercel](https://vercel.com/docs/functions/runtimes/python), [Node na Vercel](https://vercel.com/docs/functions/runtimes/node-js/node-js-versions).
 
 O Python global não precisa ser alterado: `uv sync` usa a versão declarada e cria `.venv` na raiz. Node é necessário para desenvolver/compilar React e gerar/verificar os tipos HTTP, separado do runtime Python. Com nvm disponível, `nvm install` e `nvm use` na raiz selecionam a versão do frontend.
 
 `pyproject.toml` declara as dependências de runtime FastAPI, Pydantic, Uvicorn, pandas, NumPy e SciPy. O grupo `pipeline` contém PyArrow, scikit-learn e threadpoolctl, usados offline. O grupo `dev` contém Ruff, pytest e HTTPX para os testes HTTP. Os dois grupos são ativados por padrão no uv para desenvolvimento. `nba_api` não é necessário para analisar o CSV já coletado, e PyOD não integra o ambiente.
 
-`uv.lock` fixa também as dependências transitivas. `requirements.txt` exporta runtime + pipeline com versões e hashes, sem ferramentas dev. `requirements-runtime.txt` contém somente as dependências da futura API: o leitor usa JSON, e as descritivas filtradas usam pandas/NumPy/SciPy. A leitura e os cálculos foram verificados em ambiente isolado sem PyArrow/scikit-learn/threadpoolctl; [política e pacote de runtime](artifacts.md).
+`uv.lock` fixa também as dependências transitivas. `requirements.txt` exporta runtime + pipeline com versões e hashes, sem ferramentas dev. `requirements-runtime.txt` contém somente as dependências da API: o leitor usa JSON, e as descritivas filtradas usam pandas/NumPy/SciPy. A leitura e os cálculos foram verificados em ambiente isolado sem PyArrow/scikit-learn/threadpoolctl; [política e pacote de runtime](artifacts.md).
 
 ## Instalação e verificação
 
