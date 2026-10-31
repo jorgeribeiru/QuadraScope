@@ -10,6 +10,8 @@ Relatório web interativo de análise de dados da NBA, desenvolvido para o Proje
 
 ## Executar o sistema
 
+Para revisar apenas as melhorias de interface na branch `melhorias`, usando os dados já publicados e sem executar o pipeline, consulte [Guia, navegação e consultas](docs/development/frontend-review.md). A nova área começa em `/guia` na prévia local. A publicação existente permanece como referência até uma publicação posterior.
+
 Requisitos: **Python 3.12, uv, Node 24, Git e GNU Make**. Validado em Linux; Windows deve usar WSL2. A instalação inicial exige internet. Selecionar Node 24 antes de instalar (com nvm: `nvm install` e `nvm use`). Na raiz do projeto clonado ou do ZIP extraído:
 
 ```bash

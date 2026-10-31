@@ -11,8 +11,11 @@ import { QueryBoundary } from '@/components/QueryBoundary'
 import { DataTable } from '@/components/DataTable'
 import { Warning, EmptyState } from '@/components/States'
 import { Button } from '@/components/ui/button'
+import { ReportIndex } from '@/components/ReportNavigation'
 import { Interpretations } from '@/components/Interpretations'
 import { BoxplotChart, DistributionChart } from '@/components/ScientificCharts'
+import { profileHref, sectionIdFromHash } from '@/lib/report-catalog'
+import { useLocation } from 'react-router-dom'
 import {
   ReportSection,
   MetricSelect,
@@ -25,6 +28,8 @@ export function TeamProfile({ meta, selection }: { meta: Meta; selection: Select
   const { teamId = '' } = useParams()
   const team = teams.find((t) => t.id === teamId)
   const hash = useReportHash()
+  const location = useLocation()
+  const section = sectionIdFromHash(location.hash)
   const metric = hash.read('variavel', Object.keys(metricLabels) as Metric[], 'PTS')
   const client = useQueryClient()
   const query = useQuery({
@@ -48,16 +53,20 @@ export function TeamProfile({ meta, selection }: { meta: Meta; selection: Select
       <div className="analysis-scope">
         <span className="scope-label">HISTÓRICO COMPLETO DO TIME</span>
         <ReadableParagraph>
-          Este perfil considera todas as partidas do time no CSV. Os filtros da Visão geral e da
-          Comparação não são aplicados aqui.
+          Neste perfil, analisamos todas as partidas disponíveis do time no CSV. Para comparar
+          períodos ou selecionar jogos em casa e fora, usamos os filtros da Visão geral e da
+          Comparação.
         </ReadableParagraph>
       </div>
+      <ReportIndex />
       <div className="report-toolbar profile-toolbar">
         <div className="team-switch" role="group" aria-label="Selecionar time">
           {teams.map((t) => (
             <Button asChild key={t.id} variant={t.id === teamId ? 'default' : 'outline'}>
               <Link
-                to={`/times/${t.id}#variavel=${metric}`}
+                to={
+                  section ? profileHref(t.id, metric, section) : `/times/${t.id}#variavel=${metric}`
+                }
                 aria-current={t.id === teamId ? 'page' : undefined}
               >
                 {t.name}
@@ -225,12 +234,11 @@ export function TeamProfile({ meta, selection }: { meta: Meta; selection: Select
                   normalidade.
                 </ReadableParagraph>
                 <ReadableParagraph>
-                  Foi escolhido o coeficiente ajustado por explicitar a correção amostral do momento
-                  de terceira ordem ao comparar amostras de tamanhos diferentes. Esse ajuste não
-                  elimina a influência dos extremos e não demonstra normalidade. Não foram aplicadas
-                  transformações logarítmicas: elas exigiriam uma análise posterior da escala, e
-                  zeros como os de BLK/STL tornam log(0) indefinido. Uma correção arbitrária como
-                  log(x+1) também precisaria ser justificada.
+                  Escolhemos o coeficiente ajustado por incluir a correção amostral ao comparar
+                  conjuntos de tamanhos diferentes. Interpretamos o resultado junto com os gráficos,
+                  pois os extremos ainda influenciam o coeficiente. Mantivemos as variáveis na
+                  escala original; uma transformação logarítmica exigiria outra discussão, inclusive
+                  sobre os zeros de BLK/STL, já que log(0) é indefinido.
                 </ReadableParagraph>
                 <ReadableParagraph>
                   Coeficiente atual: <Value measure={row.statistics.skewness} />. Histograma mostra
@@ -251,12 +259,12 @@ export function TeamProfile({ meta, selection }: { meta: Meta; selection: Select
                   team={teamId}
                   metric={metric}
                 />
-                <Warning>
-                  Perfil fixo ao histórico completo no CSV. Atlanta tem 75 jogos e dois com
-                  prorrogação; Houston tem 74 jogos e oito com prorrogação. Totais não são ajustados
-                  por minutos ou posses e não permitem atribuir diferenças à prorrogação ou a uma
-                  causa isolada.
-                </Warning>
+                <ReadableParagraph>
+                  Trabalhamos com 75 jogos de Atlanta e 74 de Houston. Nesse conjunto, Atlanta teve
+                  dois jogos com prorrogação e Houston, oito. Mantivemos os totais por partida, sem
+                  ajuste por minutos ou posses, e consideramos essa diferença ao interpretar os
+                  times.
+                </ReadableParagraph>
               </ReportSection>
             </>
           )

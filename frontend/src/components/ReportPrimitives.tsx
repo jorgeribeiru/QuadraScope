@@ -1,6 +1,7 @@
 import type { components } from '@/generated/api'
 import { formatMeasure, metricLabels, formatDate } from '@/lib/format'
 import type { Metric } from '@/lib/filters'
+import { SectionActions } from './ReportNavigation'
 export type Description = components['schemas']['Description']
 export type Measure = components['schemas']['Measure']
 export function Value({ measure }: { measure: Measure }) {
@@ -23,12 +24,18 @@ export function ReportSection({
   children: React.ReactNode
 }) {
   return (
-    <section className="panel report-section" id={id} aria-labelledby={`${id}-title`}>
+    <section
+      className="panel report-section"
+      id={id}
+      aria-labelledby={`${id}-title`}
+      data-requirements={requirements}
+    >
       <div className="panel-heading">
         <h2 id={`${id}-title`}>{title}</h2>
-        <span className="tag">{requirements}</span>
+        {!/^R\d/.test(requirements) && <span className="tag">{requirements}</span>}
       </div>
       {children}
+      <SectionActions id={id} />
     </section>
   )
 }

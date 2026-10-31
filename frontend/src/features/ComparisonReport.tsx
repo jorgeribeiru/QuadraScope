@@ -1,6 +1,6 @@
 import { VariableHighlights } from '@/components/VariableHighlights'
 import { ReadableParagraph } from '@/components/ReadableParagraph'
-import { statisticLabels, meanContrast } from '@/lib/statistics'
+import { statisticLabels, measureContrast, comparisonMeasures } from '@/lib/statistics'
 import { lazy, Suspense } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { api, type Meta } from '@/lib/api'
@@ -13,6 +13,8 @@ import { EmptyState, Loading, Warning } from '@/components/States'
 import { Interpretations } from '@/components/Interpretations'
 import { ComparisonBoxes } from '@/components/ComparisonBoxes'
 import { ReportSection, Value } from '@/components/ReportPrimitives'
+import { ReportIndex } from '@/components/ReportNavigation'
+import { useReportHash } from '@/lib/report-hash'
 const PointsChart = lazy(() =>
   import('@/components/PointsChart').then((m) => ({ default: m.PointsChart })),
 )
@@ -37,9 +39,15 @@ function comparisonText(
           ? 'Atlanta'
           : 'Houston'
       : 'indefinido'
-  return `Menor CV: ${direction(cv)}; menor desvio: ${direction(sd)}; menor IQR: ${direction(iqr)}. CV compara dispersão relativa à média, desvio e IQR permanecem na unidade original. ${direction(cv) !== direction(sd) ? 'CV e desvio discordam: a diferença entre as médias altera a ordenação relativa.' : 'CV e desvio têm a mesma ordenação nesta seleção; isso não demonstra equivalência das medidas.'} ${direction(sd) !== direction(iqr) ? 'Desvio e IQR discordam: o centro e as caudas têm comportamentos distintos; confira os boxplots.' : 'A ordenação do desvio coincide com a do IQR, mas suas sensibilidades aos extremos são diferentes.'}`
+  const finding = (label: string, values: typeof cv) =>
+    direction(values) === 'empate'
+      ? `${label} igual nos dois times`
+      : `menor ${label} em ${direction(values)}`
+  return `Ao comparar esta variável, encontramos ${finding('CV', cv)}, ${finding('desvio', sd)} e ${finding('IQR', iqr)}. ${direction(cv) !== direction(sd) ? 'A ordenação muda entre CV e desvio porque o CV também considera a média de cada time.' : 'CV e desvio apontam a mesma ordenação neste recorte.'} ${direction(sd) !== direction(iqr) ? 'Já o IQR e o desvio apontam ordenações diferentes, mostrando que a concentração central e os extremos pesam de formas distintas na comparação.' : 'O IQR acompanha a ordenação do desvio, embora resuma apenas os 50% centrais dos jogos.'}`
 }
 export function Comparison({ meta, selection }: Props) {
+  const hash = useReportHash()
+  const measure = hash.read('medida', [...comparisonMeasures], 'mean')
   const client = useQueryClient()
   const query = useQuery({
     queryKey: analysisKey(meta, 'comparisons', { ...selection.filters, metric: selection.metric }),
@@ -56,18 +64,20 @@ export function Comparison({ meta, selection }: Props) {
             <div className="analysis-scope">
               <span className="scope-label">SELEÇÃO APLICADA</span>
               <ReadableParagraph>
-                Os resultados desta página acompanham os filtros aplicados. Os perfis individuais e
-                os detectores usam o histórico completo de cada time.
+                Aqui comparamos os times usando os filtros selecionados. Nos perfis individuais e na
+                análise de outliers, consideramos o histórico completo de cada time.
               </ReadableParagraph>
             </div>
+            <ReportIndex />
             <ReportSection
               id="comparacao"
               title={`${metricLabels[selection.metric]} · Atlanta × Houston`}
               requirements="R03 · R04 · R18"
             >
               <ReadableParagraph>
-                Mesmos filtros, unidade e eixo iniciado em zero. São médias por partida em
-                históricos próprios, não médias apenas dos confrontos diretos.
+                Comparamos os históricos dos dois times com os mesmos filtros e unidades. Nas
+                barras, mantivemos o eixo iniciado em zero. A diferença é descritiva: não realizamos
+                um teste de superioridade entre os times.
               </ReadableParagraph>
               <div
                 className="comparison-highlights"
@@ -101,12 +111,54 @@ export function Comparison({ meta, selection }: Props) {
                   )
                 })}
               </div>
+              <label className="report-control chart-measure-control">
+                Medida das barras
+                <select
+                  value={measure}
+                  onChange={(event) => hash.set('medida', event.target.value)}
+                >
+                  {comparisonMeasures.map((key) => (
+                    <option key={key} value={key}>
+                      {statisticLabels[key]}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <h3>
+                {statisticLabels[measure]} · {metricLabels[selection.metric]}
+              </h3>
               <ReadableParagraph className="comparison-reading">
-                {meanContrast(data.summary, selection.metric)}
+                {measureContrast(data.summary, selection.metric, measure)}
               </ReadableParagraph>
               <Suspense fallback={<Loading />}>
-                <PointsChart rows={data.selected_summary} metric={selection.metric} />
+                <PointsChart
+                  rows={data.selected_summary}
+                  metric={selection.metric}
+                  measure={measure}
+                />
               </Suspense>
+              <DataTable
+                data={data.selected_summary}
+                columns={[
+                  {
+                    id: 'team',
+                    header: 'Time',
+                    cell: ({ row }) => teams.find((team) => team.id === row.original.team_id)?.name,
+                  },
+                  { accessorKey: 'n', header: 'Jogos' },
+                  {
+                    id: 'measure',
+                    header: statisticLabels[measure],
+                    cell: ({ row }) => <Value measure={row.original.statistics[measure]} />,
+                  },
+                  {
+                    id: 'unit',
+                    header: 'Unidade',
+                    cell: ({ row }) => row.original.statistics[measure].unit,
+                  },
+                ]}
+                caption={`Dados das barras: ${statisticLabels[measure]} de ${selection.metric} — seleção atual.`}
+              />
               <DataTable
                 data={data.selected_summary}
                 columns={[
@@ -145,7 +197,7 @@ export function Comparison({ meta, selection }: Props) {
               {data.context.warnings.map((w) => (
                 <Warning key={w}>{w}</Warning>
               ))}
-              <details>
+              <details id="zscore">
                 <summary>Onde o z-score pode ser usado</summary>
                 <ReadableParagraph>
                   z = (x − x̄)/s é adimensional. Para mostrar os dois times em uma escala padronizada
@@ -155,10 +207,10 @@ export function Comparison({ meta, selection }: Props) {
                   por construção.
                 </ReadableParagraph>
                 <ReadableParagraph>
-                  As barras acima mantêm as unidades originais. O detector Z-score usa média e
-                  desvio amostral do próprio time, e os métodos de vizinhança usam StandardScaler
-                  com desvio populacional por feature no histórico do próprio time. Essas
-                  referências têm objetivos diferentes e não produzem um ranking comum de scores.
+                  Nas barras, mantivemos as unidades das medidas. Para detectar outliers por
+                  Z-score, usamos a média e o desvio amostral do próprio time. Nos métodos de
+                  vizinhança, utilizamos StandardScaler com desvio populacional por variável, também
+                  ajustado separadamente para cada time.
                 </ReadableParagraph>
               </details>
             </ReportSection>
@@ -176,35 +228,36 @@ export function Comparison({ meta, selection }: Props) {
               </ReadableParagraph>
               <VariableHighlights rows={data.summary} />
               {(['cv', 'iqr'] as const).map((stat) => (
-                <DataTable
-                  key={stat}
-                  data={data.matrices[stat].rows}
-                  columns={[
-                    {
-                      id: 'metric',
-                      header: 'Variável',
-                      cell: ({ row }) =>
-                        `${row.original.metric} · ${metricLabels[row.original.metric]}`,
-                    },
-                    ...teams.map((team) => ({
-                      id: team.id,
-                      header: team.name,
-                      cell: ({
-                        row,
-                      }: {
-                        row: { original: (typeof data.matrices.cv.rows)[number] }
-                      }) => (
-                        <>
-                          <Value measure={row.original.teams[team.id]} />
-                          <small className="measure-state">
-                            n={row.original.teams[team.id].n} · {row.original.unit}
-                          </small>
-                        </>
-                      ),
-                    })),
-                  ]}
-                  caption={`Quadro 7×2 de ${stat === 'cv' ? 'CV (%)' : 'IQR (unidades por variável)'} — seleção atual.`}
-                />
+                <div key={stat} id={stat} className="anchor-target">
+                  <DataTable
+                    data={data.matrices[stat].rows}
+                    columns={[
+                      {
+                        id: 'metric',
+                        header: 'Variável',
+                        cell: ({ row }) =>
+                          `${row.original.metric} · ${metricLabels[row.original.metric]}`,
+                      },
+                      ...teams.map((team) => ({
+                        id: team.id,
+                        header: team.name,
+                        cell: ({
+                          row,
+                        }: {
+                          row: { original: (typeof data.matrices.cv.rows)[number] }
+                        }) => (
+                          <>
+                            <Value measure={row.original.teams[team.id]} />
+                            <small className="measure-state">
+                              n={row.original.teams[team.id].n} · {row.original.unit}
+                            </small>
+                          </>
+                        ),
+                      })),
+                    ]}
+                    caption={`Quadro 7×2 de ${stat === 'cv' ? 'CV (%)' : 'IQR (unidades por variável)'} — seleção atual.`}
+                  />
+                </div>
               ))}
               <ReadableParagraph>
                 IQR = Q3 − Q1 usa quartis com interpolação linear, iguais aos boxplots na mesma
@@ -213,27 +266,29 @@ export function Comparison({ meta, selection }: Props) {
                 relativa robusta, não outro nome para CV: exige mediana positiva e não é
                 automaticamente percentual.
               </ReadableParagraph>
-              <DataTable
-                data={data.quartiles}
-                columns={[
-                  { accessorKey: 'metric', header: 'Variável' },
-                  { id: 'unit', header: 'Unidade', cell: ({ row }) => row.original.q1.unit },
-                  {
-                    id: 'team',
-                    header: 'Time',
-                    cell: ({ row }) => teams.find((t) => t.id === row.original.team_id)?.name,
-                  },
-                  { accessorKey: 'n', header: 'Jogos' },
-                  ...(['q1', 'q3', 'iqr'] as const).map((key) => ({
-                    id: key,
-                    header: key.toUpperCase(),
-                    cell: ({ row }: { row: { original: (typeof data.quartiles)[number] } }) => (
-                      <Value measure={row.original[key]} />
-                    ),
-                  })),
-                ]}
-                caption="Q1, Q3 e IQR dos 14 pares variável/time — seleção atual."
-              />
+              <div id="quartis" className="anchor-target">
+                <DataTable
+                  data={data.quartiles}
+                  columns={[
+                    { accessorKey: 'metric', header: 'Variável' },
+                    { id: 'unit', header: 'Unidade', cell: ({ row }) => row.original.q1.unit },
+                    {
+                      id: 'team',
+                      header: 'Time',
+                      cell: ({ row }) => teams.find((t) => t.id === row.original.team_id)?.name,
+                    },
+                    { accessorKey: 'n', header: 'Jogos' },
+                    ...(['q1', 'q3', 'iqr'] as const).map((key) => ({
+                      id: key,
+                      header: key.toUpperCase(),
+                      cell: ({ row }: { row: { original: (typeof data.quartiles)[number] } }) => (
+                        <Value measure={row.original[key]} />
+                      ),
+                    })),
+                  ]}
+                  caption="Q1, Q3 e IQR dos 14 pares variável/time — seleção atual."
+                />
+              </div>
               <details>
                 <summary>Discussão por variável e quadro de evidências</summary>
                 {Object.keys(metricLabels).map((metric) => (
@@ -289,8 +344,8 @@ export function Comparison({ meta, selection }: Props) {
                 metric={selection.metric}
               />
               <ReadableParagraph>
-                As leituras acompanham os filtros. Os perfis individuais e os detectores usam o
-                histórico completo do time no CSV; abrir um perfil não mantém esta seleção.
+                Nossas interpretações acompanham os filtros desta página. Nos perfis e nos
+                detectores, retomamos o histórico completo do time no CSV.
               </ReadableParagraph>
             </ReportSection>
           </div>

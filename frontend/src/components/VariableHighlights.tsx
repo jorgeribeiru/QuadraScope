@@ -48,12 +48,12 @@ export function VariableHighlights({ rows }: { rows: Row[] }) {
           <h4>{team.name}</h4>
           <ReadableParagraph>
             {cv
-              ? `Maior dispersão relativa pelo CV: ${show(cv.high, '%')}. Menor dispersão relativa: ${show(cv.low, '%')}. Empates são preservados.`
+              ? `Ao comparar as variáveis deste time, encontramos maior dispersão relativa pelo CV em ${show(cv.high, '%')}. A menor dispersão relativa aparece em ${show(cv.low, '%')}.`
               : 'Sem CV válido para ordenar as variáveis deste time nesta seleção.'}
           </ReadableParagraph>
           <ReadableParagraph>
             {skew
-              ? `Maior assimetria em magnitude |G₁|: ${show(skew.high, '')}. O sinal mostrado preserva a direção, e a ordenação usa o valor absoluto.`
+              ? `Encontramos a maior assimetria em magnitude |G₁| em ${show(skew.high, '')}. Usamos o valor absoluto nessa comparação e mantivemos o sinal para indicar a direção da cauda.`
               : 'Sem coeficiente de assimetria válido para ordenar as variáveis deste time.'}
           </ReadableParagraph>
         </article>
@@ -66,10 +66,10 @@ export function VariableHighlights({ rows }: { rows: Row[] }) {
         </ReadableParagraph>
       )}
       <ReadableParagraph>
-        CV é adimensional e permite comparar escalas de razão diferentes; o desvio bruto de pontos
-        não pode ser ordenado diretamente com o de tocos. Essa leitura não elimina o efeito de
-        médias pequenas nem da granularidade de BLK/STL. Para assimetria forte, considere também
-        mediana e IQR/mediana, sem substituir automaticamente a definição do CV.
+        Usamos o CV para comparar a dispersão relativa entre variáveis de escalas diferentes. Assim,
+        conseguimos relacionar a variação dos pontos à dos tocos, por exemplo. Em BLK e STL,
+        consideramos também as médias pequenas e o fato de serem contagens inteiras. Quando a
+        assimetria é forte, olhamos a mediana e a razão IQR/mediana como medidas complementares.
       </ReadableParagraph>
     </div>
   )

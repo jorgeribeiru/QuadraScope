@@ -1,17 +1,19 @@
 import { SlidersHorizontal, RotateCcw } from 'lucide-react'
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { parseSelection, selectionParams, type Filters, type Metric } from '@/lib/filters'
 import { metricLabels } from '@/lib/format'
 import { Button } from './ui/button'
 
 export function FilterBar() {
   const [params, setParams] = useSearchParams()
+  const navigate = useNavigate()
+  const location = useLocation()
   const { filters, metric, issues } = parseSelection(params)
   function apply(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    setParams(
-      selectionParams(
+    void navigate({
+      search: selectionParams(
         {
           from: String(data.get('from') || ''),
           to: String(data.get('to') || ''),
@@ -19,8 +21,9 @@ export function FilterBar() {
           outcome: data.get('outcome') as Filters['outcome'],
         },
         data.get('metric') as Metric,
-      ),
-    )
+      ).toString(),
+      hash: location.hash,
+    })
   }
   return (
     <section className="filter-section" aria-label="Filtros da análise">
