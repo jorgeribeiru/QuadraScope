@@ -1,5 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "fastapi",
-  "functions": {"app.py": {"maxDuration": 60}}
+  "functions": {"app.py": {"maxDuration": 60}},
+  "rewrites": [
+    {"source": "/comparar", "destination": "/"},
+    {"source": "/dados", "destination": "/"},
+    {"source": "/fora-da-curva", "destination": "/"},
+    {"source": "/times/:teamId", "destination": "/"}
+  ]
 }

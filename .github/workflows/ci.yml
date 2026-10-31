@@ -82,19 +82,20 @@ jobs:
           node-version: '24'
       - name: Instalar CLI de publicação
         run: npm install --global "vercel@${VERCEL_CLI_VERSION}"
-      - name: Conferir credencial de publicação
+      - name: Conferir credencial e obter configuração de produção
         run: |
           if [[ -z "$VERCEL_TOKEN" ]]; then
             echo "::error::Cadastre o secret VERCEL_SECRET_2 nas configurações de Actions do repositório."
             exit 1
           fi
+          vercel pull --yes --environment=production --scope projetos-do-jorge
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_SECRET_2 }}
       - name: Publicar candidata sem alterar o domínio
         id: candidate
         run: |
-          # O builder remoto promove app.frontend() para CDN; o build local da CLI
-          # 65.8.0 omite essas rotas. Enviar somente o runtime mínimo validado.
+          # O builder remoto mantém a integração FastAPI/CDN já usada pelo projeto.
+          # Enviar somente o runtime mínimo validado, com os rewrites da SPA.
           vercel deploy --project quadrascope --prod --skip-domain --yes --json --scope projetos-do-jorge \
             --meta githubCommitSha="$GITHUB_SHA" --meta githubCommitRef=main > "$RUNNER_TEMP/deployment.json"
           node --input-type=module -e '
