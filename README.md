@@ -10,8 +10,6 @@ Relatório web interativo de análise de dados da NBA, desenvolvido para o Proje
 
 ## Executar o sistema
 
-Para revisar apenas as melhorias de interface na branch `melhorias`, usando os dados já publicados e sem executar o pipeline, consulte [Guia, navegação e consultas](docs/development/frontend-review.md). A nova área começa em `/guia` na prévia local. A publicação existente permanece como referência até uma publicação posterior.
-
 Requisitos: **Python 3.12, uv, Node 24, Git e GNU Make**. Validado em Linux; Windows deve usar WSL2. A instalação inicial exige internet. Selecionar Node 24 antes de instalar (com nvm: `nvm install` e `nvm use`). Na raiz do projeto clonado ou do ZIP extraído:
 
 ```bash
@@ -79,14 +77,11 @@ QuadraScope/
     │   ├── data-dictionary.md
     │   ├── methodology.md
     │   └── anomaly-sensitivity.json
-    ├── planning/
-    │   ├── requirements.md
-    │   └── implementation-plan.md
     └── references/
         └── Projeto 1.pdf
 ```
 
-`data/raw/` guarda o CSV original sem alterações. `docs/data/` guarda sua documentação. O enunciado acadêmico fica em `docs/references/`; desenho do sistema, planejamento e dados têm pastas próprias. A base React está em `frontend/`; o pacote de publicação gerado fica em `.deployment/`, ignorado pelo Git.
+`data/raw/` guarda o CSV original sem alterações. `docs/data/` guarda sua documentação. O enunciado acadêmico fica em `docs/references/`; desenho do sistema e dados têm pastas próprias. A base React está em `frontend/`; o pacote de publicação gerado fica em `.deployment/`, ignorado pelo Git.
 
 ## Ambiente e verificações
 
@@ -114,8 +109,6 @@ O [guia de desenvolvimento](docs/development/setup.md) apresenta instalação al
 - [Relatório web e mapa de requisitos](docs/development/report.md).
 - [Frontend: executar e verificar](docs/development/frontend.md).
 - [Pacote, medições e publicação na Vercel](docs/development/deployment.md).
-- [Plano de implementação e tarefas](docs/planning/implementation-plan.md).
-- [Requisitos, caixas de conclusão e histórico](docs/planning/requirements.md).
 - [Arquitetura](docs/architecture/architecture.md) e [diagrama](docs/architecture/diagrams/quadrascope-arquitetura.svg).
 - [Origem e extração dos dados](docs/data/provenance.md).
 

@@ -67,7 +67,7 @@ São quinze requisições por cenário, sem tráfego externo, concorrência ou r
 
 ## Publicação verificada na Vercel
 
-Em 29/10/2026, a CLI 65.8.0 foi instalada no usuário e autenticada como `jorgribeiro`. O plugin oficial Vercel foi habilitado no Codex; o MCP compartilhado `https://mcp.vercel.com` foi registrado e autenticado por OAuth, com confirmação para operações de escrita. A sessão corrente ainda não carregou os tools MCP; a publicação e a inspeção usaram a CLI autenticada. Tokens e configurações pessoais não estão no repositório.
+Em 29/10/2026, a CLI 65.8.0 foi instalada no usuário e autenticada como `jorgribeiro`. A publicação e a inspeção usaram a CLI autenticada. Tokens e configurações pessoais não estão no repositório.
 
 Com autorização do usuário, a equipe Hobby existente foi renomeada para **Projetos do Jorge**, com identificador **`projetos-do-jorge`**. O ID da equipe foi preservado, e não houve criação de outra equipe ou mudança de plano.
 

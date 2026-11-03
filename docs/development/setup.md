@@ -144,7 +144,7 @@ As seleções unit e analytics têm testes de configuração e de ingestão/qual
 
 Node 24 foi registrado como versão-alvo, mas o frontend não foi instalado nem testado nesta etapa. A seleção não altera o Node global da máquina. Não houve prova de deploy.
 
-R01, R05 e R06 permanecem parciais: preparar o ambiente não entrega aplicação, hospedagem nem submissão. O [histórico](../planning/requirements.md) registra as evidências de P1.01–P1.07.
+R01, R05 e R06 permanecem parciais: preparar o ambiente não entrega aplicação, hospedagem nem submissão.
 
 ## Validação da etapa 2 em 29/10/2026
 
@@ -176,4 +176,4 @@ R01, R05 e R06 permanecem parciais: preparar o ambiente não entrega aplicação
 
 ## Publicação da etapa 8 em 29/10/2026
 
-https://quadrascope.vercel.app foi publicada no projeto `quadrascope`, equipe `projetos-do-jorge`, no plano Hobby. Os quatro Playwright também passaram nessa URL, sem login, com os dez endpoints e códigos 404/422/304 conferidos. A Vercel classificou o primeiro deploy como produção apesar da solicitação de preview; é uma versão técnica, ainda sem o relatório completo. CLI 65.8.0 e plugin/MCP foram configurados no usuário. A consulta específica para separar cold start exige Observability Plus, sem upgrade realizado. [Detalhes e reprodução](deployment.md).
+https://quadrascope.vercel.app foi publicada no projeto `quadrascope`, equipe `projetos-do-jorge`, no plano Hobby. Os quatro Playwright também passaram nessa URL, sem login, com os dez endpoints e códigos 404/422/304 conferidos. A Vercel classificou o primeiro deploy como produção apesar da solicitação de preview; é uma versão técnica, ainda sem o relatório completo. CLI 65.8.0 foi configurada no usuário. A consulta específica para separar cold start exige Observability Plus, sem upgrade realizado. [Detalhes e reprodução](deployment.md).

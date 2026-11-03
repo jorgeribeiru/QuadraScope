@@ -76,7 +76,7 @@ As simulações de troca de release/versão, resposta incompatível, atraso e 50
 | R19–R23 | [X] Assimetria, CV/IQR, comparações e robustez revisados e complementados | Destaques contextuais, diagnóstico e conferência independente |
 | R24 | [X] Síntese da seleção separada de cobertura/confrontos completos | Jornada, filtros e testes de contexto/release |
 
-A matriz detalhada em [requirements.md](../planning/requirements.md) foi atualizada por requisito; a existência de testes isoladamente não foi usada para fechar a submissão.
+A existência de testes isoladamente não foi usada para fechar a submissão.
 
 ## Reproduzir
 

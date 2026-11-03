@@ -21,8 +21,6 @@ Documentos complementares:
 - [Descritivas, boxplots e distribuições](../development/descriptive.md).
 - [Detectores e sensibilidade](../development/anomalies.md).
 - [Metodologia e regras científicas](../data/methodology.md).
-- [Requisitos, rastreabilidade e acompanhamento](../planning/requirements.md).
-- [Plano detalhado de implementação, do início à entrega](../planning/implementation-plan.md).
 - [Dicionário e transformação das 28 colunas](../data/data-dictionary.md).
 - [Proveniência e extração do CSV](../data/provenance.md).
 - [Diagrama](diagrams/quadrascope-arquitetura.svg), gerado da [fonte Graphviz](diagrams/architecture.dot).
@@ -190,7 +188,6 @@ quadrascope/
 │   │   └── diagrams/           # fonte DOT e diagrama SVG
 │   ├── development/            # instalação, comandos e verificações
 │   ├── data/                   # proveniência, dicionário e metodologia
-│   ├── planning/               # requisitos e plano de implementação
 │   └── references/             # enunciado acadêmico original
 ├── tools/contracts/            # gerador OpenAPI/TypeScript com lock
 ├── deployment/                 # templates do pacote mínimo FastAPI + SPA
