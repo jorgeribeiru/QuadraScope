@@ -146,7 +146,7 @@ test('comparação e síntese acompanham filtros e não inventam regularidade co
   await page.goto('/?venue=home&metric=REB')
   await expect(page.locator('#sintese')).toContainText('38 jogos nesta seleção')
   await expect(page.locator('#sintese')).toContainText('35 jogos nesta seleção')
-  await expect(page.locator('#contexto-completo')).toContainText('Escopo fixo: CSV completo')
+  await expect(page.locator('#contexto-completo')).toContainText('cobertura do CSV completo')
   await expect(page.locator('#contexto-completo')).toContainText('149 observações em 147 jogos')
   await page.getByRole('link', { name: 'Comparar BLK', exact: true }).click()
   await expect(page).toHaveURL(/venue=home&metric=BLK/)

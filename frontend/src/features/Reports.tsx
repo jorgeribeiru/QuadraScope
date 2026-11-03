@@ -2,7 +2,7 @@ import { ReadableParagraph } from '@/components/ReadableParagraph'
 import { meanContrast } from '@/lib/statistics'
 import { lazy, Suspense } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { ArrowRight, BarChart3, Database, Target } from 'lucide-react'
+import { ArrowRight, BarChart3, BookOpen, Database, Target } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { api, type Meta } from '@/lib/api'
 import { analysisKey, requireRelease } from '@/lib/queries'
@@ -13,6 +13,7 @@ import { QueryBoundary as Boundary } from '@/components/QueryBoundary'
 import { EmptyState, Loading, Warning } from '@/components/States'
 import { ReportSection, Value } from '@/components/ReportPrimitives'
 import { Interpretations } from '@/components/Interpretations'
+import { ReportIndex } from '@/components/ReportNavigation'
 const PointsChart = lazy(() =>
   import('@/components/PointsChart').then((m) => ({ default: m.PointsChart })),
 )
@@ -62,15 +63,15 @@ function FullHistoryContext({ meta }: { meta: Meta }) {
       title="Históricos completos e confrontos diretos"
       requirements="R07 · R24"
     >
-      <Warning>
-        Escopo fixo: CSV completo. Este bloco de cobertura não é recalculado pelos filtros acima. As
-        conclusões da seleção ficam na seção anterior.
-      </Warning>
       <ReadableParagraph>
-        O recorte reúne {show(focus.rows)} observações em {show(focus.unique_games)} jogos
-        distintos. Os {show(focus.head_to_head_games)} confrontos diretos aparecem em ambos os
-        históricos, não são amostra independente adicional e não substituem a comparação de todas as
-        partidas.
+        Neste bloco, apresentamos a cobertura do CSV completo. Os filtros acima alteram as
+        estatísticas da seleção, mas não esta descrição da base.
+      </ReadableParagraph>
+      <ReadableParagraph>
+        Trabalhamos com {show(focus.rows)} observações em {show(focus.unique_games)} jogos
+        distintos. Os {show(focus.head_to_head_games)} confrontos diretos aparecem nos históricos
+        dos dois times. Por isso, distinguimos esses jogos da comparação geral, que considera todos
+        os adversários presentes na base.
       </ReadableParagraph>
       <ul>
         {history.map((row) => (
@@ -107,12 +108,12 @@ function FullHistoryContext({ meta }: { meta: Meta }) {
         caption="Confrontos diretos no CSV completo — escopo fixo, separado da seleção atual."
       />
       <ReadableParagraph>
-        Prorrogações aumentam a exposição dos totais por jogo; não se atribui a elas uma diferença
-        isolada entre times. Calendário, adversários e quantidade de jogos também variam. Não há
-        ajuste por posses, previsão, causalidade ou verificação externa de completude.
+        Mantivemos os totais das partidas com prorrogação. Ao comparar os times, levamos em conta
+        que a quantidade de jogos, os adversários e o tempo jogado variam. Nesta análise, não
+        ajustamos os resultados por posses ou minutos.
       </ReadableParagraph>
       <Link to="/dados#base" className="text-link">
-        Auditar cobertura e métodos <ArrowRight size={15} />
+        Ver a base e os métodos <ArrowRight size={15} />
       </Link>
     </ReportSection>
   )
@@ -124,13 +125,25 @@ export function Overview(props: Props) {
     <Boundary query={query}>
       {(data) => (
         <>
+          <Link to="/guia" className="guide-banner">
+            <BookOpen size={23} />
+            <span>
+              <strong>Como organizamos nosso trabalho</strong>
+              <span>
+                Reunimos os assuntos do enunciado, o mapa do site e os atalhos para as análises.
+              </span>
+            </span>
+            <ArrowRight size={20} />
+          </Link>
+          <ReportIndex />
           <section className="overview-selection" aria-labelledby="overview-selection-title">
             <div>
               <span className="scope-label">SELEÇÃO APLICADA</span>
               <h2 id="overview-selection-title">Atlanta Hawks × Houston Rockets</h2>
               <ReadableParagraph>
-                Explore estatísticas por partida dos históricos próprios dos dois times na temporada
-                regular da NBA. A análise acadêmica é descritiva e respeita a seleção abaixo.
+                Neste trabalho, analisamos as estatísticas por partida de Atlanta Hawks e Houston
+                Rockets na temporada regular da NBA. Comparamos as médias, a variação entre os jogos
+                e as partidas que se destacaram em cada time.
               </ReadableParagraph>
               <ul className="selection-summary" aria-label="Resumo da seleção aplicada">
                 {selectionDescription(props.selection).map((item) => (
@@ -152,7 +165,7 @@ export function Overview(props: Props) {
             <>
               <div className="section-heading">
                 <div>
-                  <span className="eyebrow">DOIS TIMES. UMA MESMA QUADRA DE ANÁLISE.</span>
+                  <span className="eyebrow">TIMES ANALISADOS</span>
                   <h2>Os times em foco</h2>
                 </div>
                 <span className="subtle">
@@ -233,21 +246,19 @@ export function Overview(props: Props) {
                   </Link>
                 </section>
                 <section className="context-panel">
-                  <span className="eyebrow">ANTES DE INTERPRETAR</span>
-                  <h2>
-                    Todo número
-                    <br />
-                    precisa de contexto.
-                  </h2>
+                  <span className="eyebrow">NOSSA COMPARAÇÃO</span>
+                  <h2>O que consideramos na análise</h2>
                   <ul>
                     <li>
-                      <span>01</span>As amostras podem ter quantidades diferentes de jogos.
+                      <span>01</span>Usamos os jogos disponíveis de cada time, com quantidades
+                      diferentes.
                     </li>
                     <li>
-                      <span>02</span>Prorrogações e zeros legítimos são preservados.
+                      <span>02</span>Mantivemos as prorrogações e os zeros que fazem sentido para a
+                      variável.
                     </li>
                     <li>
-                      <span>03</span>Uma partida atípica não comprova erro no dado.
+                      <span>03</span>Analisamos as partidas atípicas sem removê-las da base.
                     </li>
                   </ul>
                   <Link to="/dados">
@@ -267,9 +278,9 @@ export function Overview(props: Props) {
               requirements="R02 · R21 · R24"
             >
               <ReadableParagraph>
-                As linhas abaixo descrevem os históricos próprios de Atlanta e Houston na seleção
-                atual. Não são um ranking global dos times. Quantidades, médias e dispersões mudam
-                com os filtros.
+                Reunimos abaixo as médias e os coeficientes de variação das sete estatísticas.
+                Usamos essas medidas para comparar o nível dos resultados e sua regularidade. A
+                quantidade de jogos e as medidas acompanham os filtros selecionados.
               </ReadableParagraph>
               <DataTable
                 data={Object.keys(metricLabels).map((code) => ({
@@ -303,7 +314,7 @@ export function Overview(props: Props) {
                   })),
                   {
                     id: 'evidence',
-                    header: 'Evidência na seleção',
+                    header: 'Ver comparação',
                     cell: ({ row }) => (
                       <Link
                         to={selectionHref(
@@ -332,9 +343,10 @@ export function Overview(props: Props) {
                 metric={props.selection.metric}
               />
               <ReadableParagraph>
-                IQR descreve o centro, desvio considera todos os afastamentos e CV os relativiza
-                pela média. Discordâncias não autorizam escolher um vencedor único; consulte os
-                quadros, assimetria e boxplots na mesma referência.
+                Para interpretar a regularidade, olhamos as medidas em conjunto: o IQR descreve a
+                faixa central, o desvio considera todos os afastamentos e o CV relaciona o desvio à
+                média. Uma ordenação diferente entre essas medidas ajuda a entender como os
+                resultados se distribuem.
               </ReadableParagraph>
             </ReportSection>
           )}

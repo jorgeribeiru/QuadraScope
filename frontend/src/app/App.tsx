@@ -6,12 +6,14 @@ import { ErrorState, Loading, Warning } from '@/components/States'
 import { parseSelection, supportsFilters } from '@/lib/filters'
 import { discardPreviousReleases, metaOptions } from '@/lib/queries'
 import { Anomalies, Comparison, DataPage, Overview, TeamProfile } from '@/features/Reports'
+import { Guide } from '@/features/Guide'
 
 export function App() {
-  const meta = useQuery(metaOptions)
+  const location = useLocation()
+  const isGuide = location.pathname.replace(/\/+$/, '') === '/guia'
+  const meta = useQuery({ ...metaOptions, enabled: !isGuide })
   const client = useQueryClient()
   const [params] = useSearchParams()
-  const location = useLocation()
   const filtersEnabled = supportsFilters(location.pathname)
   const selection = parseSelection(filtersEnabled ? params : new URLSearchParams())
   const release = meta.data?.context.release_id
@@ -23,7 +25,9 @@ export function App() {
   }
   return (
     <Layout>
-      {selection.issues.length > 0 ? (
+      {isGuide ? (
+        <Guide />
+      ) : selection.issues.length > 0 ? (
         <Warning>
           Revise os filtros acima para consultar os dados. Nenhum resultado foi calculado com esta
           seleção inválida.

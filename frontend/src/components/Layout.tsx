@@ -15,8 +15,10 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { FilterBar } from './FilterBar'
 import { teams } from '@/lib/format'
 import { selectionHref, supportsFilters } from '@/lib/filters'
+import { ReportSearch, SectionNavigation } from './ReportNavigation'
 
 const navigation = [
+  { to: '/guia', label: 'Guia do projeto', Icon: BookOpen },
   { to: '/', label: 'Visão geral', Icon: LayoutDashboard },
   { to: '/times/1610612737', label: 'Perfil dos times', Icon: Users },
   { to: '/comparar', label: 'Comparação', Icon: BarChart3 },
@@ -151,6 +153,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <ChevronRight size={14} />
             <span>{active?.label || 'Página'}</span>
           </div>
+          <ReportSearch />
           <span className="topbar-status">
             <Activity size={15} />
             Análise descritiva
@@ -165,7 +168,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   ? 'O jogo, em perspectiva.'
                   : active?.label || 'Página não encontrada'}
               </h1>
-              <p>Estatísticas por partida. Contexto antes da conclusão.</p>
+              <p>Projeto 1 · Laboratório de Ciência de Dados</p>
             </div>
             <span className="season-tag">
               2025<span>—</span>26
@@ -173,11 +176,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
           {supportsFilters(location.pathname) && <FilterBar />}
           {children}
+          <SectionNavigation />
           <footer className="page-footer">
-            <span>QuadraScope · Dados reais, análise com contexto.</span>
-            <a href="/api/v1/meta" target="_blank" rel="noreferrer">
-              Consultar metadados <ArrowUpRight size={13} />
-            </a>
+            <span>QuadraScope · Laboratório de Ciência de Dados · UFAPE</span>
+            <Link to="/dados#origem">
+              Sobre os dados <ArrowUpRight size={13} />
+            </Link>
           </footer>
         </main>
       </div>

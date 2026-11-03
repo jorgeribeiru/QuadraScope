@@ -9,12 +9,22 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true,
-    proxy: { '/api': process.env.QUADRASCOPE_API_PROXY || 'http://127.0.0.1:8000' },
+    proxy: {
+      '/api': {
+        target: process.env.QUADRASCOPE_API_PROXY || 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
+    },
   },
   preview: {
     port: 4173,
     strictPort: true,
-    proxy: { '/api': process.env.QUADRASCOPE_API_PROXY || 'http://127.0.0.1:8000' },
+    proxy: {
+      '/api': {
+        target: process.env.QUADRASCOPE_API_PROXY || 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
+    },
   },
   build: { target: 'es2022' },
   test: {

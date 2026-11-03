@@ -41,6 +41,20 @@ export function BoxplotChart({
     max = hi + span * 0.07
   const x = (v: number) => left + ((v - min) / (max - min)) * (right - left)
   const tick = Array.from({ length: 6 }, (_, i) => min + ((max - min) * i) / 5)
+  const labels = [
+    { name: 'Cerca inferior', value: b.lower_fence },
+    { name: 'Bigode inferior', value: b.lower_whisker },
+    { name: 'Q1', value: b.q1 },
+    { name: 'Mediana', value: b.median },
+    { name: 'Q3', value: b.q3 },
+    { name: 'Bigode superior', value: b.upper_whisker },
+    { name: 'Cerca superior', value: b.upper_fence },
+  ].sort((a, b) => a.value - b.value)
+  // Distribuir rótulos, sem deslocar as coordenadas dos valores científicos.
+  const placed = labels.map((label, index) => ({
+    ...label,
+    labelX: left + (index * (right - left)) / (labels.length - 1),
+  }))
   return (
     <figure
       className="scientific-chart"
@@ -48,7 +62,7 @@ export function BoxplotChart({
       aria-label="Gráfico científico com rolagem horizontal"
     >
       <svg
-        viewBox={`0 0 ${W} ${H}`}
+        viewBox={`0 0 ${W} 395`}
         role="img"
         aria-label={`Boxplot ${description.metric}: Q1 ${decimal(b.q1)}, mediana ${decimal(b.median)}, Q3 ${decimal(b.q3)}, ${b.outlier_count} partidas atípicas. Valores e partidas nas tabelas abaixo.`}
       >
@@ -136,7 +150,63 @@ export function BoxplotChart({
         <text x="420" y="284" textAnchor="middle">
           {description.unit} · eixo horizontal contínuo
         </text>
+        {placed.map((label, index) => (
+          <g key={label.name} className="boxplot-value-label">
+            <path
+              d={`M ${x(label.value)} 294 L ${label.labelX} ${index % 2 === 0 ? 316 : 353}`}
+              fill="none"
+              stroke="#a4b39b"
+            />
+            <text
+              x={label.labelX}
+              y={index % 2 === 0 ? 332 : 369}
+              textAnchor={index === 0 ? 'start' : index === labels.length - 1 ? 'end' : 'middle'}
+            >
+              {label.name}
+            </text>
+            <text
+              x={label.labelX}
+              y={index % 2 === 0 ? 348 : 385}
+              textAnchor={index === 0 ? 'start' : index === labels.length - 1 ? 'end' : 'middle'}
+              fontWeight="700"
+            >
+              {decimal(label.value)}
+            </text>
+          </g>
+        ))}
       </svg>
+      <dl className="boxplot-key-values">
+        <div>
+          <dt>Média</dt>
+          <dd>{b.mean === null ? 'Indefinida' : decimal(b.mean)}</dd>
+        </div>
+        <div>
+          <dt>Moda(s)</dt>
+          <dd>{b.modes.length ? b.modes.map(decimal).join(' · ') : 'Sem moda repetida'}</dd>
+        </div>
+        <div>
+          <dt>Outliers inferiores</dt>
+          <dd>
+            {b.outliers.some((point) => point.side === 'lower')
+              ? b.outliers
+                  .filter((point) => point.side === 'lower')
+                  .map((point) => decimal(point.value))
+                  .join(' · ')
+              : 'Nenhum'}
+          </dd>
+        </div>
+        <div>
+          <dt>Outliers superiores</dt>
+          <dd>
+            {b.outliers.some((point) => point.side === 'upper')
+              ? b.outliers
+                  .filter((point) => point.side === 'upper')
+                  .map((point) => decimal(point.value))
+                  .join(' · ')
+              : 'Nenhum'}
+          </dd>
+        </div>
+      </dl>
       <figcaption>
         Caixa: Q1–Q3; traço interno: mediana; bigodes: observações extremas dentro das cercas;
         linhas tracejadas: cercas teóricas; losango vermelho: média; círculos roxos: todas as modas

@@ -100,6 +100,10 @@ test('auditoria automática de acessibilidade nas seis telas, com gráficos carr
 test('cada outlier do boxplot e cada sinalização dos sete métodos coincide com o CSV', async ({
   page,
 }, testInfo) => {
+  test.skip(
+    Boolean(process.env.E2E_API_PROXY),
+    'Esta auditoria Python requer artefatos locais existentes; o modo frontend usa a API já publicada sem gerar dados.',
+  )
   test.setTimeout(180_000)
   const output = testInfo.outputPath('source-audit.json')
   execFileSync(
@@ -111,7 +115,7 @@ test('cada outlier do boxplot e cada sinalização dos sete métodos coincide co
   for (const pair of audit.pairs) {
     await page.goto(`/times/${pair.team_id}#variavel=${pair.metric}`)
     await expect(page.locator('#boxplot')).toBeVisible()
-    const svg = page.locator('#boxplot svg')
+    const svg = page.locator('#boxplot svg[role=img]')
     await expect(svg.locator('circle[tabindex="0"]')).toHaveCount(pair.boxplot_outlier_ids.length)
     await expect(svg).toContainText(pair.unit)
     await page.locator('#distribuicao details summary').click()
@@ -220,6 +224,8 @@ test('teclado, menu móvel, tabelas e página atual nos dois perfis', async ({ p
   await expect(menu).toHaveAttribute('aria-expanded', 'false')
   await page.keyboard.press('Enter')
   await page.keyboard.press('Tab')
+  await expect(page.getByRole('link', { name: 'Guia do projeto', exact: true })).toBeFocused()
+  await page.keyboard.press('Tab')
   await page.keyboard.press('Tab')
   await expect(page.getByRole('link', { name: 'Perfil dos times', exact: true })).toBeFocused()
   await page.keyboard.press('Enter')
@@ -251,15 +257,15 @@ test('teclado, menu móvel, tabelas e página atual nos dois perfis', async ({ p
 
 test('contraste de textos SVG e limites das barras do histograma', async ({ page }, testInfo) => {
   await page.goto('/times/1610612737')
-  await expect(page.locator('#distribuicao svg')).toBeVisible()
+  await expect(page.locator('#distribuicao svg[role=img]')).toBeVisible()
   const colors = await page.locator('#distribuicao').evaluate((section) => {
     const bg = getComputedStyle(section).backgroundColor
     return {
       bg,
-      texts: Array.from(section.querySelectorAll('svg text')).map(
+      texts: Array.from(section.querySelectorAll('svg[role=img] text')).map(
         (text) => getComputedStyle(text).fill,
       ),
-      bars: Array.from(section.querySelectorAll('svg rect')).map((bar) => ({
+      bars: Array.from(section.querySelectorAll('svg[role=img] rect')).map((bar) => ({
         fill: getComputedStyle(bar).fill,
         stroke: getComputedStyle(bar).stroke,
       })),
@@ -382,7 +388,7 @@ test('refluxo em 320/390/768 px e todas as modas, inclusive coincidentes com a m
   }
   await page.setViewportSize({ width: 1280, height: 900 })
   await page.goto('/times/1610612737#variavel=STL')
-  const figure = page.locator('#boxplot svg')
+  const figure = page.locator('#boxplot svg[role=img]')
   const mode = figure.locator('circle').filter({ hasText: 'Moda 9,00' })
   await expect(mode).toHaveCount(1)
   const median = figure.locator('line').filter({ hasText: 'Mediana 9,00' })
@@ -411,9 +417,9 @@ test('interpretação explicita destaques de CV/assimetria e diagnóstico sem mu
 }) => {
   await page.goto('/comparar')
   const highlights = page.locator('#destaques-variaveis')
-  await expect(highlights).toContainText('Maior dispersão relativa pelo CV')
+  await expect(highlights).toContainText('maior dispersão relativa pelo CV')
   await expect(highlights).toContainText('BLK (Tocos)')
-  await expect(highlights).toContainText('Maior assimetria em magnitude')
+  await expect(highlights).toContainText('maior assimetria em magnitude')
   await page.goto('/times/1610612737#variavel=REB')
   await expect(page.locator('#leitura')).toContainText('Diagnóstico de sensibilidade')
   await expect(page.locator('#leitura')).toContainText('6,55 em vez de 6,82')

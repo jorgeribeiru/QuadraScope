@@ -7,7 +7,9 @@ import { analysisKey, requireRelease } from '@/lib/queries'
 import { formatDate, integer, metricLabels, teams } from '@/lib/format'
 import { DataTable } from '@/components/DataTable'
 import { QueryBoundary } from '@/components/QueryBoundary'
-import { Warning } from '@/components/States'
+import { ReportIndex } from '@/components/ReportNavigation'
+import { ReportSection } from '@/components/ReportPrimitives'
+import { columnDecisions } from '@/lib/column-decisions'
 
 type Column = components['schemas']['DictionaryColumn']
 type Quality = Awaited<ReturnType<typeof api.quality>>['report']
@@ -62,7 +64,7 @@ const dictionaryColumns: ColumnDef<Column>[] = [
     cell: ({ row }) =>
       row.original.analysis_eligible
         ? 'Incluída entre as sete variáveis'
-        : row.original.exclusion_reason,
+        : (columnDecisions[row.original.original] ?? row.original.exclusion_reason),
   },
 ]
 const qualityColumns: ColumnDef<QualityColumn>[] = [
@@ -126,16 +128,9 @@ function Section({
   children: React.ReactNode
 }) {
   return (
-    <section className="panel report-section" id={id} aria-labelledby={`${id}-title`}>
-      <div className="panel-heading">
-        <h2 id={`${id}-title`}>{title}</h2>
-        <span className="tag">{requirements}</span>
-      </div>
+    <ReportSection id={id} title={title} requirements={requirements}>
       {children}
-      <a className="data-back-link" href="#indice-dados">
-        Voltar ao índice de Dados e métodos
-      </a>
-    </section>
+    </ReportSection>
   )
 }
 function Coverage({ coverage }: { coverage: Quality['coverage'] }) {
@@ -166,10 +161,10 @@ function Coverage({ coverage }: { coverage: Quality['coverage'] }) {
         caption="Cobertura dos históricos de Atlanta e Houston no CSV completo."
       />
       <ReadableParagraph>
-        O recorte do grupo reúne {count(focus.rows)} observações em {count(focus.unique_games)}{' '}
-        jogos distintos. Seus {count(focus.head_to_head_games)} confrontos diretos pertencem aos
-        dois históricos; não representam uma amostra independente adicional. Prorrogações são
-        mantidas, pois alteram a exposição dos totais por partida.
+        Nosso recorte reúne {count(focus.rows)} observações em {count(focus.unique_games)} jogos
+        distintos. Os {count(focus.head_to_head_games)} confrontos diretos aparecem nos históricos
+        dos dois times. Também mantivemos os jogos com prorrogação, considerando que eles têm mais
+        tempo para acumular pontos e outras estatísticas.
       </ReadableParagraph>
       <details>
         <summary>Cobertura dos 30 times e confrontos diretos</summary>
@@ -195,10 +190,11 @@ function Coverage({ coverage }: { coverage: Quality['coverage'] }) {
             ))}
         </ul>
       </details>
-      <Warning>
-        {text(coverage.completeness)} Quantidades diferentes entre os times não significam células
-        ausentes e não autorizam completar partidas por suposição.
-      </Warning>
+      <ReadableParagraph>
+        Trabalhamos com os jogos disponíveis no arquivo. Por isso, a cobertura apresentada aqui é a
+        da nossa base, e não a temporada completa. A diferença na quantidade de jogos entre os times
+        é uma questão de cobertura, separada da presença de campos vazios.
+      </ReadableParagraph>
     </>
   )
 }
@@ -214,11 +210,11 @@ function Missingness({ report }: { report: Quality }) {
       requirements="R12 · R13"
     >
       <ReadableParagraph>
-        Foram encontradas{' '}
+        Na verificação dos dados, encontramos{' '}
         <strong>{count(global.missing_cells)} células ausentes na base completa</strong> e{' '}
-        {count(focus.missing_cells)} no recorte Atlanta/Houston. Não houve imputação. O mecanismo de
-        ausência não foi identificado: ausência de células vazias não demonstra MCAR nem cobertura
-        integral da temporada.
+        {count(focus.missing_cells)} no recorte Atlanta/Houston. Não houve imputação. Como não temos
+        padrões de ausência para comparar neste arquivo, discutimos os mecanismos abaixo sem
+        atribuir um deles à base.
       </ReadableParagraph>
       <dl className="report-definitions">
         {Object.entries(mechanisms).map(([name, explanation]) => (
@@ -262,11 +258,11 @@ function Missingness({ report }: { report: Quality }) {
           </article>
         ))}
       </div>
-      <Warning>
-        Não foram criados padrões artificiais de ausência para produzir p-valores. Os testes
-        longitudinais citados exigem desenho e pressupostos próprios; linhas time-partida não
-        equivalem automaticamente a um painel de abandono clínico.
-      </Warning>
+      <ReadableParagraph>
+        Não aplicamos esses testes à nossa base, pois não encontramos células ausentes. Além disso,
+        os métodos longitudinais exigem observações repetidas e padrões de abandono específicos, que
+        precisam ser considerados antes de uma aplicação a dados de partidas.
+      </ReadableParagraph>
       <details>
         <summary>Limitações e referências dos métodos de ausência</summary>
         <ul>
@@ -301,19 +297,24 @@ function QualityReport({ report }: { report: Quality }) {
     <>
       <Section id="qualidade" title="Auditoria de qualidade" requirements="R11 · R12 · R14">
         <ReadableParagraph>
-          A auditoria aprovada encontrou {integer(missing)} células ausentes, {integer(invalid)}{' '}
-          valores fora do domínio, {count(report.duplicates.row_excess)} linhas duplicadas
-          excedentes e {count(report.duplicates.key_excess)} chaves time-partida duplicadas
-          excedentes. A aprovação comprova consistência segundo as regras verificadas; não autentica
-          externamente os resultados esportivos.
+          Verificamos as 28 colunas e encontramos {integer(missing)} células ausentes,{' '}
+          {integer(invalid)} valores fora do domínio, {count(report.duplicates.row_excess)} linhas
+          duplicadas excedentes e {count(report.duplicates.key_excess)} chaves time-partida
+          duplicadas excedentes. Também conferimos relações entre as estatísticas, como a soma dos
+          rebotes e a composição da pontuação.
         </ReadableParagraph>
         <ReadableParagraph>
-          Zeros são preservados quando válidos no domínio. Um zero em BLK ou STL pode representar
-          uma partida sem tocos ou roubos. Negativos e ausências são contados separadamente; valores
-          atípicos não são automaticamente erros de domínio.
+          Mantivemos os zeros quando eles fazem sentido para a variável. Em BLK ou STL, por exemplo,
+          zero pode representar uma partida sem tocos ou roubos. Tratamos valores negativos,
+          ausências e outliers separadamente, porque são situações diferentes.
         </ReadableParagraph>
         <DataTable
           data={report.columns}
+          search={{
+            label: 'Consultar qualidade por coluna',
+            text: (row) =>
+              `${row.original} ${row.canonical} ${metricLabels[row.original as keyof typeof metricLabels] ?? ''} ${row.domain}`,
+          }}
           columns={qualityColumns}
           caption="Qualidade por coluna — base completa, 28 colunas originais."
         />
@@ -321,6 +322,11 @@ function QualityReport({ report }: { report: Quality }) {
           <summary>Auditoria por coluna no recorte Atlanta/Houston</summary>
           <DataTable
             data={report.focus_columns}
+            search={{
+              label: 'Consultar qualidade no recorte',
+              text: (row) =>
+                `${row.original} ${row.canonical} ${metricLabels[row.original as keyof typeof metricLabels] ?? ''} ${row.domain}`,
+            }}
             columns={qualityColumns}
             caption="Qualidade por coluna — somente as observações dos dois times em foco."
           />
@@ -334,14 +340,18 @@ function QualityReport({ report }: { report: Quality }) {
         </ReadableParagraph>
         <DataTable
           data={checks}
+          search={{
+            label: 'Consultar regras de consistência',
+            text: (row) => `${row.rule} ${row.description} ${statuses[row.status]}`,
+          }}
           columns={checkColumns}
           caption="Regras de consistência, estados e ocorrências na base completa."
         />
-        <Warning>
-          Outliers estatísticos são avaliados separadamente nos perfis e em Fora da curva. IDs,
-          datas, textos e acumulados não entram no vetor dos sete indicadores; não se aplica uma
-          distância estatística ao número de um identificador.
-        </Warning>
+        <ReadableParagraph>
+          Analisamos os outliers das sete variáveis nos perfis e em Fora da curva. Mantivemos
+          identificadores, datas, textos e acumulados como informações de contexto, fora desse
+          conjunto de indicadores.
+        </ReadableParagraph>
       </Section>
       <Missingness report={report} />
     </>
@@ -367,51 +377,12 @@ export function DataPage({ meta }: { meta: Meta }) {
         <span className="scope-label">DOCUMENTAÇÃO DA BASE COMPLETA</span>
         <h2>Conheça os dados antes de interpretar</h2>
         <ReadableParagraph>
-          Consulte a cobertura, a origem, o dicionário, a auditoria e as escolhas metodológicas do
-          QuadraScope. Esta documentação tem escopo fixo e não muda com os filtros das análises.
+          Aqui descrevemos a base que utilizamos e os tratamentos que aplicamos antes da análise.
+          Reunimos o dicionário, a verificação de qualidade e nossas escolhas metodológicas. Estas
+          informações se referem ao arquivo completo e não mudam com os filtros.
         </ReadableParagraph>
       </div>
-      <nav id="indice-dados" className="report-index" aria-label="Seções de Dados e métodos">
-        <h2>Explore por assunto</h2>
-        <ul>
-          <li>
-            <a href="#base">
-              <strong>Base e cobertura</strong>
-              <span>Dimensões, times e partidas</span>
-            </a>
-          </li>
-          <li>
-            <a href="#origem">
-              <strong>Origem</strong>
-              <span>Proveniência e limites da coleta</span>
-            </a>
-          </li>
-          <li>
-            <a href="#dicionario">
-              <strong>Dicionário</strong>
-              <span>Colunas, unidades e transformações</span>
-            </a>
-          </li>
-          <li>
-            <a href={quality.isSuccess ? '#qualidade' : '#auditoria'}>
-              <strong>Qualidade</strong>
-              <span>Regras e resultados da auditoria</span>
-            </a>
-          </li>
-          <li>
-            <a href={quality.isSuccess ? '#ausencias' : '#auditoria'}>
-              <strong>Ausências</strong>
-              <span>Mecanismos e testes aplicáveis</span>
-            </a>
-          </li>
-          <li>
-            <a href="#metodos">
-              <strong>Métodos</strong>
-              <span>Convenções, detectores e limites</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <ReportIndex auditAvailable={quality.isSuccess} />
       <Section id="base" title="Dimensões e cobertura do recorte" requirements="R07 · R08">
         <div className="stat-grid data-stat-grid">
           {[
@@ -432,55 +403,79 @@ export function DataPage({ meta }: { meta: Meta }) {
       </Section>
       <Section id="origem" title="Origem e limites de proveniência" requirements="R07 · R08">
         <ReadableParagraph>
-          A origem foi declarada pela equipe. Os detalhes disponíveis e os não informados estão
-          registrados abaixo, sem presumir uma verificação externa.
+          Utilizamos um arquivo CSV com estatísticas da temporada regular 2025–26 da NBA. A fonte
+          registrada para a coleta é a API da NBA, acessada pela biblioteca nba_api. Abaixo,
+          apresentamos os registros disponíveis sobre a origem do arquivo.
         </ReadableParagraph>
         <QueryBoundary query={documentation}>
           {(data) => {
             const provenance = data.provenance
             return (
               <>
-                <dl className="report-definitions">
+                <div className="provenance-grid">
                   <div>
-                    <dt>Fonte declarada pelo grupo</dt>
-                    <dd>{text(provenance.source)}</dd>
+                    <h3>Sobre a base utilizada</h3>
+                    <dl className="report-definitions">
+                      <div>
+                        <dt>Fonte dos dados</dt>
+                        <dd>{text(provenance.source)}</dd>
+                      </div>
+                      <div>
+                        <dt>Coleta</dt>
+                        <dd>{text(provenance.collection_library)}</dd>
+                      </div>
+                      <div>
+                        <dt>Temporada / fase</dt>
+                        <dd>
+                          {text(provenance.season)} · {text(provenance.phase)}
+                        </dd>
+                      </div>
+                    </dl>
                   </div>
                   <div>
-                    <dt>Coleta</dt>
-                    <dd>{text(provenance.collection_library)}</dd>
+                    <h3>Detalhes da extração</h3>
+                    <dl className="report-definitions">
+                      {' '}
+                      <div>
+                        <dt>Data de extração</dt>
+                        <dd>
+                          {provenance.extracted_at === null
+                            ? 'Não informada'
+                            : text(provenance.extracted_at)}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>Endpoints / versão da biblioteca</dt>
+                        <dd>
+                          {text(provenance.endpoints)} /{' '}
+                          {text(provenance.collection_library_version)}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>Tratamentos anteriores à entrega do CSV</dt>
+                        <dd>{text(provenance.prior_transformations)}</dd>
+                      </div>
+                    </dl>
                   </div>
-                  <div>
-                    <dt>Temporada / fase</dt>
-                    <dd>
-                      {text(provenance.season)} · {text(provenance.phase)}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Data de extração</dt>
-                    <dd>
-                      {provenance.extracted_at === null
-                        ? 'Não informada'
-                        : text(provenance.extracted_at)}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Endpoints / versão da biblioteca</dt>
-                    <dd>
-                      {text(provenance.endpoints)} / {text(provenance.collection_library_version)}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Tratamentos anteriores à entrega do CSV</dt>
-                    <dd>{text(provenance.prior_transformations)}</dd>
-                  </div>
-                </dl>
-                <Warning>{text(provenance.limitation)}</Warning>
+                </div>
+                {[
+                  provenance.extracted_at,
+                  provenance.endpoints,
+                  provenance.collection_library_version,
+                  provenance.prior_transformations,
+                ].some((value) => value == null) && (
+                  <ReadableParagraph>
+                    Alguns detalhes da extração não constam nos registros que temos. Mantivemos
+                    esses campos como não informados e usamos o CSV original como referência para
+                    reproduzir a análise.
+                  </ReadableParagraph>
+                )}
               </>
             )
           }}
         </QueryBoundary>
         <ReadableParagraph>
-          O CSV original é preservado; o pipeline confere sua identidade antes de processar. Nome:{' '}
+          Preservamos o CSV original e conferimos sua identificação antes do processamento. Nome:{' '}
           <code>{meta.source.filename}</code>. Delimitador: <code>{meta.source.delimiter}</code>.
         </ReadableParagraph>
         <ReadableParagraph className="source-identity">
@@ -491,14 +486,34 @@ export function DataPage({ meta }: { meta: Meta }) {
       </Section>
       <Section id="dicionario" title="Dicionário dos dados" requirements="R07 · R08 · R09 · R10">
         <ReadableParagraph>
-          As 28 colunas originais são preservadas com nomes canônicos explícitos. As sete variáveis
-          do vetor são PTS, REB, AST, STL, BLK, PF e FG3M. Cada exclusão está justificada na última
-          coluna.
+          Mantivemos as 28 colunas da base e adotamos nomes mais descritivos no processamento. Para
+          a análise principal, selecionamos PTS, REB, AST, STL, BLK, PF e FG3M. Na última coluna,
+          explicamos o uso de cada campo.
         </ReadableParagraph>
         <QueryBoundary query={dictionary}>
           {(data) => (
             <DataTable
               data={data.columns}
+              search={{
+                label: 'Buscar no dicionário',
+                placeholder: 'Ex.: tocos, BLK, data ou cumulative_wins',
+                text: (row) =>
+                  `${row.original} ${row.canonical} ${row.label} ${kinds[row.kind]} ${roles[row.role]} ${columnDecisions[row.original] ?? ''}`,
+              }}
+              filters={[
+                {
+                  id: 'kind',
+                  label: 'Tipo de dado',
+                  value: (row) => row.kind,
+                  options: Object.entries(kinds).map(([value, label]) => ({ value, label })),
+                },
+                {
+                  id: 'role',
+                  label: 'Papel da coluna',
+                  value: (row) => row.role,
+                  options: Object.entries(roles).map(([value, label]) => ({ value, label })),
+                },
+              ]}
               columns={dictionaryColumns}
               caption="Dicionário completo: nomes, tipos semânticos, unidades, domínios e seleção das 28 colunas."
             />
@@ -511,8 +526,8 @@ export function DataPage({ meta }: { meta: Meta }) {
             conversão de fuso.
           </li>
           <li>
-            W e L já são contagens numéricas de vitórias e derrotas acumuladas. WL é 0/1 na origem e
-            vira o booleano won; não se inventa uma codificação categórica.
+            W e L já vieram como contagens numéricas de vitórias e derrotas acumuladas. WL veio como
+            0/1 e foi convertido para o booleano won.
           </li>
           <li>
             Contagens são inteiros não negativos; percentuais da fonte são frações entre 0 e 1.
@@ -528,8 +543,8 @@ export function DataPage({ meta }: { meta: Meta }) {
             dos jogadores: 240 + 25 × prorrogações; não é a duração individual de uma partida.
           </li>
           <li>
-            Não há imputação, exclusão de zeros ou remoção automática de outliers. Registros
-            permanecem disponíveis para contexto e auditoria.
+            Não precisamos imputar valores. Preservamos os zeros válidos e mantivemos as partidas
+            identificadas como outliers para discutir seus resultados.
           </li>
         </ul>
         <ReadableParagraph>
@@ -550,10 +565,10 @@ export function DataPage({ meta }: { meta: Meta }) {
         requirements="R01 · R10 · R14"
       >
         <ReadableParagraph>
-          A análise científica é executada em Python. FastAPI reutiliza as funções validadas,
-          verifica parâmetros e publica contratos OpenAPI. React organiza navegação, tabelas e
-          gráficos interativos; os indicadores vêm da API, evitando reproduzir fórmulas estatísticas
-          no navegador. A combinação FastAPI + React foi confirmada pelo grupo.
+          Desenvolvemos a análise em Python e utilizamos FastAPI para disponibilizar os resultados.
+          Escolhemos React para organizar as páginas, os filtros e os gráficos interativos. Assim,
+          concentramos os cálculos estatísticos no Python e usamos a interface para consultar e
+          apresentar esses resultados.
         </ReadableParagraph>
         <QueryBoundary query={documentation}>
           {(data) => {
@@ -577,9 +592,9 @@ export function DataPage({ meta }: { meta: Meta }) {
                   ))}
                 </dl>
                 <ReadableParagraph>
-                  Z-score, IQR e Grubbs são univariados. ECOD, k-NN, LOF e DBSCAN analisam o vetor
-                  das sete variáveis. Grubbs testa um extremo sob pressupostos; DBSCAN identifica
-                  ruído, sem score contínuo inventado.
+                  Aplicamos Z-score, IQR e Grubbs a uma variável por vez. Nos métodos ECOD, k-NN,
+                  LOF e DBSCAN, consideramos as sete variáveis em conjunto. Para o DBSCAN,
+                  apresentamos os grupos e o ruído identificados pelo método.
                 </ReadableParagraph>
                 <ul>
                   {list(methodology.limitations).map((value) => (
@@ -591,14 +606,13 @@ export function DataPage({ meta }: { meta: Meta }) {
           }}
         </QueryBoundary>
         <ReadableParagraph>
-          Históricos com calendários, adversários e quantidades diferentes são comparados de forma
-          descritiva. Não se conclui causalidade, eficiência por posse ou superioridade global a
-          partir desses totais.
+          Nosso objetivo é descrever e comparar os jogos presentes na base. Como os times
+          enfrentaram adversários e calendários diferentes, interpretamos as diferenças como
+          resultados desse recorte, sem atribuir uma causa isolada a elas.
         </ReadableParagraph>
         <ReadableParagraph className="chart-footnote">
-          Os códigos R01–R24 nas seções permitem localizar as exigências do relatório. Esta página
-          apresenta os requisitos de dados e qualidade; os resultados estatísticos por time
-          pertencem aos perfis e às páginas de comparação e anomalias.
+          Depois da preparação dos dados, seguimos para os perfis dos times, a comparação das
+          estatísticas e a análise dos outliers. O guia do projeto reúne os links para cada assunto.
         </ReadableParagraph>
       </Section>
     </div>

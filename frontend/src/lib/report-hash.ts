@@ -1,8 +1,9 @@
 import { useLocation, useNavigate } from 'react-router-dom'
+import { reportHashParams } from './report-catalog'
 export function useReportHash() {
   const location = useLocation()
   const navigate = useNavigate()
-  const params = new URLSearchParams(location.hash.slice(1))
+  const params = reportHashParams(location.hash)
   return {
     read: <T extends string>(key: string, allowed: readonly T[], fallback: T): T => {
       const value = params.get(key)
