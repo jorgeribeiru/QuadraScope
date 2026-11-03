@@ -79,14 +79,11 @@ QuadraScope/
     │   ├── data-dictionary.md
     │   ├── methodology.md
     │   └── anomaly-sensitivity.json
-    ├── planning/
-    │   ├── requirements.md
-    │   └── implementation-plan.md
     └── references/
         └── Projeto 1.pdf
 ```
 
-`data/raw/` guarda o CSV original sem alterações. `docs/data/` guarda sua documentação. O enunciado acadêmico fica em `docs/references/`; desenho do sistema, planejamento e dados têm pastas próprias. A base React está em `frontend/`; o pacote de publicação gerado fica em `.deployment/`, ignorado pelo Git.
+`data/raw/` guarda o CSV original sem alterações. `docs/data/` guarda sua documentação. O enunciado acadêmico fica em `docs/references/`; desenho do sistema e dados têm pastas próprias. A base React está em `frontend/`; o pacote de publicação gerado fica em `.deployment/`, ignorado pelo Git.
 
 ## Ambiente e verificações
 
@@ -114,8 +111,6 @@ O [guia de desenvolvimento](docs/development/setup.md) apresenta instalação al
 - [Relatório web e mapa de requisitos](docs/development/report.md).
 - [Frontend: executar e verificar](docs/development/frontend.md).
 - [Pacote, medições e publicação na Vercel](docs/development/deployment.md).
-- [Plano de implementação e tarefas](docs/planning/implementation-plan.md).
-- [Requisitos, caixas de conclusão e histórico](docs/planning/requirements.md).
 - [Arquitetura](docs/architecture/architecture.md) e [diagrama](docs/architecture/diagrams/quadrascope-arquitetura.svg).
 - [Origem e extração dos dados](docs/data/provenance.md).
 
