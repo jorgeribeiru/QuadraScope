@@ -108,7 +108,10 @@ export function SectionNavigation() {
       frame = requestAnimationFrame(() => {
         if (cancelled || !target.isConnected || document.getElementById(id) !== target) return
         revealed = target
-        const focus = target.querySelector<HTMLElement>('h2, h3') ?? target
+        const focus =
+          target.id === 'conteudo'
+            ? target
+            : (target.querySelector<HTMLElement>('h2, h3') ?? target)
         focus.setAttribute('tabindex', '-1')
         focus.focus({ preventScroll: true })
         target.scrollIntoView({ block: 'start', behavior: 'instant' })
